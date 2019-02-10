@@ -1,0 +1,24 @@
+{
+  "name": "NBS/login",
+  "description": "",
+  "authors": [
+    {
+      "name": "Web NBS",
+      "email": "web@nbs.co.id"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bromo\\Auth\\Providers\\LoginServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Bromo\\Auth\\": ""
+    }
+  }
+}
