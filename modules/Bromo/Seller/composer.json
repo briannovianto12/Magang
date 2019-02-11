@@ -1,0 +1,24 @@
+{
+  "name": "NBS/seller",
+  "description": "",
+  "authors": [
+    {
+      "name": "Web NBS",
+      "email": "web@nbs.co.id"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bromo\\Seller\\Providers\\SellerServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Bromo\\Seller\\": ""
+    }
+  }
+}

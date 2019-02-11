@@ -2,7 +2,9 @@
 
 namespace Bromo\Theme\Exceptions;
 
-class ThemeNotFound extends \Exceptions
+use Exception;
+
+class ThemeNotFound extends Exception
 {
     public function __construct($name)
     {

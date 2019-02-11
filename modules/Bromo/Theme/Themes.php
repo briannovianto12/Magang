@@ -2,6 +2,7 @@
 
 namespace Bromo\Theme;
 
+use Bromo\Theme\Exceptions\ThemeNotFound;
 use Illuminate\Support\Facades\Config;
 
 class Themes
@@ -102,7 +103,7 @@ class Themes
             }
         }
 
-        throw new Exceptions\ThemeNotFound($themeName);
+        throw new ThemeNotFound($themeName);
     }
 
     /**
