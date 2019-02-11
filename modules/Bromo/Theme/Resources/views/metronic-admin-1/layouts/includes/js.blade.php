@@ -1,6 +1,7 @@
 <!--begin::Global Theme Bundle -->
 <script src="{{ nbs_asset('vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ nbs_asset('demo/default/base/scripts.bundle.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/custom.js') }}"></script>
 <!--end::Global Theme Bundle -->
 @yield('scripts')
 <script type="text/javascript">

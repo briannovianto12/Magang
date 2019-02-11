@@ -53,4 +53,9 @@ class Helper
             'text' => $text
         ]);
     }
+
+    public function isMenuActive($module)
+    {
+        return request()->routeIs($module) ? ' m-menu__item--active' : '';
+    }
 }

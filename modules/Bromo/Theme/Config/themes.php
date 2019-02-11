@@ -7,7 +7,7 @@ return [
         'metronic-admin-1' => [
             'name' => 'Metronic Admin 1',
             'views_path' => 'resources/themes/default/views',
-            'assets_path' => 'themes/',
+            'assets_path' => 'themes',
         ],
     ]
 ];

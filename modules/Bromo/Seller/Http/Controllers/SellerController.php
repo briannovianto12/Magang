@@ -19,6 +19,8 @@ class SellerController extends Controller
 
     public function index()
     {
-        return view('seller::index');
+        $data['title'] = 'Seller';
+
+        return view('seller::index', $data);
     }
 }
