@@ -94,8 +94,12 @@
                                                     </li>--}}
                                                     <li class="m-nav__separator m-nav__separator--fit"></li>
                                                     <li class="m-nav__item">
-                                                        <a href="#"
-                                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                                        {{--<a href="#"--}}
+                                                        {{--onclick="event.preventDefault(); document.getElementById('logout-form').submit();"--}}
+                                                        {{--class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">--}}
+                                                        {{--Logout--}}
+                                                        {{--</a>--}}
+                                                        <a href="{{ route('dashboard') }}"
                                                            class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
                                                             Logout
                                                         </a>

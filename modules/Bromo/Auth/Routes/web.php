@@ -12,8 +12,10 @@
 */
 
 Route::name('login')->get('/login', 'LoginController@form');
-Route::name('post.login')->post('/login', 'LoginController@login');
-
+//Route::name('post.login')->post('/login', 'LoginController@login');
+Route::name('post.login')->post('/login', function () {
+    return redirect()->route('dashboard');
+});
 
 // Route::group(['middleware' => 'auth'], function () {
 Route::name('logout')->post('/logout', 'LoginController@logout');
