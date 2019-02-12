@@ -9,5 +9,7 @@ return [
             'views_path' => 'resources/themes/default/views',
             'assets_path' => 'themes',
         ],
-    ]
+    ],
+
+    'base_format_date' => 'd-M-Y \a\t h:i A'
 ];
