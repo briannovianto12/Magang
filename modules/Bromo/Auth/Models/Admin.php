@@ -21,6 +21,8 @@ class Admin extends Authenticatable
         'role_id'
     ];
 
+    public $incrementing = false;
+
     /**
      * The attributes that should be hidden for arrays.
      *
