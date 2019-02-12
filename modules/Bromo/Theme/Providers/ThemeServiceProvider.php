@@ -5,6 +5,7 @@ namespace Bromo\Theme\Providers;
 use Bromo\Theme\Themes;
 use Bromo\Theme\ThemeViewFinder;
 use Bromo\Theme\Utils\Helper;
+use Bromo\Theme\Utils\SnowFlake;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
@@ -99,6 +100,10 @@ class ThemeServiceProvider extends ServiceProvider
 
         $this->app->singleton('helper', function () {
             return new Helper();
+        });
+
+        $this->app->singleton('snowflake', function () {
+            return new SnowFlake();
         });
 
         $this->app->singleton('view.finder', function ($app) {
