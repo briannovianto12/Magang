@@ -8,4 +8,5 @@ class BuyerStatus extends Model
 {
     protected $table = 'buyer_status';
 
+    public $incrementing = false;
 }
