@@ -36,3 +36,10 @@ if (!function_exists('view_render_event')) {
         return $viewEventManager->render();
     }
 }
+
+if (!function_exists('snowflake_id')) {
+    function snowflake_id()
+    {
+        return app()->make('snowflake')->generateID();
+    }
+}
