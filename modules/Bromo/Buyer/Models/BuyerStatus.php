@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuyerStatus extends Model
 {
-    protected $table = 'buyer_status';
+    protected $table = 'user_status';
 
     public $incrementing = false;
 }
