@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuyerSession extends Model
 {
-    protected $table = 'buyer_session';
+    protected $table = 'user_session';
 
 }
