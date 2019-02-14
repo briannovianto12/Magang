@@ -3,6 +3,7 @@
 namespace Nbs\BaseResource\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Nbs\BaseResource\Utils\SnowFlake;
 
 class BaseResourceServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,8 @@ class BaseResourceServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        include __DIR__ . '/../Http/helpers.php';
+
         $this->registerTranslations();
         $this->registerViews();
     }
@@ -67,6 +70,8 @@ class BaseResourceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('snowflake', function () {
+            return new SnowFlake();
+        });
     }
 }

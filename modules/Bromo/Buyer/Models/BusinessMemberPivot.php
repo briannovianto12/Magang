@@ -2,9 +2,9 @@
 
 namespace Bromo\Buyer\Models;
 
-use Bromo\Theme\Utils\FormatDates;
-use Bromo\Theme\Utils\TimezoneAccessor;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use NBs\Theme\Utils\FormatDates;
+use NBs\Theme\Utils\TimezoneAccessor;
 
 class BusinessMemberPivot extends Pivot
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bromo\Theme;
+namespace Nbs\Theme;
 
-use Bromo\Theme\Facades\Themes;
 use Illuminate\Support\Arr;
 use Illuminate\View\FileViewFinder;
+use Nbs\Theme\Facades\Themes;
 
 class ThemeViewFinder extends FileViewFinder
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Bromo\Theme\ViewRenderEventManager;
+use Nbs\Theme\ViewRenderEventManager;
 
 if (!function_exists('themes')) {
     function themes()
@@ -34,12 +34,5 @@ if (!function_exists('view_render_event')) {
         $viewEventManager->handleRenderEvent($eventName, $params);
 
         return $viewEventManager->render();
-    }
-}
-
-if (!function_exists('snowflake_id')) {
-    function snowflake_id()
-    {
-        return app()->make('snowflake')->generateID();
     }
 }

@@ -1,13 +1,12 @@
 <?php
 
-namespace Bromo\Theme\Providers;
+namespace Nbs\Theme\Providers;
 
-use Bromo\Theme\Themes;
-use Bromo\Theme\ThemeViewFinder;
-use Bromo\Theme\Utils\Helper;
-use Bromo\Theme\Utils\SnowFlake;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Nbs\Theme\Themes;
+use Nbs\Theme\ThemeViewFinder;
+use Nbs\Theme\Utils\Helper;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -25,15 +24,11 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerRoutes();
+        include __DIR__ . '/../Http/helpers.php';
+
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-    }
-
-    public function registerRoutes()
-    {
-        $this->loadRoutesFrom(__DIR__ . '/../Http/helpers.php');
     }
 
     /**
@@ -100,10 +95,6 @@ class ThemeServiceProvider extends ServiceProvider
 
         $this->app->singleton('helper', function () {
             return new Helper();
-        });
-
-        $this->app->singleton('snowflake', function () {
-            return new SnowFlake();
         });
 
         $this->app->singleton('view.finder', function ($app) {

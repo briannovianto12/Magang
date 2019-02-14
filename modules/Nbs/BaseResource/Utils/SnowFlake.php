@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme\Utils;
+namespace Nbs\BaseResource\Utils;
 
 use Illuminate\Support\Facades\DB;
 
@@ -80,7 +80,7 @@ class SnowFlake
         try {
             $database_name = DB::getName();
         } catch (\PDOException $e) {
-            return $e;
+            throw new $e;
         }
 
         switch ($database_name) {

@@ -45,7 +45,6 @@ abstract class BaseResourceController extends Controller
         $this->pageData['module'] = $this->module;
         $this->pageData['page'] = $this->page;
         $this->pageData['title'] = $this->title;
-//        $this->middleware('admin');
     }
 
     /**
@@ -92,8 +91,8 @@ abstract class BaseResourceController extends Controller
      */
     public function getBrowseView(): string
     {
-        if (view()->exists("{$this->module}::{$this->module}.browse")) {
-            $this->browseView = "{$this->module}::{$this->module}.browse";
+        if (view()->exists("{$this->module}::browse")) {
+            $this->browseView = "{$this->module}::browse";
         } else {
             $this->browseView = "theme::layouts.browse";
         }
@@ -124,8 +123,8 @@ abstract class BaseResourceController extends Controller
 
     private function getEditorView(): string
     {
-        if (view()->exists("{$this->module}::{$this->module}.editor")) {
-            $this->editorView = "{$this->module}::{$this->module}.editor";
+        if (view()->exists("{$this->module}::editor")) {
+            $this->editorView = "{$this->module}::editor";
         } else {
             $this->editorView = "theme::layouts.editor";
         }

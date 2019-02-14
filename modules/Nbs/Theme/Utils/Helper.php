@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme\Utils;
+namespace Nbs\Theme\Utils;
 
 class Helper
 {
@@ -11,18 +11,18 @@ class Helper
 
         switch ($state) {
             case 'stored':
-                $text = trans('admin::common.flash.saved', ['name' => $data]);
+                $text = trans('theme::common.flash.saved', ['name' => $data]);
                 break;
             case 'updated':
-                $text = trans('admin::common.flash.updated', ['name' => $data]);
+                $text = trans('theme::common.flash.updated', ['name' => $data]);
                 break;
             case 'deleted':
-                $text = trans('admin::common.flash.deleted', ['name' => $data]);
+                $text = trans('theme::common.flash.deleted', ['name' => $data]);
                 break;
             case 'error':
                 $title = 'Oh Snap!';
                 $type = 'error';
-                $text = trans('admin::common.flash.error');
+                $text = trans('theme::common.flash.error');
                 break;
             default:
                 $title = '';

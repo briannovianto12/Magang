@@ -1,9 +1,9 @@
 <?php
 
-namespace Bromo\Theme;
+namespace Nbs\Theme;
 
-use Bromo\Theme\Exceptions\ThemeNotFound;
 use Illuminate\Support\Facades\Config;
+use Nbs\Theme\Exceptions\ThemeNotFound;
 
 class Themes
 {

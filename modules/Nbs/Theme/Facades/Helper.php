@@ -1,18 +1,18 @@
 <?php
 
-namespace Bromo\Theme\Facades;
+namespace Nbs\Theme\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class SnowFlake extends Facade
+class Helper extends Facade
 {
     /**
-     * Get the registered name of component.
+     * Get the registered name of the component.
      *
      * @return string
      */
     protected static function getFacadeAccessor()
     {
-        return 'snowflake';
+        return 'helper';
     }
 }

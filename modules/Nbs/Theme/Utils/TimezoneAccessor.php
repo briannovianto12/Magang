@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme\Utils;
+namespace Nbs\Theme\Utils;
 
 use Carbon\Carbon;
 

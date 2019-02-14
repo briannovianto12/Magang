@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme;
+namespace Nbs\Theme;
 
 class Theme
 {

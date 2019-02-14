@@ -2,9 +2,9 @@
 
 namespace Bromo\ProductCategory\Models;
 
-use Bromo\Theme\Utils\FormatDates;
-use Bromo\Theme\Utils\TimezoneAccessor;
 use Illuminate\Database\Eloquent\Model;
+use Nbs\Theme\Utils\FormatDates;
+use Nbs\Theme\Utils\TimezoneAccessor;
 
 class ProductCategory extends Model
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme\Facades;
+namespace Nbs\Theme\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Nbs\BaseResource\Providers\BaseResourceServiceProvider::class,
+        Nbs\Theme\Providers\ThemeServiceProvider::class,
 
         /*
          * Application Service Providers...

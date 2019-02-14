@@ -1,6 +1,6 @@
 <?php
 
-namespace Bromo\Theme\Exceptions;
+namespace Nbs\Theme\Exceptions;
 
 use Exception;
 
