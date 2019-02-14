@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Nbs\BaseResource\Providers\BaseResourceServiceProvider::class,
 
         /*
          * Application Service Providers...

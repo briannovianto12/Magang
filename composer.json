@@ -56,7 +56,8 @@
             "Bromo\\Seller\\": "modules/Bromo/Seller/",
             "Bromo\\Buyer\\": "modules/Bromo/Buyer/",
             "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/",
-            "Bromo\\Product\\": "modules/Bromo/Product/"
+            "Bromo\\Product\\": "modules/Bromo/Product/",
+            "Nbs\\BaseResource\\": "modules/Nbs/BaseResource/"
         }
     },
     "minimum-stability": "dev",
