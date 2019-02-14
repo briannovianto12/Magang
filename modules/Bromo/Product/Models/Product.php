@@ -4,9 +4,9 @@ namespace Bromo\Product\Models;
 
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
-use Bromo\Theme\Utils\FormatDates;
-use Bromo\Theme\Utils\TimezoneAccessor;
 use Illuminate\Database\Eloquent\Model;
+use Nbs\Theme\Utils\FormatDates;
+use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Product extends Model
 {

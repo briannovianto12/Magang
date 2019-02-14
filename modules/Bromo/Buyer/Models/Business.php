@@ -2,10 +2,10 @@
 
 namespace Bromo\Buyer\Models;
 
-use Bromo\Theme\Utils\FormatDates;
-use Bromo\Theme\Utils\TimezoneAccessor;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Nbs\Theme\Utils\FormatDates;
+use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Business extends Model
 {
