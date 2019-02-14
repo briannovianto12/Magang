@@ -12,7 +12,3 @@
 */
 
 Route::name('buyer')->get('buyer', 'BuyerController@index');
-
-Route::get('test', function () {
-
-});
