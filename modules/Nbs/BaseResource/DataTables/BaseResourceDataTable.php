@@ -20,7 +20,7 @@ class BaseResourceDataTable extends DataTable
                     'id' => $data->id
                 ];
 
-                return view('admin::layouts.includes.actions', $action);
+                return view('theme::layouts.includes.actions', $action);
             })
             ->rawColumns(['action'])
             ->make(true);
