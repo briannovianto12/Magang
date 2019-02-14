@@ -55,7 +55,8 @@
             "Bromo\\Auth\\": "modules/Bromo/Auth/",
             "Bromo\\Seller\\": "modules/Bromo/Seller/",
             "Bromo\\Buyer\\": "modules/Bromo/Buyer/",
-            "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/"
+            "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/",
+            "Bromo\\Product\\": "modules/Bromo/Product/"
         }
     },
     "minimum-stability": "dev",
