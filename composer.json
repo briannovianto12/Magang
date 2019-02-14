@@ -40,16 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/",
+            "App\\": "app/",
             "Modules\\": "modules/",
             "Bromo\\Theme\\": "modules/Bromo/Theme/",
             "Bromo\\Auth\\": "modules/Bromo/Auth/",
@@ -58,6 +49,15 @@
             "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/",
             "Bromo\\Product\\": "modules/Bromo/Product/",
             "Nbs\\BaseResource\\": "modules/Nbs/BaseResource/"
+        },
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
