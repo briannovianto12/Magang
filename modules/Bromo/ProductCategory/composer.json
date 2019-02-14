@@ -1,0 +1,25 @@
+{
+    "name": "NBS/product-category",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\ProductCategory\\Providers\\ProductCategoryServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\ProductCategory\\": ""
+        }
+    }
+}

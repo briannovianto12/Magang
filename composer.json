@@ -49,12 +49,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-          "Tests\\": "tests/",
-          "Modules\\": "modules/",
-          "Bromo\\Theme\\": "modules/Bromo/Theme/",
-          "Bromo\\Auth\\": "modules/Bromo/Auth/",
-          "Bromo\\Seller\\": "modules/Bromo/Seller/",
-          "Bromo\\Buyer\\": "modules/Bromo/Buyer/"
+            "Tests\\": "tests/",
+            "Modules\\": "modules/",
+            "Bromo\\Theme\\": "modules/Bromo/Theme/",
+            "Bromo\\Auth\\": "modules/Bromo/Auth/",
+            "Bromo\\Seller\\": "modules/Bromo/Seller/",
+            "Bromo\\Buyer\\": "modules/Bromo/Buyer/",
+            "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/"
         }
     },
     "minimum-stability": "dev",

@@ -29,6 +29,12 @@
                     <span class="m-menu__link-text">Buyer</span>
                 </a>
             </li>
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-category') }}" aria-haspopup="true">
+                <a href="{{ route('product-category') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <span class="m-menu__link-text">Product Category</span>
+                </a>
+            </li>
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
