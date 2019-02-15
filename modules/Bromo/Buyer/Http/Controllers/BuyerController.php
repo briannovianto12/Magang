@@ -20,4 +20,14 @@ class BuyerController extends BaseResourceController
 
         parent::__construct();
     }
+
+    protected function modelDestroy($id)
+    {
+        $data = $this->model->findOrFail($id);
+        $data->sessions()->delete();
+        $data->businesses()->detach();
+        $data->delete();
+
+        return $data;
+    }
 }

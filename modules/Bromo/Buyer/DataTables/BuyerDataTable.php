@@ -33,7 +33,7 @@ class BuyerDataTable extends DataTable
                     'id' => $data->id,
                     'show_url' => route("{$this->module}.show", $data->id),
 //                    'edit_url' => route("{$this->module}.edit", $data->id),
-//                    'delete_url' => route("{$this->module}.destroy", $data->id),
+                    'delete_url' => route("{$this->module}.destroy", $data->id),
                 ];
 
                 return view('theme::layouts.includes.actions', $action);
