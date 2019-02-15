@@ -2,13 +2,16 @@
 
 namespace Bromo\Buyer\Models;
 
+use Bromo\Buyer\Traits\JoinedAttribute;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use NBs\Theme\Utils\FormatDates;
 use NBs\Theme\Utils\TimezoneAccessor;
 
 class BusinessMemberPivot extends Pivot
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        JoinedAttribute,
+        TimezoneAccessor;
 
     public $casts = [
         'joined_at' => 'timestamp',
@@ -28,23 +31,23 @@ class BusinessMemberPivot extends Pivot
         'joined_at'
     ];
 
-    public function getStatusNameAttribute(): string
-    {
-        return $this->status()->first()->name ?? '';
-    }
-
     public function status()
     {
         return $this->belongsTo(BusinessMemberStatus::class, 'status');
     }
 
-    public function getRoleNameAttribute(): string
-    {
-        return $this->role()->first()->name ?? '';
-    }
-
     public function role()
     {
         return $this->belongsTo(BusinessMemberRole::class, 'role');
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        return $this->status()->first()->name ?? '';
+    }
+
+    public function getRoleNameAttribute(): string
+    {
+        return $this->role()->first()->name ?? '';
     }
 }

@@ -56,4 +56,9 @@ class Business extends Model
     {
         return $this->hasMany(BusinessBankAccount::class, 'business_id');
     }
+
+    public function getStatusNameAttribute(): string
+    {
+        return $this->status()->first()->name ?? '';
+    }
 }

@@ -4,37 +4,20 @@ namespace Bromo\Buyer\Http\Controllers;
 
 use Bromo\Buyer\DataTables\BuyerDataTable;
 use Bromo\Buyer\Models\Buyer;
-use Illuminate\Routing\Controller;
+use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
-class BuyerController extends Controller
+class BuyerController extends BaseResourceController
 {
-    protected $module;
-
-    protected $model;
-    protected $title;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @param Buyer $buyer
-     */
-    public function __construct(Buyer $buyer)
+    public function __construct(Buyer $model, BuyerDataTable $dataTable)
     {
-        $this->model = $buyer;
         $this->module = 'buyer';
-        $this->title = ucwords($this->module);
-        $this->middleware('auth');
-    }
+        $this->page = 'Buyer';
+        $this->title = 'Buyer';
+        $this->model = $model;
+        $this->dataTable = $dataTable;
+        $this->validateStoreRules = [];
+        $this->validateUpdateRules = [];
 
-    public function index(BuyerDataTable $dataTable)
-    {
-        $data['title'] = $this->title;
-
-        return $dataTable
-            ->with([
-                'module' => $this->module,
-                'model' => $this->model
-            ])
-            ->render('buyer::list', $data);
+        parent::__construct();
     }
 }

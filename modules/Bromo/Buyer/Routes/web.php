@@ -10,5 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('buyer', 'BuyerController');
 
-Route::name('buyer')->get('buyer', 'BuyerController@index');
+Route::prefix('buyer')->name('buyer')->group(function () {
+
+    Route::get('/', 'BuyerController@index');
+    
+});
