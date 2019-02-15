@@ -17,27 +17,27 @@
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
                                         <div class="m-widget28__tab-item">
-                                            <span>Avatar</span>
-                                            <span><img src="https://placehold.it/128x128?text=Avatar" alt=""></span>
+                                            <span>{{ __('Avatar') }}</span>
+                                            <span><img src="{{ $data->avatar_url }}" alt="" width="128"></span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>ID</span>
+                                            <span>{{ __('ID') }}</span>
                                             <span>{{ $data->id }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>Full Name</span>
+                                            <span>{{ __('Full Name') }}</span>
                                             <span>{{ $data->full_name }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>Phone number</span>
+                                            <span>{{ __('Phone number') }}</span>
                                             <span>{{ $data->msisdn }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>Status</span>
+                                            <span>{{ __('Status') }}</span>
                                             <span>{{ $data->status_name }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>Joined At</span>
+                                            <span>{{ __('Joined At') }}</span>
                                             <span>{{ $data->created_at_formatted }}</span>
                                         </div>
                                     </div>
@@ -46,43 +46,50 @@
                                     <div class="col-6">
                                         <div class="m-widget28__tab-items">
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Logo</span>
-                                                <span><img src="https://placehold.it/128x128?text=Business+Logo" alt=""></span>
+                                                <span>{{ __('Business Logo') }}</span>
+                                                <span><img src="{{ $data->business->logo_url }}" alt=""
+                                                           width="128"></span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Name</span>
+                                                <span>{{ __('Business Name') }}</span>
                                                 <span>{{ $data->business->name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Description</span>
+                                                <span>{{ __('Business Description') }}</span>
                                                 <span>{{ $data->business->description ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Tag</span>
+                                                <span>{{ __('Business Tag') }}</span>
                                                 <span>{{ $data->business->tag ?? '-'}}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Tax No</span>
+                                                <span>{{ __('Tax No') }}</span>
                                                 <span>{{ $data->business->tax_no ?? '-'}}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Postal Code</span>
+                                                <span>{{ __('Tax Image') }}</span>
+                                                <span>
+                                                    <img src="{{ $data->business->tax_image_url }}" alt="" width="128">
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Postal Code') }}</span>
                                                 <span>{{ $data->business->postal_code ?? '-'}}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Status</span>
+                                                <span>{{ __('Business Status') }}</span>
                                                 <span>{{ $data->business->status_name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Member Status</span>
+                                                <span>{{ __('Business Member Status') }}</span>
                                                 <span>{{ $data->business->pivot->status_name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Member Role</span>
+                                                <span>{{ __('Business Member Role') }}</span>
                                                 <span>{{ $data->business->pivot->role_name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>Business Member Joined</span>
+                                                <span>{{ __('Business Member Joined At') }}</span>
                                                 <span>{{ $data->business->pivot->joined_at_formatted ?? '-' }}</span>
                                             </div>
                                         </div>

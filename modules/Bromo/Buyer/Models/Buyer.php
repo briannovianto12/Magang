@@ -63,4 +63,9 @@ class Buyer extends Model
     {
         return $this->status()->first()->name ?? '';
     }
+
+    public function getAvatarUrlAttribute()
+    {
+        return file_attribute('buyer.path_avatar', $this->avatar_file);
+    }
 }

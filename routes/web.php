@@ -11,15 +11,6 @@
 |
 */
 
-use Illuminate\Support\Facades\Storage;
-
 Route::get('/', function () {
     return redirect('dashboard');
-});
-
-Route::get('lel', function () {
-
-//    $files = Storage::disk('gcs');
-
-    dd(Storage::url('buyers/avatars/1094722516166905856.png'));
 });

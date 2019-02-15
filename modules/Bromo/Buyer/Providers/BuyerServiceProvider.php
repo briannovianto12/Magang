@@ -21,6 +21,7 @@ class BuyerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerTranslations();
+        $this->registerConfig();
         $this->registerViews();
     }
 
@@ -58,6 +59,21 @@ class BuyerServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/buyer';
         }, \Config::get('view.paths')), [$sourcePath]), 'buyer');
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../Config/config.php' => config_path('buyer.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/config.php', 'buyer'
+        );
     }
 
     /**

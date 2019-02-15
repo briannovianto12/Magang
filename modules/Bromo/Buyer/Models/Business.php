@@ -61,4 +61,14 @@ class Business extends Model
     {
         return $this->status()->first()->name ?? '';
     }
+
+    public function getLogoUrlAttribute()
+    {
+        return file_attribute('buyer.path_business_avatar', $this->logo_file);
+    }
+
+    public function getTaxImageUrlAttribute()
+    {
+        return file_attribute('buyer.path_business_logo', $this->tax_no_image_File);
+    }
 }
