@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bromo-b2b-marketplace",
+  "private_key_id": "59ffb71260b389e2f78a34293c52b6fbffdcc2f8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDWvHDm7nTT9OAr\nPqEUho0UQr8A+FijaUc7u8GCCzdV53lmMf5VwWv8BwL4TqzYvlOJE99d6NE/qjeH\nd4hvVtKmcidW+PjGoR9/VcBobmQj6QLHwxLDlj6oRIqhBovqG4BgJEIIV0Dgo/Tc\naYdcgjv+z7/7fmiAzX+Z2RhXckzIazIMPXB1eUHYlekjpuAOhF52d1yNUB2xUZWG\nZHQPFz3hQyNxDvARL7IERoaX0Wd9lAW5wbK1mXAdu4WvOHVsjuV8M7RCwWA3o2Ea\nk8d7zNAI1syCoLozEX478w6iA1Ctw+40GQhDZiGrLKXCZ20IzZKrtRKmlnJb3XZX\n9A0cDpK5AgMBAAECggEAI4FyiJiWjCJh+3yGTVrHEnnL07j8jP6AFv4fS6WXn3Zf\n4hgzldHezUQKh2yY01i6/sAgr4oqqSR3vIg08LXyLC/VVeHiXpNvHhKbdxkDqVVi\njo2weVMLJq74nhHzSgEEm8D7Ax6MPWiWuOghB9iH24TV2VtoI5328oUNK45caEnV\nqcAsqQ/NpfHlsmZkkOwzTcxHFdVCeFctcdlriA+mnX25v2kaEuUn7Nr+HP+u5noj\n8oXtRyK0BHI6t4Mc/eyATYw4KkX1xRXrx8reusOv2jjhaxhIdEALMVSg8ltdX+vM\nnWGz7MNfwQ8VxTwvhsvsf+ZzwanmCnSyIYW1DQcNZQKBgQDsJg+3k50REcNY+ZNO\ndRh2qtFfLdrGqLT55RMTF/IBZ+frC5ybh5lems+YuJEmcEVtc+fJkgZNo1c+/tM5\nkXO5nmtTpEkeN2+yPLIKrAL7Vz36RBqPKn8bxhBh7a7sn0xgpbSs7yiy7unZXjI6\n1ZA3GF4mHWAuYO7n0mjbUhXihQKBgQDoyZRFnn11JU6op+XePcInHuqmo5/VR7WE\n35DEEHjwcoVUwRDMFr5YCsYi/GD4a70ckNB+wz8lc4RfN6Alp2qFN/ZkinT5FsC2\nTyzMNKkjRs2f2RmJN6G2WQtU4w0m4VifMYdd5iYpf+8T2QOJjUR/QirOviyar2qw\nauMtC/U3pQKBgDjR+6wnN3648HEDND+Hi0haV6B4LxDn3QvX45wPgep2ruXuWFNP\n8EZEJ7lOh5ZhI0NvxRDKMvwRVlfRBs/uQJMkHBz3BaTgn96aHhjVRK5nUoFaS62x\nAv6SzLRTdWh39++1T2Dg9sD/HYNw19MyOc4X7edr4A2owzNCfHpxKNTlAoGAcUmY\npQDqoVYUn7OGBNAdaph7Lbm3kT4ispVyiFhT4wB4rrR+jjQLUiF8J46XSo50LDC1\nptsyIfHD2+rgPzLofgisGmXfY1GVW6PQc1i1b3uHmmE3MjYmtu1CvH766Y8FaAPc\nku/sZoniOdCFDi33xc7XsmGOp4Dy9QQvpr6JChkCgYEA3QP5hVHu+FmBmx6Htqh8\nyHBIUWt5Gxz/c4nRh7goYWgCvQg9iyrUNGjp5twuEsnEnutR2w7UVQi9SdPvya9L\nCNyrCur83q7X1sVqC/1MBi3MNHXrv+1VErV6PMEjhs323VZ1kCW7uaCXjCQXZiyW\nSpu9y1ROPYFACdpR6ZYPRXQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "assets-dev@bromo-b2b-marketplace.iam.gserviceaccount.com",
+  "client_id": "114555018913775391348",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/assets-dev%40bromo-b2b-marketplace.iam.gserviceaccount.com"
+}
