@@ -28,16 +28,17 @@ class BuyerDataTable extends DataTable
             ->editColumn('created_at', function ($data) {
                 return $data->created_at_formatted;
             })
-//            ->addColumn('action', function ($data) {
-//                $action = [
+            ->addColumn('action', function ($data) {
+                $action = [
+                    'id' => $data->id,
+                    'show_url' => route("{$this->module}.show", $data->id),
 //                    'edit_url' => route("{$this->module}.edit", $data->id),
 //                    'delete_url' => route("{$this->module}.destroy", $data->id),
-//                    'id' => $data->id
-//                ];
-//
-//                return view('layouts.includes.actions', $action);
-//            })
-//            ->rawColumns(['action'])
+                ];
+
+                return view('theme::layouts.includes.actions', $action);
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -59,7 +60,7 @@ class BuyerDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-//            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
+            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [],

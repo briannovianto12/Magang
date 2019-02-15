@@ -35,7 +35,7 @@
 
             @isset($url)
                 <div class="m-portlet__head-tools">
-                    <a href="#" onclick="window.location.href=' {{ $url }}'"
+                    <a href="#" onclick="window.location.href='{{ $url }}'"
                        class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
                         <span>
                             <i class="la la-plus"></i>
@@ -60,7 +60,7 @@
                         </form>
                     @endisset
                     @isset($postfix_edit)
-                        <a href="#" onclick="window.location.href=' {{ $url_manage_edit }}'"
+                        <a href="#" onclick="window.location.href='{{ $url_manage_edit }}'"
                            class="btn btn-info m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
                         <span>
                             <i class="la la-edit"></i>
@@ -68,17 +68,11 @@
                         </span>
                         </a>
                     @endisset
-                    <a href="#" onclick="window.location.href=' {{ $url_manage }}'"
-                       class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
-                        <span>
-                            <i class="la la-plus"></i>
-                            <span>@isset($postfix) {{$postfix}} @endisset</span>
-                        </span>
-                    </a>
                     @isset($url_back)
-                        <a href="#" onclick="window.location.href=' {{ $url_back }}'"
-                           class="btn btn-default m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
+                        <a href="#" class="btn btn-outline-primary btn-sm m-btn m-btn m-btn--icon m-btn--outline-2x"
+                           onclick="window.location.href='{{ $url_back }}'">
                             <span>
+                                <i class="fa fa-angle-double-left"></i>
                                 <span>@isset($postfix_back) {{$postfix_back}} @endisset</span>
                             </span>
                         </a>
@@ -87,7 +81,7 @@
             @endisset
         </div>
     @endisset
-    <div class="m-portlet__body">
+    <div class="m-portlet__body @isset($body_class) {{$body_class}} @endisset">
         {!! $body !!}
     </div>
 </div>

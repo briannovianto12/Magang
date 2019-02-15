@@ -1,4 +1,10 @@
 <div style="overflow: visible;">
+    @isset($show_url)
+        <a href="{{ $show_url }}"
+           class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+           title="Detail"><i class="la la-eye"></i>
+        </a>
+    @endisset
     @isset($edit_url)
         <a href="{{ $edit_url }}"
            class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"

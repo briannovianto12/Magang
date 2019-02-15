@@ -35,6 +35,8 @@ abstract class BaseResourceController extends Controller
 
     private $editorView;
 
+    private $detailView;
+
     /**
      * Create a new controller instance.
      *
@@ -101,6 +103,20 @@ abstract class BaseResourceController extends Controller
     }
 
     /**
+     * @return string
+     */
+    public function getDetailView(): string
+    {
+        if (view()->exists("{$this->module}::detail")) {
+            $this->detailView = "{$this->module}::detail";
+        } else {
+            $this->detailView = "theme::layouts.detail";
+        }
+
+        return $this->detailView;
+    }
+
+    /**
      * Show the form to create a Resource
      *
      * @return mixed
@@ -163,6 +179,14 @@ abstract class BaseResourceController extends Controller
         $data = array_merge($this->pageData, $this->getRequiredData());
 
         return view($this->getEditorView(), $data);
+    }
+
+    public function show($id)
+    {
+        $this->pageData['data'] = $this->model->findOrFail($id);
+        $data = array_merge($this->pageData, $this->getRequiredData());
+
+        return view($this->getDetailView(), $data);
     }
 
     /**
