@@ -15,7 +15,6 @@ class BusinessMemberPivot extends Pivot
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
-    protected $table = 'business';
     protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $appends = [

@@ -26,6 +26,8 @@ class Buyer extends Model
         'updated_at'
     ];
 
+    public $incrementing = false;
+
     public function sessions()
     {
         return $this->hasMany(BuyerSession::class, 'user_id');

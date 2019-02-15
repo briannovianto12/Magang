@@ -2,14 +2,16 @@
 
 namespace Bromo\Buyer\Models;
 
-use Carbon\Carbon;
+use Bromo\Buyer\Traits\JoinedAttribute;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Business extends Model
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        JoinedAttribute,
+        TimezoneAccessor;
 
     public $casts = [
         'created_at' => 'timestamp',
@@ -25,6 +27,7 @@ class Business extends Model
         'tax_no',
         'tax_no_image_file',
         'logo_file',
+        'postal_code',
         'status'
     ];
 
@@ -33,33 +36,24 @@ class Business extends Model
         return $this->belongsTo(BusinessStatus::class, 'status');
     }
 
-    /**
-     * Created At Formatted
-     * field created_at_formatted
-     * @return string
-     */
-    public function getJoinedAtFormattedAttribute()
+    public function members()
     {
-        if ($this->getJoinedAtTimezoneAttribute()) {
-            return $this->getJoinedAtTimezoneAttribute()->format(config('themes.base_format_date'));
-        }
-
-        return '';
+        return $this->belongsToMany(
+            Buyer::class,
+            'business_member',
+            'business_id',
+            'user_id'
+        )
+            ->using(BusinessMemberPivot::class)
+            ->withPivot([
+                'role',
+                'status',
+                'joined_at'
+            ]);
     }
 
-    /**
-     * Created At Timezone Attribute
-     *
-     * @return mixed
-     */
-    public function getJoinedAtTimezoneAttribute()
+    public function bankAccounts()
     {
-        if (strlen($this->joined_at) > 0) {
-            $date = Carbon::createFromTimestamp($this->joined_at);
-
-            return $this->getMutatedTimestampValue($date);
-        }
-
-        return $this->joined_at;
+        return $this->hasMany(BusinessBankAccount::class, 'business_id');
     }
 }
