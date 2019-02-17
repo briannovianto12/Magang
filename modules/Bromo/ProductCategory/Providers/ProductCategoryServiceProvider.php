@@ -2,6 +2,7 @@
 
 namespace Bromo\ProductCategory\Providers;
 
+use Bromo\ProductCategory\Category;
 use Illuminate\Support\ServiceProvider;
 
 class ProductCategoryServiceProvider extends ServiceProvider
@@ -20,6 +21,8 @@ class ProductCategoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        include __DIR__ . '/../Http/helpers.php';
+
         $this->registerTranslations();
         $this->registerViews();
     }
@@ -68,6 +71,10 @@ class ProductCategoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->singleton('category', function () {
+            return new Category();
+        });
     }
 
     /**
