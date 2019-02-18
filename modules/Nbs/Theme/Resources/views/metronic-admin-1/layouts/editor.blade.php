@@ -28,7 +28,7 @@
                         {{ isset($data) ? __('Update') : __('Submit') }}
                     </button>
                     <button type="button" class="btn btn-secondary"
-                            onclick="window.location.href='{{ route("{$module}.index") }}'">
+                            onclick="window.location.href='{{ route("{$module}") }}'">
                         {{ __('Cancel') }}
                     </button>
                 @endslot

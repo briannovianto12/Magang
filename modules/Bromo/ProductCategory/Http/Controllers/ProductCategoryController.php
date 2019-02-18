@@ -4,94 +4,51 @@ namespace Bromo\ProductCategory\Http\Controllers;
 
 use Bromo\ProductCategory\DataTables\ProductCategoryDataTable;
 use Bromo\ProductCategory\Models\ProductCategory;
+use Bromo\ProductCategory\Models\ProductCategoryLevel;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
-class ProductCategoryController extends Controller
+class ProductCategoryController extends BaseResourceController
 {
-    protected $module;
-
-    protected $model;
-
-    protected $title;
-
-    protected $dataTable;
-
-    public function __construct(ProductCategory $productCategory, ProductCategoryDataTable $dataTable)
+    public function __construct(ProductCategory $model, ProductCategoryDataTable $dataTable)
     {
-        $this->model = $productCategory;
         $this->module = 'product-category';
+        $this->page = 'Product Category';
+        $this->title = 'Product Category';
+        $this->model = $model;
         $this->dataTable = $dataTable;
-        $this->title = ucwords(str_replace('-', ' ', $this->module));
+        $this->validateStoreRules = [
+            'ext_id' => 'required',
+            'name' => 'required',
+            'parent_id' => 'nullable',
+            'level' => 'required',
+            'sku_code' => 'nullable'
+        ];
+
+        $this->validateUpdateRules = [
+            'ext_id' => 'required',
+            'name' => 'required',
+            'parent_id' => 'nullable',
+            'level' => 'required',
+            'sku_code' => 'nullable'
+        ];
+
+        $this->requiredData = [
+            'categories' => ProductCategory::query()->get(),
+            'level' => ProductCategoryLevel::query()->get()
+        ];
+
+        parent::__construct();
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
+    protected function modifyWhenStore(array $inputData, Request $request): array
     {
-        $data['title'] = $this->title;
+        $parent = ProductCategory::find($inputData['parent_id']);
 
-        return $this->dataTable
-            ->with([
-                'module' => $this->module,
-                'model' => $this->model
-            ])
-            ->render("{$this->module}::list", $data);
-    }
+        if($parent) {
+            $inputData['ext_id'] = $parent->ext_id . '-' . $request->ext_id;
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('product-category::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('product-category::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('product-category::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
+        return parent::modifyWhenStore($inputData, $request);
     }
 }
