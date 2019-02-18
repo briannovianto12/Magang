@@ -4,94 +4,20 @@ namespace Bromo\ProductCategory\Http\Controllers;
 
 use Bromo\ProductCategory\DataTables\ProductCategoryDataTable;
 use Bromo\ProductCategory\Models\ProductCategory;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
-class ProductCategoryController extends Controller
+class ProductCategoryController extends BaseResourceController
 {
-    protected $module;
-
-    protected $model;
-
-    protected $title;
-
-    protected $dataTable;
-
-    public function __construct(ProductCategory $productCategory, ProductCategoryDataTable $dataTable)
+    public function __construct(ProductCategory $model, ProductCategoryDataTable $dataTable)
     {
-        $this->model = $productCategory;
         $this->module = 'product-category';
+        $this->page = 'Product Category';
+        $this->title = 'Product Category';
+        $this->model = $model;
         $this->dataTable = $dataTable;
-        $this->title = ucwords(str_replace('-', ' ', $this->module));
-    }
+        $this->validateStoreRules = [];
+        $this->validateUpdateRules = [];
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
-    {
-        $data['title'] = $this->title;
-
-        return $this->dataTable
-            ->with([
-                'module' => $this->module,
-                'model' => $this->model
-            ])
-            ->render("{$this->module}::list", $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('product-category::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('product-category::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('product-category::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
+        parent::__construct();
     }
 }

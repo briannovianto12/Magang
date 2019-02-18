@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Product Category Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -11,8 +11,10 @@
 |
 */
 
-Route::prefix('product-category')
-    ->name('product-category')->group(function () {
+Route::resource('product-category', 'ProductCategoryController');
+
+Route::prefix('product-category')->name('product-category')->group(function () {
+
     Route::get('/', 'ProductCategoryController@index');
 
 });
