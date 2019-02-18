@@ -3,12 +3,15 @@
 namespace Bromo\ProductCategory\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
 class ProductCategory extends Model
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        SnowFlakeTrait,
+        TimezoneAccessor;
 
     public $casts = [
         'created_at' => 'timestamp',

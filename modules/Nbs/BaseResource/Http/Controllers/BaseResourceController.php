@@ -156,21 +156,31 @@ abstract class BaseResourceController extends Controller
     public function store(Request $request)
     {
         $inputData = $this->validate($request, $this->validateStoreRules, $this->validateStoreMessages);
-        $this->model->create($this->modifyWhenStore($inputData));
 
-        nbs_helper()->flashMessage('stored');
+        DB::beginTransaction();
+        try {
+            $attributes = $this->modifyWhenStore($inputData, $request);
+            $this->model->create($attributes);
+            nbs_helper()->flashMessage('stored');
+            DB::commit();
+        } catch (\Exception $exception) {
+            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
+            DB::rollBack();
+        }
 
-        return redirect()->route("{$this->module}.index");
+
+        return redirect()->route($this->module);
     }
 
     /**
      * Modify input data then send data to store method
      * @param array $inputData
+     * @param Request $request
      * @return array
      */
-    protected function modifyWhenStore(array $inputData): array
+    protected function modifyWhenStore(array $inputData, Request $request): array
     {
-        return $inputData;
+        return array_merge($inputData, $request->only($this->validateStoreRules));
     }
 
     public function edit($id)
@@ -198,11 +208,23 @@ abstract class BaseResourceController extends Controller
     public function update(Request $request, $id)
     {
         $inputData = $this->validate($request, $this->validateUpdateRules, $this->validateUpdateMessages);
-        $this->model->updateOrCreate(['id' => $id], $this->modifyWhenStore($inputData));
+        $attributes = $this->modifyWhenUpdate($inputData, $request);
+        $this->model->updateOrCreate(['id' => $id], $attributes);
 
         nbs_helper()->flashMessage('updated');
 
-        return redirect()->route("{$this->module}.index");
+        return redirect()->route($this->module);
+    }
+
+    /**
+     * Modify input data then send data to update method
+     * @param array $inputData
+     * @param Request $request
+     * @return array
+     */
+    protected function modifyWhenUpdate(array $inputData, Request $request): array
+    {
+        return array_merge($inputData, $request->only($this->validateUpdateRules));
     }
 
     public function destroy($id)
@@ -220,15 +242,5 @@ abstract class BaseResourceController extends Controller
         $data->delete();
 
         return $data;
-    }
-
-    /**
-     * Modify input data then send data to update method
-     * @param array $inputData
-     * @return array
-     */
-    protected function modifyWhenUpdate(array $inputData): array
-    {
-        return $inputData;
     }
 }
