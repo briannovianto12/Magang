@@ -11,4 +11,10 @@
 |
 */
 
-Route::name('seller')->get('seller', 'SellerController@index');
+Route::resource('store', 'SellerController');
+
+Route::prefix('store')->name('store')->group(function () {
+
+    Route::get('/', 'SellerController@index');
+
+});
