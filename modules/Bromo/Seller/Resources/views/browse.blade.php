@@ -13,13 +13,9 @@
 
     @component('components._portlet',[
           'portlet_head' => true,
-          'portlet_title' => "List {$title}"])
+          'portlet_title' => "List of {$title}"])
         @slot('body')
             {!! $dataTable->table() !!}
-        @endslot
-
-        @slot('url')
-{{--            {{ route("{$module}.create") }}--}}
         @endslot
 
         @slot('postfix')

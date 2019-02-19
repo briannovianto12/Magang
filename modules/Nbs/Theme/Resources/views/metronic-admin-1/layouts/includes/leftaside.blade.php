@@ -17,10 +17,10 @@
                     </span>
                 </a>
             </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('seller') }}" aria-haspopup="true">
-                <a href="{{ route('seller') }}" class="m-menu__link">
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('store') }}" aria-haspopup="true">
+                <a href="{{ route('store') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">Seller</span>
+                    <span class="m-menu__link-text">Store</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('buyer') }}" aria-haspopup="true">

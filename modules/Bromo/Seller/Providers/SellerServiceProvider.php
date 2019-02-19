@@ -47,7 +47,7 @@ class SellerServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/seller');
+        $viewPath = resource_path('views/modules/store');
 
         $sourcePath = __DIR__ . '/../Resources/views';
 
@@ -56,8 +56,23 @@ class SellerServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/seller';
-        }, \Config::get('view.paths')), [$sourcePath]), 'seller');
+            return $path . '/modules/store';
+        }, \Config::get('view.paths')), [$sourcePath]), 'store');
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../Config/config.php' => config_path('store.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/config.php', 'store'
+        );
     }
 
     /**
