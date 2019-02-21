@@ -13,7 +13,13 @@ class Business extends Model
         JoinedAttribute,
         TimezoneAccessor;
 
+    protected $appends = [
+        'logo_url',
+        'tax_image_url'
+    ];
+
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
@@ -64,11 +70,11 @@ class Business extends Model
 
     public function getLogoUrlAttribute()
     {
-        return file_attribute('buyer.path_business_avatar', $this->logo_file);
+        return file_attribute('buyer.path_business_logo', $this->logo_file);
     }
 
     public function getTaxImageUrlAttribute()
     {
-        return file_attribute('buyer.path_business_logo', $this->tax_no_image_File);
+        return file_attribute('buyer.path_business_tax', $this->tax_no_image_file);
     }
 }

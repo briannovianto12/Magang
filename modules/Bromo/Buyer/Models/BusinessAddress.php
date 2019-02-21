@@ -12,6 +12,7 @@ class BusinessAddress extends Model
 
     public $timestamps = false;
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];

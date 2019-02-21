@@ -13,6 +13,7 @@ class Buyer extends Model
     protected $table = 'user_profile';
 
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
@@ -22,6 +23,7 @@ class Buyer extends Model
     protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $hidden = [
+        'id' => 'string',
         'created_at',
         'updated_at'
     ];
