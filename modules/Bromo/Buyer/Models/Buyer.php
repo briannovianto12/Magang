@@ -23,7 +23,6 @@ class Buyer extends Model
     protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $hidden = [
-        'id' => 'string',
         'created_at',
         'updated_at'
     ];
