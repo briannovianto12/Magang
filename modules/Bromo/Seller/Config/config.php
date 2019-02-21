@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'path_tax_image' => 'shop/tax/'
+    'path_tax_image' => 'businesses/tax-card/'
 ];
