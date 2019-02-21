@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 if (!function_exists('snowflake_id')) {
     function snowflake_id()
     {
@@ -11,7 +13,7 @@ if (!function_exists('file_upload')) {
 
     function file_upload($file, $path)
     {
-        $res = \Illuminate\Support\Facades\Storage::putFile($path, $file);
+        $res = Storage::putFile($path, $file);
 
         $filename = str_replace($path . '/', '', $res);
 
@@ -30,7 +32,7 @@ if (!function_exists('file_attribute')) {
 
         if (in_array(config('filesystems.default'), ['s3', 'minio', 'gcs'])) {
 
-            $image = \Illuminate\Support\Facades\Storage::url($config_path . $filename);
+            $image = Storage::url($config_path . $filename);
 
             return $image;
 

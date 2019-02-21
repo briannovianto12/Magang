@@ -13,6 +13,7 @@ class Buyer extends Model
     protected $table = 'user_profile';
 
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];

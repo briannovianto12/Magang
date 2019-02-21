@@ -14,6 +14,8 @@ class BusinessMemberPivot extends Pivot
         TimezoneAccessor;
 
     public $casts = [
+        'user_id' => 'string',
+        'business_id' => 'string',
         'joined_at' => 'timestamp',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
@@ -21,6 +23,7 @@ class BusinessMemberPivot extends Pivot
     protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $appends = [
+        'id' => 'string',
         'status_name',
         'role_name'
     ];
