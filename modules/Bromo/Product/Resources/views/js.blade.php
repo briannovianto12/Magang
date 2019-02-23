@@ -1,0 +1,1 @@
+<script src="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.js') }}"></script>
