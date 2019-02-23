@@ -2,6 +2,7 @@
 
 namespace Bromo\Product\Http\Controllers;
 
+use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
 use Illuminate\Routing\Controller;
 
@@ -33,5 +34,12 @@ class ProductController extends Controller
         $data['title'] = $this->title;
 
         return view("{$this->module}::list", $data);
+    }
+
+    public function submited(ProductSubmitedDatatable $datatable)
+    {
+        return $datatable
+            ->with('model', $this->model)
+            ->render("$this->module::list");
     }
 }
