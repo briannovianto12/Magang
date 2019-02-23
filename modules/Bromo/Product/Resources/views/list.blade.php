@@ -35,9 +35,29 @@
                 </li>
             </ul>
             <div class="tab-content">
+                <!--begin:: Submited Page-->
                 <div class="tab-pane active" id="submit" role="tabpanel">
-                    <p>Submited page</p>
+                    <table class="table table-striped table-bordered table-hover display nowrap" id="product_submit"
+                           style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Product ID</th>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Shop</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Product Type</th>
+                            <th>Submit Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
+                <!--end:: Submited Page-->
+
                 <div class="tab-pane" id="reject" role="tabpanel">
                     <p>Rejected page</p>
                 </div>
