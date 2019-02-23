@@ -2,7 +2,6 @@
 
 namespace Bromo\Product\Http\Controllers;
 
-use Bromo\Product\DataTables\ProductDataTable;
 use Bromo\Product\Models\Product;
 use Illuminate\Routing\Controller;
 
@@ -28,15 +27,11 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(ProductDataTable $dataTable)
+    public function index()
     {
+        $data['module'] = $this->module;
         $data['title'] = $this->title;
 
-        return $dataTable
-            ->with([
-                'module' => $this->module,
-                'model' => $this->model
-            ])
-            ->render("{$this->module}::list", $data);
+        return view("{$this->module}::list", $data);
     }
 }
