@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('product') }}" aria-haspopup="true">
-                <a href="{{ route('product') }}" class="m-menu__link">
+                <a href="{{ route('product.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-layers"></i>
                     <span class="m-menu__link-text">Product</span>
                 </a>
