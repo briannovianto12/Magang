@@ -2,6 +2,7 @@
 
 namespace Bromo\Product\Http\Controllers;
 
+use Bromo\Product\DataTables\ProductRejectedDatatable;
 use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
 use Illuminate\Routing\Controller;
@@ -37,6 +38,13 @@ class ProductController extends Controller
     }
 
     public function submited(ProductSubmitedDatatable $datatable)
+    {
+        return $datatable
+            ->with('model', $this->model)
+            ->render("$this->module::list");
+    }
+
+    public function rejected(ProductRejectedDatatable $datatable)
     {
         return $datatable
             ->with('model', $this->model)

@@ -15,5 +15,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::name('product.index')->get('/product', 'ProductController@index');
     Route::name('product.submited')->get('/submited', 'ProductController@submited');
+    Route::name('product.rejected')->get('/rejected', 'ProductController@rejected');
 
 });
