@@ -5,6 +5,14 @@
     $(document).ready(function () {
         loadSubmitedProduct();
 
+        $('#submited_tab').on('click', function () {
+            loadSubmitedProduct();
+        });
+
+        $('#rejected_tab').on('click', function () {
+            loadRejectedProduct();
+        });
+
         function loadSubmitedProduct() {
 
             if (!$.fn.dataTable.isDataTable('#product_submit')) {
