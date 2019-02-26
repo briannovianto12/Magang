@@ -13,6 +13,7 @@ class Product extends Model
     use FormatDates, TimezoneAccessor;
 
     public $casts = [
+        'id' => 'string',
         'image_files' => 'array',
         'category_tree' => 'array',
         'product_type_tree' => 'array',

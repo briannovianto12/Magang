@@ -17,6 +17,10 @@ class ProductAttributeValueOption extends Model
 
     protected $table = 'product_attribute_value_option';
 
+    protected $casts = [
+        'id' => 'string'
+    ];
+
     protected $fillable = [
         'key',
         'value',
