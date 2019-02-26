@@ -10,9 +10,9 @@ class SellerController extends BaseResourceController
 {
     public function __construct(Shop $model, SellerDataTable $dataTable)
     {
-        $this->module = 'seller';
-        $this->page = 'Shop';
-        $this->title = 'Shop';
+        $this->module = 'store';
+        $this->page = 'Store';
+        $this->title = 'Store';
         $this->model = $model;
         $this->dataTable = $dataTable;
         $this->validateStoreRules = [

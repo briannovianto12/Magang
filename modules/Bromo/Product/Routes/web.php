@@ -11,8 +11,10 @@
 |
 */
 
-Route::prefix('product')->name('product')->group(function () {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', 'ProductController@index');
+    Route::name('product.index')->get('/product', 'ProductController@index');
+    Route::name('product.submited')->get('/submited', 'ProductController@submited');
+    Route::name('product.rejected')->get('/rejected', 'ProductController@rejected');
 
 });
