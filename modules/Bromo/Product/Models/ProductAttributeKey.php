@@ -18,6 +18,7 @@ class ProductAttributeKey extends Model
     protected $table = 'product_attribute_key';
 
     protected $casts = [
+        'id' => 'string',
         'updated_at' => 'timestamp'
     ];
 

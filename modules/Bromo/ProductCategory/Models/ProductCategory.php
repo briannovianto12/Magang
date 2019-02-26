@@ -14,6 +14,7 @@ class ProductCategory extends Model
         TimezoneAccessor;
 
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
@@ -31,5 +32,10 @@ class ProductCategory extends Model
     public function children()
     {
         return $this->hasMany($this, 'parent_id');
+    }
+
+    public function productCategoryAttrs()
+    {
+        return $this->hasMany(ProductCategoryAttribute::class, 'category_id');
     }
 }
