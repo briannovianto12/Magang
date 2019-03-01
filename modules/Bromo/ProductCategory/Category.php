@@ -6,30 +6,26 @@ use Bromo\ProductCategory\Models\ProductCategory;
 
 class Category
 {
-    private $parents;
-
-    private $children;
+    private $categories;
 
     private $result = [];
 
     private $columns;
 
+    private $level;
+
+    private $depth;
+
     public function __construct()
     {
         $this->getColumn();
-        $this->parents = $this->getModel()
-            ->whereNull('parent_id')
-            ->get()
-            ->toArray();
-        $this->children = $this->getModel()
-            ->whereNotNull('parent_id')
-            ->get()
-            ->toArray();
+        $this->categories = $this->getModel()
+            ->get();
     }
 
     private function getColumn()
     {
-        $this->columns = ['id', 'ext_id', 'name', 'parent_id'];
+        $this->columns = ['id', 'parent_id', 'sku', 'name', 'level'];
     }
 
     private function getModel()
@@ -37,16 +33,34 @@ class Category
         return ProductCategory::select($this->columns);
     }
 
-    public function treeView()
+    public function treeView($level = 1, $depth = 0)
     {
-        if (count($this->parents) == 0) {
+        if (count($this->categories) == 0) {
             return [];
         }
 
-        foreach ($this->parents as $category) {
-            if ($category['parent_id'] == null) {
-                $this->result = $category;
-                $this->result['child'] = $this->getChildren($category['id']);
+        if ($level) {
+            $this->level = $level;
+        }
+
+        if ($level && $depth) {
+            $this->level = $level;
+            $this->depth = $depth;
+        }
+
+        foreach ($this->categories as $category) {
+            if ($category['level'] == $this->level) {
+                $data['id'] = $category['id'];
+                $data['name'] = $category['name'];
+                $data['sku'] = $category['sku'];
+                $data['level'] = $category['level'];
+                if (($category['level'] < $this->level + $this->depth - 1 || $this->depth == 0)) {
+                    $children = $this->getChildren($category['id']);
+                    if (count($children) > 0) {
+                        $data['children'] = $children;
+                    }
+                }
+                array_push($this->result, $data);
             }
         }
 
@@ -56,11 +70,25 @@ class Category
     private function getChildren($parentId)
     {
         $result = [];
-        foreach ($this->children as $category) {
+        foreach ($this->categories as $category) {
+
             if ($category['parent_id'] == $parentId) {
-                $result[] = $category;
-                $this->getChildren($category['id']);
+                $data['id'] = $category['id'];
+                $data['name'] = $category['name'];
+                $data['sku'] = $category['sku'];
+                $data['level'] = $category['level'];
+
+                if (($category['level'] < $this->level + $this->depth - 1 || $this->depth == 0)) {
+
+                    $children = $this->getChildren($category['id']);
+                    if (count($children) > 0) {
+                        $data['children'] = $children;
+                    }
+                }
+
+                array_push($result, $data);
             }
+
         }
         return $result;
 

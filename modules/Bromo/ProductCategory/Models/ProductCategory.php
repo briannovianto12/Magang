@@ -21,11 +21,11 @@ class ProductCategory extends Model
     protected $table = 'product_category';
     protected $dateFormat = 'Y-m-d H:i:s.uO';
     protected $fillable = [
-        'ext_id',
+        'sku',
+        'sku_part',
         'name',
         'parent_id',
         'level',
-        'sku_code',
     ];
 
     public function children()

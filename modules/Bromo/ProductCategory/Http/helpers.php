@@ -2,9 +2,9 @@
 
 if (!function_exists('getCategoryTree')) {
 
-    function getCategoryTree()
+    function getCategoryTree($level = 1, $depth = 0)
     {
-        return app('category')->treeView();
+        return app('category')->treeView($level, $depth);
     }
 
 }
