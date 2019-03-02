@@ -16,16 +16,16 @@ class ProductCategoryDataTable extends DataTable
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
-//            ->addColumn('action', function ($data) {
-//                $action = [
-//                    'edit_url' => route("{$this->module}.edit", $data->id),
+            ->addColumn('action', function ($data) {
+                $action = [
+                    'edit_url' => route("{$this->module}.edit", $data->id),
 //                    'delete_url' => route("{$this->module}.destroy", $data->id),
-//                    'id' => $data->id
-//                ];
-//
-//                return view('layouts.includes.actions', $action);
-//            })
-//            ->rawColumns(['action'])
+                    'id' => $data->id
+                ];
+
+                return view('theme::layouts.includes.actions', $action);
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -46,7 +46,7 @@ class ProductCategoryDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-//            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
+            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [],
@@ -62,7 +62,8 @@ class ProductCategoryDataTable extends DataTable
     {
         return [
             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'width' => '1'],
-            ['data' => 'ext_id', 'name' => 'ext_id', 'title' => 'Code'],
+            ['data' => 'sku', 'name' => 'sku', 'title' => 'SKU'],
+            ['data' => 'sku_part', 'name' => 'sku_part', 'title' => 'SKU part'],
             ['data' => 'name', 'name' => 'name', 'title' => 'Name'],
             ['data' => 'level', 'name' => 'level', 'title' => 'Level'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
