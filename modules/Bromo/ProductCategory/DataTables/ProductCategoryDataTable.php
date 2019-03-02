@@ -23,7 +23,7 @@ class ProductCategoryDataTable extends DataTable
                     'id' => $data->id
                 ];
 
-                return view('layouts.includes.actions', $action);
+                return view('theme::layouts.includes.actions', $action);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -46,7 +46,7 @@ class ProductCategoryDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-//            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
+            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [],
