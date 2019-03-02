@@ -23,16 +23,17 @@
                         'name' => 'parent_id',
                         'label' => 'Parent Category',
                         'value' => $data->parent_id ?? null,
-                        'options' => $categories ?? [],
+                        'options' => getCategoryTree() ?? [],
+                        'custom' => 'product_category',
                         'help' => 'If this is Parent Category leave blank this field.'
                     ])
                     @endcomponent
 
                     @component('components.inputs._text', [
-                        'id' => 'ext_id',
-                        'name' => 'ext_id',
-                        'label' => 'Ext ID',
-                        'value' => $data->ext_id ?? null
+                        'id' => 'sku',
+                        'name' => 'sku',
+                        'label' => 'SKU',
+                        'value' => $data->sku ?? null
                     ])
                     @endcomponent
 
@@ -45,10 +46,10 @@
                     @endcomponent
 
                     @component('components.inputs._text', [
-                        'id' => 'sku_code',
-                        'name' => 'sku_code',
-                        'label' => 'SKU Code',
-                        'value' => $data->sku_code ?? null
+                        'id' => 'sku_part',
+                        'name' => 'sku_part',
+                        'label' => 'SKU Part',
+                        'value' => $data->sku_part ?? null
                     ])
                     @endcomponent
 

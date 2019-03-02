@@ -9,22 +9,26 @@
                 @isset($multiple) multiple @endisset>
             @isset ($options)
                 <option value=""></option>
-                @foreach($options as $option)
-                    @if(isset($multiple) && $multiple != null)
-                        @if(!is_null($value))
-                            @foreach($value as $item)
-                                @if($item->id == $option->id)
-                                    {{ $id = $item->id }}
-                                @endif
-                            @endforeach
+                @if(isset($custom) && $custom == 'product_category')
+                {!! printTree($options, $value) !!}
+                @else
+                    @foreach($options as $option)
+                        @if(isset($multiple) && $multiple != null)
+                            @if(!is_null($value))
+                                @foreach($value as $item)
+                                    @if($item->id == $option->id)
+                                        {{ $id = $item->id }}
+                                    @endif
+                                @endforeach
+                            @endif
+                            <option @if($id == $option->id ) selected @endif
+                            value="{{$option->id}}">{{$option->name ?? $option->title}}</option>
+                        @else
+                            <option @if($value == $option->id ) selected @endif
+                            value="{{$option->id}}">{{$option->name ?? $option->title}}</option>
                         @endif
-                        <option @if($id == $option->id ) selected @endif
-                        value="{{$option->id}}">{{$option->name ?? $option->title}}</option>
-                    @else
-                        <option @if($value == $option->id ) selected @endif
-                        value="{{$option->id}}">{{$option->name ?? $option->title}}</option>
-                    @endif
-                @endforeach
+                    @endforeach
+                @endif
             @endisset
         </select>
         @if ($errors->has($name))

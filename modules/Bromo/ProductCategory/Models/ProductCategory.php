@@ -19,7 +19,7 @@ class ProductCategory extends Model
     ];
     public $incrementing = false;
     protected $table = 'product_category';
-    protected $dateFormat = 'Y-m-d H:i:s.uO';
+    protected $dateFormat = 'Y-m-d H:i:sO';
     protected $fillable = [
         'sku',
         'sku_part',

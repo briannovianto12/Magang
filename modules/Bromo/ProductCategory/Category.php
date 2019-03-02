@@ -8,7 +8,7 @@ class Category
 {
     private $categories;
 
-    private $result = [];
+    private $result;
 
     private $columns;
 
@@ -18,6 +18,7 @@ class Category
 
     public function __construct()
     {
+        $this->result = collect();
         $this->getColumn();
         $this->categories = $this->getModel()
             ->get();
@@ -36,7 +37,7 @@ class Category
     public function treeView($level = 1, $depth = 0)
     {
         if (count($this->categories) == 0) {
-            return [];
+            return collect();
         }
 
         if ($level) {
@@ -49,18 +50,19 @@ class Category
         }
 
         foreach ($this->categories as $category) {
-            if ($category['level'] == $this->level) {
-                $data['id'] = $category['id'];
-                $data['name'] = $category['name'];
-                $data['sku'] = $category['sku'];
-                $data['level'] = $category['level'];
-                if (($category['level'] < $this->level + $this->depth - 1 || $this->depth == 0)) {
-                    $children = $this->getChildren($category['id']);
+            if ($category->level == $this->level) {
+                $data = (object)[];
+                $data->id = $category->id;
+                $data->name = $category->name;
+                $data->sku = $category->sku;
+                $data->level = $category->level;
+                if (($category->level < $this->level + $this->depth - 1 || $this->depth == 0)) {
+                    $children = $this->getChildren($category->id);
                     if (count($children) > 0) {
-                        $data['children'] = $children;
+                        $data->children = $children;
                     }
                 }
-                array_push($this->result, $data);
+                $this->result->push($data);
             }
         }
 
@@ -69,24 +71,25 @@ class Category
 
     private function getChildren($parentId)
     {
-        $result = [];
+        $result = collect();
         foreach ($this->categories as $category) {
 
-            if ($category['parent_id'] == $parentId) {
-                $data['id'] = $category['id'];
-                $data['name'] = $category['name'];
-                $data['sku'] = $category['sku'];
-                $data['level'] = $category['level'];
+            if ($category->parent_id == $parentId) {
+                $data = (object)[];
+                $data->id = $category->id;
+                $data->name = $category->name;
+                $data->sku = $category->sku;
+                $data->level = $category->level;
 
-                if (($category['level'] < $this->level + $this->depth - 1 || $this->depth == 0)) {
+                if (($category->level < $this->level + $this->depth - 1 || $this->depth == 0)) {
 
-                    $children = $this->getChildren($category['id']);
+                    $children = $this->getChildren($category->id);
                     if (count($children) > 0) {
-                        $data['children'] = $children;
+                        $data->children = $children;
                     }
                 }
 
-                array_push($result, $data);
+                $result->push($data);
             }
 
         }

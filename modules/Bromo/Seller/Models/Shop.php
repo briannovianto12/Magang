@@ -21,7 +21,7 @@ class Shop extends Model
     protected $table = 'shop';
     protected $appends = ['status_name', 'tax_image_url'];
 
-    protected $dateFormat = 'Y-m-d H:i:s.uO';
+    protected $dateFormat = 'Y-m-d H:i:sZ';
 
     protected $hidden = [
         'created_at',
