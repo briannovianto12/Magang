@@ -7,12 +7,15 @@ use Bromo\Buyer\Models\BusinessAddress;
 use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Nbs\BaseResource\Traits\VersionModelTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Shop extends Model
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        TimezoneAccessor,
+        VersionModelTrait;
 
     public $casts = [
         'created_at' => 'timestamp',
@@ -21,7 +24,7 @@ class Shop extends Model
     protected $table = 'shop';
     protected $appends = ['status_name', 'tax_image_url'];
 
-    protected $dateFormat = 'Y-m-d H:i:sZ';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $hidden = [
         'created_at',
@@ -37,7 +40,8 @@ class Shop extends Model
         'tax_card_image_file',
         'product_category_id',
         'product_category',
-        'status'
+        'status',
+        'version'
     ];
 
     public function business()
@@ -63,6 +67,16 @@ class Shop extends Model
     public function status()
     {
         return $this->belongsTo(ShopStatus::class, 'status');
+    }
+
+    public function statusNotes()
+    {
+        return $this->hasMany(ShopStatusNote::class, 'shop_id');
+    }
+
+    public function getVersionName()
+    {
+        return 'version';
     }
 
     public function getStatusNameAttribute(): string
