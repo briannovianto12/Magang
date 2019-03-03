@@ -30,12 +30,11 @@ class ProductSubmitedDatatable extends DataTable
     {
         $query = $this->model->select([
             'product.id',
-            'product.ext_id',
             'product.name',
-            'product.unit_type',
-            'product.display_price',
-            'product.product_type_id',
-            'product.created_at',
+            'product.image_files',
+            'product.condition_type',
+            'product.category',
+            'product.sku',
 
             'shop.name as shop_name',
             'product_status.name as status'

@@ -14,10 +14,9 @@ class Product extends Model
 
     public $casts = [
         'image_files' => 'array',
-        'category_tree' => 'array',
-        'product_type_tree' => 'array',
-        'dimension' => 'array',
-        'display_attributes' => 'array',
+        'dimensions' => 'array',
+        'attributes' => 'array',
+        'tags' => 'array',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
@@ -25,26 +24,30 @@ class Product extends Model
     protected $table = 'product';
     protected $dateFormat = 'Y-m-d H:i:s.uO';
     protected $fillable = [
-        'ext_id',
         'shop_id',
         'name',
+        'slug_name',
         'description',
         'image_files',
         'category_id',
-        'category_tree',
-        'product_type_id',
-        'product_type_tree',
+        'category',
         'brand_id',
         'brand',
         'unit_type_id',
         'unit_type',
-        'weight',
-        'dimension',
-        'display_price',
-        'display_attributes',
+        'condition_type_id',
+        'condition_type',
+        'dimensions',
+        'price_min',
+        'price_max',
+        'qty_min',
+        'qty_max',
+        'attributes',
+        'tags',
         'status',
-        'search_tags',
-        'search_score'
+        'sku',
+        'sku_part',
+        'version',
     ];
 
     public function shop()

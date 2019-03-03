@@ -47,8 +47,9 @@
                             <th>SKU</th>
                             <th>Name</th>
                             <th>Shop</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            {{-- TODO show this data--}}
+                            {{--<th>Price</th>--}}
+                            {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Submit Date</th>
                             <th>Status</th>
@@ -69,8 +70,9 @@
                             <th>Product ID</th>
                             <th>SKU</th>
                             <th>Name</th>
-                            <th>Shop</th>
-                            <th>Price</th>
+                            {{-- TODO show this data--}}
+                            {{--<th>Shop</th>--}}
+                            {{--<th>Price</th>--}}
                             <th>Quantity</th>
                             <th>Product Type</th>
                             <th>Rejected Date</th>

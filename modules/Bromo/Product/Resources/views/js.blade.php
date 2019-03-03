@@ -37,7 +37,7 @@
                     }, {
                         'data': 'id', 'name': 'id'
                     }, {
-                        'data': 'ext_id', 'name': 'ext_id'
+                        'data': 'sku', 'name': 'sku'
                     }, {
                         'data': 'name', 'name': 'name'
                     }, {
@@ -45,9 +45,9 @@
                     }, {
                         'data': 'unit_type', 'name': 'unit_type'
                     }, {
-                        'data': 'display_price', 'name': 'display_price'
-                    }, {
-                        'data': 'product_type_id', 'name': 'product_type_id'
+                    //     'data': 'display_price', 'name': 'display_price'
+                    // }, {
+                        'data': 'category', 'name': 'category'
                     }, {
                         'data': 'created_at', 'name': 'created_at'
                     }, {
@@ -91,7 +91,7 @@
                     }, {
                         'data': 'id', 'name': 'id'
                     }, {
-                        'data': 'ext_id', 'name': 'ext_id'
+                        'data': 'sku', 'name': 'sku'
                     }, {
                         'data': 'name', 'name': 'name'
                     }, {
@@ -99,9 +99,9 @@
                     }, {
                         'data': 'unit_type', 'name': 'unit_type'
                     }, {
-                        'data': 'display_price', 'name': 'display_price'
-                    }, {
-                        'data': 'product_type_id', 'name': 'product_type_id'
+                    //     'data': 'display_price', 'name': 'display_price'
+                    // }, {
+                        'data': 'category', 'name': 'category'
                     }, {
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
