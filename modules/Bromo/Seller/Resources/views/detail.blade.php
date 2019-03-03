@@ -1,6 +1,25 @@
 @extends('theme::layouts.master')
 
 @section('content')
+
+    @component('components.modals.basic', [
+        'modalId' => 'verify',
+        'method' => 'POST',
+        'route' => route("{$module}.verify", $data->id),
+        'title' => __('Verify Seller'),
+        'body' => 'Are you sure ?'
+    ])
+    @endcomponent
+
+    @component('components.modals.basic', [
+        'modalId' => 'reject',
+        'method' => 'POST',
+        'route' => route("{$module}.reject", $data->id),
+        'title' => __('Reject Seller'),
+        'body' => ['textarea' => ['name' => 'notes']],
+    ])
+    @endcomponent
+
     @component('components._portlet', [
           'portlet_head' => true,
           'portlet_title' => sprintf("Detail %s: %s", $title, $data->name),
@@ -42,6 +61,23 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Created At') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
+                                </div>
+                                <div class="m-widget28__tab-item">
+                                    @if(in_array($data->status, [
+                                        \Bromo\Seller\Models\ShopStatus::REG_SUBMITTED,
+                                        \Bromo\Seller\Models\ShopStatus::SURVEY_SUBMITTED
+                                    ]))
+                                        <button type="button" class="btn btn-success m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#verify"
+                                                data-route="{{ route("{$module}.verify", $data->id) }}">
+                                            Verify
+                                        </button>
+                                        <button type="button" class="btn btn-danger m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#reject"
+                                                data-route="{{ route("{$module}.reject", $data->id) }}">
+                                            Reject
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
