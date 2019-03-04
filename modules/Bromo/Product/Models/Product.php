@@ -5,12 +5,15 @@ namespace Bromo\Product\Models;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Product extends Model
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        SnowFlakeTrait,
+        TimezoneAccessor;
 
     public $casts = [
         'image_files' => 'array',
@@ -22,7 +25,7 @@ class Product extends Model
     ];
     public $incrementing = false;
     protected $table = 'product';
-    protected $dateFormat = 'Y-m-d H:i:s.uO';
+    protected $dateFormat = 'Y-m-d H:i:sO';
     protected $fillable = [
         'shop_id',
         'name',
