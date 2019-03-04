@@ -18,4 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('product.submited')->get('/submited', 'ProductController@submited');
     Route::name('product.rejected')->get('/rejected', 'ProductController@rejected');
     Route::name('product.approved')->get('/approved', 'ProductController@approved');
+
+    Route::name('product.unverified')->patch('/unverified/{id}', 'ProductController@unverified');
+    Route::name('product.verified')->patch('/verified/{id}', 'ProductController@verified');
 });
