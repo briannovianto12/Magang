@@ -47,3 +47,11 @@ if (!function_exists('file_attribute')) {
         }
     }
 }
+
+if (!function_exists('present')) {
+    function present($string)
+    {
+        return $string !== null && $string !== '';
+
+    }
+}
