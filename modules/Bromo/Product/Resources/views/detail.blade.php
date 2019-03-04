@@ -1,6 +1,23 @@
 @extends('theme::layouts.master')
 
 @section('content')
+    @component('components.modals.basic', [
+        'modalId' => 'verify',
+        'method' => 'PATCH',
+        'route' => route("{$module}.verified", $data->id),
+        'title' => __('Verify Product'),
+        'body' => 'Are you sure ?'
+    ])
+    @endcomponent
+
+    @component('components.modals.basic', [
+        'modalId' => 'reject',
+        'method' => 'PATCH',
+        'route' => route("{$module}.unverified", $data->id),
+        'title' => __('Reject Product'),
+        'body' => ['textarea' => ['name' => 'notes']],
+    ])
+    @endcomponent
     @component('components._portlet', [
           'portlet_head' => true,
           'portlet_title' => sprintf("Detail %s: %s", $title, $data->name),
@@ -69,15 +86,17 @@
                                     <span>{{ __('Status') }}</span>
                                     <span>{{ $data->productStatus->name ?? '-' }}</span>
                                 </div>
-                                @if($data->status === \Bromo\Product\Models\ProductStatus::APPROVE)
+                                @if($data->status === \Bromo\Product\Models\ProductStatus::SUBMIT)
                                     <div class="m-widget28__tab-item text-center">
-                                        <button type="button"
-                                                class="btn btn-danger btn-sm m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+                                        <button type="button" class="btn btn-danger m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#reject"
+                                                data-route="{{ route("{$module}.unverified", $data->id) }}">
                                             Reject
                                         </button>
-                                        <button type="button"
-                                                class="btn btn-success btn-sm m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
-                                            Approve
+                                        <button type="button" class="btn btn-success m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#verify"
+                                                data-route="{{ route("{$module}.verified", $data->id) }}">
+                                            Verify
                                         </button>
                                     </div>
                                 @endif
