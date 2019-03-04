@@ -58,12 +58,12 @@ class Product extends Model
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
-    public function category()
+    public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
-    public function status()
+    public function productStatus()
     {
         return $this->belongsTo(ProductStatus::class, 'status');
     }
