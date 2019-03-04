@@ -16,6 +16,7 @@ class ProductAttribute extends Model
     protected $table = 'product_attribute';
 
     protected $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
@@ -27,5 +28,20 @@ class ProductAttribute extends Model
         'value_option',
         'value',
     ];
+
+    public function attributeKey()
+    {
+        return $this->belongsTo(ProductAttributeKey::class, 'key');
+    }
+
+    public function attributeValueType()
+    {
+        return $this->belongsTo(ProductAttributeValueType::class, 'value_type');
+    }
+
+    public function attributeValueOption()
+    {
+        return $this->belongsTo(ProductAttributeValueOption::class, 'value_option');
+    }
 
 }

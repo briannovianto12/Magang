@@ -16,6 +16,7 @@ class Product extends Model
         TimezoneAccessor;
 
     public $casts = [
+        'id' => 'string',
         'image_files' => 'array',
         'dimensions' => 'array',
         'attributes' => 'array',
