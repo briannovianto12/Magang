@@ -50,7 +50,7 @@ class Product extends Model
         'status',
         'sku',
         'sku_part',
-        'version',
+        'version'
     ];
 
     public function shop()
@@ -66,5 +66,10 @@ class Product extends Model
     public function productStatus()
     {
         return $this->belongsTo(ProductStatus::class, 'status');
+    }
+
+    public function productStatusNote()
+    {
+        return $this->hasOne(ProductStatusNotes::class, 'product_id', 'id');
     }
 }
