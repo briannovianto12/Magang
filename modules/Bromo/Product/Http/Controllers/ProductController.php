@@ -6,7 +6,10 @@ use Bromo\Product\DataTables\ProductApprovedDatatable;
 use Bromo\Product\DataTables\ProductRejectedDatatable;
 use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
+use Bromo\Product\Models\ProductStatus;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -28,15 +31,11 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function show($id)
-    {
-        $data['module'] = $this->module;
-        $data['title'] = $this->title;
-        $data['data'] = Product::findOrFail($id);
-
-        return view("{$this->module}::detail", $data);
-    }
-
+    /**
+     * Display index page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $data['module'] = $this->module;
@@ -45,6 +44,13 @@ class ProductController extends Controller
         return view("{$this->module}::list", $data);
     }
 
+
+    /**
+     * Get the submited data.
+     *
+     * @param ProductSubmitedDatatable $datatable
+     * @return mixed
+     */
     public function submited(ProductSubmitedDatatable $datatable)
     {
         return $datatable
@@ -55,6 +61,12 @@ class ProductController extends Controller
             ->render("$this->module::list");
     }
 
+    /**
+     * Get the rejected data.
+     *
+     * @param ProductRejectedDatatable $datatable
+     * @return mixed
+     */
     public function rejected(ProductRejectedDatatable $datatable)
     {
         return $datatable
@@ -65,6 +77,12 @@ class ProductController extends Controller
             ->render("$this->module::list");
     }
 
+    /**
+     * Get the approved data.
+     *
+     * @param ProductApprovedDatatable $datatable
+     * @return mixed
+     */
     public function approved(ProductApprovedDatatable $datatable)
     {
         return $datatable
@@ -73,5 +91,74 @@ class ProductController extends Controller
                 'module' => $this->module,
             ])
             ->render("$this->module::list");
+    }
+
+    /**
+     * Get the detail of product.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $data['module'] = $this->module;
+        $data['title'] = $this->title;
+        $data['data'] = Product::findOrFail($id);
+
+        return view("{$this->module}::detail", $data);
+    }
+
+    /**
+     * Verified product.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function verified($id)
+    {
+        DB::beginTransaction();
+        try {
+            $product = Product::find($id);
+
+            $product->update([
+                'status' => ProductStatus::APPROVE
+            ]);
+            $product->increment('version', 1);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Unverified product.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unverified(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $product = Product::find($id);
+            $product->update([
+                'status' => ProductStatus::REJECT
+            ]);
+            $product->productStatusNote()->create([
+                'product_snapshot' => $product,
+                'notes' => $request->input('notes'),
+                'status' => ProductStatus::REJECT
+            ]);
+            $product->increment('version', 1);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
+        return redirect()->back();
     }
 }
