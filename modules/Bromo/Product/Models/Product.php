@@ -5,46 +5,53 @@ namespace Bromo\Product\Models;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
 class Product extends Model
 {
-    use FormatDates, TimezoneAccessor;
+    use FormatDates,
+        SnowFlakeTrait,
+        TimezoneAccessor;
 
     public $casts = [
+        'id' => 'string',
         'image_files' => 'array',
-        'category_tree' => 'array',
-        'product_type_tree' => 'array',
-        'dimension' => 'array',
-        'display_attributes' => 'array',
+        'dimensions' => 'array',
+        'attributes' => 'array',
+        'tags' => 'array',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
     public $incrementing = false;
     protected $table = 'product';
-    protected $dateFormat = 'Y-m-d H:i:s.uO';
+    protected $dateFormat = 'Y-m-d H:i:sO';
     protected $fillable = [
-        'ext_id',
         'shop_id',
         'name',
+        'slug_name',
         'description',
         'image_files',
         'category_id',
-        'category_tree',
-        'product_type_id',
-        'product_type_tree',
+        'category',
         'brand_id',
         'brand',
         'unit_type_id',
         'unit_type',
-        'weight',
-        'dimension',
-        'display_price',
-        'display_attributes',
+        'condition_type_id',
+        'condition_type',
+        'dimensions',
+        'price_min',
+        'price_max',
+        'qty_min',
+        'qty_max',
+        'attributes',
+        'tags',
         'status',
-        'search_tags',
-        'search_score'
+        'sku',
+        'sku_part',
+        'version'
     ];
 
     public function shop()
@@ -52,13 +59,18 @@ class Product extends Model
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
-    public function category()
+    public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
-    public function status()
+    public function productStatus()
     {
         return $this->belongsTo(ProductStatus::class, 'status');
+    }
+
+    public function productStatusNote()
+    {
+        return $this->hasOne(ProductStatusNotes::class, 'product_id', 'id');
     }
 }

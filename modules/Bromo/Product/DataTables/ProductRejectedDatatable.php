@@ -20,7 +20,7 @@ class ProductRejectedDatatable extends DataTable
                     'id' => $data->id
                 ];
 
-                return view('layouts.includes.actions', $action);
+                return view('theme::layouts.includes.actions', $action);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -30,11 +30,12 @@ class ProductRejectedDatatable extends DataTable
     {
         $query = $this->model->select([
             'product.id',
-            'product.ext_id',
             'product.name',
-            'product.unit_type',
-            'product.display_price',
-            'product.product_type_id',
+            'product.image_files',
+            'product.condition_type',
+            'product.category',
+            'product.sku',
+            'product.created_at',
             'product.updated_at',
 
             'shop.name as shop_name',

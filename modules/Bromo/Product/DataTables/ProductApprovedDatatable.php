@@ -5,7 +5,7 @@ namespace Bromo\Product\DataTables;
 use Bromo\Product\Models\ProductStatus;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductSubmitedDatatable extends DataTable
+class ProductApprovedDatatable extends DataTable
 {
     public function ajax()
     {
@@ -42,7 +42,7 @@ class ProductSubmitedDatatable extends DataTable
             'product_status.name as status'
         ])->join('shop', 'shop.id', '=', 'product.shop_id')
             ->join('product_status', 'product_status.id', '=', 'product.status')
-            ->where('product.status', ProductStatus::SUBMIT);
+            ->where('product.status', ProductStatus::APPROVE);
 
         return $this->applyScopes($query);
     }

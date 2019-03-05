@@ -32,4 +32,9 @@ class ProductCategory extends Model
     {
         return $this->hasMany($this, 'parent_id');
     }
+
+    public function atrributeKeys()
+    {
+        return $this->hasMany(ProductCategoryAttributeKey::class, 'id', 'category_id');
+    }
 }

@@ -47,8 +47,9 @@
                             <th>SKU</th>
                             <th>Name</th>
                             <th>Shop</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            {{-- TODO show this data--}}
+                            {{--<th>Price</th>--}}
+                            {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Submit Date</th>
                             <th>Status</th>
@@ -70,8 +71,9 @@
                             <th>SKU</th>
                             <th>Name</th>
                             <th>Shop</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            {{-- TODO show this data--}}
+                            {{--<th>Price</th>--}}
+                            {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Rejected Date</th>
                             <th>Status</th>
@@ -82,9 +84,29 @@
                 </div>
                 <!--end:: Rejected Page-->
 
+                <!--begin:: Approved Page-->
                 <div class="tab-pane" id="approve" role="tabpanel">
-                    <p>Approved Page</p>
+                    <table class="table table-striped table-bordered table-hover display nowrap" id="product_approve"
+                           style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Product ID</th>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Shop</th>
+                            {{-- TODO show this data--}}
+                            {{--<th>Price</th>--}}
+                            {{--<th>Quantity</th>--}}
+                            <th>Product Type</th>
+                            <th>Approve Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
+                <!--end:: Approved Page-->
             </div>
         </div>
     </div>
