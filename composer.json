@@ -43,6 +43,7 @@
         "psr-4": {
             "App\\": "app/",
             "Modules\\": "modules/",
+            "Bromo\\AttributeKey\\": "modules/Bromo/AttributeKey/",
             "Bromo\\Auth\\": "modules/Bromo/Auth/",
             "Bromo\\Seller\\": "modules/Bromo/Seller/",
             "Bromo\\Buyer\\": "modules/Bromo/Buyer/",

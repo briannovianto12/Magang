@@ -15,6 +15,9 @@ class ProductAttributeValueType extends Model
 
     const CREATED_AT = null;
 
+    const DESCRIPTIVE = 1;
+    const OPTIONS = 2;
+
     protected $table = 'product_attribute_value_type';
 
     protected $fillable = [
