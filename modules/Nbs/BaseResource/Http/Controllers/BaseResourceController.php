@@ -160,16 +160,38 @@ abstract class BaseResourceController extends Controller
         DB::beginTransaction();
         try {
             $attributes = $this->modifyWhenStore($inputData, $request);
-            $this->model->create($attributes);
+            $created = $this->model->create($attributes);
+            $this->performAfterStore($request, $created);
             nbs_helper()->flashMessage('stored');
             DB::commit();
         } catch (\Exception $exception) {
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
             DB::rollBack();
+            dd($exception);
         }
 
 
         return redirect()->route($this->module);
+    }
+
+    /**
+     * Perform after Store
+     * @param Request $request
+     * @param $data
+     */
+    protected function performAfterStore(Request $request, $data)
+    {
+        //
+    }
+
+    /**
+     * Perform after Update
+     * @param Request $request
+     * @param $data
+     */
+    protected function performAfterUpdate(Request $request, $data)
+    {
+        //
     }
 
     /**
@@ -209,8 +231,8 @@ abstract class BaseResourceController extends Controller
     {
         $inputData = $this->validate($request, $this->validateUpdateRules, $this->validateUpdateMessages);
         $attributes = $this->modifyWhenUpdate($inputData, $request);
-        $this->model->updateOrCreate(['id' => $id], $attributes);
-
+        $updated = $this->model->updateOrCreate(['id' => $id], $attributes);
+        $this->performAfterUpdate($request, $updated);
         nbs_helper()->flashMessage('updated');
 
         return redirect()->route($this->module);
