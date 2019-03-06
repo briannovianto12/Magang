@@ -4,11 +4,23 @@
         init: function (id) {
             if (id) {
                 $("#" + id).repeater({
+                    isFirstItemUndeletable: true,
                     show: function () {
                         $(this).slideDown()
                     },
                     hide: function (e) {
-                        confirm("Are you sure you want to delete this element?") && $(this).slideUp(e)
+                        var url = $(this).find("a").attr('data-route');
+                        var result = confirm("Are you sure you want to delete this element?");
+                        if (result) {
+                            App.ajax('delete', url, {}, 'json', successDeleteOptionHandler);
+                        }
+
+                        function successDeleteOptionHandler(response) {
+                            if (response.status === 'success') {
+                                App.DisplaySuccess("{{ __('Option deleted successfully') }}");
+                                $(this).slideUp(e);
+                            }
+                        }
                     }
                 });
             }

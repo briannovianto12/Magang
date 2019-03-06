@@ -160,8 +160,7 @@ abstract class BaseResourceController extends Controller
         DB::beginTransaction();
         try {
             $attributes = $this->modifyWhenStore($inputData, $request);
-            $created = $this->model->create($attributes);
-            $this->performAfterStore($request, $created);
+            $this->performStore($request, $attributes);
             nbs_helper()->flashMessage('stored');
             DB::commit();
         } catch (\Exception $exception) {
@@ -177,19 +176,31 @@ abstract class BaseResourceController extends Controller
     /**
      * Perform after Store
      * @param Request $request
-     * @param $data
+     * @param $attributes
+     * @return void
      */
-    protected function performAfterStore(Request $request, $data)
+    protected function performStore(Request $request, $attributes)
     {
-        //
+        $this->model->create($attributes);
     }
 
     /**
      * Perform after Update
      * @param Request $request
+     * @param $id
+     * @param $attributes
+     */
+    protected function performUpdate(Request $request, $id, $attributes)
+    {
+        $this->model->updateOrCreate(['id' => $id], $attributes);
+    }
+
+    /**
+     * Perform after Delete
+     * @param Request $request
      * @param $data
      */
-    protected function performAfterUpdate(Request $request, $data)
+    protected function performAfterDelete(Request $request, $data)
     {
         //
     }
@@ -231,8 +242,7 @@ abstract class BaseResourceController extends Controller
     {
         $inputData = $this->validate($request, $this->validateUpdateRules, $this->validateUpdateMessages);
         $attributes = $this->modifyWhenUpdate($inputData, $request);
-        $updated = $this->model->updateOrCreate(['id' => $id], $attributes);
-        $this->performAfterUpdate($request, $updated);
+        $this->performUpdate($request, $id, $attributes);
         nbs_helper()->flashMessage('updated');
 
         return redirect()->route($this->module);

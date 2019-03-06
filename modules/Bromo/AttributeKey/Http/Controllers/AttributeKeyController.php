@@ -6,6 +6,7 @@ use Bromo\AttributeKey\DataTables\AttributeKeyDataTable;
 use Bromo\Product\Models\ProductAttributeKey;
 use Bromo\Product\Models\ProductAttributeValueType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
 class AttributeKeyController extends BaseResourceController
@@ -32,8 +33,10 @@ class AttributeKeyController extends BaseResourceController
         parent::__construct();
     }
 
-    protected function performAfterStore(Request $request, $data)
+    protected function performStore(Request $request, $attributes)
     {
+        $created = $this->model->create($attributes);
+
         if ($request->input('value_type') == ProductAttributeValueType::OPTIONS) {
             $this->validate($request, [
                 'value_options.*.value' => 'required|max:64',
@@ -41,13 +44,15 @@ class AttributeKeyController extends BaseResourceController
             ]);
 
             foreach ($request->input('value_options') as $row) {
-                $data->options()->create($row);
+                $created->options()->create($row);
             }
         }
     }
 
-    protected function performAfterUpdate(Request $request, $data)
+    protected function performUpdate(Request $request, $id, $attributes)
     {
+        $updated = $this->model->updateOrCreate(['id' => $id], $attributes);
+
         if ($request->input('value_type') == ProductAttributeValueType::OPTIONS) {
             $this->validate($request, [
                 'value_options.*.value' => 'required|max:64',
@@ -58,9 +63,36 @@ class AttributeKeyController extends BaseResourceController
             ]);
 
             foreach ($request->input('value_options') as $row) {
-                $data->options()->find($row['id'])->update($row);
+                $updated->options()->find($row['id'])->update($row);
             }
         }
+    }
+
+    public function attrOptions($attributeKey, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model->find($attributeKey)->options()->find($id)->delete();
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            report($exception);
+            throw $exception;
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    protected function modelDestroy($id)
+    {
+        $data = $this->model->findOrFail($id);
+        $data->options()->delete();
+        $data->delete();
+
+        return $data;
     }
 
 
