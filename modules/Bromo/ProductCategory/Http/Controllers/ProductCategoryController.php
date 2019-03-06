@@ -2,10 +2,12 @@
 
 namespace Bromo\ProductCategory\Http\Controllers;
 
+use Bromo\Product\Models\ProductAttributeKey;
 use Bromo\ProductCategory\DataTables\ProductCategoryDataTable;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\ProductCategory\Models\ProductCategoryLevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
 class ProductCategoryController extends BaseResourceController
@@ -18,24 +20,24 @@ class ProductCategoryController extends BaseResourceController
         $this->model = $model;
         $this->dataTable = $dataTable;
         $this->validateStoreRules = [
-            'ext_id' => 'required',
+            'sku' => 'required',
             'name' => 'required',
             'parent_id' => 'nullable',
             'level' => 'required',
-            'sku_code' => 'nullable'
+            'sku_part' => 'nullable'
         ];
 
         $this->validateUpdateRules = [
-            'ext_id' => 'required',
+            'sku' => 'required',
             'name' => 'required',
             'parent_id' => 'nullable',
             'level' => 'required',
-            'sku_code' => 'nullable'
+            'sku_part' => 'nullable'
         ];
 
         $this->requiredData = [
             'categories' => ProductCategory::query()->get(),
-            'level' => ProductCategoryLevel::query()->get()
+            'level' => ProductCategoryLevel::query()->get(),
         ];
 
         parent::__construct();
@@ -45,10 +47,55 @@ class ProductCategoryController extends BaseResourceController
     {
         $parent = ProductCategory::find($inputData['parent_id']);
 
-        if($parent) {
-            $inputData['ext_id'] = $parent->ext_id . '-' . $request->ext_id;
+        if ($parent) {
+            $inputData['sku'] = $parent->sku . '-' . $request->sku;
         }
 
         return parent::modifyWhenStore($inputData, $request);
+    }
+
+    public function attributes($id)
+    {
+        $data['module'] = $this->module;
+        $data['data'] = $this->model->findOrFail($id);
+        $data['attributeKeys'] = ProductAttributeKey::all();
+
+        return view("{$this->module}::attributes", $data);
+    }
+
+    public function attachAttribute($category, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model->find($category)->attributeKeys()->attach($id, ['sort' => 1]);
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            report($exception);
+            throw $exception;
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function detachAttribute($category, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model->find($category)->attributeKeys()->detach($id);
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            report($exception);
+            throw $exception;
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }
