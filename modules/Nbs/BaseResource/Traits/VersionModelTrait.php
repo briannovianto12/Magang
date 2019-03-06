@@ -4,9 +4,11 @@ namespace Modules\Nbs\BaseResource\Traits;
 
 trait VersionModelTrait
 {
-    protected static function boot()
+    public static function bootVersionModelTrait()
     {
-        parent::boot();
+        static::creating(function ($model) {
+            $model->version = 0;
+        });
 
         static::updating(function ($model) {
             $model->increment("{$model->getVersionName()}", 1);
