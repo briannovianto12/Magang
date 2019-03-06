@@ -39,14 +39,16 @@
                     @endcomponent
 
                     @component('components.inputs._list', [
-                        'id' => 'value_options',
-                        'label' => 'Value Options',
-                        'visible' => isset($data) ? true : false,
-                        'fields' => [
+                        'module' => $module, // define module
+                        'id' => 'value_options', // id for js
+                        'label' => 'Value Options', // label
+                        'visible' => isset($data) ? true : false, // define visible or not
+                        'fields' => [ // define fields
                             ['name' => 'value', 'placeholder' => 'Value'],
                             ['name' => 'sku_part', 'placeholder' => 'SKU Part']
                         ],
-                        'values' => $data->options ?? []
+                        'values' => $data->options ?? [], // get values when data is exists
+                        'dataId' => $data->id ?? null,
                     ])
                     @endcomponent
 

@@ -11,10 +11,16 @@
 |
 */
 
+
+
 Route::resource('attribute-key', 'AttributeKeyController');
 
 Route::prefix('attribute-key')->name('attribute-key')->group(function () {
 
     Route::get('/', 'AttributeKeyController@index');
+    Route::delete('/{attribute_key}/options/{options}', 'AttributeKeyController@attrOptions')
+        ->name('.options.destroy');
+
 
 });
+

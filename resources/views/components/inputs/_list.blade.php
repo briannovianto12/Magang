@@ -15,7 +15,8 @@
                             </div>
                         @endforeach
                         <div class="col-lg-2">
-                            <a href="#" data-repeater-delete="" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only">
+                            <a href="#" data-repeater-delete data-route="{{ route("{$module}.options.destroy", [$dataId, $item->id]) }}"
+                               class="btn btn-danger m-btn m-btn--icon m-btn--icon-only">
                                 <i class="la la-remove"></i>
                             </a>
                         </div>
