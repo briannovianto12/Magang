@@ -1,4 +1,38 @@
 <script type="text/javascript">
+    function attachAttribute(url) {
+        if (confirm('Are you sure add this attribute ?')) {
+            App.ajax('post', url, {}, 'json', successAttachAttributeHandler);
+
+            function successAttachAttributeHandler(response) {
+                if (response.status === 'success') {
+                    App.DisplaySuccess("{{ __('Attribute added to this Category') }}");
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000)
+                }
+            }
+        }
+    }
+
+    function detachAttribute(url) {
+        if (confirm('Are you sure remove this attribute ?')) {
+            App.ajax('delete', url, {}, 'json', successDetachAttributeHandler);
+
+
+            function successDetachAttributeHandler(response) {
+                if (response.status === 'success') {
+                    App.DisplaySuccess("{{ __('Attribute removed from this Category') }}");
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000)
+                }
+            }
+
+        }
+    }
+
     $(document).ready(function () {
         $('#validate').on('click', function () {
             if ($('#form').valid()) {

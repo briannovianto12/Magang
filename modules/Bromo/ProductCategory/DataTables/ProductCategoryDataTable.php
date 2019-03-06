@@ -19,6 +19,7 @@ class ProductCategoryDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $action = [
                     'edit_url' => route("{$this->module}.edit", $data->id),
+                    'show_url' => route("{$this->module}.attributes", $data->id),
 //                    'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];

@@ -2,6 +2,7 @@
 
 namespace Bromo\ProductCategory\Models;
 
+use Bromo\Product\Models\ProductAttributeKey;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
@@ -33,8 +34,25 @@ class ProductCategory extends Model
         return $this->hasMany($this, 'parent_id');
     }
 
-    public function atrributeKeys()
+    public function parent()
     {
-        return $this->hasMany(ProductCategoryAttributeKey::class, 'id', 'category_id');
+        return $this->belongsTo($this, 'parent_id');
+    }
+
+    public function categoryLevel()
+    {
+        return $this->belongsTo(ProductCategoryLevel::class, 'level');
+    }
+
+    public function attributeKeys()
+    {
+        return $this->belongsToMany(
+            ProductAttributeKey::class,
+            'product_category_attribute_key',
+            'category_id',
+            'attribute_key'
+        )->using(ProductCategoryAttributeKey::class)->withPivot([
+            'sort'
+        ])->withTimestamps();
     }
 }
