@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Nbs\BaseResource\Traits;
+namespace Nbs\BaseResource\Traits;
 
 trait SnowFlakeTrait
 {
@@ -8,7 +8,7 @@ trait SnowFlakeTrait
     {
         parent::boot();
 
-        static::creating(function($model){
+        static::creating(function ($model) {
 
             $model->{$model->getKeyName()} = snowflake_id();
 

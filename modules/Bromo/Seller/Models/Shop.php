@@ -7,7 +7,7 @@ use Bromo\Buyer\Models\BusinessAddress;
 use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Nbs\BaseResource\Traits\VersionModelTrait;
+use Nbs\BaseResource\Traits\VersionModelTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 

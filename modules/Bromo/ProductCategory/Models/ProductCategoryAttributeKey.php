@@ -3,7 +3,7 @@
 namespace Bromo\ProductCategory\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
+use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 
