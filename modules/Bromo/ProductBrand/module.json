@@ -1,0 +1,14 @@
+{
+    "name": "Product Brand",
+    "alias": "product-brand",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Bromo\\ProductBrand\\Providers\\ProductBrandServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

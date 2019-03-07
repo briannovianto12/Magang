@@ -1,0 +1,25 @@
+{
+    "name": "NBS/product-brand",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\ProductBrand\\Providers\\ProductBrandServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\ProductBrand\\": ""
+        }
+    }
+}
