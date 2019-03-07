@@ -5,7 +5,7 @@ namespace Bromo\Product\Models;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Nbs\BaseResource\Traits\SnowFlakeTrait;
+use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
 

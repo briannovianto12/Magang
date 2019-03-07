@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Nbs\BaseResource\Traits;
+namespace Nbs\BaseResource\Traits;
 
 trait VersionModelTrait
 {
