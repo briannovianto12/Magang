@@ -46,11 +46,11 @@ class BusinessMemberPivot extends Pivot
 
     public function getStatusNameAttribute(): string
     {
-        return $this->status()->first()->name ?? '';
+        return self::status()->first()->name ?? '';
     }
 
     public function getRoleNameAttribute(): string
     {
-        return $this->role()->first()->name ?? '';
+        return self::role()->first()->name ?? '';
     }
 }

@@ -69,4 +69,20 @@ class Buyer extends Model
     {
         return file_attribute('buyer.path_avatar', $this->avatar_file);
     }
+
+    public function getNotificationTokens(): array
+    {
+        $token = $this->sessions()
+            ->whereIn('device_type', [DeviceType::ANDROID, DeviceType::IOS])
+            ->whereNotNull('notification_token')
+            ->get();
+
+        if (count($token) == 0) {
+            return [];
+        }
+
+        return $token->map(function ($item) {
+            return $item->notification_token;
+        });
+    }
 }
