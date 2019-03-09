@@ -3,6 +3,7 @@
 namespace Nbs\BaseResource\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Nbs\BaseResource\Services\FirebaseService;
 use Nbs\BaseResource\Utils\SnowFlake;
 
 class BaseResourceServiceProvider extends ServiceProvider
@@ -23,6 +24,7 @@ class BaseResourceServiceProvider extends ServiceProvider
     {
         include __DIR__ . '/../Http/helpers.php';
 
+        $this->registerConfig();
         $this->registerTranslations();
         $this->registerViews();
     }
@@ -64,6 +66,21 @@ class BaseResourceServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../Config/fcm.php' => config_path('fcm.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/fcm.php', 'fcm'
+        );
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -72,6 +89,10 @@ class BaseResourceServiceProvider extends ServiceProvider
     {
         $this->app->singleton('snowflake', function () {
             return new SnowFlake();
+        });
+
+        $this->app->singleton('firebase', function () {
+            return new FirebaseService();
         });
     }
 }

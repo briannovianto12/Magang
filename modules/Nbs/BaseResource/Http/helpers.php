@@ -9,6 +9,13 @@ if (!function_exists('snowflake_id')) {
     }
 }
 
+if (!function_exists('firebase')) {
+    function firebase()
+    {
+        return app()->make('firebase');
+    }
+}
+
 if (!function_exists('file_upload')) {
 
     function file_upload($file, $path)
