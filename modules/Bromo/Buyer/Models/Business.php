@@ -77,4 +77,12 @@ class Business extends Model
     {
         return file_attribute('buyer.path_business_tax', $this->tax_no_image_file);
     }
+
+    public function getOwner()
+    {
+        return $this
+            ->members()
+            ->wherePivot('role', BusinessMemberRole::OWNER)
+            ->first();
+    }
 }

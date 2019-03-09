@@ -62,3 +62,12 @@ if (!function_exists('present')) {
 
     }
 }
+
+if (!function_exists('presence')) {
+
+    function presence($string, $valueIfBlank = null)
+    {
+        return present($string) ? $string : $valueIfBlank;
+    }
+
+}

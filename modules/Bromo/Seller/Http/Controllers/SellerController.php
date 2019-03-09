@@ -43,9 +43,28 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
 
         try {
-            $this->approval($id, ShopStatus::VERIFIED);
+            $shop = $this->approval($id, ShopStatus::VERIFIED);
             nbs_helper()->flashSuccess('Shop has been Verified');
             DB::commit();
+
+            // Send notification
+            $owner = $shop->business->getOwner();
+            if ($owner) { // check owner is exist
+                $token = $owner->getNotificationToken();
+                if (count($token) > 0) { // check token is exists
+                    firebase()
+                        ->createDataPayload([
+                            'id' => snowflake_id(),
+                            'user_id' => (string)$owner->id,
+                            'shop_id' => (string)$id,
+                            'title' => 'Shop Approved',
+                            'type' => 'shop_approved',
+                            'body' => 'Congratulation! Your Shop has been Approved',
+                        ])
+                        ->setTokens()
+                        ->sendToDevice();
+                }
+            }
 
         } catch (\Exception $exception) {
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
@@ -90,6 +109,9 @@ class SellerController extends BaseResourceController
                 'notes' => $notes
             ]);
         }
+        $data->refresh();
+
+        return $data;
     }
 
 }
