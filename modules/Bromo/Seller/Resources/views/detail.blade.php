@@ -157,6 +157,11 @@
                     Bank Account
                 </a>
             </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#survey" role="tab">
+                    Survey
+                </a>
+            </li>
         @endslot
 
         @slot('tab_body')
@@ -239,6 +244,32 @@
                                             <span>{{ __('Updated') }}</span>
                                             <span>{{ $bankAccount->updated_at_formatted ?? '-' }}</span>
                                         </div>
+                                    </div>
+                                </div>
+                            @endisset
+                        </div>
+                    @endslot
+                @endcomponent
+            </div>
+
+            <div class="tab-pane" id="survey">
+                @component('components._widget-list')
+                    @slot('body')
+                        <div class="row">
+                            @isset($data->survey)
+                                @php
+                                    $surveys = $data->survey->result['questions'] ?? null;
+                                @endphp
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        @isset($surveys)
+                                            @foreach($surveys as $survey)
+                                                <div class="m-widget28__tab-item">
+                                                    <span>Question : {{ $survey['title'] }}</span>
+                                                    <span>Answer :  {{ $survey['answer'] }}</span>
+                                                </div>
+                                            @endforeach
+                                        @endisset
                                     </div>
                                 </div>
                             @endisset
