@@ -69,6 +69,11 @@ class Shop extends Model
         return $this->belongsTo(ShopStatus::class, 'status');
     }
 
+    public function survey()
+    {
+        return $this->hasOne(ShopSurvey::class, 'shop_id');
+    }
+
     public function statusNotes()
     {
         return $this->hasMany(ShopStatusNote::class, 'shop_id');
