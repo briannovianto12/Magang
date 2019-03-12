@@ -61,7 +61,7 @@ class SellerController extends BaseResourceController
                             'type' => 'shop_approved',
                             'body' => 'Congratulation! Your Shop has been Approved',
                         ])
-                        ->setTokens()
+                        ->setTokens($token)
                         ->sendToDevice();
                 }
             }
