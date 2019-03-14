@@ -120,15 +120,15 @@ class FirebaseService
                 return $this->firebase->getMessaging()->send($message);
 
             } catch (IssuedInTheFuture $e) {
-dd($e);
+
             } catch (InvalidToken $e) {
-dd($e);
+
             } catch (NotFound $e) {
-dd($e);
+
             } catch (InvalidArgument $e) {
-dd($e);
+                
             } catch (AuthenticationError $e) {
-dd($e);
+
             }
         }
     }
