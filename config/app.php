@@ -229,4 +229,43 @@ return [
 
     ],
 
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'DB_CONNECTION',
+            'DB_HOST',
+            'DB_PORT',
+            'DB_PASSWORD',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'FILESYSTEM_DRIVER',
+            'GOOGLE_CLOUD_KEY_FILE',
+            'GOOGLE_CLOUD_PROJECT_ID',
+            'GOOGLE_CLOUD_STORAGE_BUCKET',
+            'FIREBASE_SDK_DEV',
+            'FIREBASE_SDK_PROD'
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_CONNECTION',
+            'DB_HOST',
+            'DB_PORT',
+            'DB_PASSWORD',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'FILESYSTEM_DRIVER',
+            'GOOGLE_CLOUD_KEY_FILE',
+            'GOOGLE_CLOUD_PROJECT_ID',
+            'GOOGLE_CLOUD_STORAGE_BUCKET',
+            'FIREBASE_SDK_DEV',
+            'FIREBASE_SDK_PROD'
+        ],
+
+        '_POST' => [
+            'password',
+        ],
+    ],
+
 ];
