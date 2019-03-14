@@ -15,6 +15,9 @@ class FirebaseService
     protected $firebase;
     private $payloadData;
     private $tokens;
+    private $androidPayloadData;
+    private $userId;
+    private $code;
 
     /**
      * FirebaseService constructor.
@@ -80,9 +83,9 @@ class FirebaseService
         foreach ($this->tokens as $token) {
             try {
                 $data['sound'] = 'default';
+
                 $message = [
                     'token' => $token,
-                    'data' => $this->payloadData,
                     'apns' => [
                         'headers' => [
                             'apns-priority' => '10',
@@ -98,23 +101,39 @@ class FirebaseService
                     ]
                 ];
 
+                if ($this->payloadData) {
+                    $message['data'] = $this->payloadData;
+                }
+
+                if ($this->androidPayloadData) {
+                    $message['android'] = [
+                        'ttl' => '3600s',
+                        'priority' => 'normal',
+                        'data' => [
+                            'user_id' => (string)$this->userId,
+                            'code' => (string)$this->code,
+                            'data' => collect($this->androidPayloadData)->toJson()
+                        ]
+                    ];
+                }
+
                 return $this->firebase->getMessaging()->send($message);
 
             } catch (IssuedInTheFuture $e) {
-
+dd($e);
             } catch (InvalidToken $e) {
-
+dd($e);
             } catch (NotFound $e) {
-
+dd($e);
             } catch (InvalidArgument $e) {
-
+dd($e);
             } catch (AuthenticationError $e) {
-
+dd($e);
             }
         }
     }
 
-    public function setTokens(...$tokens): self
+    public function setTokens($tokens): self
     {
         $this->tokens = $tokens;
 
@@ -124,6 +143,15 @@ class FirebaseService
     public function createDataPayload($data): self
     {
         $this->payloadData = $data;
+
+        return $this;
+    }
+
+    public function toAndroid(string $userId, $code, array $data): self
+    {
+        $this->userId = $userId;
+        $this->androidPayloadData = $data;
+        $this->code = $code;
 
         return $this;
     }
