@@ -3,6 +3,7 @@
 namespace Bromo\ProductCategory\Models;
 
 use Bromo\Product\Models\ProductAttributeKey;
+use Bromo\ProductBrand\Models\ProductBrand;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
@@ -54,5 +55,15 @@ class ProductCategory extends Model
         )->using(ProductCategoryAttributeKey::class)->withPivot([
             'sort'
         ])->withTimestamps();
+    }
+
+    public function brands()
+    {
+        return $this->belongsToMany(
+            ProductBrand::class,
+            'product_category_brand',
+            'category_id',
+            'brand_id'
+        )->using(ProductCategoryBrand::class);
     }
 }

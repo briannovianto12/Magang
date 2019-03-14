@@ -3,9 +3,11 @@
 namespace Bromo\ProductCategory\Http\Controllers;
 
 use Bromo\Product\Models\ProductAttributeKey;
+use Bromo\ProductBrand\Models\ProductBrand;
 use Bromo\ProductCategory\DataTables\ProductCategoryDataTable;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\ProductCategory\Models\ProductCategoryLevel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
@@ -63,6 +65,16 @@ class ProductCategoryController extends BaseResourceController
         return view("{$this->module}::attributes", $data);
     }
 
+    public function brands($id)
+    {
+        $data['module'] = $this->module;
+        $data['data'] = $this->model->findOrFail($id);
+        $data['productBrands'] = ProductBrand::all();
+
+        return view("{$this->module}::brands", $data);
+
+    }
+
     public function attachAttribute($category, $id)
     {
         DB::beginTransaction();
@@ -86,6 +98,46 @@ class ProductCategoryController extends BaseResourceController
         DB::beginTransaction();
         try {
             $this->model->find($category)->attributeKeys()->detach($id);
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            report($exception);
+            throw $exception;
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function attachBrand($category, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model->find($category)->brands()->attach($id, [
+                'id' => snowflake_id(),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:sO')
+            ]);
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            report($exception);
+            throw $exception;
+
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function detachBrand($category, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model->find($category)->brands()->detach($id);
             DB::commit();
 
         } catch (\Exception $exception) {
