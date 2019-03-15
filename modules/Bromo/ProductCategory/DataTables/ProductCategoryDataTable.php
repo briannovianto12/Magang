@@ -19,7 +19,16 @@ class ProductCategoryDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $action = [
                     'edit_url' => route("{$this->module}.edit", $data->id),
-                    'show_url' => route("{$this->module}.attributes", $data->id),
+                    'attribute_url' => view('components.buttons._button-url', [
+                        'url' => route("{$this->module}.attributes", $data->id),
+                        'title' => 'Attribute',
+                        'iconClass' => 'la la-tags'
+                    ]),
+                    'brand_url' => view('components.buttons._button-url', [
+                        'url' => route("{$this->module}.brands", $data->id),
+                        'title' => 'Brand',
+                        'iconClass' => 'la la-diamond'
+                    ]),
 //                    'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];
