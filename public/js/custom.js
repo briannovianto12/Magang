@@ -20,18 +20,32 @@ var App = function () {
             var failureMessage = 'Error occurred in ajax call ' + err.status + ' - ' + err.responseText + " - " + httpStatus;
             console.log(failureMessage);
         },
-        DisplaySuccess: function (message) {
-            App.ShowAlertSuccess(message);
+        DisplaySuccess: function (message, timer) {
+            App.ShowAlertSuccess(message, timer);
         },
         DisplayError: function (message) {
             App.ShowAlertError(message);
         },
-        ShowAlertSuccess: function (messageText) {
-            swal(
-                'Successfully',
-                messageText,
-                'success'
-            )
+        ShowAlertSuccess: function (messageText, timer = 2000) {
+            let timerInterval;
+            Swal.fire({
+                title: 'Successfully',
+                html: messageText,
+                timer: timer,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+                onClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.timer
+                ) {
+                    window.location.reload()
+                }
+            });
         },
         ShowAlertError: function (messageText) {
             swal(

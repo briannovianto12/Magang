@@ -41,6 +41,8 @@ class ProductBrand extends Model
      */
     protected $dateFormat = 'Y-m-d H:i:sO';
 
+    public $incrementing = false;
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -57,6 +59,7 @@ class ProductBrand extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'slug_name',
         'sku_part',
