@@ -104,15 +104,12 @@ class SellerController extends BaseResourceController
             DB::commit();
             nbs_helper()->flashSuccess('Shop has been Rejected');
 
-            return redirect("{$this->module}");
-
         } catch (\Exception $exception) {
             DB::rollBack();
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
         }
 
-        return redirect('store');
-
+        return redirect("{$this->module}");
     }
 
     /**
