@@ -79,6 +79,11 @@ class Shop extends Model
         return $this->hasMany(ShopStatusNote::class, 'shop_id');
     }
 
+    public function index()
+    {
+        return $this->hasOne(ShopIndex::class, 'id');
+    }
+
     public function getVersionName()
     {
         return 'version';
