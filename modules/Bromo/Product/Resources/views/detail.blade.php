@@ -1,5 +1,18 @@
 @extends('theme::layouts.master')
 
+@section('css')
+    <style>
+        #bromo .m-widget5 .m-widget5__item .m-widget5__content:last-child {
+            float: none;
+        }
+
+        #bromo .list-inline-item:not(:last-child) {
+            margin-right: 5rem;
+            vertical-align: top;
+        }
+    </style>
+@endsection
+
 @section('content')
     @component('components.modals.basic', [
         'modalId' => 'verify',
@@ -178,6 +191,98 @@
                                         </ul>
                                     </div>
                                 @endisset
+                            </div>
+                        @endslot
+                    @endcomponent
+
+                @endslot
+
+            @endcomponent
+        </div>
+
+        <div class="col-12">
+            @component('components._portlet', [
+            'portlet_head' => true,
+            'portlet_title' => sprintf("Variants"),
+            'body_class' => 'pt-0'])
+                @slot('body')
+
+                    @component('components._widget-list')
+                        @slot('body')
+                            <div class="m-widget28__tab-items">
+
+                                @isset($data->productVariants)
+                                    @foreach($data->productVariants->sortBy('sort') ?? [] as $variant)
+                                        <div class="m-widget28__tab-item pb-3">
+                                            <div class="row">
+                                                <div class="col-3" style="border-right: 1px solid #dddddd">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">Variant</span>
+                                                        </li>
+                                                        <li class="m-nav__item mb-2">
+                                                            <b class="m-nav__link-text">{{ $variant->name ?? '-' }}</b>
+                                                        </li>
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">SKU</span>
+                                                        </li>
+                                                        <li class="m-nav__item mb-2">
+                                                            <b class="m-nav__link-text">{{ $variant->sku ?? '-' }}</b>
+                                                        </li>
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">SKU Seller</span>
+                                                        </li>
+                                                        <li class="m-nav__item mb-2">
+                                                            <b class="m-nav__link-text">{{ $variant->seller_sku ?? '-' }}</b>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="col-9">
+                                                    <div class="m-widget5">
+                                                        @isset($variant->productBuyingOptions)
+                                                            @foreach($variant->productBuyingOptions->sortBy('sort') as $key => $option)
+                                                                <div class="m-widget5__item">
+                                                                    <div class="m-widget5__content">
+                                                                        <div class="m-widget5__section">
+                                                                            <h4 class="m-widget5__title">
+                                                                                Option-{{ $key + 1 }}</h4>
+                                                                            <span class="m-widget5__desc">Margin: 1%</span>
+                                                                            <div class="m-widget5__info">
+                                                                                <ul class="list-inline">
+                                                                                    <li class="list-inline-item">
+                                                                                        <span class="m-widget5__author">Base Price : </span>
+                                                                                        <span class="m-widget5__info-date m--font-info">IDR {{ number_format($option->price_comp_base) ?? 0 }}</span>
+                                                                                        </br>
+                                                                                        <span class="m-widget5__author">Display Price : </span>
+                                                                                        <span class="m-widget5__info-date m--font-info">IDR {{ number_format($option->price) ?? 0 }}</span>
+                                                                                    </li>
+                                                                                    <li class="list-inline-item">
+                                                                                        <span class="m-widget5__author">Quantity Product : </span>
+                                                                                        <span class="m-widget5__info-date m--font-info">{{ $option->unit_qty ?? 0 }} {{ $option->unit_type ?? '' }}</span>
+                                                                                    </li>
+                                                                                    <li class="list-inline-item">
+                                                                                        <span class="m-widget5__author">Minimum : </span>
+                                                                                        <span class="m-widget5__info-date m--font-info">{{ $option->qty_min ?? 0 }} {{ $option->unit_type ?? '' }}</span>
+                                                                                        </br>
+                                                                                        <span class="m-widget5__author">Maximum : </span>
+                                                                                        <span class="m-widget5__info-date m--font-info">{{ $option->qty_max ?? 0 }} {{ $option->unit_type ?? '' }}</span>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endisset
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endisset
+
                             </div>
                         @endslot
                     @endcomponent
