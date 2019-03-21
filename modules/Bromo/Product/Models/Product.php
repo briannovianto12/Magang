@@ -54,6 +54,12 @@ class Product extends Model
         'version'
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Define some eloquent relationships
+    |--------------------------------------------------------------------------
+    */
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id');
@@ -72,5 +78,15 @@ class Product extends Model
     public function productStatusNote()
     {
         return $this->hasOne(ProductStatusNotes::class, 'product_id', 'id');
+    }
+
+    /**
+     * Get all of the variants product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productVariants()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
 }

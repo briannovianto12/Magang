@@ -28,4 +28,20 @@ class ProductVariant extends Model
         'stock_qty'
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Define some eloquent relationships
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get all of the buying options variant.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productBuyingOptions()
+    {
+        return $this->hasMany(ProductBuyingOption::class, 'variant_id', 'id');
+    }
+
 }
