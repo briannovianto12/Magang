@@ -24,13 +24,21 @@ class Order extends Model
         'id' => 'string',
         'buyer_snapshot' => 'array',
         'seller_snapshot' => 'array',
+        'business_snapshot' => 'array',
         'shipping_snapshot' => 'array',
         'payment_snapshot' => 'array',
         'payment_details' => 'array',
         'notes' => 'array',
+        'payment_amount' => 'double',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
     public $incrementing = false;
 
     /**
@@ -47,13 +55,20 @@ class Order extends Model
      */
     protected $dateFormat = 'Y-m-d H:i:sO';
 
+    protected $appends = [
+        'business_name',
+        'seller_name',
+        'payment_amount_formatted',
+        'notes_admin'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'code',
+        'order_no',
         'buyer_id',
         'buyer_snapshot',
         'seller_id',
@@ -89,6 +104,41 @@ class Order extends Model
         return $this->hasMany(OrderLog::class, 'order_trx_id');
     }
 
+    public function orderStatus()
+    {
+        return $this->belongsTo(OrderStatus::class, 'status');
+    }
+
+    public function shippingCourier()
+    {
+        return $this->belongsTo(ShippingCourier::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Define some attributes
+    |--------------------------------------------------------------------------
+    */
+
+    public function getPaymentAmountFormattedAttribute()
+    {
+        return number_format($this->payment_amount);
+    }
+
+    public function getNotesAdminAttribute()
+    {
+        return $this->notes['admin'] ?? '';
+    }
+
+    public function getBusinessNameAttribute()
+    {
+        return $this->business_snapshot['name'] ?? '';
+    }
+
+    public function getSellerNameAttribute()
+    {
+        return $this->seller_snapshot['name'] ?? '';
+    }
 
 
 }

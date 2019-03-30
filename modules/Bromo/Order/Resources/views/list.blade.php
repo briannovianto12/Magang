@@ -61,8 +61,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -83,8 +83,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -105,8 +105,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -127,8 +127,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -149,8 +149,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>
@@ -171,8 +171,8 @@
                             <th>Seller</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Date</th>
                         </tr>
                         </thead>

@@ -10,13 +10,13 @@
                     'data': 'DT_RowIndex', 'name': 'DT_RowIndex',
                     'orderable': false, 'searchable': false, 'width': '10%'
                 },
-                {'data': 'code', 'name': 'code'},
+                {'data': 'order_no', 'name': 'order_no'},
                 {'data': 'buyer_name', 'name': 'buyer_name'},
                 {'data': 'seller_name', 'name': 'seller_name'},
                 {'data': 'payment_method', 'name': 'payment_method'},
-                {'data': 'payment_amount', 'name': 'payment_amount'},
-                {'data': 'notes', 'name': 'notes'},
-                {'data': 'status', 'name': 'status'},
+                {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
+                {'data': 'notes_admin', 'name': 'notes_admin'},
+                {'data': 'status_name', 'name': 'status_name', orderable:false, searchable: false},
                 {'data': 'created_at', 'name': 'created_at'}
             ];
         }
