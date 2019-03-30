@@ -12,6 +12,7 @@
 */
 
 Route::name('order.index')->get('/order', 'OrderController@index');
+Route::name('order.show')->get('/order/{id}', 'OrderController@show');
 Route::name('order.new-order')->get('/new-order', 'OrderController@newOrder');
 Route::name('order.process-order')->get('/process-order', 'OrderController@processOrder');
 Route::name('order.delivery-order')->get('/delivery-order', 'OrderController@deliveryOrder');

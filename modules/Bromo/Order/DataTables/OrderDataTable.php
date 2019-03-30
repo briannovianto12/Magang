@@ -14,14 +14,17 @@ abstract class OrderDatatable extends DataTable
                 return $data->created_at_formatted;
             })
             ->addColumn('seller_name', function ($data) {
-                //TODO GET SELLER NAME FROM SNAPSHOT
-                return '';
+                return $data->seller_name;
             })
             ->addColumn('buyer_name', function ($data) {
-                //TODO GET BUYER NAME FROM SNAPSHOT
-                return '';
+                return $data->business_name;
             })
-
+            ->addColumn('payment_method', function ($data) {
+                return $data->payment_snapshot['name'] ?? '';
+            })
+            ->addColumn('status_name', function ($data) {
+                return $data->orderStatus->name ?? '';
+            })
             ->addColumn('action', function ($data) {
                 $action = [
                     'show_url' => route("{$this->module}.show", $data->id),
@@ -37,6 +40,7 @@ abstract class OrderDatatable extends DataTable
     public function query()
     {
         $query = $this->model
+            ->with('orderStatus:id,name')
             ->latest('created_at');
 
         return $this->applyScopes($query);
