@@ -42,7 +42,7 @@ class ProductApprovedDatatable extends DataTable
             'product_status.name as status'
         ])->join('shop', 'shop.id', '=', 'product.shop_id')
             ->join('product_status', 'product_status.id', '=', 'product.status')
-            ->where('product.status', ProductStatus::APPROVE);
+            ->whereIn('product.status', [ProductStatus::PUBLISH, ProductStatus::UNPUBLISH]);
 
         return $this->applyScopes($query);
     }
