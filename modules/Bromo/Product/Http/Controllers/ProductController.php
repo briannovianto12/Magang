@@ -7,9 +7,13 @@ use Bromo\Product\DataTables\ProductRejectedDatatable;
 use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
 use Bromo\Product\Models\ProductStatus;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -34,7 +38,7 @@ class ProductController extends Controller
     /**
      * Display index page.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -97,7 +101,7 @@ class ProductController extends Controller
      * Get the detail of product.
      *
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show($id)
     {
@@ -112,7 +116,7 @@ class ProductController extends Controller
      * Verified product.
      *
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function verified($id)
     {
@@ -121,12 +125,12 @@ class ProductController extends Controller
             $product = Product::find($id);
 
             $product->update([
-                'status' => ProductStatus::APPROVE
+                'status' => ProductStatus::PUBLISH
             ]);
             $product->increment('version', 1);
 
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
         }
 
@@ -137,7 +141,7 @@ class ProductController extends Controller
      * Unverified product.
      *
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function unverified(Request $request, $id)
     {
@@ -155,7 +159,7 @@ class ProductController extends Controller
             $product->increment('version', 1);
 
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
         }
 
