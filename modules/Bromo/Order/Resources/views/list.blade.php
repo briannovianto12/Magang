@@ -51,22 +51,25 @@
             <div class="tab-content">
                 <!--begin:: New Order Page-->
                 <div class="tab-pane active" id="new_order" role="tabpanel">
-                    <table id="table_new_order" class="table table-striped table-bordered table-hover display nowrap"
-                           style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Code</th>
-                            <th>Buyer</th>
-                            <th>Seller</th>
-                            <th>Payment Method</th>
-                            <th>Amount</th>
-                            <th>Notes</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="table_new_order" class="table table-striped table-bordered table-hover display nowrap"
+                               style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Code</th>
+                                <th>Buyer</th>
+                                <th>Seller</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
                 <!--end:: New Order Page-->
 
@@ -86,6 +89,7 @@
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -108,6 +112,7 @@
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -130,6 +135,7 @@
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -152,6 +158,7 @@
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -174,6 +181,7 @@
                             <th>Notes</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>

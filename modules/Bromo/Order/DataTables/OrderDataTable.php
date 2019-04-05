@@ -17,7 +17,7 @@ abstract class OrderDatatable extends DataTable
                 return $data->seller_name;
             })
             ->addColumn('buyer_name', function ($data) {
-                return $data->business_name;
+                return $data->buyer_name;
             })
             ->addColumn('payment_method', function ($data) {
                 return $data->payment_snapshot['name'] ?? '';
