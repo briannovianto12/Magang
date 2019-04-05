@@ -22,6 +22,7 @@ class SellerServiceProvider extends ServiceProvider
     {
         $this->registerTranslations();
         $this->registerViews();
+        $this->registerConfig();
     }
 
     /**
@@ -68,10 +69,10 @@ class SellerServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__ . '/../Config/config.php' => config_path('store.php'),
+            __DIR__ . '/../Config/config.php' => config_path('shop.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php', 'store'
+            __DIR__ . '/../Config/config.php', 'shop'
         );
     }
 

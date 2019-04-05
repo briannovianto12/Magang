@@ -2,6 +2,10 @@
 
 namespace Bromo\Order\Models;
 
+use Bromo\Buyer\Models\Business;
+use Bromo\Buyer\Models\Buyer;
+use Bromo\Buyer\Models\BuyerStatus;
+use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\BaseResource\Traits\VersionModelTrait;
@@ -23,8 +27,10 @@ class Order extends Model
     public $casts = [
         'id' => 'string',
         'buyer_snapshot' => 'array',
-        'seller_snapshot' => 'array',
         'business_snapshot' => 'array',
+        'shop_snapshot' => 'array',
+        'orig_address_snapshot' => 'array',
+        'dest_address_snapshot' => 'array',
         'shipping_snapshot' => 'array',
         'payment_snapshot' => 'array',
         'payment_details' => 'array',
@@ -75,9 +81,11 @@ class Order extends Model
         'seller_snapshot',
         'shipping_courier_id',
         'shipping_service_code',
-        'shipping_snapshot',
+        'shipping_service_snapshot',
         'payment_method_id',
         'payment_snapshot',
+        'orig_address_snapshot',
+        'dest_address_snapshot',
         'payment_amount',
         'payment_details',
         'tax_no',
@@ -99,6 +107,21 @@ class Order extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function buyer()
+    {
+        return $this->belongsTo(Buyer::class, 'buyer_id');
+    }
+
+    public function business()
+    {
+        return $this->belongsTo(Business::class, 'business_id');
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
     public function logs()
     {
         return $this->hasMany(OrderLog::class, 'order_trx_id');
@@ -107,6 +130,16 @@ class Order extends Model
     public function orderStatus()
     {
         return $this->belongsTo(OrderStatus::class, 'status');
+    }
+
+    public function paymentStatus()
+    {
+        return $this->belongsTo(OrderStatus::class, 'payment_status');
+    }
+
+    public function shippingStatus()
+    {
+        return $this->belongsTo(ShippingStatus::class, 'shipping_status');
     }
 
     public function shippingCourier()
@@ -125,19 +158,136 @@ class Order extends Model
         return number_format($this->payment_amount);
     }
 
-    public function getNotesAdminAttribute()
+    public function getPaymentMethodNameAttribute(): string
+    {
+        return $this->payment_snapshot['name'] ?? '';
+    }
+
+    public function getNotesAdminAttribute(): string
     {
         return $this->notes['admin'] ?? '';
     }
 
-    public function getBusinessNameAttribute()
+    // Buyer section
+    public function getBuyerAvatarAttribute(): string
     {
-        return $this->business_snapshot['name'] ?? '';
+        return file_attribute('buyer.path_avatar', $this->buyer_snapshot['avatar_file'] ?? null);
     }
 
-    public function getSellerNameAttribute()
+    public function getBuyerNameAttribute(): string
     {
-        return $this->seller_snapshot['name'] ?? '';
+        return $this->buyer_snapshot['full_name'] ?? '-';
+    }
+
+    public function getBuyerPhoneNoAttribute(): string
+    {
+        return $this->buyer_snapshot['msisdn'] ?? '-';
+
+    }
+
+    public function getBuyerStatusAttribute(): string
+    {
+        return BuyerStatus::find($this->buyer_snapshot['status'])->name ?? '-';
+    }
+
+    // Business Section
+    public function getBusinessLogoAttribute(): string
+    {
+        return file_attribute('buyer.path_business_logo', $this->business_snapshot['logo_file']);
+    }
+
+    public function getBusinessNameAttribute(): string
+    {
+        return presence($this->business_snapshot['name'], '-');
+    }
+
+    public function getBusinessTagAttribute(): string
+    {
+        return presence($this->business_snapshot['tag'], '-');
+    }
+
+    public function getBusinessTaxNoAttribute(): string
+    {
+        return presence($this->business_snapshot['tax_no'], '-');
+    }
+
+    // Seller Section
+    public function getSellerLogoAttribute()
+    {
+        return file_attribute('shop.path_logo', $this->shop_snapshot['logo_file']);
+    }
+
+    public function getSellerNameAttribute(): string
+    {
+        return presence($this->shop_snapshot['name'], '-');
+    }
+
+    public function getSellerDescriptionAttribute()
+    {
+        return presence($this->shop_snapshot['description'], '-');
+    }
+
+    public function getSellerTaxNoAttribute()
+    {
+        return presence($this->shop_snapshot['tax_no'], '-');
+    }
+
+    public function getSellerProductCategoryAttribute()
+    {
+        return presence($this->shop_snapshot['product_category'], '-');
+    }
+
+    // Shipping section
+    public function getOriginBuildingAttribute(): string
+    {
+        return $this->orig_address_snapshot['building_name'] ?? '-';
+    }
+
+    public function getOriginAddressAttribute(): string
+    {
+        $field = $this->orig_address_snapshot;
+        if (is_array($field) == false) {
+            return '';
+        }
+        $output = $field['address_line'] . '<br>';
+        $output .= $field['subdistrict'] . ', ';
+        $output .= $field['district'] . ', ';
+        $output .= $field['city'] . ' ' . $field['city_type'] . '<br>';
+        $output .= $field['province'] . ', ';
+        $output .= $field['postal_code'];
+
+        return $output;
+    }
+
+    public function getOriginNotesAttribute(): string
+    {
+        return $this->orig_address_snapshot['notes'] ?? '-';
+    }
+
+    public function getDestinationBuildingAttribute(): string
+    {
+        return $this->dest_address_snapshot['building_name'] ?? '-';
+    }
+
+    public function getDestinationAddressAttribute(): string
+    {
+        $field = $this->dest_address_snapshot;
+        if (is_array($field) == false) {
+            return '-';
+        }
+        $output = $field['address_line'] . '<br>';
+        $output .= $field['subdistrict'] . ', ';
+        $output .= $field['district'] . ', ';
+        $output .= $field['city'] . ' ' . $field['city_type'] . '<br>';
+        $output .= $field['province'] . ', ';
+        $output .= $field['postal_code'];
+
+        return $output;
+    }
+
+    public function getDestinationNotesAttribute(): string
+    {
+        return $this->dest_address_snapshot['notes'] ?? '-';
     }
 
 

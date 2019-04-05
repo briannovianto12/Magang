@@ -20,6 +20,7 @@ class Business extends Model
 
     public $casts = [
         'id' => 'string',
+        'tag' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];

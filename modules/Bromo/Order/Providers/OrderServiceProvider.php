@@ -2,7 +2,6 @@
 
 namespace Bromo\Order\Providers;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
 
 class OrderServiceProvider extends ServiceProvider
@@ -85,18 +84,6 @@ class OrderServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (!app()->environment('orderion')) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
     }
 
     /**
