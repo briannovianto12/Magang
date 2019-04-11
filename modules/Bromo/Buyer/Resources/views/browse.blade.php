@@ -18,10 +18,6 @@
             {!! $dataTable->table() !!}
         @endslot
 
-        @slot('url')
-            {{--{{ route("{$module}.create") }}--}}
-        @endslot
-
         @slot('postfix')
             {{ $title }}
         @endslot
