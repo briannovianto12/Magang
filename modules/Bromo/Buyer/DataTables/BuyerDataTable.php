@@ -20,7 +20,7 @@ class BuyerDataTable extends DataTable
                 }
             })
             ->editColumn('business', function ($data) {
-                return $data->business->name;
+                return $data->business->name ?? '';
             })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
