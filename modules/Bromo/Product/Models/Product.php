@@ -89,4 +89,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
+
+    public function getImagesUrlAttribute()
+    {
+        return files_attribute($this->image_files, config('product.path_product_image'));
+    }
 }

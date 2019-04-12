@@ -125,6 +125,27 @@
 
     <div class="row">
         <div class="col-6">
+
+            @component('components._portlet', [
+            'portlet_head' => true,
+            'portlet_title' => sprintf("Images"),
+            'body_class' => 'pt-0'])
+                @slot('body')
+
+                    @component('components._widget-list')
+                        @slot('body')
+                            @forelse($data->images_url as $k =>  $image)
+                                <img src="{{ $image }}" width="200" alt="Image {{ $k }}"> &nbsp;
+                            @empty
+                                Tidak ada Image
+                            @endforelse
+                        @endslot
+                    @endcomponent
+
+                @endslot
+
+            @endcomponent
+
             @component('components._portlet', [
             'portlet_head' => true,
             'portlet_title' => sprintf("Descriptions"),

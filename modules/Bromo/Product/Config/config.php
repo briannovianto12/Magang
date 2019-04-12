@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Product'
+    'name' => 'Product',
+    'path_product_image' => 'products/'
 ];
