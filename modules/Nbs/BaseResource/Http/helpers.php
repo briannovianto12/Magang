@@ -93,6 +93,43 @@ if (!function_exists('files_attribute')) {
     }
 }
 
+if (!function_exists('files_attribute')) {
+
+    function files_attribute($config_path, $field, $key = null)
+    {
+        if (is_null($key)) {
+            $key = 'filenames';
+        }
+
+        if (is_null($field)) {
+            return $field;
+        }
+
+        $images = $field[$key] ?? null;
+
+        if ($key != 'filenames' && is_null($images)) {
+            return [];
+        }
+
+        if (is_null($images)) {
+            return null;
+        }
+
+        $withUrls = [];
+
+        foreach ($images as $image) {
+            if (str_contains($image, 'http')) {
+                $withUrls[] = $image;
+            } else if (in_array(config('filesystems.default'), ['s3', 'minio', 'gcs'])) {
+                $withUrls[] = Storage::url($config_path . $image);
+            }
+        }
+
+        return $withUrls;
+    }
+
+}
+
 if (!function_exists('present')) {
     function present($string)
     {
