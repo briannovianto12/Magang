@@ -1,5 +1,9 @@
 <?php
 
 return [
-    'name' => 'Order'
+    'name' => 'Order',
+    'path' => [
+        'logo' => 'businesses/logos/',
+        'buyer_avatar' => 'buyers/avatars/'
+    ]
 ];
