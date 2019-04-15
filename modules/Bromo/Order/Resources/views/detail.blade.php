@@ -159,7 +159,9 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Avatar') }}</span>
                                         <span>
-                                            <img src="{{ $data->buyer_avatar }}" alt="" width="128">
+                                            <a data-fancybox data-type="image" href="{{ $data->buyer_avatar }}">
+                                                <img src="{{ $data->buyer_avatar }}" alt="" width="128">
+                                            </a>
                                         </span>
 
                                     </div>
@@ -183,7 +185,9 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Logo') }}</span>
                                         <span>
-                                            <img src="{{ $data->business_logo }}" alt="" width="128">
+                                            <a data-fancybox data-type="image" href="{{ $data->business_logo }}">
+                                                <img src="{{ $data->business_logo }}" alt="" width="128">
+                                            </a>
                                         </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
@@ -215,7 +219,9 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Logo') }}</span>
                                         <span>
-                                            <img src="{{ $data->seller_logo }}" alt="" width="128">
+                                            <a data-fancybox data-type="image" href="{{ $data->seller_logo }}">
+                                                <img src="{{ $data->seller_logo }}" alt="" width="128">
+                                            </a>
                                         </span>
 
                                     </div>
