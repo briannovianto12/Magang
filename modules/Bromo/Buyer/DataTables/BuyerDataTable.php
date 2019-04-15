@@ -2,6 +2,7 @@
 
 namespace Bromo\Buyer\DataTables;
 
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 
 class BuyerDataTable extends DataTable
@@ -54,7 +55,7 @@ class BuyerDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
     public function html()
     {
