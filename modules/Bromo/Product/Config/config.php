@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'name' => 'Product'
+    'name' => 'Product',
+    'path' => [
+        'product' => 'products/'
+    ]
 ];
