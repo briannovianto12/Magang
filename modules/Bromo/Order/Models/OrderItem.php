@@ -78,5 +78,28 @@ class OrderItem extends Model
         //
     }
 
+    public function orderItemStatus()
+    {
+        return $this->belongsTo(OrderItemStatus::class, 'status', 'id');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Add accessors.
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get payment details attribute.
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function getPaymentDetailsAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 
 }
