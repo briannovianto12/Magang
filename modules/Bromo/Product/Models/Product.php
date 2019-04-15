@@ -5,6 +5,7 @@ namespace Bromo\Product\Models;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\Theme\Utils\FormatDates;
 use Nbs\Theme\Utils\TimezoneAccessor;
@@ -83,10 +84,28 @@ class Product extends Model
     /**
      * Get all of the variants product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function productVariants()
     {
         return $this->hasMany(ProductVariant::class, 'product_id', 'id');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Set accessors
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get the image files attribute.
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function getImageFilesUrlAttribute()
+    {
+        return files_attribute(config('product.path.product'), $this->image_files);
     }
 }
