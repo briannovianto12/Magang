@@ -59,7 +59,7 @@ class Order extends Model
      *
      * @var string
      */
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $appends = [
         'business_name',
