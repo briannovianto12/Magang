@@ -138,9 +138,30 @@
 
                     @component('components._widget-list')
                         @slot('body')
-                            <section class="text-justify">
+                            <section class="text-justify mb-5">
                                 <p>{!! $data->description !!}</p>
+                                <hr>
                             </section>
+                            <div class="m-widget28__tab-items">
+                                <div class="m-widget28__tab-item">
+                                    <span>
+                                        @forelse($data->image_files_url as $image)
+                                            <a data-fancybox data-type="image"
+                                               href="{{ $image  }}">
+                                                <img class="img-thumbnail mb-2 mr-2"
+                                                     src="{{ $image  }}"
+                                                     alt=""
+                                                     width="128">
+                                            </a>
+                                        @empty
+                                            <img class="img-thumbnail mb-2 mr-2"
+                                                 src="{{ 'https://via.placeholder.com/480x480?text=No+Image' }}"
+                                                 alt=""
+                                                 width="128">
+                                        @endforelse
+                                    </span>
+                                </div>
+                            </div>
                         @endslot
                     @endcomponent
 
