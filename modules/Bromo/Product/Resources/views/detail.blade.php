@@ -1,6 +1,7 @@
 @extends('theme::layouts.master')
 
 @section('css')
+    <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
     <style>
         #bromo .m-widget5 .m-widget5__item .m-widget5__content:last-child {
             float: none;
@@ -11,6 +12,10 @@
             vertical-align: top;
         }
     </style>
+@endsection
+
+@section('scripts')
+    <script src="{{ nbs_asset('vendor/fancybox/jquery.fancybox.js') }}"></script>
 @endsection
 
 @section('content')
