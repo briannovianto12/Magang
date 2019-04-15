@@ -98,6 +98,11 @@
                     Seller Detail
                 </a>
             </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#item_detail" role="tab">
+                    Item Detail
+                </a>
+            </li>
         @endslot
 
         @slot('tab_body')
@@ -237,6 +242,103 @@
                                 </div>
                             </div>
                         </div>
+                    @endslot
+                @endcomponent
+            </div>
+
+            <div class="tab-pane" id="item_detail">
+                @component('components._widget-list')
+                    @slot('body')
+
+                        @isset($data->orderItems)
+                            @foreach($data->orderItems as $item)
+                                <div class="row mb-4">
+                                    <div class="col-6">
+                                        <div class="m-widget28__tab-items">
+                                            <div class="h4">{{ $item->product_name ?? '-' }}</div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Variant') }}</span>
+                                                <span>{{ $item->product_variant_name ?? '-' }}</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Note') }}</span>
+                                                <span>{{ $item->note ?? '-' }}</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Status') }}</span>
+                                                <span>{{ $item->orderItemStatus->name ?? '-' }}</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Product Image') }}</span>
+                                                <span>
+                                                    <a data-fancybox data-type="image"
+                                                       href="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}">
+                                                        <img src="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}"
+                                                             alt="" width="128">
+                                                    </a>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="m-widget28__tab-items">
+                                            <div class="h4">##</div>
+                                            <div class="m-widget28__tab-item row">
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Base') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->base_price ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Margin') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->margin ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Bargain') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->bargain ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Shop Discount') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->shop_discount ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Quantity') }}</span>
+                                                <span>{{ $item->qty ?? '' }} {{ $item->unit_type ?? '-'}}</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item row">
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Amount') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_amount ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Settlement') }}</span>
+                                                        <span>IDR {{ number_format($item->settlement_amount ?? 0) ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Shipping Weight') }}</span>
+                                                <span>{{ $item->shipping_weight ?? '0' }} gr</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-5">
+                            @endforeach
+                        @endisset
+
                     @endslot
                 @endcomponent
             </div>
