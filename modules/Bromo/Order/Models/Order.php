@@ -127,6 +127,11 @@ class Order extends Model
         return $this->hasMany(OrderLog::class, 'order_trx_id');
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_trx_id', 'id');
+    }
+
     public function orderStatus()
     {
         return $this->belongsTo(OrderStatus::class, 'status');
