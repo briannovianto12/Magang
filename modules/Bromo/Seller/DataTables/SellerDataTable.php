@@ -2,6 +2,7 @@
 
 namespace Bromo\Seller\DataTables;
 
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 
 class SellerDataTable extends DataTable
@@ -45,8 +46,7 @@ class SellerDataTable extends DataTable
     public function query()
     {
         $query = $this->model
-            ->with(['status:id,name'])
-            ->orderByDesc('created_at');
+            ->with(['status:id,name']);
 
         return $this->applyScopes($query);
     }
@@ -54,7 +54,7 @@ class SellerDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
     public function html()
     {
@@ -63,7 +63,9 @@ class SellerDataTable extends DataTable
             ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
-                'order' => [],
+                'order' => [
+                    [5, 'desc']
+                ],
             ]);
     }
 
@@ -75,9 +77,9 @@ class SellerDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'width' => '1'],
+            ['data' => 'DT_RowIndex', 'name' => 'id', 'title' => '#', 'searchable' => false, 'width' => '1', 'orderable' => false],
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
-            ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name'],
+            ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
             ['data' => 'product_category', 'name' => 'product_category', 'title' => 'Category'],
             ['data' => 'status.name', 'name' => 'status', 'title' => 'Status'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
