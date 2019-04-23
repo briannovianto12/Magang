@@ -2,6 +2,7 @@
 
 namespace Bromo\ProductBrand\DataTables;
 
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 
 class ProductBrandDataTable extends DataTable
@@ -37,7 +38,7 @@ class ProductBrandDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
     public function html()
     {
@@ -58,7 +59,7 @@ class ProductBrandDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'width' => '1'],
+            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'orderable' => false, 'searchable' => false, 'width' => '1'],
             ['data' => 'name', 'name' => 'name', 'title' => 'Name'],
             ['data' => 'sku_part', 'name' => 'sku_part', 'title' => 'SKU Part'],
             ['data' => 'version', 'name' => 'version', 'title' => 'Version'],

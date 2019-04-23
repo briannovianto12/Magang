@@ -2,6 +2,7 @@
 
 namespace Bromo\AttributeKey\DataTables;
 
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 
 class AttributeKeyDataTable extends DataTable
@@ -40,7 +41,7 @@ class AttributeKeyDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
     public function html()
     {
@@ -61,7 +62,7 @@ class AttributeKeyDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'width' => '1'],
+            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'orderable' => false, 'searchable' => false, 'width' => '1'],
             ['data' => 'key', 'name' => 'key', 'title' => 'Key'],
             ['data' => 'value_type', 'name' => 'value_type', 'title' => 'Value Type'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated'],
