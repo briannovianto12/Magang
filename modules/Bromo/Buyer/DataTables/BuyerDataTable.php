@@ -76,7 +76,7 @@ class BuyerDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'width' => '1'],
+            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'orderable' => false, 'searchable' => false, 'width' => '1'],
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
             ['data' => 'full_name', 'name' => 'full_name', 'title' => 'Buyer name'],
             ['data' => 'msisdn', 'name' => 'msisdn', 'title' => 'Phone Number'],
