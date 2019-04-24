@@ -3,8 +3,12 @@
 namespace Nbs\BaseResource\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Nbs\BaseResource\DataTables\BaseResourceDataTable;
 
 abstract class BaseResourceController extends Controller
@@ -53,7 +57,7 @@ abstract class BaseResourceController extends Controller
      * Display a listing of the resource.
      *
      * @param BaseResourceDataTable $baseDataTable
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(BaseResourceDataTable $baseDataTable)
     {
@@ -150,8 +154,8 @@ abstract class BaseResourceController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -163,12 +167,11 @@ abstract class BaseResourceController extends Controller
             $this->performStore($request, $attributes);
             nbs_helper()->flashMessage('stored');
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
+            report($exception);
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
             DB::rollBack();
-            dd($exception);
         }
-
 
         return redirect()->route($this->module);
     }
@@ -235,15 +238,24 @@ abstract class BaseResourceController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
         $inputData = $this->validate($request, $this->validateUpdateRules, $this->validateUpdateMessages);
-        $attributes = $this->modifyWhenUpdate($inputData, $request);
-        $this->performUpdate($request, $id, $attributes);
-        nbs_helper()->flashMessage('updated');
+
+        DB::beginTransaction();
+        try {
+            $attributes = $this->modifyWhenUpdate($inputData, $request);
+            $this->performUpdate($request, $id, $attributes);
+            nbs_helper()->flashMessage('updated');
+            DB::commit();
+        } catch (Exception $exception) {
+            report($exception);
+            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
+            DB::rollBack();
+        }
 
         return redirect()->route($this->module);
     }
