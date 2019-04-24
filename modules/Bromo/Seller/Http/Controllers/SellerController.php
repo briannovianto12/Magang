@@ -5,6 +5,7 @@ namespace Bromo\Seller\Http\Controllers;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
 use Bromo\Seller\Models\ShopStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -62,7 +63,8 @@ class SellerController extends BaseResourceController
             }
             DB::commit();
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
+            report($exception);
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
             DB::rollBack();
         }
@@ -104,7 +106,8 @@ class SellerController extends BaseResourceController
             DB::commit();
             nbs_helper()->flashSuccess('Shop has been Rejected');
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
+            report($exception);
             DB::rollBack();
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
         }
