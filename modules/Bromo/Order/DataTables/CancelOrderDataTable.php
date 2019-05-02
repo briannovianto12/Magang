@@ -10,9 +10,9 @@ class CancelOrderDataTable extends OrderDatatable
     public function query()
     {
         $query = $this->model
+            ->select($this->getColumns())
             ->where('status', '>=', OrderStatus::CANCELED)
-            ->with('orderStatus:id,name')
-            ->latest('created_at');
+            ->with('orderStatus:id,name');
 
         return $this->applyScopes($query);
     }

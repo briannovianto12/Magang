@@ -88,7 +88,7 @@
                             <th>Amount</th>
                             <th>Notes</th>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Updated Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -111,7 +111,7 @@
                             <th>Amount</th>
                             <th>Notes</th>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Updated Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -134,7 +134,7 @@
                             <th>Amount</th>
                             <th>Notes</th>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Updated Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>

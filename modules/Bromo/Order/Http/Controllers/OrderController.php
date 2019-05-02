@@ -9,7 +9,10 @@ use Bromo\Order\DataTables\NewOrderDatatable;
 use Bromo\Order\DataTables\ProcessOrderDataTable;
 use Bromo\Order\DataTables\SuccessOrderDataTable;
 use Bromo\Order\Models\Order;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -33,7 +36,7 @@ class OrderController extends Controller
     /**
      * Display index page.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
@@ -46,7 +49,7 @@ class OrderController extends Controller
     /**
      * Get New Order data.
      * @param NewOrderDatatable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function newOrder(NewOrderDatatable $datatable)
     {
@@ -59,7 +62,7 @@ class OrderController extends Controller
     /**
      * Get Order list status in processed.
      * @param ProcessOrderDataTable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function processOrder(ProcessOrderDataTable $datatable)
     {
@@ -72,7 +75,7 @@ class OrderController extends Controller
     /**
      * Get Order list status in delivery only.
      * @param DeliveryOrderDataTable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function deliveryOrder(DeliveryOrderDataTable $datatable)
     {
@@ -85,7 +88,7 @@ class OrderController extends Controller
     /**
      * Get Order list status in success only.
      * @param SuccessOrderDataTable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function successOrder(SuccessOrderDataTable $datatable)
     {
@@ -98,7 +101,7 @@ class OrderController extends Controller
     /**
      * Get Order list status in success only.
      * @param CancelOrderDataTable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function cancelOrder(CancelOrderDataTable $datatable)
     {
@@ -111,7 +114,7 @@ class OrderController extends Controller
     /**
      * Get Order list status in success only.
      * @param ListOrderDataTable $datatable
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function listOrder(ListOrderDataTable $datatable)
     {
@@ -125,7 +128,7 @@ class OrderController extends Controller
      * Get the detail of product.
      *
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show($id)
     {
