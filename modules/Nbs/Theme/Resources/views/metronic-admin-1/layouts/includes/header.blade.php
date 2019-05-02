@@ -6,8 +6,8 @@
             <div class="m-stack__item m-brand m-brand--skin-light">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                        <a href="#" class="m-brand__logo-wrapper" style="text-decoration: none;">
-                            <span class="font-weight-bold m--icon-font-size-lg4">{{ config('app.name') }}</span>
+                        <a href="{{ url('/') }}" class="m-brand__logo-wrapper" style="text-decoration: none;">
+                            <img src="{{ asset('img/logo_light.svg') }}" alt="" width="120">
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">

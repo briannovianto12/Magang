@@ -30,4 +30,4 @@
 </style>
 
 <!--end::Page Vendors Styles -->
-<link rel="shortcut icon" href=""/>
+<link rel="shortcut icon" href="{{ asset('img/favicon.png') }}"/>

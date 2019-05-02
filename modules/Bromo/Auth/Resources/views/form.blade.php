@@ -20,8 +20,8 @@
                 <div class="m-login__container">
 
                     <div class="m-login__logo">
-                        <a href="#">
-                            <img src="{{ asset('themes/app/media/img/logos/logo-1.png') }}">
+                        <a href="{{ url('/') }}">
+                            <img src="{{ asset('img/logo_light.svg') }}">
                         </a>
                     </div>
 
