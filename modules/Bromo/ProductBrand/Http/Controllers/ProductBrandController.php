@@ -11,8 +11,8 @@ class ProductBrandController extends BaseResourceController
     public function __construct(ProductBrand $model, ProductBrandDataTable $dataTable)
     {
         $this->module = 'product-brand';
-        $this->page = 'Product Brand';
-        $this->title = 'Product Brand';
+        $this->page = 'Brand';
+        $this->title = 'Brand';
         $this->model = $model;
         $this->dataTable = $dataTable;
         $this->validateStoreRules = [
