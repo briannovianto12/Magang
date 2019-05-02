@@ -19,10 +19,3 @@ Route::name('order.delivery-order')->get('/delivery-order', 'OrderController@del
 Route::name('order.success-order')->get('/success-order', 'OrderController@successOrder');
 Route::name('order.cancel-order')->get('/cancel-order', 'OrderController@cancelOrder');
 Route::name('order.list-order')->get('/list-order', 'OrderController@listOrder');
-
-#Route::name('product.show')->get('/product/{id}', 'ProductController@show');
-#Route::name('product.submited')->get('/submited', 'ProductController@submited');
-#Route::name('product.rejected')->get('/rejected', 'ProductController@rejected');
-#Route::name('product.approved')->get('/approved', 'ProductController@approved');
-#Route::name('product.unverified')->patch('/unverified/{id}', 'ProductController@unverified');
-#Route::name('product.verified')->patch('/verified/{id}', 'ProductController@verified');

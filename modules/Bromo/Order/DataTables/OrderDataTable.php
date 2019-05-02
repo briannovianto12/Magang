@@ -13,6 +13,9 @@ abstract class OrderDatatable extends DataTable
             ->editColumn('created_at', function ($data) {
                 return $data->created_at_formatted;
             })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at_formatted;
+            })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
             })
@@ -40,8 +43,8 @@ abstract class OrderDatatable extends DataTable
     public function query()
     {
         $query = $this->model
-            ->with('orderStatus:id,name')
-            ->latest('created_at');
+            ->select($this->getColumns())
+            ->with('orderStatus:id,name');
 
         return $this->applyScopes($query);
     }
@@ -54,5 +57,22 @@ abstract class OrderDatatable extends DataTable
     protected function filename()
     {
         return $this->module . "_" . time();
+    }
+
+    protected function getColumns()
+    {
+        return [
+            'id',
+            'order_no',
+            'status',
+            'payment_amount',
+            'buyer_snapshot',
+            'shop_snapshot',
+            'payment_method_id',
+            'payment_snapshot',
+            'notes',
+            'created_at',
+            'updated_at'
+        ];
     }
 }

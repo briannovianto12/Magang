@@ -10,9 +10,9 @@ class SuccessOrderDataTable extends OrderDatatable
     public function query()
     {
         $query = $this->model
-            ->where('status', OrderStatus::SUCCESS)
-            ->with('orderStatus:id,name')
-            ->latest('created_at');
+            ->select($this->getColumns())
+            ->whereIn('status', [OrderStatus::SUCCESS, OrderStatus::DELIVERED])
+            ->with('orderStatus:id,name');
 
         return $this->applyScopes($query);
     }
