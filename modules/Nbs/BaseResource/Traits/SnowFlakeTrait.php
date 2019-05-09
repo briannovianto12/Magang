@@ -9,9 +9,9 @@ trait SnowFlakeTrait
         parent::boot();
 
         static::creating(function ($model) {
-
-            $model->{$model->getKeyName()} = snowflake_id();
-
+            if (!isset($model->attributes[$model->getKeyName()])) {
+                $model->{$model->getKeyName()} = snowflake_id();
+            }
         });
     }
 }

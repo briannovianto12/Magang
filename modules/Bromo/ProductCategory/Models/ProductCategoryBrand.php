@@ -3,9 +3,9 @@
 namespace Bromo\ProductCategory\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class ProductCategoryBrand extends Pivot
 {

@@ -4,8 +4,8 @@ namespace Bromo\Buyer\Models;
 
 use Bromo\Buyer\Traits\JoinedAttribute;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use NBs\Theme\Utils\FormatDates;
-use NBs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Traits\FormatDates;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class BusinessMemberPivot extends Pivot
 {

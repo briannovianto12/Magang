@@ -4,8 +4,8 @@ namespace Bromo\Buyer\Models;
 
 use Bromo\Buyer\Traits\JoinedAttribute;
 use Illuminate\Database\Eloquent\Model;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Traits\FormatDates;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class Business extends Model
 {

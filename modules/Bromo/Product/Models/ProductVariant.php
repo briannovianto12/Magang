@@ -3,9 +3,10 @@
 namespace Bromo\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class ProductVariant extends Model
 {
@@ -37,7 +38,7 @@ class ProductVariant extends Model
     /**
      * Get all of the buying options variant.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function productBuyingOptions()
     {
