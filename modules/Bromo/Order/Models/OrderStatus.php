@@ -8,23 +8,25 @@ class OrderStatus extends Model
 {
     const CREATED_AT = null;
 
+    /**
+     * Set status model.
+     */
     const PLACED = 1;
     const ACCEPTED = 2;
     const PAYMENT_REQUESTED = 3;
     const PAYMENT_PENDING = 4;
     const PAYMENT_OK = 5;
-    const PACKAGED = 6;
-    const SHIPPED = 7;
-    const DELIVERED = 8;
+    const PACKAGING = 6;
+    const PACKAGED = 7;
+    const SHIPPED = 8;
+    const DELIVERED = 9;
     const SUCCESS = 10;
 
     const COMPLAINED = 20;
     const COMPLAIN_RESOLVED = 21;
-    const REFUNDED = 22;
 
     const CANCELED = 30;
-    const EXPIRED = 31;
-    const REJECTED = 32;
+    const REJECTED = 31;
     /**
      * The attributes that should be cast to native types.
      *

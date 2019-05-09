@@ -16,6 +16,7 @@ class ProcessOrderDataTable extends OrderDatatable
                 OrderStatus::PAYMENT_REQUESTED,
                 OrderStatus::PAYMENT_PENDING,
                 OrderStatus::PAYMENT_OK,
+                OrderStatus::PACKAGING,
                 OrderStatus::PACKAGED,
             ])
             ->with('orderStatus:id,name');
