@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Ordered Date') }}</span>
-                                    <span>{{ $data->created_at_formatted ?? '-' }}</span>
+                                    <span>{{ $data->created_at_formatted }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Payment Method') }}</span>
@@ -109,6 +109,26 @@
             <div class="tab-pane active" id="shipping_detail">
                 @component('components._widget-list')
                     @slot('body')
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="m-widget28__tab-items">
+                                    <div class="h2">Shipping</div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Shipping Service Code') }}</span>
+                                        <span>{{ $data->shipping_service_code }}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Shipping Estimated') }}</span>
+                                        <span>{{ $data->shipping_estimated }}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Shipping Cost') }}</span>
+                                        <span>{{ $data->shipping_cost }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <div class="col-6">
                                 <div class="m-widget28__tab-items">

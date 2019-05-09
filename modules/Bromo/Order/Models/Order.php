@@ -31,6 +31,7 @@ class Order extends Model
         'shop_snapshot' => 'array',
         'orig_address_snapshot' => 'array',
         'dest_address_snapshot' => 'array',
+        'shipping_service_snapshot' => 'array',
         'shipping_snapshot' => 'array',
         'payment_snapshot' => 'array',
         'payment_details' => 'array',
@@ -165,7 +166,7 @@ class Order extends Model
 
     public function getPaymentMethodNameAttribute(): string
     {
-        return $this->payment_snapshot['name'] ?? '';
+        return $this->payment_snapshot['name'] ?? 'N/A';
     }
 
     public function getNotesAdminAttribute(): string
@@ -295,5 +296,14 @@ class Order extends Model
         return $this->dest_address_snapshot['notes'] ?? '-';
     }
 
+    public function getShippingEstimatedAttribute(): string
+    {
+        return $this->shipping_service_snapshot['etd'] . " Hari" ?? '-';
+    }
+
+    public function getShippingCostAttribute(): string
+    {
+        return number_format($this->shipping_service_snapshot['cost']) ?? '-';
+    }
 
 }
