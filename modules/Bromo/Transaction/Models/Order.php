@@ -153,6 +153,16 @@ class Order extends Model
         return $this->belongsTo(ShippingCourier::class);
     }
 
+    public function shippingManifest()
+    {
+        return $this->hasMany(OrderShippingManifest::class, 'order_id');
+    }
+
+    public function itemShipment()
+    {
+        return $this->hasMany(OrderItemShipment::class, 'order_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Define some attributes

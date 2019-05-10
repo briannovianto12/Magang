@@ -372,4 +372,151 @@
 
     @endcomponent
 
+    @if($data->status >= \Bromo\Transaction\Models\OrderStatus::PAYMENT_OK)
+        <!--begin::Portlet-->
+        <div class="m-portlet m-portlet--collapsed m-portlet--head-sm" m-portlet="true">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="flaticon-notes"></i>
+                    </span>
+                        <h3 class="m-portlet__head-text">
+                            Shipping Manifest Plan
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="m-portlet__nav">
+                        <li class="m-portlet__nav-item">
+                            <a href="" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                                <i class="la la-angle-down"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+
+                @component('components._widget-list')
+                    @slot('body')
+                        @forelse($data->shippingManifest()->get() as $iManifest => $manifest)
+                            <div class="h4">#{{ $loop->iteration }}</div>
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Weight') }}</span>
+                                            <span>{{ $manifest->weight ?? '-' }}</span>
+                                        </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Cost') }}</span>
+                                            <span>IDR {{ number_format($manifest->cost ?? 0) ?? '-' }}</span>
+                                        </div>
+
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Airwaybill') }}</span>
+                                            <span>{{ $manifest->airwaybill ?? '-' }}</span>
+                                        </div>
+
+                                        {{--<div class="m-widget28__tab-item">
+                                            <span>{{ __('Carrier') }}</span>
+                                            <span>{{ '-' }}</span>
+                                        </div>--}}
+
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Status') }}</span>
+                                            <span>{{ $manifest->shippingStatus->name ?? '' }}</span>
+                                        </div>
+
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Created Date') }}</span>
+                                            <span>{{ $manifest->created_at_formatted }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Carrier') }}</span>
+                                            <span>-</span>
+                                        </div>
+
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Receiver') }}</span>
+                                            <span>-</span>
+                                        </div>
+
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Action for Delivered') }}</span>
+                                            <span>
+                                                <button type="button" class="btn btn-success">
+                                                    Delivered
+                                                </button>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mb-5">
+                        @empty
+                            Shipping Manifest not yet created
+                        @endforelse
+
+                        @forelse($data->itemShipment()->get() as $itemShipment)
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="h4">Item Shipment of #{{ $loop->iteration }}</div>
+                                        <div class="m-widget28__tab-item row">
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Product') }}</span>
+                                                    <span>{{ $itemShipment->item_snapshot['product_name'] ?? '' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Total Qty') }}</span>
+                                                    <span>{{ $itemShipment->qty_total }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-widget28__tab-item row">
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Shipped') }}</span>
+                                                    <span>{{ $itemShipment->qty_shipped }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Delivered') }}</span>
+                                                    <span>{{ $itemShipment->qty_delivered }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Accepted') }}</span>
+                                                    <span>{{ $itemShipment->qty_accepted }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Rejected') }}</span>
+                                                    <span>{{ $itemShipment->qty_rejected }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                        @endforelse
+                    @endslot
+                @endcomponent
+            </div>
+        </div>
+        <!--end::Portlet-->
+    @endif
 @endsection

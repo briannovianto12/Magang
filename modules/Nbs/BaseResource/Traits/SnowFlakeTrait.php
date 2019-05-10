@@ -4,10 +4,8 @@ namespace Nbs\BaseResource\Traits;
 
 trait SnowFlakeTrait
 {
-    protected static function boot()
+    public static function bootSnowFlakeTrait()
     {
-        parent::boot();
-
         static::creating(function ($model) {
             if (!isset($model->attributes[$model->getKeyName()])) {
                 $model->{$model->getKeyName()} = snowflake_id();
