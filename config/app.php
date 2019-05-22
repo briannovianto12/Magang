@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Nbs\BaseResource\Providers\BaseResourceServiceProvider::class,
+        Nbs\BaseResource\Providers\FirebaseServiceProvider::class,
         Nbs\Theme\Providers\GoogleStorageServiceProvider::class,
         Nbs\Theme\Providers\ThemeServiceProvider::class,
 
