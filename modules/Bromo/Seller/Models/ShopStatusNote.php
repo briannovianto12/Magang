@@ -3,9 +3,9 @@
 namespace Bromo\Seller\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class ShopStatusNote extends Model
 {

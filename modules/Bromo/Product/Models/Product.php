@@ -6,9 +6,9 @@ use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Seller\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class Product extends Model
 {

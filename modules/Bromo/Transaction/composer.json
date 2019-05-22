@@ -1,0 +1,24 @@
+{
+    "name": "NBS/transaction",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\Transaction\\Providers\\TransactionServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\Transaction\\": ""
+        }
+    }
+}

@@ -3,8 +3,8 @@
 namespace Bromo\Buyer\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Nbs\Theme\Utils\FormatDates;
-use Nbs\Theme\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Traits\FormatDates;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class BusinessBankAccount extends Model
 {

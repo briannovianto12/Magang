@@ -47,7 +47,7 @@
             "Bromo\\AttributeKey\\": "modules/Bromo/AttributeKey/",
             "Bromo\\Auth\\": "modules/Bromo/Auth/",
             "Bromo\\Buyer\\": "modules/Bromo/Buyer/",
-            "Bromo\\Order\\": "modules/Bromo/Order/",
+            "Bromo\\Transaction\\": "modules/Bromo/Transaction/",
             "Bromo\\ProductBrand\\": "modules/Bromo/ProductBrand/",
             "Bromo\\Seller\\": "modules/Bromo/Seller/",
             "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/",
