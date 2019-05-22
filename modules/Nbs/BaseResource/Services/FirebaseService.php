@@ -4,150 +4,122 @@ namespace Nbs\BaseResource\Services;
 
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Firebase\Auth\Token\Exception\IssuedInTheFuture;
+use Illuminate\Config\Repository;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\Exception\Messaging\AuthenticationError;
 use Kreait\Firebase\Exception\Messaging\InvalidArgument;
 use Kreait\Firebase\Exception\Messaging\NotFound;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
+use Nbs\BaseResource\Exceptions\FirebaseKeyNotFoundException;
 
 class FirebaseService
 {
     protected $firebase;
-    private $payloadData;
-    private $tokens;
-    private $androidPayloadData;
-    private $userId;
-    private $code;
+    /**
+     * @var Application
+     */
+    protected $app;
+    /**
+     * @var Repository|mixed config
+     */
+    protected $config;
+    /**
+     * @var array
+     */
+    protected $tokens;
+    protected $userId;
+    protected $androidPayloadData;
+    protected $iosPayloadData;
+    protected $code;
 
     /**
      * FirebaseService constructor.
+     * @param $app
+     * @param $config
      */
-    public function __construct()
+    public function __construct($app, $config)
     {
-        if (app()->environment() == 'production') {
-            $pathJsonFile = base_path('keys/') . config('fcm.firebase-sdk-prod');
-        } else {
-            $pathJsonFile = base_path('keys/') . config('fcm.firebase-sdk-dev');
-        }
-        $serviceAccount = ServiceAccount::fromJsonFile($pathJsonFile);
+        $this->app = $app ?? app();
+
+        $this->config = $config ?? config();
+
+        $this->createServiceAccount();
+    }
+
+    private function createServiceAccount()
+    {
         $this->firebase = (new Factory())
-            ->withServiceAccount($serviceAccount)
+            ->withServiceAccount(ServiceAccount::fromJsonFile($this->getPathJsonFile()))
             ->create();
     }
 
-    /**
-     *
-     * Send Fcm by Topic
-     *
-     * @param $topic
-     * @param $data
-     */
-    public function sendToTopic($topic, $data)
+    private function getPathJsonFile()
     {
-        $data['sound'] = 'default';
-        $message = [
-            'topic' => $topic,
-            'data' => $data,
-            'apns' => [
-                'headers' => [
-                    'apns-priority' => '10',
-                ],
-                'payload' => [
-                    'aps' => [
-                        'alert' => $data,
-                        'badge' => 1,
-                        'mutable-content' => 1,
-                        'sound' => 'default'
+        $prod = base_path('keys/') . $this->config['firebase-sdk-prod'];
+        $dev = base_path('keys/') . $this->config['firebase-sdk-dev'];
+
+        if (!file_exists($prod)) {
+            throw new FirebaseKeyNotFoundException('Firebase key production not found');
+        }
+        if (!file_exists($dev)) {
+            throw new FirebaseKeyNotFoundException('Firebase key development not found');
+        }
+
+        return $this->app->environment('production') ? $prod : $dev;
+    }
+
+    private function formatApns(): array
+    {
+        return [
+            'headers' => [
+                'apns-priority' => '10',
+            ],
+            'payload' => [
+                'aps' => [
+                    'alert' => [
+                        'user_id' => (string)$this->userId,
+                        'code' => (string)$this->code,
+                        'data' => collect($this->iosPayloadData)->toJson()
                     ],
+                    'badge' => 1,
+                    'mutable-content' => 1,
+                    'sound' => 'default'
                 ],
             ]
         ];
-
-        try {
-            $this->firebase->getMessaging()->send($message);
-        } catch (IssuedInTheFuture $e) {
-
-        } catch (InvalidToken $e) {
-
-        } catch (NotFound $e) {
-
-        } catch (InvalidArgument $e) {
-
-        } catch (AuthenticationError $e) {
-
-        }
     }
 
-    public function sendToDevice()
+    private function formatAndroid(): array
     {
-        foreach ($this->tokens as $token) {
-            try {
-                $data['sound'] = 'default';
-
-                $message = [
-                    'token' => $token,
-                    'apns' => [
-                        'headers' => [
-                            'apns-priority' => '10',
-                        ],
-                        'payload' => [
-                            'aps' => [
-                                'alert' => $data,
-                                'badge' => 1,
-                                'mutable-content' => 1,
-                                'sound' => 'default'
-                            ],
-                        ],
-                    ]
-                ];
-
-                if ($this->payloadData) {
-                    $message['data'] = $this->payloadData;
-                }
-
-                if ($this->androidPayloadData) {
-                    $message['android'] = [
-                        'ttl' => '3600s',
-                        'priority' => 'normal',
-                        'data' => [
-                            'user_id' => (string)$this->userId,
-                            'code' => (string)$this->code,
-                            'data' => collect($this->androidPayloadData)->toJson()
-                        ]
-                    ];
-                }
-
-                return $this->firebase->getMessaging()->send($message);
-
-            } catch (IssuedInTheFuture $e) {
-
-            } catch (InvalidToken $e) {
-
-            } catch (NotFound $e) {
-
-            } catch (InvalidArgument $e) {
-                
-            } catch (AuthenticationError $e) {
-
-            }
-        }
+        return [
+            'ttl' => '3600s',
+            'priority' => 'normal',
+            'data' => [
+                'user_id' => (string)$this->userId,
+                'code' => (string)$this->code,
+                'data' => collect($this->androidPayloadData)->toJson()
+            ]
+        ];
     }
 
-    public function setTokens($tokens): self
+    /**
+     * @return mixed
+     */
+    public function getFirebase()
+    {
+        return $this->firebase;
+    }
+
+    public function setTokens(array $tokens): self
     {
         $this->tokens = $tokens;
 
         return $this;
     }
 
-    public function createDataPayload($data): self
-    {
-        $this->payloadData = $data;
-
-        return $this;
-    }
-
-    public function toAndroid(string $userId, $code, array $data): self
+    public function toAndroid(string $userId, string $code, array $data): self
     {
         $this->userId = $userId;
         $this->androidPayloadData = $data;
@@ -155,4 +127,41 @@ class FirebaseService
 
         return $this;
     }
+
+    public function sendToDevice(): void
+    {
+        foreach ($this->tokens as $token) {
+            if (is_null($token) || $token == '') {
+                continue;
+            }
+
+            try {
+                $message['token'] = $token;
+
+                if ($this->iosPayloadData) {
+                    $message['apns'] = $this->formatApns();
+                }
+
+                if ($this->androidPayloadData) {
+                    $message['android'] = $this->formatAndroid();
+                }
+
+                $this->getFirebase()
+                    ->getMessaging()
+                    ->send($message);
+
+            } catch (IssuedInTheFuture $e) {
+                Log::warning('Error Fcm : ', [$e->getToken()]);
+            } catch (InvalidToken $e) {
+                Log::warning('Invalid Token : ', [$e->getToken()]);
+            } catch (NotFound $e) {
+                Log::warning('Token not found');
+            } catch (InvalidArgument $e) {
+                Log::warning('Firebase Invalid Argument');
+            } catch (AuthenticationError $e) {
+                Log::warning('Firebase Auth Error');
+            }
+        }
+    }
+
 }
