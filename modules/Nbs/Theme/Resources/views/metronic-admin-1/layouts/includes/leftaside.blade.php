@@ -19,43 +19,49 @@
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('store') }}" aria-haspopup="true">
                 <a href="{{ route('store') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-truck"></i>
                     <span class="m-menu__link-text">Store</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('buyer') }}" aria-haspopup="true">
                 <a href="{{ route('buyer') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-avatar"></i>
                     <span class="m-menu__link-text">Buyer</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-category') }}" aria-haspopup="true">
                 <a href="{{ route('product-category') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-squares"></i>
                     <span class="m-menu__link-text">Product Category</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-brand') }}" aria-haspopup="true">
                 <a href="{{ route('product-brand') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-grid-menu-v2"></i>
                     <span class="m-menu__link-text">Brand</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('product') }}" aria-haspopup="true">
                 <a href="{{ route('product.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-business"></i>
                     <span class="m-menu__link-text">Product</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('attribute-key') }}" aria-haspopup="true">
                 <a href="{{ route('attribute-key') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-app"></i>
                     <span class="m-menu__link-text">Attribute Key</span>
+                </a>
+            </li>
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unit-type') }}" aria-haspopup="true">
+                <a href="{{ route('unit-type') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-network"></i>
+                    <span class="m-menu__link-text">Unit Type</span>
                 </a>
             </li>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('order.index') }}" aria-haspopup="true">
                 <a href="{{ route('order.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-layers"></i>
+                    <i class="m-menu__link-icon flaticon-open-box"></i>
                     <span class="m-menu__link-text">Order</span>
                 </a>
             </li>

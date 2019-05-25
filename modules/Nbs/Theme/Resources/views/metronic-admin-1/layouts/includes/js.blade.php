@@ -47,13 +47,22 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {_method: 'DELETE'},
-                    success: function () {
-                        window.LaravelDataTables["dataTableBuilder"].table().ajax.reload(null, false);
-                        swal(
-                            'Deleted!',
-                            'Data has been deleted.',
-                            'success'
-                        )
+                    success: function (response) {
+                        if(response.success === false) {
+                            swal(
+                                'Warning!',
+                                response.message,
+                                'warning'
+                            )
+                        } else {
+                            window.LaravelDataTables["dataTableBuilder"].table().ajax.reload(null, false);
+                            swal(
+                                'Deleted!',
+                                'Data has been deleted.',
+                                'success'
+                            )
+                        }
+
                     },
                     error: function () {
                         swal(
