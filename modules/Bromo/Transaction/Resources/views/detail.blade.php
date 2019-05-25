@@ -46,9 +46,36 @@
                                     <span>{{ __('Payment Method') }}</span>
                                     <span>{{ $data->payment_method_name }}</span>
                                 </div>
+                                <div class="m-widget28__tab-item row">
+                                    <div class="col-3">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Total VAT') }}</span>
+                                            <span>IDR {{ number_format($data['payment_details']['total_vat']) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Total TAX') }}</span>
+                                            <span>IDR {{ number_format($data['payment_details']['total_tax_base']) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="m-widget28__tab-item">
+                                            <span>Total Gross and Total Order</span>
+                                            <span>IDR {{ number_format($data['payment_details']['total_gross']) }} <br>
+                                                IDR {{ number_format($data['payment_details']['total_order']) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Total Shipping Cost') }}</span>
+                                            <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Payment Amount') }}</span>
-                                    <span>{{ $data->payment_amount_formatted }}</span>
+                                    <span>{{ __('Grand Total') }}</span>
+                                    <h4 class="h4">IDR {{ number_format($data->payment_amount ?? 0) }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -313,32 +340,45 @@
                                             <div class="m-widget28__tab-item row">
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Base') }}</span>
-                                                        <span>IDR {{ number_format($item->payment_details->base_price ?? 0) ?? '-' }}</span>
+                                                        <span>Unit Price and Gross Amount</span>
+                                                        <span>
+                                                            IDR {{ number_format($item->payment_details->unit_price) }} <br>
+                                                            IDR {{ number_format($item->payment_details->gross_amount) }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Margin') }}</span>
-                                                        <span>IDR {{ number_format($item->payment_details->margin ?? 0) ?? '-' }}</span>
+                                                        <span>{{ __('Tax') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->tax_base ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Bargain') }}</span>
-                                                        <span>IDR {{ number_format($item->payment_details->bargain ?? 0) ?? '-' }}</span>
+                                                        <span>{{ __('VAT') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->vat ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Shop Discount') }}</span>
-                                                        <span>IDR {{ number_format($item->payment_details->shop_discount ?? 0) ?? '-' }}</span>
+                                                        <span>{{ __('Discount') }}</span>
+                                                        <span>IDR {{ number_format($item->payment_details->discount_amount ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('Quantity') }}</span>
-                                                <span>{{ $item->qty ?? '' }} {{ $item->unit_type ?? '-'}}</span>
+                                            <div class="m-widget28__tab-item row">
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Quantity') }}</span>
+                                                        <span>{{ $item->qty ?? '' }} {{ $item->unit_type ?? '-'}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Margin Rate') }}</span>
+                                                        <span>{{ $item->payment_details->margin_rate }}%</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="m-widget28__tab-item row">
                                                 <div class="col-3">
