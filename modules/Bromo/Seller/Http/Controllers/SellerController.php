@@ -4,6 +4,7 @@ namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
+use Bromo\Seller\Models\ShopRegistrationLog;
 use Bromo\Seller\Models\ShopStatus;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,14 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
         try {
             $shop = $this->approval($id, ShopStatus::VERIFIED);
+            ShopRegistrationLog::create([
+                'shop_id' => $id,
+                'shop_snapshot' => null,
+                'status' => ShopStatus::VERIFIED,
+                'notes' => '',
+                'modified_by' => auth()->user()->id,
+                'modifier_role' => auth()->user()->role_id
+            ]);
             nbs_helper()->flashSuccess('Shop has been Verified');
 
             // Send notification
@@ -101,6 +110,15 @@ class SellerController extends BaseResourceController
                 'status' => ShopStatus::REJECTED,
                 'notes' => $request->input('notes')
             ]);
+            ShopRegistrationLog::create([
+                'shop_id' => $id,
+                'shop_snapshot' => $shop,
+                'status' => ShopStatus::REJECTED,
+                'notes' => $request->input('notes'),
+                'modified_by' => auth()->user()->id,
+                'modifier_role' => auth()->user()->role_id
+            ]);
+
             $shop->index()->delete();
             $shop->delete();
             DB::commit();
