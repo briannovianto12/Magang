@@ -20,6 +20,14 @@ class SellerDataTable extends DataTable
                     });
                 }
             })
+            ->filterColumn('tax_type', function ($query) use ($keyword) {
+                if ($keyword) {
+                    $keyword = $this->request()->input('search.value');
+                    $query->whereHas('taxType', function ($query) use ($keyword) {
+                        $query->where('name', 'like', "%{$keyword}%");
+                    });
+                }
+            })
             ->editColumn('business', function ($data) {
                 return $data->business->name;
             })
@@ -46,7 +54,7 @@ class SellerDataTable extends DataTable
     public function query()
     {
         $query = $this->model
-            ->with(['status:id,name']);
+            ->with(['status:id,name', 'taxType:id,name']);
 
         return $this->applyScopes($query);
     }
@@ -64,7 +72,7 @@ class SellerDataTable extends DataTable
             ->minifiedAjax()
             ->parameters([
                 'order' => [
-                    [5, 'desc']
+                    [6, 'desc']
                 ],
             ]);
     }
@@ -81,6 +89,7 @@ class SellerDataTable extends DataTable
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
             ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
             ['data' => 'product_category', 'name' => 'product_category', 'title' => 'Category'],
+            ['data' => 'tax_type.name', 'name' => 'tax_type', 'title' => 'Tax Payer Type'],
             ['data' => 'status.name', 'name' => 'status', 'title' => 'Status'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated']

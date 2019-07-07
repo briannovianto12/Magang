@@ -89,6 +89,11 @@ class Shop extends Model
         return 'version';
     }
 
+    public function taxType()
+    {
+        return $this->belongsTo(TaxPayerType::class, 'taxpayer_type', 'id');
+    }
+
     public function getStatusNameAttribute(): string
     {
         return $this->status()->first()->name ?? '';

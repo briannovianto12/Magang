@@ -55,6 +55,11 @@
                                     <span><img src="{{ $data->tax_image_url }}" alt="" width="128"></span>
                                 </div>
                                 <div class="m-widget28__tab-item">
+                                    <span>{{ __('Tax Type') }}</span>
+                                    <span>{{ $data->taxType->name ?? '-' }}</span>
+
+                                </div>
+                                <div class="m-widget28__tab-item">
                                     <span>{{ __('Status') }}</span>
                                     <span>{{ $data->status_name }}</span>
                                 </div>
