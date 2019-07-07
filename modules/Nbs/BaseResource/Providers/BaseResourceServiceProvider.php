@@ -3,7 +3,6 @@
 namespace Nbs\BaseResource\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Nbs\BaseResource\Services\FirebaseService;
 use Nbs\BaseResource\Utils\SnowFlake;
 
 class BaseResourceServiceProvider extends ServiceProvider
@@ -89,10 +88,6 @@ class BaseResourceServiceProvider extends ServiceProvider
     {
         $this->app->singleton('snowflake', function () {
             return new SnowFlake();
-        });
-
-        $this->app->singleton('firebase', function () {
-            return new FirebaseService();
         });
     }
 }

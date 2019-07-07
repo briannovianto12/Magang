@@ -92,19 +92,7 @@ class SellerController extends BaseResourceController
         try {
             $shop = $this->model->findOrFail($id);
             $owner = $shop->business->getOwner();
-            if (!is_null($owner)) { // check owner is exist
-                $token = $owner->getNotificationTokens();
-                if (count($token) > 0) { // check token is exists
-                    // Send notification
-                    firebase()
-                        ->toAndroid($owner->id, 'BSM002', [
-                            "title" => "Rejected",
-                            "message" => "Your Shop has been Rejected"
-                        ])
-                        ->setTokens($token)
-                        ->sendToDevice();
-                }
-            }
+
             $shop->statusNotes()->create([
                 'shop_snapshot' => $shop->getOriginal(),
                 'status' => ShopStatus::REJECTED,
@@ -118,6 +106,20 @@ class SellerController extends BaseResourceController
                 'modified_by' => auth()->user()->id,
                 'modifier_role' => auth()->user()->role_id
             ]);
+
+            if (!is_null($owner)) { // check owner is exist
+                $token = $owner->getNotificationTokens();;
+                if (count($token) > 0) { // check token is exists
+                    // Send notification
+                    firebase()
+                        ->toAndroid($owner->id, 'BSM002', [
+                            "title" => "Rejected",
+                            "message" => "Your Shop has been Rejected"
+                        ])
+                        ->setTokens($token->toArray())
+                        ->sendToDevice();
+                }
+            }
 
             $shop->index()->delete();
             $shop->delete();
