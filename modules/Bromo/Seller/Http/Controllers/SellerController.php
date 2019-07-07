@@ -93,6 +93,9 @@ class SellerController extends BaseResourceController
             $shop = $this->model->findOrFail($id);
             $owner = $shop->business->getOwner();
 
+            $shop->update([
+                'status' => ShopStatus::REJECTED
+            ]);
             $shop->statusNotes()->create([
                 'shop_snapshot' => $shop->getOriginal(),
                 'status' => ShopStatus::REJECTED,
