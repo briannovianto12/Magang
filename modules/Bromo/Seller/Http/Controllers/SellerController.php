@@ -121,8 +121,6 @@ class SellerController extends BaseResourceController
                 }
             }
 
-            $shop->index()->delete();
-            $shop->delete();
             DB::commit();
             nbs_helper()->flashSuccess('Shop has been Rejected');
 
