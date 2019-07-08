@@ -111,7 +111,7 @@ class SellerController extends BaseResourceController
             ]);
 
             if (!is_null($owner)) { // check owner is exist
-                $token = $owner->getNotificationTokens();
+                $token = $owner->getNotificationTokens();;
                 if (count($token) > 0) { // check token is exists
                     // Send notification
                     firebase()
