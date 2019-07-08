@@ -66,7 +66,7 @@ class SellerController extends BaseResourceController
                             "title" => "Approved",
                             "message" => "Your Shop has been Approved"
                         ])
-                        ->setTokens($token)
+                        ->setTokens($token->toArray())
                         ->sendToDevice();
                 }
             }
