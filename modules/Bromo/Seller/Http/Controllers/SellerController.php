@@ -4,6 +4,7 @@ namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
+use Bromo\Seller\Models\ShopRegistrationLog;
 use Bromo\Seller\Models\ShopStatus;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,14 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
         try {
             $shop = $this->approval($id, ShopStatus::VERIFIED);
+            ShopRegistrationLog::create([
+                'shop_id' => $id,
+                'shop_snapshot' => null,
+                'status' => ShopStatus::VERIFIED,
+                'notes' => '',
+                'modified_by' => auth()->user()->id,
+                'modifier_role' => auth()->user()->role_id
+            ]);
             nbs_helper()->flashSuccess('Shop has been Verified');
 
             // Send notification
@@ -57,7 +66,7 @@ class SellerController extends BaseResourceController
                             "title" => "Approved",
                             "message" => "Your Shop has been Approved"
                         ])
-                        ->setTokens($token)
+                        ->setTokens($token->toArray())
                         ->sendToDevice();
                 }
             }
@@ -83,6 +92,24 @@ class SellerController extends BaseResourceController
         try {
             $shop = $this->model->findOrFail($id);
             $owner = $shop->business->getOwner();
+
+            $shop->update([
+                'status' => ShopStatus::REJECTED
+            ]);
+            $shop->statusNotes()->create([
+                'shop_snapshot' => $shop->getOriginal(),
+                'status' => ShopStatus::REJECTED,
+                'notes' => $request->input('notes')
+            ]);
+            ShopRegistrationLog::create([
+                'shop_id' => $id,
+                'shop_snapshot' => $shop,
+                'status' => ShopStatus::REJECTED,
+                'notes' => $request->input('notes'),
+                'modified_by' => auth()->user()->id,
+                'modifier_role' => auth()->user()->role_id
+            ]);
+
             if (!is_null($owner)) { // check owner is exist
                 $token = $owner->getNotificationTokens();
                 if (count($token) > 0) { // check token is exists
@@ -92,17 +119,11 @@ class SellerController extends BaseResourceController
                             "title" => "Rejected",
                             "message" => "Your Shop has been Rejected"
                         ])
-                        ->setTokens($token)
+                        ->setTokens($token->toArray())
                         ->sendToDevice();
                 }
             }
-            $shop->statusNotes()->create([
-                'shop_snapshot' => $shop->getOriginal(),
-                'status' => ShopStatus::REJECTED,
-                'notes' => $request->input('notes')
-            ]);
-            $shop->index()->delete();
-            $shop->delete();
+
             DB::commit();
             nbs_helper()->flashSuccess('Shop has been Rejected');
 
