@@ -18,8 +18,10 @@ if (!function_exists('nbs_helper')) {
 }
 
 if (!function_exists('nbs_asset')) {
-    function nbs_asset($path, $secure = null)
+    function nbs_asset($path)
     {
+        $secure = config('themes.app_secure');
+
         return themes()->url($path, $secure);
     }
 }
