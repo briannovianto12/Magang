@@ -106,11 +106,11 @@ class SellerController extends BaseResourceController
                 ->orderBy('updated_at', 'desc')
                 ->first();
 
-            $encode = json_decode($latestRegistrationLog['shop_snapshot'], true);
+            $decodeData = json_decode($latestRegistrationLog['shop_snapshot'], true);
 
             $snapshot = [
                 'changes' => [],
-                'data' => $encode['data'] ?? $encode
+                'data' => $decodeData['data'] ?? $decodeData
             ];
 
             ShopRegistrationLog::create([
