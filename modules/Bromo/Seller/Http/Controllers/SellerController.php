@@ -101,9 +101,21 @@ class SellerController extends BaseResourceController
                 'status' => ShopStatus::REJECTED,
                 'notes' => $request->input('notes')
             ]);
+            $oldestLog = ShopRegistrationLog::query()
+                ->where('shop_id', $shop->id)
+                ->orderBy('updated_at', 'desc')
+                ->first();
+
+            $encode = json_decode($oldestLog['shop_snapshot'], true);
+
+            $snapshot = [
+                'changes' => [],
+                'data' => $encode['data'] ?? $encode
+            ];
+
             ShopRegistrationLog::create([
                 'shop_id' => $id,
-                'shop_snapshot' => $shop,
+                'shop_snapshot' => $snapshot,
                 'status' => ShopStatus::REJECTED,
                 'notes' => $request->input('notes'),
                 'modified_by' => auth()->user()->id,
