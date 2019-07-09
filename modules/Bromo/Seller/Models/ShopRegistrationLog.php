@@ -19,8 +19,10 @@ class ShopRegistrationLog extends Model
         'status',
         'notes',
         'modified_by',
-        'modifier_role',
+        'modifier_role'
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     public function setShopSnapshotAttribute($value)
     {
