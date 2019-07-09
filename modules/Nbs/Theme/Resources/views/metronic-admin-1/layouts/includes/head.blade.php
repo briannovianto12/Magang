@@ -17,8 +17,8 @@
 </script>
 <!--end::Web font -->
 <!--begin::Global Theme Styles -->
-<link href="{{ nbs_asset('vendors/base/vendors.bundle.css', env('APP_SECURE', false)) }}" rel="stylesheet">
-<link href="{{ nbs_asset('demo/default/base/style.bundle.css', env('APP_SECURE', false)) }}" rel="stylesheet">
+<link href="{{ nbs_asset('vendors/base/vendors.bundle.css') }}" rel="stylesheet">
+<link href="{{ nbs_asset('demo/default/base/style.bundle.css') }}" rel="stylesheet">
 <!--end::Global Theme Styles -->
 @yield('css')
 <!-- end::Page Snippets -->
