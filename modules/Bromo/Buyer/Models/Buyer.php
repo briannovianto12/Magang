@@ -2,6 +2,7 @@
 
 namespace Bromo\Buyer\Models;
 
+use Bromo\ProductCategory\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Utils\TimezoneAccessor;
@@ -37,6 +38,12 @@ class Buyer extends Model
     public function status()
     {
         return $this->belongsTo(BuyerStatus::class, 'status');
+    }
+
+    public function interests()
+    {
+        return $this->belongsToMany(ProductCategory::class, 'user_interest', 'user_id', 'category_id')
+            ->using(UserInterest::class);
     }
 
     public function businesses()
