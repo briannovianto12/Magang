@@ -26,6 +26,7 @@ class BuyerController extends BaseResourceController
         $data = $this->model->findOrFail($id);
         $data->sessions()->delete();
         $data->businesses()->detach();
+        $data->interests()->detach();
         $data->delete();
 
         return $data;
