@@ -1,24 +1,12 @@
 @extends('theme::layouts.master')
 
+@section('scripts')
+    <script src="{{ asset('vendor/qiscus/js/lib/qiscus-sdk-core.min.js') }}"></script>
+
+    @include('store::js')
+@endsection
+
 @section('content')
-
-    @component('components.modals.basic', [
-        'modalId' => 'verify',
-        'method' => 'POST',
-        'route' => route("{$module}.verify", $data->id),
-        'title' => __('Verify Seller'),
-        'body' => 'Are you sure ?'
-    ])
-    @endcomponent
-
-    @component('components.modals.basic', [
-        'modalId' => 'reject',
-        'method' => 'POST',
-        'route' => route("{$module}.reject", $data->id),
-        'title' => __('Reject Seller'),
-        'body' => ['textarea' => ['name' => 'notes']],
-    ])
-    @endcomponent
 
     @component('components._portlet', [
           'portlet_head' => true,
@@ -28,6 +16,57 @@
           'postfix_back' => 'Back',
           'body_class' => 'pt-0'])
         @slot('body')
+
+            <!--begin::Modal-->
+            <div class="modal fade" id="verify" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{ route("{$module}.verify", $data->id) ?? '#' }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="modal-header">
+                                <h5 class="modal-title title">{{ __('Verify Seller') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Are you sure??</div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button name="submit" type="button" class="btn btn-primary">Yes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal-->
+
+            <!--begin::Modal-->
+            <div class="modal fade" id="reject" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{ route("{$module}.reject", $data->id) ?? '#' }}" method="POST">
+                            {{ csrf_field() }}
+                            <div class="modal-header">
+                                <h5 class="modal-title title">{{ __('Reject Seller') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <textarea name="notes" id="" cols="30" rows="10" class="form-control"
+                                          placeholder="Type here reason..."></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button name="submit" type="button" class="btn btn-primary">Yes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal-->
 
             @component('components._widget-list')
                 @slot('body')
@@ -61,13 +100,13 @@
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Status') }}</span>
-                                    <span>{{ $data->status_name }}</span>
+                                    <span name="shop_status">{{ $data->status_name }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Created At') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
                                 </div>
-                                <div class="m-widget28__tab-item">
+                                <div id="approval" class="m-widget28__tab-item">
                                     @if(in_array($data->status, [
                                         \Bromo\Seller\Models\ShopStatus::REG_SUBMITTED,
                                         \Bromo\Seller\Models\ShopStatus::SURVEY_SUBMITTED

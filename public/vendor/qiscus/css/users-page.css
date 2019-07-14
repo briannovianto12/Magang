@@ -1,0 +1,151 @@
+.Users {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.Users .toolbar {
+    flex: 0 0 48px;
+    display: flex;
+    border-bottom: 1px solid #ececec;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.Users .toolbar button {
+    flex: 0;
+    flex-basis: 48px;
+    background: none;
+    border: none;
+    display: flex;
+    align-content: center;
+    cursor: pointer;
+}
+
+.Users .toolbar-title {
+    font-weight: 600;
+    font-size: 18px;
+    text-align: left;
+    color: #362c33;
+}
+
+.Users .create-group-btn {
+    flex: 0 0 45px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: none;
+    border-bottom: 1px solid #ececec;
+    font-size: 14px;
+    color: #2C2C36;
+    text-indent: 12px;
+    padding: 0 6px;
+    cursor: pointer;
+}
+
+.Users .search-container {
+    flex: 0 0 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ececec;
+    padding: 0 5px;
+}
+
+.Users .icon.icon-search {
+    flex: 0;
+    flex-basis: 30px;
+    background-size: 15px;
+}
+
+.Users input[type="text"] {
+    flex: 1;
+    height: 100%;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+}
+
+.Users .contact-list-container {
+    flex: 1;
+    height: 100%;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.Users .contact-list-title {
+    flex: 0;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #666;
+    padding: 10px;
+}
+
+.Users .contact-list {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: white;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.Users .contact-list .scrollspy {
+    /* height: 50px; */
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Users .contact-item {
+    display: flex;
+    height: 46.5px;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.Users .contact-item img {
+    flex: 0;
+    flex-basis: 30px;
+    overflow: hidden;
+    object-fit: cover;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.Users .contact-item .name {
+    flex: 1;
+    font-size: 14px;
+    color: #2c2c36;
+    margin-left: 15px;
+    border-bottom: 1px solid #ececec;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+.Users .contact-list .load-more {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.Users .contact-list .load-more button {
+    background: #94ca62;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}

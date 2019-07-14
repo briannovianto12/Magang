@@ -1,0 +1,14 @@
+{
+  "name": "HostToHost",
+  "alias": "hosttohost",
+  "description": "",
+  "keywords": [],
+  "active": 1,
+  "order": 0,
+  "providers": [
+    "Bromo\\HostToHost\\Providers\\HostToHostServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

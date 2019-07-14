@@ -1,0 +1,902 @@
+.ChatList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.ChatList .Toolbar .avatar-btn img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.ChatList .empty-content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ChatList img.empty-logo {
+    margin-top: 50px;
+}
+
+.ChatList .empty-title {
+    margin-top: 23px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #666666;
+}
+
+.ChatList .empty-description {
+    margin-top: 12px;
+    line-height: 19px;
+    font-size: 13px;
+    color: #666666;
+}
+
+.ChatList button.start-chat {
+    margin-top: 40px;
+    background: #94CA62;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: #FFFFFF;
+    border: none;
+    height: 36px;
+    width: 138px;
+    text-transform: uppercase;
+}
+
+/* Room list */
+.ChatList .room-list {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.ChatList .room-list .scrollspy {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ChatList .room-item {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px 16px;
+    cursor: pointer;
+}
+
+.ChatList .room-data-container {
+    display: flex;
+    flex: 1;
+    border-bottom: 1px solid #ececec;
+    margin-left: 16px;
+    padding-bottom: 16px;
+}
+
+.ChatList img.room-avatar {
+    flex: 0;
+    flex-basis: 40px;
+    flex-shrink: 0;
+    object-fit: cover;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.ChatList .room-content {
+    flex: 1;
+}
+
+.ChatList .room-content .room-name {
+    font-size: 14px;
+    color: #2c2c36;
+}
+
+.ChatList .room-content .room-last-message {
+    font-size: 11px;
+    color: #979797;
+    max-width: 175px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ChatList .room-meta {
+    flex: 0;
+    flex-basis: 55px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.ChatList .room-meta .room-time {
+    font-size: 10px;
+    text-align: right;
+    color: #979797;
+}
+
+.ChatList .room-meta .room-unread-count {
+    font-size: 10px;
+    color: white;
+    background: #94ca62;
+    border-radius: 50%;
+    min-width: 14px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Chat room */
+.Chat {
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    height: 100%;
+}
+
+.Chat .ToolbarChatRoom {
+    overflow: hidden;
+    height: 48px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 0.5px solid #e8e8e8;
+}
+
+.Chat .ToolbarChatRoom button.btn-icon {
+    background: none;
+    border: none;
+    height: 40px;
+    width: 40px;
+    flex-basis: 40px;
+    flex: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.Chat .ToolbarChatRoom .room-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.Chat .ToolbarChatRoom .room-name {
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: #362c33;
+}
+
+.Chat .ToolbarChatRoom .online-status {
+    font-size: 11px;
+    text-align: center;
+    color: #4BC2C6;
+}
+
+.Chat .ToolbarChatRoom .online-status.--offline {
+    color: #949494;
+}
+
+.Chat .ToolbarChatRoom .online-status.participant-list {
+    color: #979797;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.Chat .ToolbarChatRoom img.avatar {
+    flex: 0 0 30px;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.Chat .comment-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1 auto;
+    height: 0;
+}
+
+.Chat .comment-list-container ul {
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+}
+
+.Chat .comment-list-container .load-more,
+.ChatList .room-list .load-more {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.Chat .comment-list-container .load-more-btn,
+.ChatList .room-list .load-more button {
+    background: #4BC2C6;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.Chat .comment-list-container .comment-item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Chat .comment-list-container .comment-item:last-child {
+    margin-bottom: 10px;
+}
+
+.Chat .comment-list-container .message-container {
+    background: #E8E8E8;
+    box-shadow: 0px 7px 16px rgba(199, 199, 199, 0.25);
+    border-radius: 4px;
+    line-height: 23px;
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /*max-width: 200px;*/
+
+    /* edited by Diar*/
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.Chat .comment-list-container .comment-item[data-comment-type=upload] .message-container,
+.Chat .comment-list-container .comment-item[data-comment-type=image] .message-container {
+    width: 200px;
+    height: 120px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.Chat .comment-list-container .comment-item[data-comment-type=uploading] a {
+    position: relative;
+}
+
+.Chat .comment-list-container .comment-item .upload-overlay {
+    background: rgba(177, 177, 177, 0.5);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.Chat .comment-list-container .comment-item .progress {
+    height: 10px;
+    border-radius: 3px;
+    width: 80%;
+    background: #fafafa;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.Chat .comment-list-container .comment-item .progress-inner {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: #94ca62;
+}
+
+.Chat .comment-list-container .message-container a {
+    height: 100%;
+    width: 100%;
+}
+
+
+.Chat .comment-list-container .comment-item[data-comment-type=upload-file] a,
+.Chat .comment-list-container .comment-item[data-comment-type=file] a {
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 18px;
+    font-size: 10px;
+    color: #666666;
+}
+
+
+.Chat .comment-list-container .comment-item[data-comment-type=upload-file] .comment-file,
+.Chat .comment-list-container .comment-item[data-comment-type=file] .comment-file {
+    display: flex;
+    padding: 10px;
+    background: #fafafa;
+    border-left: 4px solid #4BC2C6;
+    border-radius: 3px;
+    align-items: center;
+}
+
+.Chat .comment-list-container .message-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.Chat .comment-list-container .comment-item.me {
+    flex-direction: row-reverse;
+}
+
+.Chat .comment-list-container .comment-item .icon {
+    display: none;
+}
+
+.Chat .comment-list-container .comment-item[data-comment-type=file] .icon {
+    display: block;
+}
+
+.Chat .comment-list-container .comment-item.me .icon {
+    display: block;
+}
+
+.Chat .comment-list-container .comment-item.me .message-container {
+    background: white;
+}
+
+.Chat .comment-list-container .message-time {
+    font-size: 10px;
+    text-align: right;
+    color: #979797;
+    margin-right: 5px;
+}
+
+.Chat .comment-list-container .icon {
+    margin-right: 5px;
+    margin-left: auto;
+}
+
+.Chat .comment-item:hover .message-meta {
+    display: none;
+}
+
+.Chat .comment-item .message-deleter {
+    display: none;
+}
+
+.Chat .comment-item:hover .message-deleter {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.Chat .comment-item .message-deleter button {
+    background: white;
+    border: none;
+    box-shadow: 0px 7px 16px rgba(199, 199, 199, 0.25);
+    border-radius: 4px;
+    line-height: 23px;
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    max-width: 200px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.Chat .comment-item .message-deleter button:hover {
+    background: #ececec;
+}
+
+.Chat .empty-title {
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    color: #666;
+    margin-top: 24px;
+}
+
+.Chat .empty-description {
+    line-height: 19px;
+    font-size: 13px;
+    text-align: center;
+    color: #666;
+    margin: 0;
+    margin-top: 12px;
+}
+
+.Chat .message-form {
+    flex: 0;
+    height: 48px;
+    flex-basis: 48px;
+    background: white;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid #E8E8E8;
+}
+
+.Chat .message-form button {
+    background: white;
+    border: none;
+    flex: 0;
+    flex-basis: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.Chat .message-form input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+}
+
+.Chat .attachment-overlay {
+    background: rgba(0, 0, 0, .5);
+    top: 29px;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+}
+
+.Chat ul.attachment-picker-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    width: 100%;
+    background: whitesmoke;
+    bottom: 0;
+}
+
+.Chat button.attachment-btn {
+    background: white;
+    border: 0;
+    width: 100%;
+    display: flex;
+    height: 48px;
+    align-items: center;
+    cursor: pointer;
+    text-indent: 15px;
+    padding: 0 16px;
+}
+
+
+/* Attachment Caption */
+::placeholder {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 25px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: #979797;
+}
+
+.AttachmentCaptioning {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 30px);
+    position: absolute;
+    background: white;
+}
+
+.AttachmentCaptioning .toolbar {
+    display: flex;
+    height: 48px;
+    flex: 0;
+    flex-basis: 48px;
+    border-bottom: 1px solid #ececec;
+}
+
+.AttachmentCaptioning .toolbar button {
+    flex: 0;
+    flex-basis: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.AttachmentCaptioning .toolbar .file-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    color: #362C33;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-indent: -48px;
+}
+
+.AttachmentCaptioning .image-preview-container {
+    flex: 1;
+}
+
+.AttachmentCaptioning .image-preview-container .attachment-preview {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    object-fit: contain;
+    background: #fafafa;
+}
+
+.AttachmentCaptioning .caption-form-container {
+    flex: 0;
+    flex-basis: 48px;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid #ececec;
+}
+
+.AttachmentCaptioning .caption-form-container input {
+    flex: 1;
+    padding: 5px 10px;
+    border: 0;
+    outline: none;
+}
+
+.AttachmentCaptioning .caption-form-container button {
+    flex: 0;
+    flex-basis: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Profile */
+
+.container-profile {
+    width: 328px;
+    font-size: 11px;
+    line-height: 15px;
+}
+
+.container-profile .subcontainer-profile {
+    width: 100%;
+    min-height: 100px;
+
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container-profile span {
+    display: block;
+}
+
+.container-profile .head-profile {
+    min-height: 61px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    background: #FAFAFA;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.container-profile .head-profile img.avatar {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 37.06px;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.container-profile .user {
+    margin-left: 20%;
+    text-align: left;
+    width: 200px;
+}
+
+.container-profile .user b,
+.container-product .user b,
+.container-quotation .user b {
+    font-size: 13px;
+}
+
+.container-profile .content-profile {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    text-align: left;
+}
+
+.container-profile .content-profile .subcontent-profile {
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.container-profile .content-profile .title-profile {
+    font-size: 10px;
+    color: #666666;
+}
+
+.container-profile .profile-caption {
+    text-align: left;
+    margin-top: 10px;
+}
+
+/* Product */
+
+.container-product {
+    width: 254px;
+    min-height: 72px;
+    font-size: 11px;
+    text-align: left;
+    line-height: 15px;
+}
+
+.container-product .content-product {
+    width: 100%;
+    height: 85px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container-product .content-product img.product-image {
+    position: relative;
+    float: left;
+    width: 72px !important;
+    height: 72px !important;
+    background: #2CC0C0;
+    margin-right: 10px;
+}
+
+.container-product .content-product .product-shop {
+    position: relative;
+    float: left;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.container-product .content-product .product-shop img.avatar {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 37.06px;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.container-product .content-product .product-shop .user {
+    float: left;
+    width: 102px;
+    margin-bottom: 2px;
+}
+
+.container-product .content-product .product-shop .user span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+}
+
+.container-product .product-name {
+    font-size: 13px;
+    position: relative;
+    margin-top: 7px;
+    margin-left: 5px;
+    float: left;
+    width: 148px;
+    display: block;
+}
+
+.container-product .product-name b {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+}
+
+.container-product .product-name span {
+    font-size: 11px;
+}
+
+.container-product .product-caption {
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.list-content-product {
+    height: 130px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-x: hidden;
+    text-align: center
+}
+
+.list-content-product .list-inline-item {
+    height: 100px;
+    width: 90px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0px 7px 16px rgba(199, 199, 199, 0.25);
+
+    margin-top: 5px;
+}
+
+.list-content-product .list-inline-item button {
+    width: 90px;
+    background: #FFFFFF;
+    border: 0;
+    cursor: pointer;
+}
+
+.list-content-product .list-inline-item div {
+    height: 70px;
+}
+
+.list-content-product .list-inline-item button img {
+    width: 70px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.list-content-product .list-inline-item button span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+}
+
+.cancel-product {
+    background: #F5F5F5;
+    border: 0;
+    height: 24px;
+    cursor: pointer;
+    float: right;
+    clear: both;
+}
+
+/* Quotation */
+
+.container-quotation {
+    width: 328px;
+    font-size: 11px;
+    line-height: 15px;
+}
+
+.container-quotation .subcontainer-quotation {
+    width: 100%;
+
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.container-quotation span {
+    display: block;
+}
+
+.container-quotation .head-quotation {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    background: #FAFAFA;
+    border: 1px solid #F1F1F1;
+    box-sizing: border-box;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.container-quotation .user {
+    position: relative;
+    text-align: left;
+    width: 200px;
+}
+
+.container-quotation .user span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}
+
+.container-quotation .content-quotation {
+    padding: 10px;
+
+    text-align: center;
+}
+
+.container-quotation .content-quotation .subcontent-quotation {
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.Chat .comment-item .message-quotation {
+    display: none;
+    margin-left: 10px;
+}
+
+.Chat .comment-item:hover .message-quotation {
+    display: flex;
+    align-items: center;
+}
+
+.Chat .comment-item .message-quotation button {
+    background: white;
+    border: none;
+    box-shadow: 0px 7px 16px rgba(199, 199, 199, 0.25);
+    border-radius: 4px;
+    line-height: 23px;
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.Chat .comment-list-container .comment-item .message-quotation button .icon {
+    display: block;
+    margin-right: 0px;
+}
+
+.Chat .comment-list-container .message-container {
+    background: #FFFFFF;
+}
+
+.Chat .comment-list-container .comment-item.me .message-container {
+    text-align: left;
+}

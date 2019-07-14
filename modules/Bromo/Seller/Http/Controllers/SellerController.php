@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Modules\Bromo\HostToHost\Services\RequestService;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
 class SellerController extends BaseResourceController
@@ -54,11 +55,14 @@ class SellerController extends BaseResourceController
                 'modified_by' => auth()->user()->id,
                 'modifier_role' => auth()->user()->role_id
             ]);
-            nbs_helper()->flashSuccess('Shop has been Verified');
 
-            // Send notification
+            //Send notification
             $owner = $shop->business->getOwner();
+
             if (!is_null($owner)) { // check owner is exist
+
+                $qiscusToken = $this->getJwt($owner->id);
+
                 $token = $owner->getNotificationTokens();
                 if (count($token) > 0) { // check token is exists
                     firebase()
@@ -70,15 +74,23 @@ class SellerController extends BaseResourceController
                         ->sendToDevice();
                 }
             }
+            $data = [
+                'token' => $qiscusToken ?? '',
+                'app_id' => config('chat.app_id'),
+                'shop_status' => 'Verified'
+            ];
+
             DB::commit();
+            return response()->json($data, 200);
 
         } catch (Exception $exception) {
             report($exception);
-            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
             DB::rollBack();
-        }
 
-        return redirect()->back();
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], $exception->getCode());
+        }
 
     }
 
@@ -136,16 +148,22 @@ class SellerController extends BaseResourceController
                 }
             }
 
+            $data = [
+                'shop' => $shop,
+                'shop_status' => 'Rejected'
+            ];
+
             DB::commit();
-            nbs_helper()->flashSuccess('Shop has been Rejected');
+            return response()->json($data, 200);
 
         } catch (Exception $exception) {
             report($exception);
             DB::rollBack();
-            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
-        }
 
-        return redirect("{$this->module}");
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], $exception->getCode());
+        }
     }
 
     /**
@@ -161,6 +179,58 @@ class SellerController extends BaseResourceController
         ]);
 
         return $data;
+    }
+
+    /**
+     * Get jwt token.
+     *
+     * @return string
+     */
+    private function getJwt($id): string
+    {
+        $nonce = $this->getNonce();
+        $endpoint = config('hosttohost.api') .
+            "/business/sellers/chats/tokens/{$nonce}?user_id={$id}";
+
+        $service = new RequestService();
+        $headers = [
+            'Authorization' => config('chat.token'),
+        ];
+
+        $response = $service->setUrl($endpoint)
+            ->setHeaders($headers)
+            ->get();
+
+        $result = $this->response($response);
+        $content = $result->getContent();
+        $data = json_decode($content, true);
+
+        return $data['data']['token'];
+    }
+
+    /**
+     * Get nonce.
+     *
+     * @return string
+     */
+    private function getNonce(): string
+    {
+        $endpoint = 'https://api.qiscus.com/api/v2/sdk/auth/nonce';
+        $service = new RequestService();
+        $headers = [
+            'qiscus_sdk_app_id' => config('chat.app_id'),
+        ];
+
+        $response = $service->setUrl($endpoint)
+            ->setHeaders($headers)
+            ->post();
+
+        $result = $this->response($response);
+        $content = $result->getContent();
+        $data = json_decode($content, true);
+        $this->nonce = $data['data']['results']['nonce'];
+
+        return $data['data']['results']['nonce'];
     }
 
 }
