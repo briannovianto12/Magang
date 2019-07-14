@@ -55,11 +55,14 @@ class SellerController extends BaseResourceController
                 'modified_by' => auth()->user()->id,
                 'modifier_role' => auth()->user()->role_id
             ]);
-            nbs_helper()->flashSuccess('Shop has been Verified');
 
-            // Send notification
+            //Send notification
             $owner = $shop->business->getOwner();
+
             if (!is_null($owner)) { // check owner is exist
+
+                $qiscusToken = $this->getJwt($owner->id);
+
                 $token = $owner->getNotificationTokens();
                 if (count($token) > 0) { // check token is exists
                     firebase()
@@ -71,15 +74,23 @@ class SellerController extends BaseResourceController
                         ->sendToDevice();
                 }
             }
+            $data = [
+                'token' => $qiscusToken ?? '',
+                'app_id' => config('chat.app_id'),
+                'shop_status' => 'Verified'
+            ];
+
             DB::commit();
+            return response()->json($data, 200);
 
         } catch (Exception $exception) {
             report($exception);
-            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
             DB::rollBack();
-        }
 
-        return redirect()->back();
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], $exception->getCode());
+        }
 
     }
 
@@ -137,16 +148,22 @@ class SellerController extends BaseResourceController
                 }
             }
 
+            $data = [
+                'shop' => $shop,
+                'shop_status' => 'Rejected'
+            ];
+
             DB::commit();
-            nbs_helper()->flashSuccess('Shop has been Rejected');
+            return response()->json($data, 200);
 
         } catch (Exception $exception) {
             report($exception);
             DB::rollBack();
-            nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
-        }
 
-        return redirect("{$this->module}");
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], $exception->getCode());
+        }
     }
 
     /**
