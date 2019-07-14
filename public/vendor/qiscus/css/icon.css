@@ -1,0 +1,150 @@
+.icon {
+    display: block;
+    height: 25px;
+    width: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-new-chat {
+    background-image: url(../img/icon-new-chat.svg);
+    background-position-x: -3px;
+}
+
+.icon-arrow-right {
+    background-image: url(../img/icon-arrow.svg);
+}
+
+.icon-arrow-right-green {
+    background-image: url(../img/icon-arrow-right-green.svg);
+}
+
+.icon-arrow-back {
+    background-image: url(../img/icon-arrow-back.svg);
+}
+
+.icon-arrow-left-green {
+    background-image: url(../img/icon-arrow-left-green.svg);
+}
+
+.icon-attachment {
+    background-image: url(../img/icon-attachment.svg);
+}
+
+.icon-send {
+    background-image: url(../img/icon-send.svg);
+}
+
+.icon-message-delivered {
+    background-color: #757575;
+    mask: url(../img/icon-message-read.svg);
+    -webkit-mask: url(../img/icon-message-read.svg);
+    width: 16px;
+    height: 9px;
+}
+
+.icon-message-sent {
+    background-image: url(../img/icon-message-sent.svg);
+    width: 12px;
+    height: 9px;
+}
+
+.icon-message-read {
+    background-image: url(../img/icon-message-read.svg);
+    height: 9px;
+    width: 16px;
+}
+
+.icon-message-failed {
+    background-image: url(../img/icon-message-failed.svg);
+}
+
+.icon-add-quotation {
+    background-image: url(../img/icon-add-quotation.svg);
+}
+
+@keyframes rotating {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+.icon-message-sending {
+    background-image: url(../img/icon-message-sending.svg);
+    height: 10px;
+    width: 10px;
+    animation: rotating 2s infinite linear;
+}
+
+.icon-attachment-file {
+    background-image: url(../img/icon-file-attachment.svg);
+}
+
+.icon-attachment-profile {
+    background-image: url(../img/icon-profile-attachment.svg);
+}
+
+.icon-attachment-cancel {
+    background-image: url(../img/icon-cancel.svg);
+}
+
+.icon-attachment-image {
+    background-image: url(../img/icon-image-attachment.svg);
+}
+
+.icon-attachment-product {
+    background-image: url(../img/icon-product-attachment.svg);
+}
+
+.icon-search {
+    background-image: url(../img/icon-search.svg);
+}
+
+.icon-new-chat-group {
+    background-image: url(../img/icon-new-chat-group.svg);
+}
+
+.icon-cross-red {
+    background-image: url(../img/icon-cross-red.svg);
+}
+
+.icon-check-green {
+    background-image: url(../img/icon-check-green.svg);
+}
+
+.icon-check {
+    background-image: url(../img/icon-check.svg);
+}
+
+.icon-avatar-picker {
+    background-image: url(../img/icon-avatar-picker.svg);
+}
+
+.icon-id-card {
+    background-image: url(../img/icon-id-card.svg);
+}
+
+.icon-user {
+    background-image: url(../img/icon-user.svg);
+}
+
+.icon-pencil-grey {
+    background-image: url(../img/icon-pencil-grey.svg);
+}
+
+.icon-pencil-white {
+    background-image: url(../img/icon-pencil-white.svg);
+}
+
+.icon-logout {
+    background-image: url(../img/icon-logout.svg);
+}
+
+.icon-add-participant {
+    background-image: url(../img/icon-add-participant.svg);
+}
