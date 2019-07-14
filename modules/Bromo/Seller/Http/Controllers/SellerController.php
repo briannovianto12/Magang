@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Modules\Bromo\HostToHost\Services\RequestService;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
 class SellerController extends BaseResourceController
@@ -161,6 +162,58 @@ class SellerController extends BaseResourceController
         ]);
 
         return $data;
+    }
+
+    /**
+     * Get jwt token.
+     *
+     * @return string
+     */
+    private function getJwt($id): string
+    {
+        $nonce = $this->getNonce();
+        $endpoint = config('hosttohost.api') .
+            "/business/sellers/chats/tokens/{$nonce}?user_id={$id}";
+
+        $service = new RequestService();
+        $headers = [
+            'Authorization' => config('chat.token'),
+        ];
+
+        $response = $service->setUrl($endpoint)
+            ->setHeaders($headers)
+            ->get();
+
+        $result = $this->response($response);
+        $content = $result->getContent();
+        $data = json_decode($content, true);
+
+        return $data['data']['token'];
+    }
+
+    /**
+     * Get nonce.
+     *
+     * @return string
+     */
+    private function getNonce(): string
+    {
+        $endpoint = 'https://api.qiscus.com/api/v2/sdk/auth/nonce';
+        $service = new RequestService();
+        $headers = [
+            'qiscus_sdk_app_id' => config('chat.app_id'),
+        ];
+
+        $response = $service->setUrl($endpoint)
+            ->setHeaders($headers)
+            ->post();
+
+        $result = $this->response($response);
+        $content = $result->getContent();
+        $data = json_decode($content, true);
+        $this->nonce = $data['data']['results']['nonce'];
+
+        return $data['data']['results']['nonce'];
     }
 
 }
