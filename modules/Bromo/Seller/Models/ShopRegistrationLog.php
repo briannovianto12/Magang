@@ -19,7 +19,8 @@ class ShopRegistrationLog extends Model
         'status',
         'notes',
         'modified_by',
-        'modifier_role'
+        'modifier_role',
+        'version'
     ];
 
     protected $dateFormat = 'Y-m-d H:i:s.uO';
