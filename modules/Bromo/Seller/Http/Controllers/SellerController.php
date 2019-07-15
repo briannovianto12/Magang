@@ -47,13 +47,20 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
         try {
             $shop = $this->approval($id, ShopStatus::VERIFIED);
+
+            $latestRegistrationLog = ShopRegistrationLog::query()
+                ->where('shop_id', $shop->id)
+                ->orderBy('updated_at', 'desc')
+                ->first();
+
             ShopRegistrationLog::create([
                 'shop_id' => $id,
                 'shop_snapshot' => null,
                 'status' => ShopStatus::VERIFIED,
                 'notes' => '',
                 'modified_by' => auth()->user()->id,
-                'modifier_role' => auth()->user()->role_id
+                'modifier_role' => auth()->user()->role_id,
+                'version' => $latestRegistrationLog->version + 1
             ]);
 
             //Send notification
@@ -131,7 +138,8 @@ class SellerController extends BaseResourceController
                 'status' => ShopStatus::REJECTED,
                 'notes' => $request->input('notes'),
                 'modified_by' => auth()->user()->id,
-                'modifier_role' => auth()->user()->role_id
+                'modifier_role' => auth()->user()->role_id,
+                'version' => $latestRegistrationLog->version + 1
             ]);
 
             if (!is_null($owner)) { // check owner is exist
