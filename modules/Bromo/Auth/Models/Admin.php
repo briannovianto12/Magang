@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
+
+    const ADMIN = 3;
+
     protected $table = 'admin';
 
     /**

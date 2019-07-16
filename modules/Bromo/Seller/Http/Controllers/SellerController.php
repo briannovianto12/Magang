@@ -2,6 +2,7 @@
 
 namespace Bromo\Seller\Http\Controllers;
 
+use Bromo\Auth\Models\Admin;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
 use Bromo\Seller\Models\ShopRegistrationLog;
@@ -59,8 +60,8 @@ class SellerController extends BaseResourceController
                 'status' => ShopStatus::VERIFIED,
                 'notes' => '',
                 'modified_by' => auth()->user()->id,
-                'modifier_role' => auth()->user()->role_id,
-                'version' => $latestRegistrationLog->version + 1
+                'modifier_role' => Admin::ADMIN,
+                'version' => ($latestRegistrationLog->version ?? 0) + 1
             ]);
 
             //Send notification
@@ -138,8 +139,8 @@ class SellerController extends BaseResourceController
                 'status' => ShopStatus::REJECTED,
                 'notes' => $request->input('notes'),
                 'modified_by' => auth()->user()->id,
-                'modifier_role' => auth()->user()->role_id,
-                'version' => $latestRegistrationLog->version + 1
+                'modifier_role' => Admin::ADMIN,
+                'version' => ($latestRegistrationLog->version ?? 0) + 1
             ]);
 
             if (!is_null($owner)) { // check owner is exist
