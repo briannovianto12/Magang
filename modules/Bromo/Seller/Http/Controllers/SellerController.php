@@ -3,6 +3,7 @@
 namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Auth\Models\Admin;
+use Bromo\HostToHost\Traits\Result;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
 use Bromo\Seller\Models\ShopRegistrationLog;
@@ -16,6 +17,8 @@ use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 
 class SellerController extends BaseResourceController
 {
+    use Result;
+
     public function __construct(Shop $model, SellerDataTable $dataTable)
     {
         $this->module = 'store';
