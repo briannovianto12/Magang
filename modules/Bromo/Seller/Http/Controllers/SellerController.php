@@ -11,6 +11,7 @@ use Bromo\Seller\Models\ShopStatus;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Modules\Bromo\HostToHost\Services\RequestService;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
@@ -100,7 +101,7 @@ class SellerController extends BaseResourceController
 
             return response()->json([
                 'message' => $exception->getMessage()
-            ], $exception->getCode());
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
