@@ -98,7 +98,7 @@ class SellerController extends BaseResourceController
 
             DB::commit();
 
-            return response()->json($data, 200);
+            return response()->json($data, Response::HTTP_OK);
 
         } catch (Exception $exception) {
             report($exception);
@@ -172,7 +172,7 @@ class SellerController extends BaseResourceController
             ];
 
             DB::commit();
-            return response()->json($data, 200);
+            return response()->json($data, Response::HTTP_OK);
 
         } catch (Exception $exception) {
             report($exception);
@@ -180,7 +180,7 @@ class SellerController extends BaseResourceController
 
             return response()->json([
                 'message' => $exception->getMessage()
-            ], $exception->getCode());
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
