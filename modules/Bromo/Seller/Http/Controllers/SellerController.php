@@ -207,7 +207,7 @@ class SellerController extends BaseResourceController
 
         $service = new RequestService();
         $headers = [
-            'Authorization' => config('chat.token'),
+            'Authorization' => config('hosttohost.chat.token'),
         ];
 
         $response = $service->setUrl($endpoint)
@@ -231,7 +231,7 @@ class SellerController extends BaseResourceController
         $endpoint = 'https://api.qiscus.com/api/v2/sdk/auth/nonce';
         $service = new RequestService();
         $headers = [
-            'qiscus_sdk_app_id' => config('chat.app_id'),
+            'qiscus_sdk_app_id' => config('hosttohost.chat.app_id'),
         ];
 
         $response = $service->setUrl($endpoint)
