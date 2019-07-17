@@ -3,6 +3,7 @@
 namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Auth\Models\Admin;
+use Bromo\Buyer\Models\Buyer;
 use Bromo\HostToHost\Traits\Result;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
@@ -73,8 +74,6 @@ class SellerController extends BaseResourceController
 
             if (!is_null($owner)) { // check owner is exist
 
-                $qiscusToken = $this->getJwt($owner->id);
-
                 $token = $owner->getNotificationTokens();
                 if (count($token) > 0) { // check token is exists
                     firebase()
@@ -86,18 +85,29 @@ class SellerController extends BaseResourceController
                         ->sendToDevice();
                 }
             }
+
             $data = [
-                'token' => $qiscusToken ?? '',
-                'app_id' => config('chat.app_id'),
-                'shop_status' => 'Verified'
+                'user_id' => $owner->id ?? null,
+                'user_name' => $owner->full_name ?? null,
+                'business_id' => $owner->business->id ?? null,
+                'business_name' => $owner->business->name ?? null,
+                'shop_id' => $shop->id ?? null,
+                'shop_name' => $shop->name ?? null,
+                'shop_status' => $shop->status
             ];
 
             DB::commit();
-            return response()->json($data, 200);
+
+            return response()->json($data, Response::HTTP_OK);
 
         } catch (Exception $exception) {
             report($exception);
             DB::rollBack();
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                return response()->json([
+                    'message' => $exception->getMessage()
+                ], $exception->getCode());
+            }
 
             return response()->json([
                 'message' => $exception->getMessage()
@@ -167,7 +177,7 @@ class SellerController extends BaseResourceController
             ];
 
             DB::commit();
-            return response()->json($data, 200);
+            return response()->json($data, Response::HTTP_OK);
 
         } catch (Exception $exception) {
             report($exception);
@@ -175,7 +185,7 @@ class SellerController extends BaseResourceController
 
             return response()->json([
                 'message' => $exception->getMessage()
-            ], $exception->getCode());
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -183,15 +193,47 @@ class SellerController extends BaseResourceController
      * @param $id
      * @param int $status
      * @return Model
+     * @throws Exception
      */
     public function approval($id, int $status)
     {
         $data = $this->model->find($id);
+
+        if (is_null($data->business->getOwner())) {
+            throw new Exception("The Shop doesn't have members", Response::HTTP_BAD_REQUEST);
+        }
+
         $data->update([
             'status' => $status
         ]);
 
         return $data;
+    }
+
+    public function requestJwt(Request $request)
+    {
+        try {
+            $userId = $request->input('user_id');
+
+            $user = Buyer::findOrFail($userId);
+
+            $qiscusToken = $this->getJwt($user->id);
+
+            $data = [
+                'token' => $qiscusToken ?? '',
+                'app_id' => config('hosttohost.chat.app_id'),
+                'shop_status' => 'Verified'
+            ];
+
+            return response()->json($data, Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+            report($exception);
+
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -207,7 +249,7 @@ class SellerController extends BaseResourceController
 
         $service = new RequestService();
         $headers = [
-            'Authorization' => config('chat.token'),
+            'Authorization' => config('hosttohost.chat.token'),
         ];
 
         $response = $service->setUrl($endpoint)
@@ -231,7 +273,7 @@ class SellerController extends BaseResourceController
         $endpoint = 'https://api.qiscus.com/api/v2/sdk/auth/nonce';
         $service = new RequestService();
         $headers = [
-            'qiscus_sdk_app_id' => config('chat.app_id'),
+            'qiscus_sdk_app_id' => config('hosttohost.chat.app_id'),
         ];
 
         $response = $service->setUrl($endpoint)
