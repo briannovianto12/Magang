@@ -1,0 +1,14 @@
+{
+    "name": "GroseniaTheme",
+    "alias": "groseniatheme",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Bromo\\GroseniaTheme\\Providers\\GroseniaThemeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

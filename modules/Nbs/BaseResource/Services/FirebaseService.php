@@ -112,7 +112,7 @@ class FirebaseService
         return $this->firebase;
     }
 
-    public function setTokens(array $tokens): self
+    public function setTokens($tokens): self
     {
         $this->tokens = $tokens;
 
