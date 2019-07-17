@@ -89,7 +89,11 @@
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Price') }}</span>
-                                    <span>IDR {{ number_format($data->price_min) ?? '-' }} - IDR {{ number_format($data->price_max) ?? '-' }}</span>
+                                    @if($data->price_min != $data->price_max)
+                                        <span>IDR {{ number_format($data->price_min) ?? '-' }} - IDR {{ number_format($data->price_max) ?? '-' }}</span>
+                                    @else
+                                        <span>IDR {{ number_format($data->price_min) ?? '-' }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -282,7 +286,7 @@
                                                                         <div class="m-widget5__section">
                                                                             <h4 class="m-widget5__title">
                                                                                 Option-{{ $key + 1 }}</h4>
-                                                                            <span class="m-widget5__desc">Margin: 1%</span>
+                                                                            <span class="m-widget5__desc">Margin: 0%</span>
                                                                             <div class="m-widget5__info">
                                                                                 <ul class="list-inline">
                                                                                     <li class="list-inline-item">

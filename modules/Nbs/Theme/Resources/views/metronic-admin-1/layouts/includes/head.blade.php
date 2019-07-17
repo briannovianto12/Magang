@@ -20,6 +20,9 @@
 <link href="{{ nbs_asset('vendors/base/vendors.bundle.css') }}" rel="stylesheet">
 <link href="{{ nbs_asset('demo/default/base/style.bundle.css') }}" rel="stylesheet">
 <!--end::Global Theme Styles -->
+<!--begin::Custom Theme Styles -->
+<link href="{{ mix('css/custom.css') }}" rel="stylesheet">
+<!--end::Custom Theme Styles -->
 @yield('css')
 <!-- end::Page Snippets -->
 

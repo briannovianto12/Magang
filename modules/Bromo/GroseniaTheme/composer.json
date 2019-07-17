@@ -1,0 +1,25 @@
+{
+    "name": "Grosenia/groseniatheme",
+    "description": "Default grosenia theme",
+    "authors": [
+        {
+            "name": "Grosenia",
+            "email": "hellodev@grosenia.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\GroseniaTheme\\Providers\\GroseniaThemeServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\GroseniaTheme\\": ""
+        }
+    }
+}
