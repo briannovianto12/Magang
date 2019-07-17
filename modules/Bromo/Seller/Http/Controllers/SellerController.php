@@ -103,6 +103,11 @@ class SellerController extends BaseResourceController
         } catch (Exception $exception) {
             report($exception);
             DB::rollBack();
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                return response()->json([
+                    'message' => $exception->getMessage()
+                ], $exception->getCode());
+            }
 
             return response()->json([
                 'message' => $exception->getMessage()
@@ -188,10 +193,16 @@ class SellerController extends BaseResourceController
      * @param $id
      * @param int $status
      * @return Model
+     * @throws Exception
      */
     public function approval($id, int $status)
     {
         $data = $this->model->find($id);
+
+        if (is_null($data->business->getOwner())) {
+            throw new Exception("The Shop doesn't have members", Response::HTTP_BAD_REQUEST);
+        }
+
         $data->update([
             'status' => $status
         ]);

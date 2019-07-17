@@ -11,7 +11,7 @@
                     '_token': $('input[name="_token"]').val()
                 },
                 beforeSend: function () {
-                    $('#verify button').addClass('disabled');
+                    $('#verify button').addClass('disabled').attr('disabled', 'disabled')
                 },
                 success: function (response) {
                     var jwtUrl = $('input[name="jwt-route"]').val();
@@ -24,7 +24,6 @@
                             'user_id': userId
                         },
                         success: function (response) {
-                            console.info(response);
 
                             var token = response.token;
                             var appId = response.app_id;
@@ -54,15 +53,21 @@
                             $('#approval').hide();
                         },
                         error: function (error) {
-                            swal('Oh Snap!', 'Cannote create qiscus id', 'error');
-                            $('#verify button').removeClass('disabled');
+                            swal('Oh Snap!', 'Cannot create qiscus id', 'error');
+                            $('#verify button').removeClass('disabled').removeAttr('disabled');
                         }
                     });
 
+
                 },
-                error: function (error) {
-                    swal('Oh Snap!', 'Look like something wen\'t wrong.', 'error');
-                    $('#verify button').removeClass('disabled');
+                error: function (xhr) {
+                    if(xhr.status === 400) {
+                        swal('Cannot Approve!', xhr.responseJSON.message, 'warning');
+                    } else {
+                        swal('Oh Snap!', 'Look like something wen\'t wrong.', 'error');
+                    }
+
+                    $('#verify button').removeClass('disabled').removeAttr('disabled');
                 }
             });
         });
@@ -78,7 +83,7 @@
                     'notes': $('textarea[name="notes"]').val(),
                 },
                 beforeSend: function () {
-                    $('#reject button').addClass('disabled');
+                    $('#reject button').addClass('disabled').attr('disabled', 'disabled');
                 },
                 success: function (response) {
                     $('span[name="shop_status"]').html(response.shop_status);
@@ -89,7 +94,7 @@
                 },
                 error: function (error) {
                     swal('Oh Snap!', 'Look like something wen\'t wrong.', 'error');
-                    $('#reject button').removeClass('disabled');
+                    $('#reject button').removeClass('disabled').removeAttr('disabled');
                 }
             });
         });
