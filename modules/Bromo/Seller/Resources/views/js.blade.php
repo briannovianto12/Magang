@@ -14,32 +14,51 @@
                     $('#verify button').addClass('disabled');
                 },
                 success: function (response) {
-                    var token = response.token;
-                    var appId = response.app_id;
+                    var jwtUrl = $('input[name="jwt-route"]').val();
+                    var userId = response.user_id;
 
-                    if (token != '') {
-                        var qiscus = new QiscusSDKCore();
-                        qiscus.init({
-                            AppId: appId,
-                            options: {
-                                loginSuccessCallback: function (authData) {
-                                    console.info('success login');
-                                }
+                    $.post({
+                        url: jwtUrl,
+                        data: {
+                            '_token': $('input[name="_token"]').val(),
+                            'user_id': userId
+                        },
+                        success: function (response) {
+                            console.info(response);
+
+                            var token = response.token;
+                            var appId = response.app_id;
+
+                            if (token != '') {
+                                var qiscus = new QiscusSDKCore();
+                                qiscus.init({
+                                    AppId: appId,
+                                    options: {
+                                        loginSuccessCallback: function (authData) {
+                                            console.info('success login');
+                                        }
+                                    }
+                                });
+
+                                qiscus.verifyIdentityToken(token).then(function (userData) {
+                                    qiscus.setUserWithIdentityToken(userData);
+                                }).catch(function (error) {
+                                    alert(error);
+                                });
                             }
-                        });
 
-                        qiscus.verifyIdentityToken(token).then(function (userData) {
-                            qiscus.setUserWithIdentityToken(userData);
-                        }).catch(function (error) {
-                            alert(error);
-                        });
-                    }
+                            $('span[name="shop_status"]').html(response.shop_status);
+                            swal('Success!', 'Seller was approved', 'success');
 
-                    $('span[name="shop_status"]').html(response.shop_status);
-                    swal('Success!', 'Seller was approved', 'success');
+                            $('.modal').modal('hide');
+                            $('#approval').hide();
+                        },
+                        error: function (error) {
+                            swal('Oh Snap!', 'Cannote create qiscus id', 'error');
+                            $('#verify button').removeClass('disabled');
+                        }
+                    });
 
-                    $('.modal').modal('hide');
-                    $('#approval').hide();
                 },
                 error: function (error) {
                     swal('Oh Snap!', 'Look like something wen\'t wrong.', 'error');
