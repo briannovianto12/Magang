@@ -24,6 +24,8 @@
                     <div class="modal-content">
                         <form action="{{ route("{$module}.verify", $data->id) ?? '#' }}" method="POST">
                             {{ csrf_field() }}
+
+                            <input name="jwt-route" type="text" value="{{ route('store.token') }}" hidden>
                             <div class="modal-header">
                                 <h5 class="modal-title title">{{ __('Verify Seller') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
