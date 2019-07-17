@@ -3,6 +3,7 @@
 namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Auth\Models\Admin;
+use Bromo\Buyer\Models\Buyer;
 use Bromo\HostToHost\Traits\Result;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
@@ -73,8 +74,6 @@ class SellerController extends BaseResourceController
 
             if (!is_null($owner)) { // check owner is exist
 
-                $qiscusToken = $this->getJwt($owner->id);
-
                 $token = $owner->getNotificationTokens();
                 if (count($token) > 0) { // check token is exists
                     firebase()
@@ -86,13 +85,19 @@ class SellerController extends BaseResourceController
                         ->sendToDevice();
                 }
             }
+
             $data = [
-                'token' => $qiscusToken ?? '',
-                'app_id' => config('chat.app_id'),
-                'shop_status' => 'Verified'
+                'user_id' => $owner->id ?? null,
+                'user_name' => $owner->full_name ?? null,
+                'business_id' => $owner->business->id ?? null,
+                'business_name' => $owner->business->name ?? null,
+                'shop_id' => $shop->id ?? null,
+                'shop_name' => $shop->name ?? null,
+                'shop_status' => $shop->status
             ];
 
             DB::commit();
+
             return response()->json($data, 200);
 
         } catch (Exception $exception) {
