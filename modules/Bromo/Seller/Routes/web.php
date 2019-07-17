@@ -21,4 +21,6 @@ Route::prefix('store')->name('store')->group(function () {
 
     Route::post('{id}/reject', 'SellerController@reject')->name('.reject');
 
+    Route::post('/token', 'SellerController@requestJwt')->name('.token');
+
 });
