@@ -194,6 +194,32 @@ class SellerController extends BaseResourceController
         return $data;
     }
 
+    public function requestJwt(Request $request)
+    {
+        try {
+            $userId = $request->input('user_id');
+
+            $user = Buyer::findOrFail($userId);
+
+            $qiscusToken = $this->getJwt($user->id);
+
+            $data = [
+                'token' => $qiscusToken ?? '',
+                'app_id' => config('hosttohost.chat.app_id'),
+                'shop_status' => 'Verified'
+            ];
+
+            return response()->json($data, Response::HTTP_OK);
+
+        } catch (\Exception $exception) {
+            report($exception);
+
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /**
      * Get jwt token.
      *
