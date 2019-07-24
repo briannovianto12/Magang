@@ -14,6 +14,9 @@ class ProductApprovedDatatable extends DataTable
             ->editColumn('created_at', function ($data) {
                 return $data->created_at_formatted;
             })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at_formatted;
+            })
             ->addColumn('action', function ($data) {
                 $action = [
                     'show_url' => route("{$this->module}.show", $data->id),
