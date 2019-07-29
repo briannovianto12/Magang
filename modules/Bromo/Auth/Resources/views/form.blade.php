@@ -86,6 +86,7 @@
     <!-- end:: Page -->
 
     @include('theme::layouts.includes.js')
+    @include('auth::layouts.footer')
 
     </body>
 @endsection
