@@ -11,7 +11,10 @@ class SuccessOrderDataTable extends OrderDatatable
     {
         $query = $this->model
             ->select($this->getColumns())
-            ->whereIn('status', [OrderStatus::SUCCESS, OrderStatus::DELIVERED])
+            ->whereIn('status', [
+                OrderStatus::SUCCESS,
+                OrderStatus::DELIVERED
+            ])
             ->with('orderStatus:id,name');
 
         return $this->applyScopes($query);
