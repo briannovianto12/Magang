@@ -11,7 +11,10 @@ class CancelOrderDataTable extends OrderDatatable
     {
         $query = $this->model
             ->select($this->getColumns())
-            ->where('status', '>=', OrderStatus::CANCELED)
+            ->whereIn('status', [
+                OrderStatus::CANCELED,
+                OrderStatus::REJECTED
+            ])
             ->with('orderStatus:id,name');
 
         return $this->applyScopes($query);
