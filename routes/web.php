@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return redirect('dashboard');
 });
+
+Route::get('/status', 'StatusController@index');
