@@ -11,7 +11,9 @@
             },
             rules: {
                 email: {required: true, email: 'email'},
-                password: {required: true}
+                password: {required: true},
+                new_password: {required: true},
+                new_password_confirmation: {required: true},
             }
         });
     });

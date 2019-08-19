@@ -100,6 +100,16 @@
                                                         Logout
                                                         </a>
                                                     </li>
+
+                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                                    <li class="m-nav__item">
+                                                        <a href="update-password"
+                                                        onclick="{{ route('update-password') }}" 
+                                                        class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                                        Change Password
+                                                        </a>
+                                                    </li>
+
                                                 </ul>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                                       style="display: none;">
