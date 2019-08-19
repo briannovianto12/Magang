@@ -18,5 +18,8 @@ Route::name('post.login')->post('/login', 'LoginController@login');
 Route::group(['middleware' => 'auth'], function () {
     Route::name('logout')->post('/logout', 'LoginController@logout');
 
+    Route::name('update-password')->get('/update-password', 'UpdatePasswordController@index');
+    Route::name('post.update-password')->post('/update-password', 'UpdatePasswordController@create');
+
     Route::name('dashboard')->get('/dashboard', 'DashboardController@index');
 });
