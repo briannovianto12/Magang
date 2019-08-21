@@ -1,7 +1,6 @@
 
 @extends('theme::layouts.master')
 
-
 @section('css')
     @include('auth::css')
 @endsection
@@ -99,9 +98,5 @@
 
     </div>
     <!-- end:: Page -->
-
-    @include('theme::layouts.includes.js')
-    @include('auth::layouts.footer')
-
     </body>
 @endsection
