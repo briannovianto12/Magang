@@ -34773,7 +34773,7 @@ th > .m-checkbox.m-checkbox--single, td > .m-checkbox.m-checkbox--single {
 
 .m-switch input:empty ~ span:after {
     color: #f7f8fa;
-    background-color: #dfe2ea
+    background-color: #f30a0a
 }
 
 .m-switch input:checked ~ span:before {

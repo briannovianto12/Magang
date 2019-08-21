@@ -109,7 +109,7 @@
                                     @if(
                                     ($data->status === \Bromo\Product\Models\ProductStatus::PUBLISH ) ||
                                     ($data->status === \Bromo\Product\Models\ProductStatus::UNPUBLISH ))
-                                        <span class="m-switch m-switch--icon m-switch--success mt-3">
+                                        <span class="m-switch m-switch--icon mt-3">
                                             <label>
                                                 <input id="status" type="checkbox"
                                                        @if($data->status === \Bromo\Product\Models\ProductStatus::PUBLISH) checked="checked" @endif>
