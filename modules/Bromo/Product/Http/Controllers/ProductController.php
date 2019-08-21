@@ -165,4 +165,26 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    public function status($id)
+    {
+        DB::beginTransaction();
+        try {
+            $product = Product::findOrFail($id);
+            $product->update([
+                'status' => ($product->status === ProductStatus::PUBLISH) ? ProductStatus::UNPUBLISH : ProductStatus::PUBLISH
+            ]);
+
+            DB::commit();
+            nbs_helper()->flashMessage('stored');
+
+        } catch (Exception $exception) {
+            report($exception);
+            DB::rollBack();
+
+            nbs_helper()->flashMessage('error');
+        }
+
+        return redirect()->back();
+    }
 }

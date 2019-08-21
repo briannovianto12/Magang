@@ -178,5 +178,26 @@
             }
 
         }
+
+        @isset($data)
+        if ("{{ route('product.show', $data->id) }}" === "{{ url()->current() }}") {
+            var switchEl = $('#status');
+
+            switchEl.on('change', function () {
+                $('#modal').modal('show');
+            });
+
+            $('#cancel').on('click', function () {
+                if ("{{ $data->status }}" == "{{ \Bromo\Product\Models\ProductStatus::PUBLISH }}") {
+                    switchEl.prop('checked', true);
+                } else {
+                    switchEl.prop('checked', false);
+                }
+
+                $('#modal').modal('hide');
+            });
+        }
+        @endisset
+        
     });
 </script>
