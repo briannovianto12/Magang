@@ -103,7 +103,7 @@
 
                                                     <li class="m-nav__separator m-nav__separator--fit"></li>
                                                     <li class="m-nav__item">
-                                                        <a href="update-password"
+                                                        <a href="{{ route('update-password') }}"
                                                         onclick="{{ route('update-password') }}" 
                                                         class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
                                                         Change Password
