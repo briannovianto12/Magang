@@ -27,7 +27,7 @@ class Product extends Model
     ];
     public $incrementing = false;
     protected $table = 'product';
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
     protected $fillable = [
         'shop_id',
         'name',
