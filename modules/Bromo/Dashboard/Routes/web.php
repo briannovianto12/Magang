@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('dashboard')->group(function() {
-    Route::get('/', 'DashboardController@index');
-});
+Route::group(['middleware' => 'auth'], function () {
+    Route::name('dashboard')->get('/dashboard', 'DashboardController@index');
+ });

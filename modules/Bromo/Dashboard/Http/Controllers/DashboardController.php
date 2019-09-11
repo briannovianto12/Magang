@@ -9,7 +9,6 @@ use DB;
 
 class DashboardController extends Controller
 {
-    use Result;
     /**
      * Display a listing of the resource.
      * @return Response
@@ -22,8 +21,13 @@ class DashboardController extends Controller
 
     public function index()
     {        
+        $data['title'] = 'Dashbor';
+        $data['breadcrumbs'] = [
+           [ "name" => "Dashbor", "url" => route('dashboard') ]
+        ];
         $data['summary'] = $this->getSummary();
         return view('dashboard::index', $data);
+        
     }
 
     private function getSummary(){
