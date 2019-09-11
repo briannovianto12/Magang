@@ -1,0 +1,25 @@
+{
+    "name": "NBS/dashboard",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\Dashboard\\Providers\\DashboardServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\Dashboard\\": ""
+        }
+    }
+}

@@ -57,7 +57,8 @@
           "Bromo\\HostToHost\\": "modules/Bromo/HostToHost/",
             "Nbs\\BaseResource\\": "modules/Nbs/BaseResource/",
             "Nbs\\Theme\\": "modules/Nbs/Theme/",
-            "Bromo\\GroseniaTheme\\": "modules/Bromo/GroseniaTheme/"
+            "Bromo\\GroseniaTheme\\": "modules/Bromo/GroseniaTheme/",
+            "Bromo\\Dashboard\\": "modules/Bromo/Dashboard/"
         },
         "classmap": [
             "database/seeds",
