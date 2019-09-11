@@ -41,8 +41,8 @@ class SellerDataTable extends DataTable
                 $action = [
                     'id' => $data->id,
                     'show_url' => route("{$this->module}.show", $data->id),
-//                    'edit_url' => route("{$this->module}.edit", $data->id),
-//                    'delete_url' => route("{$this->module}.destroy", $data->id),
+    //                    'edit_url' => route("{$this->module}.edit", $data->id),
+    //                    'delete_url' => route("{$this->module}.destroy", $data->id),
                 ];
 
                 return view('theme::layouts.includes.actions', $action);
@@ -68,7 +68,6 @@ class SellerDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [
@@ -85,6 +84,7 @@ class SellerDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            ['data' => 'action', 'title' => 'Action','width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false, 'orderable' => false],
             ['data' => 'DT_RowIndex', 'name' => 'id', 'title' => '#', 'searchable' => false, 'width' => '1', 'orderable' => false],
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
             ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
