@@ -15,7 +15,8 @@ class UnverifiedController extends Controller
 
     public function index()
     {
-        return view('unverified::index');
+        $data = \DB::select("SELECT * FROM vw_sellers_unverified");
+        return view('unverified::index', ['data' => $data]);
     }
 
     /**
