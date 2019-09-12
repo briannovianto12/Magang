@@ -28,6 +28,14 @@ class SellerDataTable extends DataTable
                     });
                 }
             })
+            ->filterColumn('status', function ($query) use ($keyword) {
+                if ($keyword && strtolower($keyword) != "all") {
+                    $keyword = $this->request()->input('search.value');
+                    $query->whereHas('status', function ($query) use ($keyword) {
+                        $query->where('name', 'like', "%{$keyword}%");
+                    });
+                }
+            })
             ->editColumn('business', function ($data) {
                 return $data->business->name;
             })
