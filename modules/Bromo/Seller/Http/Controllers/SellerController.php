@@ -287,5 +287,6 @@ class SellerController extends BaseResourceController
 
         return $data['data']['results']['nonce'];
     }
+    
 
 }
