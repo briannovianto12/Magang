@@ -70,7 +70,7 @@
                     <i class="m-menu__link-icon flaticon-open-box"></i>
                     <span class="m-menu__link-text">Messages</span>
                 </a>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified') }}" aria-haspopup="true">
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
                 <a href="{{ route('unverified.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-avatar"></i>
                     <span class="m-menu__link-text">Unverified Seller</span>
