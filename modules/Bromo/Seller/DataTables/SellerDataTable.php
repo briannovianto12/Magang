@@ -13,7 +13,7 @@ class SellerDataTable extends DataTable
         return datatables($this->query())
             ->addIndexColumn()
             ->filterColumn('business_name', function ($query) use ($keyword) {
-                if ($keyword) {
+                if ($keyword ) {
                     $keyword = $this->request()->input('search.value');
                     $query->whereHas('business', function ($query) use ($keyword) {
                         $query->where('name', 'like', "%{$keyword}%");
@@ -29,7 +29,7 @@ class SellerDataTable extends DataTable
                 }
             })
             ->filterColumn('status', function ($query) use ($keyword) {
-                if ($keyword && strtolower($keyword) != "all") {
+                if ($keyword) {
                     $keyword = $this->request()->input('search.value');
                     $query->whereHas('status', function ($query) use ($keyword) {
                         $query->where('name', 'like', "%{$keyword}%");
@@ -63,7 +63,7 @@ class SellerDataTable extends DataTable
     {
         $query = $this->model
             ->with(['status:id,name', 'taxType:id,name']);
-
+        
         return $this->applyScopes($query);
     }
 
@@ -92,7 +92,7 @@ class SellerDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'action', 'title' => 'Action','width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false, 'orderable' => false],
+            ['data' => 'action', 'title' => 'Action','width' => '50px', 'footer' => 'Action', 'exportable' => false, 'printable' => false, 'orderable' => false],
             ['data' => 'DT_RowIndex', 'name' => 'id', 'title' => '#', 'searchable' => false, 'width' => '1', 'orderable' => false],
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
             ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
