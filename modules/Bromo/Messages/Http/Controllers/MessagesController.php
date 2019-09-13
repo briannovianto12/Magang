@@ -33,6 +33,7 @@ class MessagesController extends BaseResourceController
            ->leftJoin('user_profile as e','d.user_id','=','e.id')
            ->leftJoin('business_member as f','b.id','=','f.business_id')
            ->leftJoin('user_profile as g','f.user_id','=','g.id')
+           ->orderBy('messages.created_at','desc')
            ->simplePaginate(30);
 
         return view("messages::index", [
