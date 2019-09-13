@@ -31,14 +31,14 @@ class DashboardController extends Controller
     }
 
     private function getSummary(){
-        $totalRegistratedSeller = DB::select("SELECT public.f_get_total_seller()");
-        $totalRegistratedUser = DB::select("SELECT public.f_get_total_user()");
-        $totalRegistratedSellerWithProduct = DB::select("SELECT public.f_get_sellers_with_total_product()");
+        $totalRegisteredSeller = DB::select("SELECT public.f_get_total_seller()");
+        $totalRegisteredUser = DB::select("SELECT public.f_get_total_user()");
+        $totalRegisteredSellerWithProduct = DB::select("SELECT public.f_get_sellers_with_total_product()");
         
         return [
-            'total_registrated_seller' => $totalRegistratedSeller[0]->f_get_total_seller,
-            'total_registrated_user' => $totalRegistratedUser[0]->f_get_total_user,
-            'total_registrated_seller_with_product' => $totalRegistratedSellerWithProduct[0]->f_get_sellers_with_total_product,
+            'total_registered_seller' => $totalRegisteredSeller[0]->f_get_total_seller,
+            'total_registered_user' => $totalRegisteredUser[0]->f_get_total_user,
+            'total_registered_seller_with_product' => $totalRegisteredSellerWithProduct[0]->f_get_sellers_with_total_product,
         ];
 
 

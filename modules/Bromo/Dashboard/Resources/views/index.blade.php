@@ -10,13 +10,13 @@
                     <div class="m-widget24">
                         <div class="m-widget24__item">
                             <h4 class="m-widget24__title">
-                                Total Registrated Seller
+                                Total Registered Seller
                             </h4><br>
                             <span class="m-widget24__desc">
-				                All Registrated Seller
+				                All Registered Seller
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-				                {{$summary['total_registrated_seller']}}
+				                {{$summary['total_registered_seller']}}
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -42,7 +42,7 @@
 				                All Seller with Product
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_registrated_user']}}
+                            {{$summary['total_registered_seller_with_product']}}
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -68,7 +68,7 @@
 				                All Buyers and Sellers
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_registrated_seller_with_product']}}   
+                            {{$summary['total_registered_user']}}   
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
