@@ -20,7 +20,6 @@ use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 class SellerController extends BaseResourceController
 {
     use Result;
-
     public function __construct(Shop $model, SellerDataTable $dataTable)
     {
         $this->module = 'store';
@@ -28,6 +27,9 @@ class SellerController extends BaseResourceController
         $this->title = 'Store';
         $this->model = $model;
         $this->dataTable = $dataTable;
+        /* $shop = $this->model->findOrFail("1172007599436992513");
+        $owner = $shop->business->getOwner();
+        ($this); */
         $this->validateStoreRules = [
             'name' => [
                 'required'
