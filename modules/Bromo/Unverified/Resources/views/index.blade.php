@@ -15,7 +15,9 @@
           'portlet_head' => true,
           'portlet_title' => "List of Unverified Seller"])
         @slot('body')
-           <table>
+            <a href="{{ url('/') }}/export/xlsx/" class="btn btn-success">Export to .xlsx</a>
+            </div>
+           <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Shop Name</th>
