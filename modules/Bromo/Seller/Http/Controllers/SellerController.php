@@ -27,9 +27,13 @@ class SellerController extends BaseResourceController
         $this->title = 'Store';
         $this->model = $model;
         $this->dataTable = $dataTable;
+        /* $this->$requiredData = [
+            'test' => "test" 
+        ]; */
         /* $shop = $this->model->findOrFail("1172007599436992513");
         $owner = $shop->business->getOwner();
         ($this); */
+        //dd($this->requiredData);
         $this->validateStoreRules = [
             'name' => [
                 'required'

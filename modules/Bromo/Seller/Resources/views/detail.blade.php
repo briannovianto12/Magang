@@ -184,10 +184,10 @@
                                         <span>{{ __('Business Owner') }}</span>
                                         <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
                                     </div>
-                                    <!-- <div class="m-widget28__tab-item">
+                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Test') }}</span>
-                                        <span>{{$data->buyer ?? '-'}}</span>
-                                    </div> -->
+                                        <span>{{$test ?? '-'}}</span>
+                                    </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Owner Phone') }}</span>
                                         <span>{{ $data->buyer->msisdn ?? '-'}}</span>

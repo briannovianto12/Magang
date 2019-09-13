@@ -138,7 +138,10 @@ abstract class BaseResourceController extends Controller
      */
     private function getRequiredData()
     {
-        return $this->requiredData;
+        $requiredData = [
+            'test' => "test" 
+        ];
+        return $requiredData;
     }
 
     private function getEditorView(): string
@@ -231,7 +234,7 @@ abstract class BaseResourceController extends Controller
     {
         $this->pageData['data'] = $this->model->findOrFail($id);
         $data = array_merge($this->pageData, $this->getRequiredData());
-
+        //dd($data);
         return view($this->getDetailView(), $data);
     }
 
