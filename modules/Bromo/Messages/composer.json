@@ -1,0 +1,25 @@
+{
+    "name": "NBS/messages",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\Messages\\Providers\\MessagesServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\Messages\\": ""
+        }
+    }
+}
