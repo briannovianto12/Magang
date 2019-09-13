@@ -17,28 +17,34 @@
         @slot('body')
             <a href="{{ url('/') }}/export/xlsx/" class="btn btn-success">Export to .xlsx</a>
             </div>
-           <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Shop Name</th>
-                        <th>Description</th>
-                        <th>Building Name</th>
-                        <th>Address Line</th>
-                        <th>MSISDN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data as $data)
-                    <tr>
-                        <td> {{$data->shop_name}} </td>
-                        <td> {{$data->description}} </td>
-                        <td> {{$data->building_name}} </td>
-                        <td> {{$data->address_line}} </td>
-                        <td> {{$data->msisdn}} </td>
-                    </tr>
-                    @endforeach
-            </tbody>
-            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12" id="unverified-table">
+                        <table class="table table-striped table-bordered table-responsive" style>
+                            <thead>
+                                <tr>
+                                    <th>Shop Name</th>
+                                    <th>Description</th>
+                                    <th>Building Name</th>
+                                    <th>Address Line</th>
+                                    <th>MSISDN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data as $data)
+                                <tr>
+                                    <td> {{$data->shop_name}} </td>
+                                    <td> {{$data->description}} </td>
+                                    <td> {{$data->building_name}} </td>
+                                    <td> {{$data->address_line}} </td>
+                                    <td> {{$data->msisdn}} </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         @endslot
 
         @slot('postfix')
