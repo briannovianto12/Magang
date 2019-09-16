@@ -36,9 +36,6 @@ class SellerDataTable extends DataTable
                     });
                 }
             })
-            /*->editColumn('business', function ($data) {
-                return $data->business->name;
-            })*/
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
@@ -61,9 +58,6 @@ class SellerDataTable extends DataTable
 
     public function query()
     {
-        /*$query = $this->model
-            ->with(['status:id,name', 'taxType:id,name']);*/
-
         $query = $this->model->selectRaw(\DB::raw(
             'shop.id, ' .
             'business.name as business, ' .
@@ -120,17 +114,6 @@ class SellerDataTable extends DataTable
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated']
         ];
-        /*return [
-            ['data' => 'action', 'title' => 'Action','width' => '50px', 'footer' => 'Action', 'exportable' => false, 'printable' => false, 'orderable' => false],
-            ['data' => 'DT_RowIndex', 'name' => 'id', 'title' => '#', 'searchable' => false, 'width' => '1', 'orderable' => false],
-            ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
-            ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
-            ['data' => 'product_category', 'name' => 'product_category', 'title' => 'Category'],
-            ['data' => 'tax_type.name', 'name' => 'tax_type', 'title' => 'Tax Payer Type'],
-            ['data' => 'status.name', 'name' => 'status', 'title' => 'Status'],
-            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
-            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated']
-        ];*/
     }
 
     /**
