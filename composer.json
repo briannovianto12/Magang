@@ -55,7 +55,7 @@
             "Bromo\\Seller\\": "modules/Bromo/Seller/",
             "Bromo\\ProductCategory\\": "modules/Bromo/ProductCategory/",
             "Bromo\\Product\\": "modules/Bromo/Product/",
-          "Bromo\\HostToHost\\": "modules/Bromo/HostToHost/",
+            "Bromo\\HostToHost\\": "modules/Bromo/HostToHost/",
             "Nbs\\BaseResource\\": "modules/Nbs/BaseResource/",
             "Nbs\\Theme\\": "modules/Nbs/Theme/",
             "Bromo\\GroseniaTheme\\": "modules/Bromo/GroseniaTheme/",

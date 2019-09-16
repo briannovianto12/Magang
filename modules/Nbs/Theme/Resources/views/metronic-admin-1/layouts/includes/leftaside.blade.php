@@ -65,6 +65,11 @@
                     <span class="m-menu__link-text">Order</span>
                 </a>
             </li>
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
+                <a href="{{ route('unverified.index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-avatar"></i>
+                    <span class="m-menu__link-text">Unverified Seller</span>
+                </a>
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('messages.index') }}" aria-haspopup="true">
                 <a href="{{ route('messages.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-open-box"></i>
