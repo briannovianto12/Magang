@@ -180,6 +180,10 @@
                                         <span>{{ $data->businessBankAccount->account_no ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Bank Account Owner') }}</span>
+                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Owner') }}</span>
                                         <span>{{ $owner->full_name ?? '-'}}</span>
                                     </div>
