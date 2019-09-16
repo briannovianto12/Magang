@@ -31,17 +31,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $data)
+                                @foreach($data as $row)
                                 <tr>
-                                    <td> {{$data->shop_name}} </td>
-                                    <td> {{$data->description}} </td>
-                                    <td> {{$data->building_name}} </td>
-                                    <td> {{$data->address_line}} </td>
-                                    <td> {{$data->msisdn}} </td>
+                                    <td> {{$row->shop_name}} </td>
+                                    <td> {{$row->description}} </td>
+                                    <td> {{$row->building_name}} </td>
+                                    <td> {{$row->address_line}} </td>
+                                    <td> {{$row->msisdn}} </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                         </table>
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>
