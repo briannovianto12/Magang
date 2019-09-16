@@ -59,7 +59,12 @@
             "Nbs\\BaseResource\\": "modules/Nbs/BaseResource/",
             "Nbs\\Theme\\": "modules/Nbs/Theme/",
             "Bromo\\GroseniaTheme\\": "modules/Bromo/GroseniaTheme/",
+<<<<<<< HEAD
             "Bromo\\Unverified\\": "modules/Bromo/Unverified/"
+=======
+            "Bromo\\Dashboard\\": "modules/Bromo/Dashboard/",
+            "Bromo\\Messages\\": "modules/Bromo/Messages/"
+>>>>>>> develop
         },
         "classmap": [
             "database/seeds",

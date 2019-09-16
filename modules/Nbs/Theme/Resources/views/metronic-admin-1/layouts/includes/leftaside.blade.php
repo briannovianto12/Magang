@@ -8,7 +8,7 @@
          m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
         <ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('dashboard') }}" aria-haspopup="true">
-                <a href="{{ route('dashboard') }}" class="m-menu__link">
+                <a href="/" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-line-graph"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
@@ -65,10 +65,17 @@
                     <span class="m-menu__link-text">Order</span>
                 </a>
             </li>
+<<<<<<< HEAD
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
                 <a href="{{ route('unverified.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-avatar"></i>
                     <span class="m-menu__link-text">Unverified Seller</span>
+=======
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('messages.index') }}" aria-haspopup="true">
+                <a href="{{ route('messages.index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-open-box"></i>
+                    <span class="m-menu__link-text">Messages</span>
+>>>>>>> develop
                 </a>
             </li>
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
