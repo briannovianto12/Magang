@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
+use DB;
+
 
 class UnverifiedController extends Controller{
     /**
@@ -19,27 +22,14 @@ class UnverifiedController extends Controller{
      * @return Response
      */
 
-    public function index(){
-        $data = \DB::select("SELECT * FROM vw_sellers_unverified")->paginate($data, '5');
-        return view('unverified::index')->with('data', $data);
-        //  ['data' => $data]);
-
-        // $fullDetail = array();
-        // $user = new User();
-        // $txnDetail = Transaction::getAllDetail();
-        // foreach ($txnDetail as $k => $v) {
-        //     $fullDetail[$k]['admin_amt'] = $v->admin_amt;
-        //     $fullDetail[$k]['publisher_amt'] = $v->publisher_amt;
-        //     $fullDetail[$k]['reseller_amt'] = $v->reseller_amt;
-        //     $fullDetail[$k]['pub_sent_status'] = $v->pub_sent_status;
-        //     $fullDetail[$k]['reseller_sent_status'] = $v->reseller_sent_status;
-        // }
-        // $finalDetail = $this->paginate($fullDetail, '20');
-        // return view('admin.transaction')->with('txnDetail', $finalDetail);
+    public function index(Request $request){
+        $data = DB::select('select * from vw_sellers_unverified');
+        $data = $this->arrayPaginator($data, $request);
+        return view('unverified::index',['data' => $data]);
     }
 
     public function export(){
-        $data = \DB::select("SELECT * FROM vw_sellers_unverified");
+        $data = DB::select('select * from vw_sellers_unverified');
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Shop Name');
@@ -72,13 +62,12 @@ class UnverifiedController extends Controller{
         return $response;
     }
 
-    public function paginate($items, $perPage){
-        $pageStart = \Request::get('page', 1);
-        $offSet = ($pageStart * $perPage) - $perPage;
-        $itemsForCurrentPage = array_slice($items, $offSet, $perPage, true);
-        return new LengthAwarePaginator($itemsForCurrentPage, count($items),
-                    $perPage, Paginator::resolveCurrentPage(),
-                    array('path' => Paginator::resolveCurrentPath()));
+    public function arrayPaginator($array, $request){
+        $page = Input::get('page', 1);
+        $perPage = 2;
+        $offset = ($page * $perPage) - $perPage;
+        return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
+        ['path' => $request->url(), 'query' => $request->query()]);
     }
 
     public function user(){
