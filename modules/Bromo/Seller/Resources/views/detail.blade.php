@@ -169,12 +169,11 @@
                                                 .", "
                                                 .$data->businessAddress->province 
                                                 .", Indonesia "
-                                                .$data->businessAddress->postal_code
                                                 ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Postal Code') }}</span>
-                                        <span>{{ $data->business->postal_code ?? '-'}}</span>
+                                        <span>{{ $data->businessAddress->postal_code ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Bank Account') }}</span>
@@ -182,15 +181,11 @@
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Owner') }}</span>
-                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Test') }}</span>
-                                        <span>{{$test ?? '-'}}</span>
+                                        <span>{{ $owner->full_name ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Owner Phone') }}</span>
-                                        <span>{{ $data->buyer->msisdn ?? '-'}}</span>
+                                        <span>{{ $owner->msisdn ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Status') }}</span>
