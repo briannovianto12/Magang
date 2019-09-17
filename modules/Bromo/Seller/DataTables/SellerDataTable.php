@@ -43,9 +43,6 @@ class SellerDataTable extends DataTable
                 return $data->created_at_formatted;
             })
             ->addColumn('action', function ($data) {
-                $shop = $this->model->findOrFail("1172007599436992513");
-                $owner = $shop->business->getOwner();
-                $data['owner'] = $owner;
                 $action = [
                     'id' => $data->id,
                     'show_url' => route("{$this->module}.show", $data->id),
