@@ -13,7 +13,7 @@ class SellerDataTable extends DataTable
         return datatables($this->query())
             ->addIndexColumn()
             ->filterColumn('business_name', function ($query) use ($keyword) {
-                if ($keyword) {
+                if ($keyword ) {
                     $keyword = $this->request()->input('search.value');
                     $query->whereHas('business', function ($query) use ($keyword) {
                         $query->where('name', 'like', "%{$keyword}%");
@@ -28,8 +28,13 @@ class SellerDataTable extends DataTable
                     });
                 }
             })
-            ->editColumn('business', function ($data) {
-                return $data->business->name;
+            ->filterColumn('status', function ($query) use ($keyword) {
+                if ($keyword) {
+                    $keyword = $this->request()->input('search.value');
+                    $query->whereHas('status', function ($query) use ($keyword) {
+                        $query->where('name', 'like', "%{$keyword}%");
+                    });
+                }
             })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
@@ -41,8 +46,8 @@ class SellerDataTable extends DataTable
                 $action = [
                     'id' => $data->id,
                     'show_url' => route("{$this->module}.show", $data->id),
-//                    'edit_url' => route("{$this->module}.edit", $data->id),
-//                    'delete_url' => route("{$this->module}.destroy", $data->id),
+    //                    'edit_url' => route("{$this->module}.edit", $data->id),
+    //                    'delete_url' => route("{$this->module}.destroy", $data->id),
                 ];
 
                 return view('theme::layouts.includes.actions', $action);
@@ -53,9 +58,24 @@ class SellerDataTable extends DataTable
 
     public function query()
     {
-        $query = $this->model
-            ->with(['status:id,name', 'taxType:id,name']);
-
+        $query = $this->model->selectRaw(\DB::raw(
+            'shop.id, ' .
+            'business.name as business, ' .
+            'shop.name, ' .
+            'string_agg(product_category.name, \', \' ORDER BY product_category.name) as product_category, ' .
+            'taxpayer_type.name as tax_type, ' .
+            'shop_status.id as status, ' .
+            'shop_status.name as shop_status_name, ' .
+            'shop.created_at, ' .
+            'shop.updated_at '
+        ))
+        ->join('business', 'business.id', '=', 'shop.business_id')
+        ->join('shop_product_category', 'shop_product_category.shop_id', '=', 'shop.id')
+        ->join('product_category', 'product_category.id', '=', 'shop_product_category.product_category_id')
+        ->join('shop_status', 'shop_status.id', '=', 'shop.status')
+        ->join('taxpayer_type', 'taxpayer_type.id', '=', 'shop.taxpayer_type')
+        ->groupBy(\DB::raw('shop.id, business.name, shop.name, taxpayer_type.name, shop_status.id, shop_status.name, shop.created_at, shop.updated_at'));
+        
         return $this->applyScopes($query);
     }
 
@@ -68,11 +88,10 @@ class SellerDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
             ]);
     }
@@ -85,12 +104,13 @@ class SellerDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            ['data' => 'action', 'title' => 'Action','width' => '50px', 'footer' => 'Action', 'exportable' => false, 'printable' => false, 'orderable' => false],
             ['data' => 'DT_RowIndex', 'name' => 'id', 'title' => '#', 'searchable' => false, 'width' => '1', 'orderable' => false],
             ['data' => 'business', 'name' => 'business_name', 'title' => 'Business Name', 'orderable' => false],
             ['data' => 'name', 'name' => 'name', 'title' => 'Shop Name', 'orderable' => false],
             ['data' => 'product_category', 'name' => 'product_category', 'title' => 'Category'],
-            ['data' => 'tax_type.name', 'name' => 'tax_type', 'title' => 'Tax Payer Type'],
-            ['data' => 'status.name', 'name' => 'status', 'title' => 'Status'],
+            ['data' => 'tax_type', 'name' => 'tax_type', 'title' => 'Tax Payer Type'],
+            ['data' => 'shop_status_name', 'name' => 'status', 'title' => 'Status'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated']
         ];
