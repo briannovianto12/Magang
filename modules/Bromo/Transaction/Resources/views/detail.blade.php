@@ -82,20 +82,20 @@
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Order Status') }}</span>
-                                    <span>{{ $data->orderStatus->name ?? '-' }}</span>
+                                    <span>{{ __('Seller Name') }}</span>
+                                    <span>{{ $sellerData->full_name ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Payment Status') }}</span>
-                                    <span>{{ $data->paymentStatus->name ?? '-' }}</span>
+                                    <span>{{ __('Seller Phone Number') }}</span>
+                                    <span>{{ $sellerData->msisdn ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Shipping Status') }}</span>
-                                    <span>{{ $data->shippingStatus->name ?? '-' }}</span>
+                                    <span>{{ __('Buyer Name') }}</span>
+                                    <span>{{ $data->buyer_name ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Updated Date') }}</span>
-                                    <span>{{ $data->created_at_formatted == $data->updated_at_formatted ? '-' : $data->updated_at_formatted }}</span>
+                                    <span>{{ __('Buyer Phone Number') }}</span>
+                                    <span>{{ $data->buyer_phone_no ?? '-' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -275,6 +275,10 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Name') }}</span>
                                         <span>{!! $data->seller_name !!}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Phone Number') }}</span>
+                                        <span>{!! $sellerData->msisdn !!}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Description') }}</span>

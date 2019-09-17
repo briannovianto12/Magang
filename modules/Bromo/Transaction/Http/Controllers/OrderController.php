@@ -134,6 +134,8 @@ class OrderController extends Controller
         $data['module'] = $this->module;
         $data['title'] = $this->title;
         $data['data'] = Order::findOrFail($id);
+        //Get seller's data
+        $data['sellerData'] = $data['data']->seller->business->getOwner();
 
         return view("{$this->module}::detail", $data);
     }
