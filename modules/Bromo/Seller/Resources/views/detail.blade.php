@@ -158,8 +158,38 @@
                                                 </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Address') }}</span>
+                                        <span>{{ $data->businessAddress->address_line
+                                                .", "
+                                                .$data->businessAddress->subdistrict
+                                                .", "
+                                                .$data->businessAddress->district 
+                                                .", "
+                                                .$data->businessAddress->city 
+                                                .", "
+                                                .$data->businessAddress->province 
+                                                .", Indonesia "
+                                                ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Postal Code') }}</span>
-                                        <span>{{ $data->business->postal_code ?? '-'}}</span>
+                                        <span>{{ $data->businessAddress->postal_code ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Bank Account') }}</span>
+                                        <span>{{ $data->businessBankAccount->account_no ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Bank Account Owner') }}</span>
+                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Owner') }}</span>
+                                        <span>{{ $owner->full_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Owner Phone') }}</span>
+                                        <span>{{ $owner->msisdn ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Status') }}</span>
@@ -260,6 +290,7 @@
                     @endslot
                 @endcomponent
             </div>
+
             <div class="tab-pane" id="bank_account">
                 @component('components._widget-list')
                     @slot('body')
@@ -272,11 +303,11 @@
                                     <div class="m-widget28__tab-items">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Account No') }}</span>
-                                            <span>{{ $bankAccount->account_no }}</span>
+                                            <span>{{ $data->businessBankAccount->account_no }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Owner Name') }}</span>
-                                            <span>{{ $bankAccount->account_owner_name }}</span>
+                                            <span>{{ $data->businessBankAccount->account_owner_name }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Bank Name') }}</span>
@@ -284,11 +315,11 @@
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Created') }}</span>
-                                            <span>{{ $bankAccount->created_at_formatted ?? '-' }}</span>
+                                            <span>{{ $data->businessBankAccount->created_at_formatted ?? '-' }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Updated') }}</span>
-                                            <span>{{ $bankAccount->updated_at_formatted ?? '-' }}</span>
+                                            <span>{{ $data->businessBankAccount->updated_at_formatted ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>

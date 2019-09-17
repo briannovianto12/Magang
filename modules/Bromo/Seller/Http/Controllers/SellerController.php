@@ -20,7 +20,6 @@ use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 class SellerController extends BaseResourceController
 {
     use Result;
-
     public function __construct(Shop $model, SellerDataTable $dataTable)
     {
         $this->module = 'store';
