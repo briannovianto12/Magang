@@ -64,7 +64,7 @@ class UnverifiedController extends Controller{
 
     public function arrayPaginator($array, $request){
         $page = Input::get('page', 1);
-        $perPage = 2;
+        $perPage = 25;
         $offset = ($page * $perPage) - $perPage;
         return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
         ['path' => $request->url(), 'query' => $request->query()]);
