@@ -35,6 +35,10 @@
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivery_order" role="tab">
                         <i class="la la-truck"></i> {{ __('Pesanan Dikirim') }}</a>
                 </li>
+                <li id="delivered_order_tab" class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivered_order" role="tab">
+                        <i class="la la-home"></i> {{ __('Sampai Tujuan') }}</a>
+                </li>
                 <li id="success_order_tab" class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#success_order" role="tab">
                         <i class="la la-check"></i> {{ __('Pesanan Sukses') }}</a>
@@ -119,6 +123,29 @@
                     </table>
                 </div>
                 <!--end:: Delivery Order Page-->
+
+                <!--begin:: Delivered Order Page-->
+                <div class="tab-pane" id="delivered_order" role="tabpanel">
+                    <table id="table_delivered_order"
+                           class="table table-striped table-bordered table-hover display nowrap"
+                           style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Code</th>
+                            <th>Buyer</th>
+                            <th>Seller</th>
+                            <th>Payment Method</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                            <th>Status</th>
+                            <th>Updated Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!--end:: Delivered Order Page-->
 
                 <!--begin:: Success Order Page-->
                 <div class="tab-pane" id="success_order" role="tabpanel">

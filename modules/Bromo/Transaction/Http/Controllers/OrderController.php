@@ -3,6 +3,7 @@
 namespace Bromo\Transaction\Http\Controllers;
 
 use Bromo\Transaction\DataTables\CancelOrderDataTable;
+use Bromo\Transaction\DataTables\DeliveredOrderDataTable;
 use Bromo\Transaction\DataTables\DeliveryOrderDataTable;
 use Bromo\Transaction\DataTables\ListOrderDataTable;
 use Bromo\Transaction\DataTables\NewOrderDatatable;
@@ -77,6 +78,19 @@ class OrderController extends Controller
      * @return JsonResponse
      */
     public function deliveryOrder(DeliveryOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module
+        ])->ajax();
+    }
+
+    /**
+     * Get Order list status in delivered only.
+     * @param DeliveredOrderDataTable $datatable
+     * @return JsonResponse
+     */
+    public function deliveredOrder(DeliveredOrderDataTable $datatable)
     {
         return $datatable->with([
             'model' => $this->model,
