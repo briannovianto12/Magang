@@ -159,21 +159,21 @@
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Address') }}</span>
-                                        <span>{{ $data->businessAddress->address_line
+                                        <span>{!! $data->businessAddress->building_name
+                                                ."<br>"."<br>"
+                                                .$data->businessAddress->address_line
+                                                ."<br>"
+                                                ."Kel. ".$data->businessAddress->subdistrict
                                                 .", "
-                                                .$data->businessAddress->subdistrict
-                                                .", "
-                                                .$data->businessAddress->district 
-                                                .", "
+                                                ."Kec. ".$data->businessAddress->district 
+                                                ."<br>"
                                                 .$data->businessAddress->city 
                                                 .", "
                                                 .$data->businessAddress->province 
                                                 .", Indonesia "
-                                                ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Postal Code') }}</span>
-                                        <span>{{ $data->businessAddress->postal_code ?? '-'}}</span>
+                                                ."<br>"
+                                                .$data->businessAddress->postal_code
+                                                ?? '-'!!}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Bank Account') }}</span>
@@ -245,47 +245,29 @@
                 @component('components._widget-list')
                     @slot('body')
                         <div class="row">
-                            @isset($data->businessAddress)
-                                @php
-                                    $address = $data->businessAddress;
-                                @endphp
-                                <div class="col-6">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Building Name') }}</span>
-                                            <span>{{ $address->building_name }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Address Line') }}</span>
-                                            <span>{{ $address->address_line }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Address Notes') }}</span>
-                                            <span>{{ $address->notes ?? '-'}}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Province Name') }}</span>
-                                            <span>{{ $address->province ?? '-' }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('City') }}</span>
-                                            <span> {{ $address->city_type }} {{ $address->city }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('District Name') }}</span>
-                                            <span>{{ $address->district ?? '-' }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Subdistrict Name') }}</span>
-                                            <span>{{ $address->subdistrict ?? '-' }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Postal Code') }}</span>
-                                            <span>{{ $address->postal_code ?? '-' }}</span>
-                                        </div>
+                            <div class="col-6">
+                                <div class="m-widget28__tab-items">
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Address') }}</span>
+                                        <span>{!! $data->businessAddress->building_name
+                                                ."<br>"."<br>"
+                                                .$data->businessAddress->address_line
+                                                ."<br>"
+                                                ."Kel. ".$data->businessAddress->subdistrict
+                                                .", "
+                                                ."Kec. ".$data->businessAddress->district 
+                                                ."<br>"
+                                                .$data->businessAddress->city 
+                                                .", "
+                                                .$data->businessAddress->province 
+                                                .", Indonesia "
+                                                ."<br>"
+                                                .$data->businessAddress->postal_code
+                                                ?? '-'!!}
+                                        </span>
                                     </div>
                                 </div>
-                            @endisset
+                            </div>
                         </div>
                     @endslot
                 @endcomponent
