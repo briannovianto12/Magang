@@ -44,6 +44,9 @@
         loadDeliveryOrder: function () {
             Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", updatedColumns, orderColumnsForUpdated);
         },
+        loadDeliveredOrder: function () {
+            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", updatedColumns, orderColumnsForUpdated);
+        },
         loadSuccessOrder: function () {
             Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", updatedColumns, orderColumnsForUpdated);
         },
@@ -83,6 +86,10 @@
 
             $('#delivery_order_tab').on('click', function () {
                 Order.loadDeliveryOrder();
+            });
+
+            $('#delivered_order_tab').on('click', function () {
+                Order.loadDeliveredOrder();
             });
 
             $('#success_order_tab').on('click', function () {

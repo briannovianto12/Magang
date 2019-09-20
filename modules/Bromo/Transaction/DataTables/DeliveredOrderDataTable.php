@@ -4,7 +4,7 @@ namespace Bromo\Transaction\DataTables;
 
 use Bromo\Transaction\Models\OrderStatus;
 
-class SuccessOrderDataTable extends OrderDatatable
+class DeliveredOrderDataTable extends OrderDatatable
 {
 
     public function query()
@@ -12,7 +12,7 @@ class SuccessOrderDataTable extends OrderDatatable
         $query = $this->model
             ->select($this->getColumns())
             ->whereIn('status', [
-                OrderStatus::SUCCESS
+                OrderStatus::DELIVERED
             ])
             ->with('orderStatus:id,name');
 
