@@ -77,6 +77,12 @@
                     <span class="m-menu__link-text">Unverified Seller</span>
                 </a>
             </li>
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('seller.balance') }}" aria-haspopup="true">
+                    <a href="{{ route('seller.balance') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-layers"></i>
+                        <span class="m-menu__link-text">Seller With Balance</span>
+                    </a>
+                </li>
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
