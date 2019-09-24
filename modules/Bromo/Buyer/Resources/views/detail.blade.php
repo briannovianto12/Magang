@@ -5,7 +5,7 @@
           'portlet_head' => true,
           'portlet_title' => sprintf("Detail %s: %s", $title, $data->full_name),
           'url_manage' => true,
-          'url_back' => route($module),
+          'url_back' => url()->previous(),
           'postfix_back' => 'Back',
           'body_class' => 'pt-0'])
         @slot('body')
