@@ -18,9 +18,11 @@ Route::prefix('store')->name('store')->group(function () {
     Route::get('/', 'SellerController@index');
 
     Route::post('{id}/verify', 'SellerController@verify')->name('.verify');
-
+    
     Route::post('{id}/reject', 'SellerController@reject')->name('.reject');
 
     Route::post('/token', 'SellerController@requestJwt')->name('.token');
 
 });
+
+Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');

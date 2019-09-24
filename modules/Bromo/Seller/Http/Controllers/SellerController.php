@@ -16,6 +16,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Modules\Bromo\HostToHost\Services\RequestService;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SellerController extends BaseResourceController
 {
@@ -286,6 +289,68 @@ class SellerController extends BaseResourceController
 
         return $data['data']['results']['nonce'];
     }
-    
 
+    
+    /**
+     * @param $id
+     * @param int $status
+     * @return Model
+     * @throws Exception
+     */
+    public function getBalanceView(Request $request)
+    {
+        $data = \DB::select("SELECT * FROM vw_seller_balance_xendit_template");
+        $data = $this->arrayPaginator($data, $request);
+        return view('store::balance',['data' => $data]);
+    }
+
+    public function export(){
+        $data = \DB::select("SELECT * FROM vw_seller_balance_xendit_template");
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Amount');
+        $sheet->setCellValue('B1', 'Bank Code');
+        $sheet->setCellValue('C1', 'Bank Account Name');
+        $sheet->setCellValue('D1', 'Bank Account Number');
+        $sheet->setCellValue('E1', 'Description');
+        $sheet->setCellValue('F1', 'Email ');
+        $sheet->setCellValue('G1', 'Email CC ');
+        $sheet->setCellValue('H1', 'Email BCC');
+        $sheet->setCellValue('I1', 'External Id');
+        $rows = 2;
+
+        foreach($data as $data){
+            $sheet->setCellValue('A' . $rows, $data->amount);
+            $sheet->setCellValue('B' . $rows, $data->bank_code);
+            $sheet->setCellValue('C' . $rows, $data->bank_account_name);
+            $sheet->setCellValue('D' . $rows, $data->bank_account_number);
+            $sheet->setCellValue('E' . $rows, $data->description);
+            $sheet->setCellValue('E' . $rows, $data->email);
+            $sheet->setCellValue('E' . $rows, $data->email_cc);
+            $sheet->setCellValue('E' . $rows, $data->email_bcc);
+            $sheet->setCellValue('E' . $rows, $data->external_id);
+            $rows++;
+        }
+
+        $writer = new Writer\Xlsx($spreadsheet);
+
+        $response =  new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            }
+        );
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Disposition', 'attachment;filename="sellerwithbalance.xls"');
+        $response->headers->set('Cache-Control','max-age=0');
+
+        return $response;
+    }
+
+    public function arrayPaginator($array, $request){
+        $page = Input::get('page', 1);
+        $perPage = 25;
+        $offset = ($page * $perPage) - $perPage;
+        return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
+        ['path' => $request->url(), 'query' => $request->query()]);
+    }
 }
