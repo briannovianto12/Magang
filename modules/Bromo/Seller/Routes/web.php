@@ -26,3 +26,4 @@ Route::prefix('store')->name('store')->group(function () {
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');
+Route::get('/balance/export/xlsx', 'SellerController@export')->name('seller.export');
