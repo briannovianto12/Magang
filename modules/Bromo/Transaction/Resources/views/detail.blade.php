@@ -24,7 +24,7 @@
           'portlet_head' => true,
           'portlet_title' => sprintf("Detail %s: %s", $title, $data->order_no),
           'url_manage' => true,
-          'url_back' => url()->previous(),
+          'url_back' => route("order.index"),
           'postfix_back' => 'Back',
           'body_class' => 'pt-0'])
         @slot('body')
