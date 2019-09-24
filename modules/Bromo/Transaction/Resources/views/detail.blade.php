@@ -35,67 +35,48 @@
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Order ID') }}</span>
-                                    <span>{{ $data->order_no }}</span>
-                                </div>
-                                <div class="m-widget28__tab-item">
                                     <span>{{ __('Ordered Date') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Payment Method') }}</span>
-                                    <span>{{ $data->payment_method_name }}</span>
-                                </div>
-                                <div class="m-widget28__tab-item row">
-                                    <div class="col-3">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Total VAT') }}</span>
-                                            <span>IDR {{ number_format($data['payment_details']['total_vat']) }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Total TAX') }}</span>
-                                            <span>IDR {{ number_format($data['payment_details']['total_tax_base']) }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Gross and Total Order</span>
-                                            <span>IDR {{ number_format($data['payment_details']['total_gross']) }} <br>
-                                                IDR {{ number_format($data['payment_details']['total_order']) }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Total Shipping Cost') }}</span>
-                                            <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
-                                        </div>
-                                    </div>
+                                    <span>{{ __('Order Status') }}</span>
+                                    <span>{{ $data->orderStatus->name }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Grand Total') }}</span>
-                                    <h4 class="h4">IDR {{ number_format($data->payment_amount ?? 0) }}</h4>
+                                    <span>{{ __('Payment Method') }}</span>
+                                    <span>{{ $data->order_no }}</span>
+                                </div>
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Seller Name — Phone Number') }}</span>
+                                    <span>{{ $sellerData->full_name
+                                            ." — "
+                                            .$sellerData->msisdn ?? '-' }}</span>
+                                </div>
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Buyer Name — Phone Number') }}</span>
+                                    <span>{{ $data->buyer_name
+                                            ." — "
+                                            .$data->buyer_phone_no ?? '-' }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Seller Name') }}</span>
-                                    <span>{{ $sellerData->full_name ?? '-' }}</span>
+                                    <span>{{ __('Origin Address') }}</span>
+                                    <span>{!! $data->origin_address !!}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Seller Phone Number') }}</span>
-                                    <span>{{ $sellerData->msisdn ?? '-' }}</span>
+                                    <span>{{ __('Destination Address') }}</span>
+                                    <span>{{ $data->destination_address }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Buyer Name') }}</span>
-                                    <span>{{ $data->buyer_name ?? '-' }}</span>
+                                    <span>{{ __('Shipping Service Code') }}</span>
+                                    <span>{{ $data->shipping_service_code }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Buyer Phone Number') }}</span>
-                                    <span>{{ $data->buyer_phone_no ?? '-' }}</span>
+                                    <span>{{ __('Shipping Weight') }}</span>
+                                    <span>{{ $data->shipping_weight }} gr</span>
                                 </div>
                             </div>
                         </div>
@@ -111,202 +92,16 @@
 
         @slot('tab_head')
             <li class="nav-item m-tabs__item">
-                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#shipping_detail" role="tab">
-                    Shipping Detail
-                </a>
-            </li>
-            <li class="nav-item m-tabs__item">
-                <a class="nav-link m-tabs__link" data-toggle="tab" href="#buyer_detail" role="tab">
-                    Buyer Detail
-                </a>
-            </li>
-            <li class="nav-item m-tabs__item">
-                <a class="nav-link m-tabs__link" data-toggle="tab" href="#seller_detail" role="tab">
-                    Seller Detail
-                </a>
-            </li>
-            <li class="nav-item m-tabs__item">
-                <a class="nav-link m-tabs__link" data-toggle="tab" href="#item_detail" role="tab">
-                    Item Detail
+                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#item_detail" role="tab">
+                Item Detail
                 </a>
             </li>
         @endslot
 
         @slot('tab_body')
-            <div class="tab-pane active" id="shipping_detail">
+            <div class="tab-pane active" id="item_detail">
                 @component('components._widget-list')
                     @slot('body')
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Shipping</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Shipping Service Code') }}</span>
-                                        <span>{{ $data->shipping_service_code }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Shipping Estimated') }}</span>
-                                        <span>{{ $data->shipping_estimated }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Shipping Cost') }}</span>
-                                        <span>{{ $data->shipping_cost }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Origin Address</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Building Name') }}</span>
-                                        <span>{{ $data->origin_building }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Address Line') }}</span>
-                                        <span>{!! $data->origin_address !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Notes') }}</span>
-                                        <span>{{ $data->origin_notes }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Destination Address</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Building Name') }}</span>
-                                        <span>{{ $data->destination_building }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Address Line') }}</span>
-                                        <span>{!! $data->destination_address !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Notes') }}</span>
-                                        <span>{{ $data->destination_notes }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endslot
-                @endcomponent
-            </div>
-
-            <div class="tab-pane" id="buyer_detail">
-                @component('components._widget-list')
-                    @slot('body')
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Buyer Information</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Avatar') }}</span>
-                                        <span>
-                                            <a data-fancybox data-type="image" href="{{ $data->buyer_avatar }}">
-                                                <img src="{{ $data->buyer_avatar }}" alt="" width="128">
-                                            </a>
-                                        </span>
-
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Full Name') }}</span>
-                                        <span>{!! $data->buyer_name !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Phone') }}</span>
-                                        <span>{{ $data->buyer_phone_no }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Status') }}</span>
-                                        <span>{{ $data->buyer_status }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Business Information</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Logo') }}</span>
-                                        <span>
-                                            <a data-fancybox data-type="image" href="{{ $data->business_logo }}">
-                                                <img src="{{ $data->business_logo }}" alt="" width="128">
-                                            </a>
-                                        </span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Name') }}</span>
-                                        <span>{{ $data->business_name }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Tag') }}</span>
-                                        <span>{{ $data->business_tag }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Tax No') }}</span>
-                                        <span>{{ $data->business_tax_no }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endslot
-                @endcomponent
-            </div>
-
-            <div class="tab-pane" id="seller_detail">
-                @component('components._widget-list')
-                    @slot('body')
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="m-widget28__tab-items">
-                                    <div class="h2">Seller Information</div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Logo') }}</span>
-                                        <span>
-                                            <a data-fancybox data-type="image" href="{{ $data->seller_logo }}">
-                                                <img src="{{ $data->seller_logo }}" alt="" width="128">
-                                            </a>
-                                        </span>
-
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Name') }}</span>
-                                        <span>{!! $data->seller_name !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Phone Number') }}</span>
-                                        <span>{!! $sellerData->msisdn !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Description') }}</span>
-                                        <span>{!! $data->seller_description !!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Product Category') }}</span>
-                                        <span>{{ $data->seller_product_category }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Tax No') }}</span>
-                                        <span>{{ $data->seller_tax_no }}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Status') }}</span>
-                                        <span>{{ $data->buyer_status }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endslot
-                @endcomponent
-            </div>
-
-            <div class="tab-pane" id="item_detail">
-                @component('components._widget-list')
-                    @slot('body')
-
                         @isset($data->orderItems)
                             @foreach($data->orderItems as $item)
                                 <div class="row mb-4">
@@ -408,7 +203,39 @@
                                 <hr class="mb-5">
                             @endforeach
                         @endisset
-
+                        <div class="m-widget28__tab-items row">
+                            <div class="col-3">
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Total VAT') }}</span>
+                                    <span>IDR {{ number_format($data['payment_details']['total_vat']) }}</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Total TAX') }}</span>
+                                    <span>IDR {{ number_format($data['payment_details']['total_tax_base']) }}</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="m-widget28__tab-item">
+                                    <span>Total Gross and Total Order</span>
+                                    <span>IDR {{ number_format($data['payment_details']['total_gross']) }} <br>
+                                        IDR {{ number_format($data['payment_details']['total_order']) }}</span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Total Shipping Cost') }}</span>
+                                    <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Grand Total') }}</span>
+                                    <h4 class="h4">IDR {{ number_format($data->payment_amount ?? 0) }}</h4>
+                                </div>
+                            </div>
+                        </div>
                     @endslot
                 @endcomponent
             </div>
@@ -463,7 +290,7 @@
                                             <span>{{ $manifest->airwaybill ?? '-' }}</span>
                                         </div>
 
-                                        {{--<div class="m-widget28__tab-item">
+                                        <div class="m-widget28__tab-item">
                                             <span>{{ __('Carrier') }}</span>
                                             <span>{{ '-' }}</span>
                                         </div>--}}
