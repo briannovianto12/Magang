@@ -6,7 +6,7 @@
           'portlet_head' => true,
           'portlet_title' => "List of Seller With Balance"])
         @slot('body')
-            <a href="{{ url('/') }}/export/xlsx/" class="btn btn-success">Export to .xlsx</a>
+            <a href="{{ route('seller.export') }}" class="btn btn-success">Export to .xlsx</a>
             </div>
             <div class="container-fluid">
                 <div class="row">

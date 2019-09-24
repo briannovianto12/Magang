@@ -19,6 +19,10 @@ use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer as Writer;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SellerController extends BaseResourceController
 {
@@ -307,13 +311,14 @@ class SellerController extends BaseResourceController
     public function export(){
         $data = \DB::select("SELECT * FROM vw_seller_balance_xendit_template");
         $spreadsheet = new Spreadsheet();
+        $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Amount');
         $sheet->setCellValue('B1', 'Bank Code');
         $sheet->setCellValue('C1', 'Bank Account Name');
         $sheet->setCellValue('D1', 'Bank Account Number');
         $sheet->setCellValue('E1', 'Description');
-        $sheet->setCellValue('F1', 'Email ');
+        $sheet->setCellValue('F1', 'Email');
         $sheet->setCellValue('G1', 'Email CC ');
         $sheet->setCellValue('H1', 'Email BCC');
         $sheet->setCellValue('I1', 'External Id');
@@ -323,12 +328,13 @@ class SellerController extends BaseResourceController
             $sheet->setCellValue('A' . $rows, $data->amount);
             $sheet->setCellValue('B' . $rows, $data->bank_code);
             $sheet->setCellValue('C' . $rows, $data->bank_account_name);
-            $sheet->setCellValue('D' . $rows, $data->bank_account_number);
+            $sheet->setCellValue('D' . $rows, $data->bank_account_number)->getStyle('D')->getNumberFormat();
+            $sheet->setCellValue('D' . $rows, $data->bank_account_number)->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
             $sheet->setCellValue('E' . $rows, $data->description);
-            $sheet->setCellValue('E' . $rows, $data->email);
-            $sheet->setCellValue('E' . $rows, $data->email_cc);
-            $sheet->setCellValue('E' . $rows, $data->email_bcc);
-            $sheet->setCellValue('E' . $rows, $data->external_id);
+            $sheet->setCellValue('F' . $rows, $data->email);
+            $sheet->setCellValue('G' . $rows, $data->email_cc);
+            $sheet->setCellValue('H' . $rows, $data->email_bcc);
+            $sheet->setCellValue('J' . $rows, $data->external_id);
             $rows++;
         }
 
