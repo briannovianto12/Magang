@@ -42,7 +42,7 @@
 				                All Seller with Product
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_registered_seller_with_product']}}
+                                {{$summary['total_registered_seller_with_product']}}
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -68,7 +68,7 @@
 				                All Buyers and Sellers
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_registered_user']}}   
+                                {{$summary['total_registered_user']}}   
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -101,7 +101,7 @@
 				                All Registered SKU
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_registered_sku']}}   
+                                {{$summary['total_registered_sku']}}   
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -127,7 +127,7 @@
                                 All Published SKU
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_published_sku']}}   
+                                {{$summary['total_published_sku']}}   
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -153,7 +153,7 @@
                                 All Unpublished SKU
 				            </span>
                             <span class="m-widget24__stats m--font-info">
-                            {{$summary['total_unpublished_sku']}}   
+                                {{$summary['total_unpublished_sku']}}   
 				            </span>
                             <div class="m--space-10"></div>
                             <div class="progress m-progress--sm">
@@ -167,6 +167,60 @@
                         </div>
                     </div>
                     <!--end::Total Unpublished SKU-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-portlet ">
+        <div class="m-portlet__body  m-portlet__body--no-padding">
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Total Last Month</th>
+                            <th scope="col">Total This Month</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">1</th>
+                            <td>Awaiting Payment</td>
+                            <td>{{$summary['total_placed_order_last_month']}}</td>
+                            <td>{{$summary['total_placed_order_this_month']}}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">2</th>
+                            <td>Awaiting Seller's Confirmation</td>
+                            <td>{{$summary['total_order_awaiting_seller_confirmation_last_month']}}</td>
+                            <td>{{$summary['total_order_awaiting_seller_confirmation_this_month']}}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">3</th>
+                            <td>Awaiting Shipment</td>
+                            <td>{{$summary['total_order_awaiting_shipment_last_month']}}</td>
+                            <td>{{$summary['total_order_awaiting_shipment_this_month']}}</td>
+                            </tr>
+                            <th scope="row">4</th>
+                            <td>On Delivery</td>
+                            <td>{{$summary['total_order_shipped_last_month']}}</td>
+                            <td>{{$summary['total_order_shipped_this_month']}}</td>
+                            </tr>
+                            <th scope="row">5</th>
+                            <td>Delivered</td>
+                            <td>{{$summary['total_order_delivered_last_month']}}</td>
+                            <td>{{$summary['total_order_delivered_this_month']}}</td>
+                            </tr>
+                            <th scope="row">6</th>
+                            <td>Success</td>
+                            <td>{{$summary['total_order_succeeded_last_month']}}</td>
+                            <td>{{$summary['total_order_succeeded_this_month']}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
