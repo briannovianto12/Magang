@@ -35,22 +35,36 @@
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
                                 <h3><b>ORDER INFO</b></h3>
-                                <div class="m-widget28__tab-item">
-                                    <span>{{ __('Order Status') }}</span>
-                                    @if($data->status == 1 || $data->status == 3 || $data->status == 4)
-                                        <span style="color:red">{{ 'Awaiting Payment' }}</span>
-                                    @elseif($data->status == 5)
-                                        <span style="color:#39b54a">{{ 'Awaiting Seller Confirmation' }}</span>
-                                    @elseif($data->status == 2 || $data->status == 6 || $data->status == 7)
-                                        <span style="color:#39b54a">{{ 'Awaiting Shipment' }}</span>
-                                    @elseif($data->status == 8)
-                                        <span style="color:#39b54a">{{ 'On Delivery' }}</span>
-                                    @elseif($data->status == 9)
-                                        <span style="color:#39b54a">{{ 'Delivered' }}</span>
-                                    @elseif($data->status == 10)
-                                        <span style="color:#39b54a">{{ 'Success' }}</span>
-                                    @elseif($data->status == 30 || $data->status == 31)
-                                        <span style="color:red">{{ 'Canceled' }}</span>
+                                <div class="m-widget28__tab-item row">
+                                    <div class="col-6">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Order Status') }}</span>
+                                            @if($data->status == 1 || $data->status == 3 || $data->status == 4)
+                                                <span style="color:red">{{ 'Awaiting Payment' }}</span>
+                                            @elseif($data->status == 5)
+                                                <span style="color:#39b54a">{{ 'Awaiting Seller Confirmation' }}</span>
+                                            @elseif($data->status == 2 || $data->status == 6 || $data->status == 7)
+                                                <span style="color:#39b54a">{{ 'Awaiting Shipment' }}</span>
+                                            @elseif($data->status == 8)
+                                                <span style="color:#39b54a">{{ 'On Delivery' }}</span>
+                                            @elseif($data->status == 9)
+                                                <span style="color:#39b54a">{{ 'Delivered' }}</span>
+                                            @elseif($data->status == 10)
+                                                <span style="color:#39b54a">{{ 'Success' }}</span>
+                                            @elseif($data->status == 30 || $data->status == 31)
+                                                <span style="color:red">{{ 'Canceled' }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @if($data->status == 8)
+                                    <div class ="col-6">
+                                        <form action="{{ url('/order/'.$data->id) ?? '#' }}" method="POST">
+                                            {{csrf_field()}}
+                                            <button class="btn btn-success">
+                                                Delivered
+                                            </button>
+                                        </form>
+                                    </div>
                                     @endif
                                 </div>
                                 <div class="m-widget28__tab-item">
@@ -429,7 +443,7 @@
                                                 <button type="button" class="btn btn-success">
                                                     Delivered
                                                 </button>
-                                        </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
