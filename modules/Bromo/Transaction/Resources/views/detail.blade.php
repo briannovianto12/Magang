@@ -126,7 +126,7 @@
                                 <h3><b>SHIPPING</b></h3>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Airwaybill No.') }}</span>
-                                    <span>{{ $data->shippingManifest()->airwaybill ?? '-' }}</span>
+                                    <span>{{ $data->shippingManifest()->get()[0]->airwaybill ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
