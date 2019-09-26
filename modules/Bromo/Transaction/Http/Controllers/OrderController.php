@@ -14,6 +14,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use DB;
 
 class OrderController extends Controller
 {
@@ -150,9 +151,14 @@ class OrderController extends Controller
         $data['data'] = Order::findOrFail($id);
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
-        
         return view("{$this->module}::detail", $data);
     }
 
+    public function changeStatusToDelivered($id){
+        $order = Order::findOrFail($id);
+        DB::select("SELECT public.fs_change_order_to_delivered('$order->order_no')");
+
+        return back();
+    }
 
 }
