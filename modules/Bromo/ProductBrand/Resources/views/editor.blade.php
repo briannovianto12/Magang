@@ -7,8 +7,9 @@
 @section('content')
 
     @component('components._portlet',[
-          'portlet_head' => true,
-          'portlet_title' => isset($data) ? __('Ubah')." $title" : __('Tambah') . " $title"])
+        'portlet_head' => true,
+        'portlet_title' => isset($data) ? __('Ubah')." $title" : __('Tambah') . " $title"])
+          
         @slot('body')
 
             @component('components._form', [

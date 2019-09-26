@@ -20,8 +20,9 @@ class ProductBrandDataTable extends DataTable
                     'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];
-
-                return view('theme::layouts.includes.actions', $action);
+                if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
+                    return view('theme::layouts.includes.actions', $action);
+                
             })
             ->rawColumns(['action'])
             ->make(true);

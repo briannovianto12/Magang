@@ -69,7 +69,6 @@
                 </div>
             </div>
             <!--end::Modal-->
-
             @component('components._widget-list')
                 @slot('body')
                     <div class="row">
@@ -133,7 +132,7 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Logo') }}</span>
                                         <span><img src="{{ $data->business->logo_url }}" alt=""
-                                                   width="128"></span>
+                                                width="128"></span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Name') }}</span>

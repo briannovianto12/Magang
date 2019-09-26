@@ -47,44 +47,44 @@
                         'value' => $data->categoryLevel->name,
                     ])
                     @endcomponent
-
-                    <hr>
-                    <div class="form-group m-form__group row">
-                        <label for="" class="col-3 col-form-label text-right">Attributes</label>
-                        <div class="col-6">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Key</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($attributeKeys as $attribute)
+                    @role('Administrator')
+                        <hr>
+                        <div class="form-group m-form__group row">
+                            <label for="" class="col-3 col-form-label text-right">Attributes</label>
+                            <div class="col-6">
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $attribute->key }}</td>
-                                        <td>
-                                            @if($data->attributeKeys()->find($attribute->id))
-                                                <button type="button" class="btn btn-danger btn-sm"
-                                                        onclick="detachAttribute('{{ route($module . '.attributes.detach', [$data->id, $attribute->id])  }}')">
-                                                    <i class="la la-minus-circle"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" class="btn btn-success btn-sm"
-                                                        onclick="attachAttribute('{{ route($module . '.attributes.attach', [$data->id, $attribute->id])  }}')">
-                                                    <i class="la la-plus-circle"></i>
-                                                </button>
-                                            @endif
-                                        </td>
+                                        <th>No</th>
+                                        <th>Key</th>
+                                        <th>Status</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($attributeKeys as $attribute)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $attribute->key }}</td>
+                                            <td>
+                                                @if($data->attributeKeys()->find($attribute->id))
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="detachAttribute('{{ route($module . '.attributes.detach', [$data->id, $attribute->id])  }}')">
+                                                        <i class="la la-minus-circle"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                            onclick="attachAttribute('{{ route($module . '.attributes.attach', [$data->id, $attribute->id])  }}')">
+                                                        <i class="la la-plus-circle"></i>
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-
+                    @endrole
                 @endslot
 
                 @slot('buttons')

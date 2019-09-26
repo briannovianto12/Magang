@@ -8,6 +8,10 @@ use Illuminate\Routing\Controller;
 use Bromo\Product\Models\ProductStatus;
 use Bromo\Transaction\Models\OrderStatus;
 use DB;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\HasRoles;
+use Bromo\Auth\Models\Admin;
 
 class DashboardController extends Controller
 {
@@ -28,7 +32,21 @@ class DashboardController extends Controller
            [ "name" => "Dashbor", "url" => route('dashboard') ]
         ];
         $data['summary'] = $this->getSummary();
+        $user = auth()->user();
         
+        if($user->role_id == 1){
+            $user->syncRoles('Administrator');
+        }else if($user->role_id == 2){
+            $user->syncRoles('Merchandiser');
+        }else if($user->role_id == 3){
+            $user->syncRoles('Sales');
+        }else if($user->role_id == 4){
+            $user->syncRoles('Finance');
+        }else if($user->role_id == 5){
+            $user->syncRoles('Support');
+        }
+        // dd($user->getRoleNames());
+        $data['user'] = $user;
         return view('dashboard::index', $data);
         
     }
