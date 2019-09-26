@@ -4,11 +4,17 @@ namespace Bromo\Auth\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\Role;
+use Spatie\Permission\Traits\Permission;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
+    use HasRoles;
 
     const ADMIN = 3;
+
+    protected $guard_name = 'web'; 
 
     protected $table = 'admin';
 

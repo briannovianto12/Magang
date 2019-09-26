@@ -47,44 +47,44 @@
                         'value' => $data->categoryLevel->name,
                     ])
                     @endcomponent
-
-                    <hr>
-                    <div class="form-group m-form__group row">
-                        <label for="" class="col-3 col-form-label text-right">Brands</label>
-                        <div class="col-6">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Key</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($productBrands as $brand)
+                    @role('Administrator|Merchandiser')
+                        <hr>
+                        <div class="form-group m-form__group row">
+                            <label for="" class="col-3 col-form-label text-right">Brands</label>
+                            <div class="col-6">
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $brand->name }}</td>
-                                        <td>
-                                            @if($data->brands()->find($brand->id))
-                                                <button type="button" class="btn btn-danger btn-sm"
-                                                        onclick="detachBrand('{{ route($module . '.brands.detach', [$data->id, $brand->id])  }}')">
-                                                    <i class="la la-minus-circle"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" class="btn btn-success btn-sm"
-                                                        onclick="attachBrand('{{ route($module . '.brands.attach', [$data->id, $brand->id])  }}')">
-                                                    <i class="la la-plus-circle"></i>
-                                                </button>
-                                            @endif
-                                        </td>
+                                        <th>No</th>
+                                        <th>Key</th>
+                                        <th>Status</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($productBrands as $brand)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $brand->name }}</td>
+                                            <td>
+                                                @if($data->brands()->find($brand->id))
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="detachBrand('{{ route($module . '.brands.detach', [$data->id, $brand->id])  }}')">
+                                                        <i class="la la-minus-circle"></i>
+                                                    </button>
+                                                @else
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                            onclick="attachBrand('{{ route($module . '.brands.attach', [$data->id, $brand->id])  }}')">
+                                                        <i class="la la-plus-circle"></i>
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-
+                    @endrole
                 @endslot
 
                 @slot('buttons')

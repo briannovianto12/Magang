@@ -17,66 +17,84 @@
                     </span>
                 </a>
             </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('store') }}" aria-haspopup="true">
-                <a href="{{ route('store') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-truck"></i>
-                    <span class="m-menu__link-text">Store</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('buyer') }}" aria-haspopup="true">
-                <a href="{{ route('buyer') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-avatar"></i>
-                    <span class="m-menu__link-text">Buyer</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-category') }}" aria-haspopup="true">
-                <a href="{{ route('product-category') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-squares"></i>
-                    <span class="m-menu__link-text">Product Category</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-brand') }}" aria-haspopup="true">
-                <a href="{{ route('product-brand') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-grid-menu-v2"></i>
-                    <span class="m-menu__link-text">Brand</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('product') }}" aria-haspopup="true">
-                <a href="{{ route('product.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-business"></i>
-                    <span class="m-menu__link-text">Product</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('attribute-key') }}" aria-haspopup="true">
-                <a href="{{ route('attribute-key') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-app"></i>
-                    <span class="m-menu__link-text">Attribute Key</span>
-                </a>
-            </li>
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unit-type') }}" aria-haspopup="true">
-                <a href="{{ route('unit-type') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-network"></i>
-                    <span class="m-menu__link-text">Unit Type</span>
-                </a>
-            </li>
+            @can('view_store')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('store') }}" aria-haspopup="true">
+                    <a href="{{ route('store') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-truck"></i>
+                        <span class="m-menu__link-text">Store</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_buyer')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('buyer') }}" aria-haspopup="true">
+                    <a href="{{ route('buyer') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-avatar"></i>
+                        <span class="m-menu__link-text">Buyer</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_product_category')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-category') }}" aria-haspopup="true">
+                    <a href="{{ route('product-category') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-squares"></i>
+                        <span class="m-menu__link-text">Product Category</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_brand')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('product-brand') }}" aria-haspopup="true">
+                    <a href="{{ route('product-brand') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-grid-menu-v2"></i>
+                        <span class="m-menu__link-text">Brand</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_product')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('product') }}" aria-haspopup="true">
+                    <a href="{{ route('product.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-business"></i>
+                        <span class="m-menu__link-text">Product</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_attribute_key')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('attribute-key') }}" aria-haspopup="true">
+                    <a href="{{ route('attribute-key') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-app"></i>
+                        <span class="m-menu__link-text">Attribute Key</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_unit_type')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('unit-type') }}" aria-haspopup="true">
+                    <a href="{{ route('unit-type') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-network"></i>
+                        <span class="m-menu__link-text">Unit Type</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_order')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('order.index') }}" aria-haspopup="true">
                 <a href="{{ route('order.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-open-box"></i>
                     <span class="m-menu__link-text">Order</span>
                 </a>
             </li>
+            @endcan
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('messages.index') }}" aria-haspopup="true">
                 <a href="{{ route('messages.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-open-box"></i>
                     <span class="m-menu__link-text">Messages</span>
                 </a>
             </li>
+            @can('view_unverified_seller')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
                 <a href="{{ route('unverified.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-avatar"></i>
                     <span class="m-menu__link-text">Unverified Seller</span>
                 </a>
             </li>
+            @endcan
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('seller.balance') }}" aria-haspopup="true">
                     <a href="{{ route('seller.balance') }}" class="m-menu__link">
                         <i class="m-menu__link-icon flaticon-layers"></i>

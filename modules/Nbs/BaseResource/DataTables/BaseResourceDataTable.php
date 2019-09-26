@@ -14,13 +14,14 @@ class BaseResourceDataTable extends DataTable
                 return $data->updated_at_formatted;
             })
             ->addColumn('action', function ($data) {
+                
                 $action = [
                     'edit_url' => route("{$this->module}.edit", $data->id),
                     'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];
-
-                return view('theme::layouts.includes.actions', $action);
+                if(auth()->user()->hasRole('Administrator'))
+                    return view('theme::layouts.includes.actions', $action);
             })
             ->rawColumns(['action'])
             ->make(true);

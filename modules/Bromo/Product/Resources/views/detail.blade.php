@@ -120,6 +120,7 @@
                                         <span>{{ $data->productStatus->name ?? '-' }}</span>
                                     @endif
                                 </div>
+                                @role('Administrator|Merchandiser')
                                 @if($data->status === \Bromo\Product\Models\ProductStatus::SUBMIT)
                                     <div class="m-widget28__tab-item text-center">
                                         <button type="button" class="btn btn-danger m-btn m-btn--custom"
@@ -134,6 +135,7 @@
                                         </button>
                                     </div>
                                 @endif
+                                @endrole
                             </div>
                         </div>
                     </div>

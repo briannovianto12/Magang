@@ -32,7 +32,8 @@
                     </div>
                 </div>
             @endisset
-
+            @can('add_unit_type')
+            @role('Administrator|Merchandiser')
             @isset($url)
                 <div class="m-portlet__head-tools">
                     <a href="#" onclick="window.location.href='{{ $url }}'"
@@ -42,9 +43,12 @@
                             <!-- <span>@isset($postfix) {{$postfix}} @endisset</span> -->
                             <span>Tambah</span>
                         </span>
+                        
                     </a>
                 </div>
             @endisset
+            @endrole
+            @endcan
 
             @isset($url_manage)
                 <div class="m-portlet__head-tools">
