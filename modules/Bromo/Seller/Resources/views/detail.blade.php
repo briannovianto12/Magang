@@ -130,6 +130,24 @@
                             <div class="col-6">
                                 <div class="m-widget28__tab-items">
                                     <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Bank Account') }}</span>
+                                        <span>{{ $data->businessBankAccount->account_no
+                                                .' - '
+                                                .$data->businessBankAccount->bank_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Bank Account Owner') }}</span>
+                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Owner') }}</span>
+                                        <span>{{ $owner->full_name ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Owner Phone') }}</span>
+                                        <span>{{ $owner->msisdn ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Logo') }}</span>
                                         <span><img src="{{ $data->business->logo_url }}" alt=""
                                                 width="128"></span>
@@ -173,22 +191,6 @@
                                                 ."<br>"
                                                 .$data->businessAddress->postal_code
                                                 ?? '-'!!}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Bank Account') }}</span>
-                                        <span>{{ $data->businessBankAccount->account_no ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Bank Account Owner') }}</span>
-                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Owner') }}</span>
-                                        <span>{{ $owner->full_name ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Owner Phone') }}</span>
-                                        <span>{{ $owner->msisdn ?? '-'}}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Status') }}</span>

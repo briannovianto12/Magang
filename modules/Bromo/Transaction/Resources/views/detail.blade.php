@@ -81,7 +81,7 @@
                                             <span>{{ __('Seller Name') }}</span>
                                             <span>
                                                 {{ $sellerData->full_name }}
-                                                <a class="btn btn-link" href="{{ url('/buyer/'.$sellerData->id) }}">
+                                                <a class="btn btn-link" href="{{ url('/store/'.$data->shop_id) }}">
                                                     detail
                                                 </a>
                                             </span>
