@@ -32,8 +32,7 @@
                     </div>
                 </div>
             @endisset
-            @can('add_unit_type')
-            @role('Administrator|Merchandiser')
+            @can('add_product_category|add_brand|add_attribute_key|add_unit_type')
             @isset($url)
                 <div class="m-portlet__head-tools">
                     <a href="#" onclick="window.location.href='{{ $url }}'"
@@ -47,7 +46,6 @@
                     </a>
                 </div>
             @endisset
-            @endrole
             @endcan
 
             @isset($url_manage)
