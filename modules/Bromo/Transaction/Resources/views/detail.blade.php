@@ -152,7 +152,7 @@
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Package Weight') }}</span>
-                                            <span>{!! $data->shipping_weight !!} gr</span>
+                                            <span>{!! ($data->shipping_weight/1000) !!} Kg</span>
                                         </div>
                                     </div>
                                 </div>
@@ -173,13 +173,13 @@
                                     <div class="col-2">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Notes') }}</span>
-                                            <span>{!! $data->orig_address_snapshot['building_name'] !!} gr</span>
+                                            <span>{!! $data->orig_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-7">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Pick Up Address') }}</span>
-                                            <span>{!! $data->origin_address !!} gr</span>
+                                            <span>{!! $data->origin_address !!}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -200,13 +200,13 @@
                                     <div class="col-2">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Notes') }}</span>
-                                            <span>{!! $data->dest_address_snapshot['notes'] !!} gr</span>
+                                            <span>{!! $data->dest_address_snapshot['notes'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-7">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Pick Up Address') }}</span>
-                                            <span>{!! $data->destination_address !!} gr</span>
+                                            <span>{!! $data->destination_address !!}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +347,7 @@
                                             </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Shipping Weight') }}</span>
-                                                <span>{{ $item->shipping_weight ?? '0' }} gr</span>
+                                                <span>{{ ($item->shipping_weight) ?? '0' }} gr</span>
                                             </div>
                                         </div>
                                     </div>
