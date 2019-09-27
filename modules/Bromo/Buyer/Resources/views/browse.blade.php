@@ -15,7 +15,9 @@
           'portlet_head' => true,
           'portlet_title' => "List {$title}"])
         @slot('body')
-            {!! $dataTable->table() !!}
+            @can('view_buyer')
+                {!! $dataTable->table() !!}
+            @endcan
         @endslot
 
         @slot('postfix')
