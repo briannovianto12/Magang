@@ -45,7 +45,6 @@ class DashboardController extends Controller
         }else if($user->role_id == 5){
             $user->syncRoles('Support');
         }
-        // dd($user->getRoleNames());
         $data['user'] = $user;
         return view('dashboard::index', $data);
         
