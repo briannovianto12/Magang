@@ -95,10 +95,10 @@
                 </a>
             </li>
             @endcan
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('seller.balance') }}" aria-haspopup="true">
-                    <a href="{{ route('seller.balance') }}" class="m-menu__link">
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('report.index') }}" aria-haspopup="true">
+                    <a href="{{ route('report.index') }}" class="m-menu__link">
                         <i class="m-menu__link-icon flaticon-layers"></i>
-                        <span class="m-menu__link-text">Seller With Balance</span>
+                        <span class="m-menu__link-text">Reports</span>
                     </a>
                 </li>
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
