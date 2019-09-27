@@ -25,29 +25,24 @@
                 <tr>
                     <th>Report Name</th>
                     <th>Description</th>
-                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Shop With Few Product</td>
+                        <td><a href="{{ route('report.shop_with_few_product') }}">Shop With Few Product</a></td>
                         <td>List of shop that has less than ten published product.</td>
-                        <td><a href="{{ route('report.shop_with_few_product') }}">Open</a></td>
                     </tr>
                     <tr>
-                        <td>Shop With Product</td>
+                        <td><a href="{{ route('report.shop_has_product') }}">Shop With Product</a></td>
                         <td>List of shop that has at least one product.</td>
-                        <td><a href="{{ route('report.shop_has_product') }}">Open</a></td>
                     </tr>
                     <tr>
-                        <td>Seller With Balance</td>
+                        <td><a href="{{ route('seller.balance') }}">Seller With Balance</a></td>
                         <td>List of seller with account balance.</td>
-                        <td><a href="{{ route('seller.balance') }}">Open</a></td>
                     </tr>
                     <tr>
-                        <td>Product Over Half Kilo</td>
+                        <td><a href="{{ route('report.product_over_half_kilo') }}">Product Over Half Kilo</a></td>
                         <td>List of product that weight more than 500gr.</td>
-                        <td><a href="{{ route('report.product_over_half_kilo') }}">Open</a></td>
                     </tr>
                 </tbody>
             </table>
