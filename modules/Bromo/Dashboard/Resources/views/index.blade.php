@@ -183,6 +183,7 @@
                             <th scope="col">Order Status</th>
                             <th scope="col">Total Last Month</th>
                             <th scope="col">Total This Month</th>
+                            <th scope="col">Total Last Week</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,33 +192,39 @@
                             <td>Awaiting Payment</td>
                             <td>{{$summary['total_placed_order_last_month']}}</td>
                             <td>{{$summary['total_placed_order_this_month']}}</td>
+                            <td>{{$summary['total_placed_order_last_week']}}</td>
                             </tr>
                             <tr>
                             <th scope="row">2</th>
                             <td>Awaiting Seller's Confirmation</td>
                             <td>{{$summary['total_order_awaiting_seller_confirmation_last_month']}}</td>
                             <td>{{$summary['total_order_awaiting_seller_confirmation_this_month']}}</td>
+                            <td>{{$summary['total_order_awaiting_seller_confirmation_last_week']}}</td>
                             </tr>
                             <tr>
                             <th scope="row">3</th>
                             <td>Awaiting Shipment</td>
                             <td>{{$summary['total_order_awaiting_shipment_last_month']}}</td>
                             <td>{{$summary['total_order_awaiting_shipment_this_month']}}</td>
+                            <td>{{$summary['total_order_awaiting_shipment_last_week']}}</td>
                             </tr>
                             <th scope="row">4</th>
                             <td>On Delivery</td>
                             <td>{{$summary['total_order_shipped_last_month']}}</td>
                             <td>{{$summary['total_order_shipped_this_month']}}</td>
+                            <td>{{$summary['total_order_shipped_last_week']}}</td>
                             </tr>
                             <th scope="row">5</th>
                             <td>Delivered</td>
                             <td>{{$summary['total_order_delivered_last_month']}}</td>
                             <td>{{$summary['total_order_delivered_this_month']}}</td>
+                            <td>{{$summary['total_order_delivered_last_week']}}</td>
                             </tr>
                             <th scope="row">6</th>
                             <td>Success</td>
                             <td>{{$summary['total_order_succeeded_last_month']}}</td>
                             <td>{{$summary['total_order_succeeded_this_month']}}</td>
+                            <td>{{$summary['total_order_succeeded_last_week']}}</td>
                             </tr>
                         </tbody>
                     </table>

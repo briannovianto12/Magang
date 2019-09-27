@@ -107,6 +107,30 @@ class DashboardController extends Controller
                                         ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
                                         (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
                                         ->count();
+        $totalPlacedOrderLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PLACED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
+        $totalOrderAwaitingSellerConfirmationLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PAYMENT_OK)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
+        $totalOrderAwaitingShipmentLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::ACCEPTED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
+        $totalOrderShippedLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::SHIPPED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
+        $totalOrderDeliveredLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::DELIVERED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
+        $totalOrderSucceededLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->count();
 
         return [
             'this_month' => $thisMonth[0],
@@ -129,6 +153,12 @@ class DashboardController extends Controller
             'total_order_delivered_last_month' => $totalOrderDeliveredLastMonth,
             'total_order_succeeded_this_month' => $totalOrderSucceededThisMonth,
             'total_order_succeeded_last_month' => $totalOrderSucceededLastMonth,
+            'total_placed_order_last_week' => $totalPlacedOrderLastWeek,
+            'total_order_awaiting_seller_confirmation_last_week' => $totalOrderAwaitingSellerConfirmationLastWeek,
+            'total_order_awaiting_shipment_last_week' => $totalOrderAwaitingShipmentLastWeek,
+            'total_order_shipped_last_week' => $totalOrderShippedLastWeek,
+            'total_order_delivered_last_week' => $totalOrderDeliveredLastWeek,
+            'total_order_succeeded_last_week' => $totalOrderSucceededLastMonth,
         ];
 
 
