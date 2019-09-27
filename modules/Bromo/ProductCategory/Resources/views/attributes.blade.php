@@ -47,7 +47,7 @@
                         'value' => $data->categoryLevel->name,
                     ])
                     @endcomponent
-                    @role('Administrator')
+                    @can('add_product_category_attribute')
                         <hr>
                         <div class="form-group m-form__group row">
                             <label for="" class="col-3 col-form-label text-right">Attributes</label>
@@ -84,7 +84,7 @@
                                 </table>
                             </div>
                         </div>
-                    @endrole
+                    @endcan
                 @endslot
 
                 @slot('buttons')

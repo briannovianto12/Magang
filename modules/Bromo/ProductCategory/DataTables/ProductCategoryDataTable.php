@@ -18,6 +18,7 @@ class ProductCategoryDataTable extends DataTable
                 return $data->updated_at_formatted;
             })
             ->addColumn('action', function ($data) {
+                $action = [];
                 if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2){
                     $action = [
                         'edit_url' => route("{$this->module}.edit", $data->id),
