@@ -56,6 +56,7 @@
                                             @endif
                                         </div>
                                     </div>
+                                    {{--
                                     @if($data->status == 8)
                                     <div class ="col-6">
                                         <form action="{{ url('/order/'.$data->id) ?? '#' }}" method="POST">
@@ -66,6 +67,7 @@
                                         </form>
                                     </div>
                                     @endif
+                                    --}}
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Ordered Date') }}</span>
