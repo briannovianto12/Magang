@@ -9,25 +9,27 @@ class AttributeKeyDataTable extends DataTable
 {
     public function ajax()
     {
-        return datatables($this->query())
-            ->addIndexColumn()
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at_formatted;
-            })
-            ->editColumn('updated_at', function ($data) {
-                return $data->updated_at_formatted;
-            })
-            ->addColumn('action', function ($data) {
-                $action = [
-                    'edit_url' => route("{$this->module}.edit", $data->id),
-                    'delete_url' => route("{$this->module}.destroy", $data->id),
-                    'id' => $data->id
-                ];
-
-                return view('theme::layouts.includes.actions', $action);
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        if(auth()->user()->hasDirectPermission('view_attribute_key')){
+            return datatables($this->query())
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($data) {
+                    return $data->created_at_formatted;
+                })
+                ->editColumn('updated_at', function ($data) {
+                    return $data->updated_at_formatted;
+                })
+                ->addColumn('action', function ($data) {
+                    $action = [
+                        'edit_url' => route("{$this->module}.edit", $data->id),
+                        'delete_url' => route("{$this->module}.destroy", $data->id),
+                        'id' => $data->id
+                    ];
+                    if(auth()->user()->hasDirectPermission('edit_attribute_key'))
+                        return view('theme::layouts.includes.actions', $action);
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     public function query()
