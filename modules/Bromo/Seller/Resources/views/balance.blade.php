@@ -29,7 +29,7 @@
                             <tbody>
                                 @foreach($data as $row)
                                 <tr>
-                                    <td> {{$row->amount }} </td>
+                                    <td > {{ number_format( $row->amount, 0, 0, '.') }} </td>
                                     <td> {{$row->bank_code }} </td>
                                     <td> {{$row->bank_account_name }} </td>
                                     <td> {{$row->bank_account_number }} </td>

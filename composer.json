@@ -62,7 +62,9 @@
             "Bromo\\GroseniaTheme\\": "modules/Bromo/GroseniaTheme/",
             "Bromo\\Dashboard\\": "modules/Bromo/Dashboard/",
             "Bromo\\Messages\\": "modules/Bromo/Messages/",
-            "Bromo\\Unverified\\": "modules/Bromo/Unverified/"
+            "Bromo\\Unverified\\": "modules/Bromo/Unverified/",
+            "Bromo\\Report\\": "modules/Bromo/Report/"
+
         },
         "classmap": [
             "database/seeds",
