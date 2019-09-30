@@ -26,5 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('unit-type', 'UnitTypeController');
     Route::name('unit-type')->get('/unit-type', 'UnitTypeController@index');
+    
+    
 
 });
