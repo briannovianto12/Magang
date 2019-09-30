@@ -83,8 +83,15 @@
                                             <span>{{ __('Seller Name') }}</span>
                                             <span>
                                                 {{ $sellerData->full_name }}
-                                                <a class="btn btn-link" href="{{ url('/store/'.$data->shop_id) }}">
-                                                    detail
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Seller Shop') }}</span>
+                                            <span>
+                                                <a href="{{ url('/store/'.$data->shop_id) }}">
+                                                    {{ $data->shop_snapshot['name'] }}
                                                 </a>
                                             </span>
                                         </div>
@@ -97,7 +104,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Seller Email') }}</span>
                                             <span>
@@ -111,9 +118,8 @@
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Buyer Name') }}</span>
                                             <span>
-                                                {{ $data->buyer_name }}
-                                                <a class="btn btn-link" href="{{ url('/buyer/'.$data->buyer->id) }}">
-                                                    detail
+                                                <a href="{{ url('/buyer/'.$data->buyer->id) }}">
+                                                    {{ $data->buyer_name }}
                                                 </a>
                                             </span>
                                         </div>
@@ -126,7 +132,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Buyer Email') }}</span>
                                             <span>
