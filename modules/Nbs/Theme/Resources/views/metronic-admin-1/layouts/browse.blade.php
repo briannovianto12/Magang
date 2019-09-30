@@ -1,7 +1,8 @@
 @extends('theme::layouts.master')
 
-@section('content')
 
+@section('content')
+    @canany(['view_brand','view_attribute_key'])
     @component('components._portlet',[
           'portlet_head' => true,
           'portlet_title' => "List {$title}"])
@@ -17,7 +18,7 @@
             {{ $title }}
         @endslot
     @endcomponent
-
+    @endcanany
 @endsection
 
 @section('css')
