@@ -14,6 +14,7 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Shop Name</th>
                                     <th>Amount</th>
                                     <th>Bank Code</th>
                                     <th>Bank Account Name</th>
@@ -29,6 +30,7 @@
                             <tbody>
                                 @foreach($data as $row)
                                 <tr>
+                                    <td> {{$row->shop_name }} </td>
                                     <td > {{ number_format( $row->amount, 0, 0, '.') }} </td>
                                     <td> {{$row->bank_code }} </td>
                                     <td> {{$row->bank_account_name }} </td>
