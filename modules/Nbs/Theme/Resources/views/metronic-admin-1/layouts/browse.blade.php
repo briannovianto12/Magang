@@ -2,7 +2,7 @@
 
 
 @section('content')
-    @canany(['view_brand','view_attribute_key'])
+    @canany(['view_brand','view_attribute_key','view_unit_type'])
     @component('components._portlet',[
           'portlet_head' => true,
           'portlet_title' => "List {$title}"])
