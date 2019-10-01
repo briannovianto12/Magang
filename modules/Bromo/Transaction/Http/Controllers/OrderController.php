@@ -151,6 +151,14 @@ class OrderController extends Controller
         $data['data'] = Order::findOrFail($id);
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
+        $data['shipingCostDetails'] = null;
+        if($data['data']['shipping_service_snapshot']['shipper']){
+            $data['shipingCostDetails'] = [
+                'shipping_gross_amount' => $data['data']['shipping_service_snapshot']['shipper']['provider_cost'],
+                'shipping_discount' => $data['data']['shipping_service_snapshot']['shipper']['platform_discount'],
+                'shipping_insurance_rate' => $data['data']['shipping_service_snapshot']['shipper']['insuranceRate'],
+            ];
+        }
         return view("{$this->module}::detail", $data);
     }
 
