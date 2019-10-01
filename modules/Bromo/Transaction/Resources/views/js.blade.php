@@ -14,14 +14,13 @@
         {'data': 'notes_admin', 'name': 'notes_admin', orderable: false, searchable: false},
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
+        {'data': 'updated_at', 'name': 'updated_at'},
         {'data': 'action', 'name': 'action', orderable: false, searchable: false}
     ];
-    var updatedColumns = initColumns;
-    updatedColumns[8] = {'data': 'updated_at', 'name': 'updated_at'};
 
     let orderColumnsForUpdated = [
-        [7, 'desc'],
-        [8, 'desc']
+        [8, 'desc'],
+        [9, 'desc']
     ];
 
     var Columns = function (data) {
@@ -34,29 +33,25 @@
     };
     var Order = {
         loadNewOrder: function () {
-            Order.loadDataTable('table_new_order', "{{ route("order.new-order") }}", initColumns, [
-                [8, 'desc']
-            ]);
+            Order.loadDataTable('table_new_order', "{{ route("order.new-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadProcessOrder: function () {
-            Order.loadDataTable('table_process_order', "{{ route("order.process-order") }}", updatedColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_process_order', "{{ route("order.process-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadDeliveryOrder: function () {
-            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", updatedColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadDeliveredOrder: function () {
-            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", updatedColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadSuccessOrder: function () {
-            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", updatedColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadCancelOrder: function () {
-            Order.loadDataTable('table_cancel_order', "{{ route("order.cancel-order") }}", updatedColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_cancel_order', "{{ route("order.cancel-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadListOrder: function () {
-            Order.loadDataTable('table_list_order', "{{ route("order.list-order") }}", initColumns, [
-                [8, 'desc']
-            ]);
+            Order.loadDataTable('table_list_order', "{{ route("order.list-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadDataTable: function (elem, route, getColumns, order = []) {
             if (!$.fn.dataTable.isDataTable("#" + elem)) {

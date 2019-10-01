@@ -70,7 +70,8 @@
                                     <th>Amount</th>
                                     <th>Notes</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -94,7 +95,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Updated Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -117,7 +119,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Updated Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -140,7 +143,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Updated Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -163,7 +167,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Updated Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -186,7 +191,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -209,7 +215,8 @@
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
