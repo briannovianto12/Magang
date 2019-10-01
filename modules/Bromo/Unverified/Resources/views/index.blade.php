@@ -31,6 +31,8 @@
                                         <th>Building Name</th>
                                         <th>Address Line</th>
                                         <th>MSISDN</th>
+                                        <th>City</th>
+                                        <th>Province</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,6 +43,8 @@
                                         <td> {{$row->building_name}} </td>
                                         <td> {{$row->address_line}} </td>
                                         <td> {{$row->msisdn}} </td>
+                                        <td> {{$row->city}} </td>
+                                        <td> {{$row->province}} </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
