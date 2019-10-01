@@ -27,11 +27,17 @@
                             <td>
                               <strong>{{ $item->sender }}</strong><br/>
                               {{ $item->sender_name }} <br/>
+                              @isset($item->sender_shop_name)
+                                <a>shop name: <strong>{{$item->sender_shop_name}}</strong> </a><br/>
+                              @endisset
                               {{ $item->sender_phone }}
                             </td>
                             <td>
                               <strong>{{ $item->receiver }}</strong><br/>
                               {{ $item->receiver_name }} <br/>
+                              @isset($item->receiver_shop_name)
+                                <a>shop name: <strong>{{$item->receiver_shop_name}}</strong> </a><br/>
+                              @endisset
                               {{ $item->receiver_phone }}
                             </td>
                             <td>
