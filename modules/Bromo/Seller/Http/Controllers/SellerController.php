@@ -322,6 +322,7 @@ class SellerController extends BaseResourceController
         $sheet->setCellValue('G1', 'Email CC ');
         $sheet->setCellValue('H1', 'Email BCC');
         $sheet->setCellValue('I1', 'External Id');
+        $sheet->setCellValue('J1', 'Shop Name');
         $rows = 2;
 
         foreach($data as $data){
@@ -334,7 +335,8 @@ class SellerController extends BaseResourceController
             $sheet->setCellValue('F' . $rows, $data->email);
             $sheet->setCellValue('G' . $rows, $data->email_cc);
             $sheet->setCellValue('H' . $rows, $data->email_bcc);
-            $sheet->setCellValue('J' . $rows, $data->external_id);
+            $sheet->setCellValue('I' . $rows, $data->external_id);
+            $sheet->setCellValue('J' . $rows, $data->shop_name);
             $rows++;
         }
 
