@@ -8,6 +8,7 @@
     @include('product::js')
 @endsection
 
+@can('view_product')
 @section('content')
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__head">
@@ -112,3 +113,4 @@
     </div>
 
 @endsection
+@endcan
