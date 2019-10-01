@@ -218,7 +218,43 @@
                                         </div>
                                     </div>
                                 </div>
+                                @isset($shipingCostDetails)
+                                    <div class="m-widget28__tab-item row">
+                                        <div class="col-12">
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    <h5><b>Shipping Cost Details</b></h5>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Total Gross Cost') }}</span>
+                                                <span><del>IDR {{ number_format($shipingCostDetails['shipping_gross_amount']) ?? '-' }}</del></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Cost After Discount') }}</span>
+                                                <span>IDR {{ number_format(($shipingCostDetails['shipping_gross_amount']) - ($shipingCostDetails['shipping_discount'])) ?? '-' }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Shipping Insurance') }}</span>
+                                                <span>IDR {{ number_format($shipingCostDetails['shipping_insurance_rate']) ?? '-' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endisset
                                 <div class="m-widget28__tab-items row">
+                                    <div class="col-12">
+                                        <div class="m-widget28__tab-item">
+                                            <span>
+                                                <h5><b>Payment Details</b></h5>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Total Gross Amount') }}</span>
