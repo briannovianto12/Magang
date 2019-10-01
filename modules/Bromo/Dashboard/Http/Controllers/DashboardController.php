@@ -108,29 +108,137 @@ class DashboardController extends Controller
                                         (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
                                         ->count();
         $totalPlacedOrderLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PLACED)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
         $totalOrderAwaitingSellerConfirmationLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PAYMENT_OK)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
         $totalOrderAwaitingShipmentLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::ACCEPTED)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
         $totalOrderShippedLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::SHIPPED)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
         $totalOrderDeliveredLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::DELIVERED)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
-        $totalOrderSucceededLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
-                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 6)
+        $totalOrderSucceededLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
                                         ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
                                         ->count();
+        $totalGrossPlacedOrderThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::PLACED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossPlacedOrderThisMonth = $this->getGrossAmount($totalGrossPlacedOrderThisMonth);
+        $totalGrossPlacedOrderLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::PLACED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossPlacedOrderLastMonth = $this->getGrossAmount($totalGrossPlacedOrderLastMonth);
+        $totalGrossOrderAwaitingSellerConfirmationLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::PAYMENT_OK)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingSellerConfirmationLastMonth = $this->getGrossAmount($totalGrossOrderAwaitingSellerConfirmationLastMonth);
+        $totalGrossOrderAwaitingSellerConfirmationThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::PAYMENT_OK)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingSellerConfirmationThisMonth = $this->getGrossAmount($totalGrossOrderAwaitingSellerConfirmationThisMonth);
+        $totalGrossOrderAwaitingShipmentThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::ACCEPTED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingShipmentThisMonth = $this->getGrossAmount($totalGrossOrderAwaitingShipmentThisMonth);
+        $totalGrossOrderAwaitingShipmentLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::ACCEPTED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingShipmentLastMonth = $this->getGrossAmount($totalGrossOrderAwaitingShipmentLastMonth);
+        $totalGrossOrderShippedThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SHIPPED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderShippedThisMonth = $this->getGrossAmount($totalGrossOrderShippedThisMonth);
+        $totalGrossOrderShippedLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SHIPPED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderShippedLastMonth = $this->getGrossAmount($totalGrossOrderShippedLastMonth);
+        $totalGrossOrderDeliveredThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::DELIVERED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderDeliveredThisMonth = $this->getGrossAmount($totalGrossOrderDeliveredThisMonth);
+        $totalGrossOrderDeliveredLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::DELIVERED)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderDeliveredLastMonth = $this->getGrossAmount($totalGrossOrderDeliveredLastMonth);
+        $totalGrossOrderSucceededThisMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderSucceededThisMonth = $this->getGrossAmount($totalGrossOrderSucceededThisMonth);
+        $totalGrossOrderSucceededLastMonth = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
+                                        ->where(DB::raw("(DATE_PART('year', NOW()) - DATE_PART('year', created_at::date)) * 12 +
+                                        (DATE_PART('month', NOW()) - DATE_PART('month', created_at::date))"), '=', 1)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderSucceededLastMonth = $this->getGrossAmount($totalGrossOrderSucceededLastMonth);
+        $totalGrossPlacedOrderLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PLACED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossPlacedOrderLastWeek = $this->getGrossAmount($totalGrossPlacedOrderLastWeek);
+        $totalGrossOrderAwaitingSellerConfirmationLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::PAYMENT_OK)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingSellerConfirmationLastWeek = $this->getGrossAmount($totalGrossOrderAwaitingSellerConfirmationLastWeek);
+        $totalGrossOrderAwaitingShipmentLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::ACCEPTED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderAwaitingShipmentLastWeek = $this->getGrossAmount($totalGrossOrderAwaitingShipmentLastWeek);
+        $totalGrossOrderShippedLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::SHIPPED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderShippedLastWeek = $this->getGrossAmount($totalGrossOrderShippedLastWeek);
+        $totalGrossOrderDeliveredLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::DELIVERED)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderDeliveredLastWeek = $this->getGrossAmount($totalGrossOrderDeliveredLastWeek);
+        $totalGrossOrderSucceededLastWeek = DB::table('order_trx')->where('status', '=', OrderStatus::SUCCESS)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '<=', 8)
+                                        ->where(DB::raw("NOW()::date - created_at::date"), '>', 0)
+                                        ->selectRaw("payment_details->'total_gross' as item_amount")
+                                        ->get();
+        $totalGrossOrderSucceededLastWeek = $this->getGrossAmount($totalGrossOrderSucceededLastWeek);
 
         return [
             'this_month' => $thisMonth[0],
@@ -158,9 +266,34 @@ class DashboardController extends Controller
             'total_order_awaiting_shipment_last_week' => $totalOrderAwaitingShipmentLastWeek,
             'total_order_shipped_last_week' => $totalOrderShippedLastWeek,
             'total_order_delivered_last_week' => $totalOrderDeliveredLastWeek,
-            'total_order_succeeded_last_week' => $totalOrderSucceededLastMonth,
+            'total_order_succeeded_last_week' => $totalOrderSucceededLastWeek,
+            'total_gross_placed_order_last_month' => $totalGrossPlacedOrderLastMonth,
+            'total_gross_placed_order_this_month' => $totalGrossPlacedOrderThisMonth,
+            'total_gross_order_awaiting_seller_confirmation_last_month' => $totalGrossOrderAwaitingSellerConfirmationLastMonth,
+            'total_gross_order_awaiting_seller_confirmation_this_month' => $totalGrossOrderAwaitingSellerConfirmationThisMonth,
+            'total_gross_order_awaiting_shipment_this_month' => $totalGrossOrderAwaitingShipmentThisMonth,
+            'total_gross_order_awaiting_shipment_last_month' => $totalGrossOrderAwaitingShipmentLastMonth,
+            'total_gross_order_shipped_this_month' => $totalGrossOrderShippedThisMonth,
+            'total_gross_order_shipped_last_month' => $totalGrossOrderShippedLastMonth,
+            'total_gross_order_delivered_this_month' => $totalGrossOrderDeliveredThisMonth,
+            'total_gross_order_delivered_last_month' => $totalGrossOrderDeliveredLastMonth,
+            'total_gross_order_succeeded_this_month' => $totalGrossOrderSucceededThisMonth,
+            'total_gross_order_succeeded_last_month' => $totalGrossOrderSucceededLastMonth,
+            'total_gross_placed_order_last_week' => $totalGrossPlacedOrderLastWeek,
+            'total_gross_order_awaiting_seller_confirmation_last_week' => $totalGrossOrderAwaitingSellerConfirmationLastWeek,
+            'total_gross_order_awaiting_shipment_last_week' => $totalGrossOrderAwaitingShipmentLastWeek,
+            'total_gross_order_shipped_last_week' => $totalGrossOrderShippedLastWeek,
+            'total_gross_order_delivered_last_week' => $totalGrossOrderDeliveredLastWeek,
+            'total_gross_order_succeeded_last_week' => $totalGrossOrderSucceededLastWeek,
         ];
+    }
 
+    private function getGrossAmount($items){
+        $grossAmount = 0;
+        foreach($items as $item){
+            $grossAmount += json_decode($item->item_amount);
+        }
 
+        return number_format($grossAmount, 0, 0, '.');;
     }
 }
