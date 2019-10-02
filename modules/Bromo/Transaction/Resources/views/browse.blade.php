@@ -58,7 +58,7 @@
                     <div class="tab-pane active" id="new_order" role="tabpanel">
                         <div class="table-responsive">
                             <table id="table_new_order"
-                                class="table table-striped table-bordered table-hover display nowrap"
+                                class="table table-striped table-bordered table-hover display"
                                 style="width: 100%">
                                 <thead>
                                 <tr>
@@ -83,7 +83,7 @@
                     <!--begin:: Process Order Page-->
                     <div class="tab-pane" id="process_order" role="tabpanel">
                         <table id="table_process_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
@@ -107,7 +107,7 @@
                     <!--begin:: Delivery Order Page-->
                     <div class="tab-pane" id="delivery_order" role="tabpanel">
                         <table id="table_delivery_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
@@ -131,7 +131,7 @@
                     <!--begin:: Delivered Order Page-->
                     <div class="tab-pane" id="delivered_order" role="tabpanel">
                         <table id="table_delivered_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
@@ -155,7 +155,7 @@
                     <!--begin:: Success Order Page-->
                     <div class="tab-pane" id="success_order" role="tabpanel">
                         <table id="table_success_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
@@ -179,7 +179,7 @@
                     <!--begin:: Cancel Order Page-->
                     <div class="tab-pane" id="cancel_order" role="tabpanel">
                         <table id="table_cancel_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
@@ -203,7 +203,7 @@
                     <!--begin:: List Order Page-->
                     <div class="tab-pane" id="list_order" role="tabpanel">
                         <table id="table_list_order"
-                            class="table table-striped table-bordered table-hover display nowrap"
+                            class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
                             <thead>
                             <tr>
