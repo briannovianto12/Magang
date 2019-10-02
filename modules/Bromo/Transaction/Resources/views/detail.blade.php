@@ -230,7 +230,11 @@
                                         <div class="col-4">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Total Gross Cost') }}</span>
-                                                <span><del>IDR {{ number_format($shipingCostDetails['shipping_gross_amount']) ?? '-' }}</del></span>
+                                                @if($shipingCostDetails['shipping_discount'] != 0)
+                                                    <span><del>IDR {{ number_format($shipingCostDetails['shipping_gross_amount']) ?? '-' }}</del></span>
+                                                @else
+                                                    <span>IDR {{ number_format($shipingCostDetails['shipping_gross_amount']) ?? '-' }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-4">
