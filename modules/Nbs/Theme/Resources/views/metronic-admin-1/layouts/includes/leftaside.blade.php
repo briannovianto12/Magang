@@ -74,33 +74,37 @@
                 </li>
             @endcan
             @can('view_order')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('order.index') }}" aria-haspopup="true">
-                <a href="{{ route('order.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-open-box"></i>
-                    <span class="m-menu__link-text">Order</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('order.index') }}" aria-haspopup="true">
+                    <a href="{{ route('order.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-open-box"></i>
+                        <span class="m-menu__link-text">Order</span>
+                    </a>
+                </li>
             @endcan
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('messages.index') }}" aria-haspopup="true">
-                <a href="{{ route('messages.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-open-box"></i>
-                    <span class="m-menu__link-text">Messages</span>
-                </a>
-            </li>
+            @can('view_messages')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('messages.index') }}" aria-haspopup="true">
+                    <a href="{{ route('messages.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-open-box"></i>
+                        <span class="m-menu__link-text">Messages</span>
+                    </a>
+                </li>
+            @endcan
             @can('view_unverified_seller')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
-                <a href="{{ route('unverified.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon flaticon-avatar"></i>
-                    <span class="m-menu__link-text">Unverified Seller</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('unverified.index') }}" aria-haspopup="true">
+                    <a href="{{ route('unverified.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon flaticon-avatar"></i>
+                        <span class="m-menu__link-text">Unverified Seller</span>
+                    </a>
+                </li>
             @endcan
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('report.index') }}" aria-haspopup="true">
+            @can('view_reports')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('report.index') }}" aria-haspopup="true">
                     <a href="{{ route('report.index') }}" class="m-menu__link">
                         <i class="m-menu__link-icon flaticon-layers"></i>
                         <span class="m-menu__link-text">Reports</span>
                     </a>
                 </li>
+            @endcan
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
