@@ -35,7 +35,9 @@ class DashboardController extends Controller
         $data['order_statistics'] = $this->getOrderStatistics();
         $user = auth()->user();
         
-        if($user->role_id == 1){
+        if($user->role_id == -1){
+            $user->syncRoles('SuperAdministrator');
+        }else if($user->role_id == 1){
             $user->syncRoles('Administrator');
         }else if($user->role_id == 2){
             $user->syncRoles('Merchandiser');
@@ -45,6 +47,8 @@ class DashboardController extends Controller
             $user->syncRoles('Finance');
         }else if($user->role_id == 5){
             $user->syncRoles('Support');
+        }else if($user->role_id == 6){
+            $user->syncRoles('ContactCenter');
         }
         $data['user'] = $user;
         return view('dashboard::index', $data);
