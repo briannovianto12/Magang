@@ -6,7 +6,7 @@
             'data': 'DT_RowIndex', 'name': 'DT_RowIndex',
             'orderable': false, 'searchable': false, 'width': '50'
         },
-        {'data': 'order_no', 'name': 'order_no'},
+        {'data': 'order_no', 'name': 'order_no', searchacble:true},
         {'data': 'buyer_name', 'name': 'buyer_name'},
         {'data': 'seller_name', 'name': 'seller_name'},
         {'data': 'payment_method', 'name': 'payment_method'},
@@ -61,9 +61,13 @@
                     ajax: route,
                     order: order,
                     scrollX: true,
-                    dom: "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'B>>" +
+                    searchable: true,
+                    dom: "<'row'<'col-sm-8 text-left'l>    <'col-sm-3 text-right'f>  <'col-sm-1 text-right'B> >" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+                    buttons: [
+                        {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
+                    ],
                     buttons: [
                         {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
                     ],
