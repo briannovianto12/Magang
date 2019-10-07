@@ -229,10 +229,6 @@ abstract class BaseResourceController extends Controller
     public function show($id)
     {
         $this->pageData['data'] = $this->model->findOrFail($id);
-        $owner = $this->pageData['data']->business->getOwner();
-        $this->requiredData = [
-            'owner' => $owner
-        ];
         $data = array_merge($this->pageData, $this->getRequiredData());
         return view($this->getDetailView(), $data);
     }

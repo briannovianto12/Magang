@@ -40,16 +40,26 @@
                                             <span>{{ __('Joined At') }}</span>
                                             <span>{{ $data->created_at_formatted }}</span>
                                         </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Total Spending') }}</span>
+                                            <span>IDR {{ number_format($total_spending, 0, 0, '.') ?? 0}}</span>
+                                        </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Last 10 Orders') }}</span>
+                                            <span>
+                                                @foreach($last_ten_orders as $order)
+                                                    <a href="{{ url('/order/'.$order->id) }}">
+                                                        {!! $order->order_no."<br>" !!}
+                                                    </a>
+                                                @endforeach
+                                                </a>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                                 @isset($data->business)
                                     <div class="col-6">
                                         <div class="m-widget28__tab-items">
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('Business Logo') }}</span>
-                                                <span><img src="{{ $data->business->logo_url }}" alt=""
-                                                           width="128"></span>
-                                            </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Business Name') }}</span>
                                                 <span>{{ $data->business->name ?? '-' }}</span>
@@ -59,8 +69,31 @@
                                                 <span>{{ $data->business->description ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
+                                                <span>{{ __('Business Address') }}</span>
+                                                @if($business_address)
+                                                    <span>{!! $business_address->address_line 
+                                                            .'<br>'
+                                                            .$business_address->subdistrict
+                                                            .', '.$business_address->district
+                                                            .'<br>'
+                                                            .$business_address->city
+                                                            .', '.$business_address->province
+                                                            .' '.$business_address->postal_code !!}
+                                                    </span>
+                                                @else
+                                                    <span>
+                                                        -
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="m-widget28__tab-item">
                                                 <span>{{ __('Business Tag') }}</span>
                                                 <span>{{ $data->business->tag ?? '-'}}</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Business Logo') }}</span>
+                                                <span><img src="{{ $data->business->logo_url }}" alt=""
+                                                           width="128"></span>
                                             </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Tax No') }}</span>
@@ -71,10 +104,6 @@
                                                 <span>
                                                     <img src="{{ $data->business->tax_image_url }}" alt="" width="128">
                                                 </span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('Postal Code') }}</span>
-                                                <span>{{ $data->business->postal_code ?? '-'}}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Business Status') }}</span>
