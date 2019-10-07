@@ -144,19 +144,23 @@
                                 <div class="m-widget28__tab-items">
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Bank Account') }}</span>
-                                        <span>{!! $data->businessBankAccount->account_no
-                                                .' - '
-                                                .$data->businessBankAccount->bank_name 
-                                                .' - PRIMARY'
-                                                .'<br>'
-                                                .$data->businessBankAccount->account_owner_name.'<br>'.'<br>' ?? '-'!!}
-                                                @foreach($business_bank_account as $bank_account)
+                                        <span>  
+                                            @foreach($business_bank_account as $bank_account)
+                                                @if($bank_account->account_no != $data->businessBankAccount->account_no)    
                                                     {!! $bank_account->account_no
                                                     .' - '
                                                     .$bank_account->bank_name 
                                                     .'<br>'
                                                     .$bank_account->account_owner_name.'<br>'.'<br>' ?? '-'!!}
-                                                @endforeach
+                                                @elseif($bank_account->account_no == $data->businessBankAccount->account_no)    
+                                                    {!! $bank_account->account_no
+                                                    .' - '
+                                                    .$bank_account->bank_name 
+                                                    .' - PRIMARY'
+                                                    .'<br>'
+                                                    .$bank_account->account_owner_name.'<br>'.'<br>' ?? '-'!!}
+                                                @endif
+                                            @endforeach
                                         </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
