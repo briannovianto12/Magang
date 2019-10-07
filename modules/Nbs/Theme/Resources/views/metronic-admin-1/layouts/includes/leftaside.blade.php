@@ -105,6 +105,14 @@
                     </a>
                 </li>
             @endcan
+            @can('view_contactcenter')
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('contactcenter.index') }}" aria-haspopup="true">
+                    <a href="{{ route('contactcenter.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-phone"></i>
+                        <span class="m-menu__link-text">Contact Center</span>
+                    </a>
+                </li>
+            @endcan
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
