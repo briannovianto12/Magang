@@ -152,7 +152,7 @@ class OrderController extends Controller
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
-        if($data['data']['shipping_service_snapshot']['shipper']){
+        if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             $data['shipingCostDetails'] = [
                 'shipping_gross_amount' => $data['data']['shipping_service_snapshot']['shipper']['provider_cost'],
                 'shipping_discount' => $data['data']['shipping_service_snapshot']['shipper']['platform_discount'],
