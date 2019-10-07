@@ -1,7 +1,11 @@
 <?php
 
-namespace Bromo\Unverified;
+namespace Bromo\ContactCenter;
 
-Route::prefix('contactcenter')->group(function() {
-    Route::get('/', 'ContactCenterController@index');
-});
+use Route;
+
+// Route::prefix('contactcenter')->group(function() {
+//     Route::get('/', 'ContactCenterController@index');
+// });
+
+Route::resource('contactcenter', 'ContactCenterController');
