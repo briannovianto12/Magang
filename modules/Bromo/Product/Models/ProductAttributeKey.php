@@ -19,7 +19,7 @@ class ProductAttributeKey extends Model
 
     protected $table = 'product_attribute_key';
 
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     protected $casts = [
         'id' => 'string',
