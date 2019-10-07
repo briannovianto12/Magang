@@ -178,37 +178,37 @@
                 <div class="col-md-12">
                     <table class="table">
                         <thead>
-                            <tr>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Total Last Month</th>
-                            <th scope="col">Total Gross Last Month</th>
-                            <th scope="col">Total This Month</th>
-                            <th scope="col">Total Gross This Month</th>
-                            <th scope="col">Total D-1 until D-8</th>
-                            <th scope="col">Total Gross D-1 until D-8</th>
+                            <tr style="text-align: right">
+                                <th scope="col" style="text-align: left">Order Status</th>
+                                <th scope="col">Total Last Month</th>
+                                <th scope="col">Total Gross Last Month</th>
+                                <th scope="col">Total This Month</th>
+                                <th scope="col">Total Gross This Month</th>
+                                <th scope="col">Total D-1 until D-8</th>
+                                <th scope="col">Total Gross D-1 until D-8</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($order_statistics as $order_statistic)
-                                <tr style="text-align: center">
+                                <tr style="text-align: right">
                                     @if($order_statistic->status == 1)
-                                        <td>Placed</td>
+                                        <td style="text-align: left">Placed</td>
                                     @elseif($order_statistic->status == 2)
-                                        <td>Accepted</td>
+                                        <td style="text-align: left">Accepted</td>
                                     @elseif($order_statistic->status == 5)
-                                        <td>Payment OK</td>
+                                        <td style="text-align: left">Payment OK</td>
                                     @elseif($order_statistic->status == 8)
-                                        <td>Shipped</td>
+                                        <td style="text-align: left">Shipped</td>
                                     @elseif($order_statistic->status == 9)
-                                        <td>Delivered</td>
+                                        <td style="text-align: left">Delivered</td>
                                     @elseif($order_statistic->status == 10)
-                                        <td>Success</td>
+                                        <td style="text-align: left">Success</td>
                                     @elseif($order_statistic->status == 30)
-                                        <td>Canceled</td>
+                                        <td style="text-align: left">Canceled</td>
                                     @elseif($order_statistic->status == 31)
-                                        <td>Rejected</td>
+                                        <td style="text-align: left">Rejected</td>
                                     @else
-                                        <td>{{ $order_statistic->status ?? '-' }}</td>
+                                        <td style="text-align: left">{{ $order_statistic->status ?? '-' }}</td>
                                     @endif
                                     <td>{{ $order_statistic->count_last_month }}</td>
                                     <td>IDR {{ number_format($order_statistic->amount_last_month, 0, 0, '.') }}</td>
