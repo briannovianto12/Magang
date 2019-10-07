@@ -4,6 +4,7 @@ namespace Bromo\Seller\Http\Controllers;
 
 use Bromo\Auth\Models\Admin;
 use Bromo\Buyer\Models\Buyer;
+use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\HostToHost\Traits\Result;
 use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
@@ -360,5 +361,18 @@ class SellerController extends BaseResourceController
         $offset = ($page * $perPage) - $perPage;
         return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
         ['path' => $request->url(), 'query' => $request->query()]);
+    }
+
+    public function show($id)
+    {
+        $this->pageData['data'] = $this->model->findOrFail($id);
+        $businessBankAccount = BusinessBankAccount::where('business_id', $this->pageData['data']->business_id)->get();
+        $owner = $this->pageData['data']->business->getOwner();
+        $this->requiredData = [
+            'owner' => $owner,
+            'business_bank_account' => $businessBankAccount
+        ];
+        $data = array_merge($this->pageData, $this->requiredData);
+        return view($this->getDetailView(), $data);
     }
 }

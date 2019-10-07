@@ -101,7 +101,20 @@
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Status') }}</span>
-                                    <span name="shop_status">{{ $data->status_name }}</span>
+                                    @if($data->status_name == 'Verified')
+                                        <span name="shop_status" style="color:#39b54a">
+                                            {{ $data->status_name }}
+                                        </span>
+                                    @elseif($data->status_name == 'Rejected')
+                                        <span name="shop_status" style="color:red">
+                                            {{ $data->status_name }}
+                                        </span>
+                                    @elseif($data->status_name == 'Registration Submitted')
+                                        <span name="shop_status" style="color:blue">
+                                            {{ $data->status_name }}
+                                        </span>
+                                    @endif
+                                    
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Created At') }}</span>
@@ -131,13 +144,20 @@
                                 <div class="m-widget28__tab-items">
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Bank Account') }}</span>
-                                        <span>{{ $data->businessBankAccount->account_no
+                                        <span>{!! $data->businessBankAccount->account_no
                                                 .' - '
-                                                .$data->businessBankAccount->bank_name ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Bank Account Owner') }}</span>
-                                        <span>{{ $data->businessBankAccount->account_owner_name ?? '-'}}</span>
+                                                .$data->businessBankAccount->bank_name 
+                                                .' - PRIMARY'
+                                                .'<br>'
+                                                .$data->businessBankAccount->account_owner_name.'<br>'.'<br>' ?? '-'!!}
+                                                @foreach($business_bank_account as $bank_account)
+                                                    {!! $bank_account->account_no
+                                                    .' - '
+                                                    .$bank_account->bank_name 
+                                                    .'<br>'
+                                                    .$bank_account->account_owner_name.'<br>'.'<br>' ?? '-'!!}
+                                                @endforeach
+                                        </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Owner') }}</span>
@@ -161,20 +181,6 @@
                                         <span>{{ $data->business->description ?? '-' }}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Tag') }}</span>
-                                        <span>{{ $data->business->tag ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Tax No') }}</span>
-                                        <span>{{ $data->business->tax_no ?? '-'}}</span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
-                                        <span>{{ __('Tax Image') }}</span>
-                                        <span>
-                                                    <img src="{{ $data->business->tax_image_url }}" alt="" width="128">
-                                                </span>
-                                    </div>
-                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Address') }}</span>
                                         <span>{!! $data->businessAddress->building_name
                                                 ."<br>"."<br>"
@@ -193,8 +199,14 @@
                                                 ?? '-'!!}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
+                                        <span>{{ __('Business Tag') }}</span>
+                                        <span>{{ $data->business->tag ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Status') }}</span>
-                                        <span>{{ $data->business->status_name ?? '-' }}</span>
+                                        <span>
+                                                {{ $data->business->status_name ?? '-' }}
+                                        </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Member Status') }}</span>
@@ -207,6 +219,16 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Member Joined At') }}</span>
                                         <span>{{ $data->business->pivot->joined_at_formatted ?? '-' }}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Tax No') }}</span>
+                                        <span>{{ $data->business->tax_no ?? '-'}}</span>
+                                    </div>
+                                    <div class="m-widget28__tab-item">
+                                        <span>{{ __('Tax Image') }}</span>
+                                        <span>
+                                            <img src="{{ $data->business->tax_image_url }}" alt="" width="128">
+                                        </span>
                                     </div>
                                 </div>
                             </div>
