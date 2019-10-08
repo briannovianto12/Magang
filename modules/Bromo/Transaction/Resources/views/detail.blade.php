@@ -256,15 +256,13 @@
                                                 <span>IDR {{ number_format(($shipingCostDetails['shipping_gross_amount']) - ($shipingCostDetails['shipping_discount'])) ?? '-' }}</span>
                                             </div>
                                         </div>
-                                        @isset($shipingCostDetails->use_shipping_insurance)
-                                            @if($shipingCostDetails->use_shipping_insurance == false)
-                                                <div class="col-4">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Shipping Insurance') }}</span>
-                                                        <span>IDR {{ number_format($shipingCostDetails['shipping_insurance_rate']) ?? '-' }}</span>
-                                                    </div>
+                                        @isset($shippingInsuranceRate)
+                                            <div class="col-4">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Shipping Insurance') }}</span>
+                                                    <span>IDR {{ number_format($shippingInsuranceRate) ?? '0' }}</span>
                                                 </div>
-                                            @endif
+                                            </div>
                                         @endisset
                                     </div>
                                 @endisset

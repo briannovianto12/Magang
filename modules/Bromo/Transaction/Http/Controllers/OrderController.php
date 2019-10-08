@@ -152,12 +152,17 @@ class OrderController extends Controller
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
+
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
+            if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
+                $data['shippingInsuranceRate'] = 0;
+            } else {
+                $data['shippingInsuranceRate'] = $data['data']['shipping_service_snapshot']['shipper']['insuranceRate'];
+            }
+
             $data['shipingCostDetails'] = [
                 'shipping_gross_amount' => $data['data']['shipping_service_snapshot']['shipper']['provider_cost'],
                 'shipping_discount' => $data['data']['shipping_service_snapshot']['shipper']['platform_discount'],
-                'shipping_insurance_rate' => $data['data']['shipping_service_snapshot']['shipper']['insuranceRate'],
-                'use_shipping_insurance' => $data['data']['shipping_service_snapshot']['shipper']['use_insurance'],
             ];
         }
         return view("{$this->module}::detail", $data);
