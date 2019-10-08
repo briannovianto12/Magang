@@ -1,5 +1,9 @@
 @extends('theme::layouts.master')
 
+@section('scripts')
+    @include('buyer::js')
+@endsection
+
 @section('content')
     @component('components._portlet',[
           'portlet_head' => true,
@@ -69,16 +73,23 @@
                                                 <span>{{ $data->business->description ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Business Address') }}</span>
+                                                <span>
+                                                    {{ __('Business Address') }}
+                                                    <button id="cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                        <i class="fa fa-clone"></i>
+                                                        Copy
+                                                    </button>
+                                                </span>
                                                 @if($business_address)
-                                                    <span>{!! $business_address->address_line 
-                                                            .'<br>'
+                                                    <span id="business-address">
+                                                            {!! nl2br($business_address->address_line 
+                                                            ."\n"
                                                             .$business_address->subdistrict
                                                             .', '.$business_address->district
-                                                            .'<br>'
+                                                            ."\n"
                                                             .$business_address->city
                                                             .', '.$business_address->province
-                                                            .' '.$business_address->postal_code !!}
+                                                            .' '.$business_address->postal_code) !!}
                                                     </span>
                                                 @else
                                                     <span>

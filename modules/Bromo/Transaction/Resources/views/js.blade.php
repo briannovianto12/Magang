@@ -108,4 +108,29 @@
     $(document).ready(function () {
         Order.init();
     });
+
+    document.getElementById("origin-cpy-btn").addEventListener("click", copy_origin_address);
+    document.getElementById("dest-cpy-btn").addEventListener("click", copy_destination_address);
+
+    function copy_origin_address() {
+        var copyText = document.getElementById("origin-address");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+        alert('Text Copied!');
+    }
+
+    function copy_destination_address() {
+        var copyText = document.getElementById("destination-address");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+        alert('Text Copied!');
+    }
 </script>

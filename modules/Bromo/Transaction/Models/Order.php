@@ -265,10 +265,10 @@ class Order extends Model
         if (is_array($field) == false) {
             return '';
         }
-        $output = $field['address_line'] . '<br>';
+        $output = $field['address_line'] . "\n";
         $output .= $field['subdistrict'] . ', ';
         $output .= $field['district'] . ', ';
-        $output .= $field['city'] . ' ' . $field['city_type'] . '<br>';
+        $output .= $field['city'] . ' ' . $field['city_type'] . "\n";
         $output .= $field['province'] . ', ';
         $output .= $field['postal_code'];
 
@@ -291,10 +291,10 @@ class Order extends Model
         if (is_array($field) == false) {
             return '-';
         }
-        $output = $field['address_line'] . '<br>';
+        $output = $field['address_line'] . "\n";
         $output .= $field['subdistrict'] . ', ';
         $output .= $field['district'] . ', ';
-        $output .= $field['city'] . ' ' . $field['city_type'] . '<br>';
+        $output .= $field['city'] . ' ' . $field['city_type'] . "\n";
         $output .= $field['province'] . ', ';
         $output .= $field['postal_code'];
 
