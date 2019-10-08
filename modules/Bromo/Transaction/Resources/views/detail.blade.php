@@ -16,6 +16,7 @@
 
 @section('scripts')
     <script src="{{ nbs_asset('vendor/fancybox/jquery.fancybox.js') }}"></script>
+    @include('transaction::js')
 @endsection
 
 @section('content')
@@ -172,49 +173,61 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Building Name') }}</span>
                                             <span>{!! $data->orig_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Notes') }}</span>
                                             <span>{!! $data->orig_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
-                                    <div class="col-7">
+                                    <div class="col-12">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Pick Up Address') }}</span>
-                                            <span>{!! $data->origin_address !!}</span>
+                                            <span>
+                                                {{ __('Pick Up Address') }}
+                                                <button id="origin-cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                    <i class="fa fa-clone"></i>
+                                                    Copy
+                                                </button>
+                                            </span>
+                                            <span id="origin-address">{!! nl2br($data->origin_address) !!}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="m-widget28__tab-item row">
-                                    <div class="col-12">
+                                    <div class="col-10">
                                         <div class="m-widget28__tab-item">
                                             <span>
                                                 <h5><b>Destination Address</b></h5>
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Building Name') }}</span>
                                             <span>{!! $data->dest_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Notes') }}</span>
                                             <span>{!! $data->dest_address_snapshot['notes'] !!}</span>
                                         </div>
                                     </div>
-                                    <div class="col-7">
+                                    <div class="col-12">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Pick Up Address') }}</span>
-                                            <span>{!! $data->destination_address !!}</span>
+                                            <span>
+                                                {{ __('Pick Up Address') }}
+                                                <button id="dest-cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                    <i class="fa fa-clone"></i>
+                                                    Copy
+                                                </button>
+                                            </span>
+                                            <span id="destination-address">{!! nl2br($data->destination_address) !!}</span>
                                         </div>
                                     </div>
                                 </div>

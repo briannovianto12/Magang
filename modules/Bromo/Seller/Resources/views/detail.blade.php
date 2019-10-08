@@ -185,22 +185,27 @@
                                         <span>{{ $data->business->description ?? '-' }}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
-                                        <span>{{ __('Business Address') }}</span>
-                                        <span>{!! $data->businessAddress->building_name
-                                                ."<br>"."<br>"
-                                                .$data->businessAddress->address_line
-                                                ."<br>"
+                                        <span>
+                                            {{ __('Business Address') }}
+                                            <button id="cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                <i class="fa fa-clone"></i>
+                                                Copy
+                                            </button>
+                                        </span>
+                                        <span id="business-address">
+                                                {!! nl2br($data->businessAddress->address_line
+                                                ."\n"
                                                 ."Kel. ".$data->businessAddress->subdistrict
                                                 .", "
                                                 ."Kec. ".$data->businessAddress->district 
-                                                ."<br>"
+                                                ."\n"
                                                 .$data->businessAddress->city 
                                                 .", "
                                                 .$data->businessAddress->province 
-                                                .", Indonesia "
-                                                ."<br>"
-                                                .$data->businessAddress->postal_code
-                                                ?? '-'!!}</span>
+                                                .", "
+                                                .$data->businessAddress->postal_code)
+                                                ?? '-'!!}
+                                        </span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Tag') }}</span>
