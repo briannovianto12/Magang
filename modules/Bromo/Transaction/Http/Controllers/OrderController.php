@@ -10,6 +10,7 @@ use Bromo\Transaction\DataTables\NewOrderDatatable;
 use Bromo\Transaction\DataTables\ProcessOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
 use Bromo\Transaction\Models\Order;
+use Bromo\Transaction\Models\OrderDeliveryTracking;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
@@ -152,7 +153,7 @@ class OrderController extends Controller
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
-
+        $data['deliveryTracking'] = null;
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
                 $data['shippingInsuranceRate'] = 0;
@@ -164,6 +165,10 @@ class OrderController extends Controller
                 'shipping_gross_amount' => $data['data']['shipping_service_snapshot']['shipper']['provider_cost'],
                 'shipping_discount' => $data['data']['shipping_service_snapshot']['shipper']['platform_discount'],
             ];
+        }
+        if(!empty(OrderDeliveryTracking::where('order_id', $id)->first())){
+            $deliveryTracking = OrderDeliveryTracking::where('order_id', $id)->first();
+            $data['deliveryTracking'] = json_decode($deliveryTracking->data_json);
         }
         return view("{$this->module}::detail", $data);
     }
