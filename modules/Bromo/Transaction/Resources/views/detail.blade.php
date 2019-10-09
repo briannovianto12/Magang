@@ -311,6 +311,11 @@
                 Item Detail
                 </a>
             </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivery_tracking" role="tab">
+                Delivery Tracking
+                </a>
+            </li>
         @endslot
 
         @slot('tab_body')
@@ -417,6 +422,42 @@
                                 </div>
                                 <hr class="mb-5">
                             @endforeach
+                        @endisset
+                    @endslot
+                @endcomponent
+            </div>
+            <div class="tab-pane" id="delivery_tracking">
+                @component('components._widget-list')
+                    @slot('body')
+                        @isset($deliveryTracking)
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="h3">Internal</div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Status') }}</span>
+                                            <span>{{ $deliveryTracking->internal->name ?? '-' }}</span>
+                                        </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Description') }}</span>
+                                            <span>{{ $deliveryTracking->internal->description ?? '-' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="h3">External</div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Status') }}</span>
+                                            <span>{{ $deliveryTracking->external->name ?? '-' }}</span>
+                                        </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Description') }}</span>
+                                            <span>{{ $deliveryTracking->external->description ?? '-' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endisset
                     @endslot
                 @endcomponent
