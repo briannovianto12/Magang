@@ -14,13 +14,25 @@
 Route::group(['middleware' => 'auth'], function () {
 
     Route::name('product.index')->get('/product', 'ProductController@index');
+
+    Route::name('product.productinfo')->get('/product-info', 'ProductController@getProductInfo');
+
+    /*
+    Route::name('product.productcategory')->get('/product-info-category', 'ProductController@getProductCategory');
+    Route::name('product.productsubcategory')->get('/product-sub-category/{parent_category}', 'ProductController@getProductSubCategory');
+    Route::name('product.productthirdcategory')->get('/product-sub-category/{parent_category}', 'ProductController@getProductThirdCategory');
+    */
+    Route::name('product.getcategories')->get('/get-categories/{id?}','ProductController@getProductCategory');
+
     Route::name('product.show')->get('/product/{id}', 'ProductController@show');
     Route::name('product.submited')->get('/submited', 'ProductController@submited');
     Route::name('product.rejected')->get('/rejected', 'ProductController@rejected');
     Route::name('product.approved')->get('/approved', 'ProductController@approved');
 
-    Route::name('product.status')->put('/product-status/{id}', 'ProductController@status');
+    Route::name('product.edit')->put('/product/update/{id}', 'ProductController@updateCategory');
 
+    Route::name('product.status')->put('/product-status/{id}', 'ProductController@status');
+    Route::name('product.getInfo')->get('/product-info/{id}', 'ProductController@getProductInfo');
     Route::name('product.unverified')->patch('/unverified/{id}', 'ProductController@unverified');
     Route::name('product.verified')->patch('/verified/{id}', 'ProductController@verified');
 

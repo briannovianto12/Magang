@@ -7,6 +7,7 @@ use Bromo\Product\DataTables\ProductRejectedDatatable;
 use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
 use Bromo\Product\Models\ProductStatus;
+use Bromo\ProductCategory\Models\ProductCategory;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -186,5 +187,82 @@ class ProductController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * edit product.
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function updateCategory(Request $request, $id)
+    {
+        if ( isset($request->fourthcategory)  ) {
+            $category_id = $request->fourthcategory;
+        } else if ( isset($request->thirdcategory) ) {
+            $category_id = $request->thirdcategory;
+        } else if ( isset($request->secondcategory) ) {
+            $category_id = $request->secondcategory;
+        } else if ( isset($request->maincategory) ) {
+            $category_id = $request->maincategory;
+        }
+
+        $category = ProductCategory::findOrFail($category_id);
+
+        \Log::debug($category->name);
+        if($this->hasChild($category_id)){
+            // Error belum leaf category
+            return response()->json([
+                "status" => "Failed",
+                "category" => $category->name,
+            ]);
+        }
+
+        $product = Product::findOrFail($id);
+        $product->category_id = $category->id;
+        $product->category = $category->name;
+
+        $product->save();
+        \Log::debug($product);
+
+        return response()->json([
+            "status" => "OK",
+            "nama_produk" => $product->name,
+        ]);
+    }
+
+    public function getProductInfo(Request $request, $id) {
+        $product = Product::find($id);
+        $product_image = ($product->image_files);
+        foreach($product_image as &$image){
+            foreach($image as &$image){
+                $image = config('product.gcs_path') . "/" .  config('product.path.product')  .  $image;
+            }
+        }
+        $current_category = DB::select("SELECT f_get_category_fulltext($product->category_id)");
+
+        return response()->json([
+            "data" => $product,
+            "items" => $image,
+            "current_category" => $current_category[0]->f_get_category_fulltext,
+        ]);
+    }
+
+    public function getProductCategory( $id = null ) {
+
+        if ( $id == null ) {
+            $categories = ProductCategory::select('id','name')->where('level', 1)->orderBy('sort_by')->get();
+        } else {
+            $categories = ProductCategory::select('id','name')->where('parent_id', $id)->orderBy('sort_by')->get();
+        }
+      
+        return response()->json([
+            "categories" => $categories,
+        ]);
+    }
+
+    private function hasChild( $category_id ) {
+        $has_child = ProductCategory::where('parent_id', $category_id)->count();
+        return $has_child > 0;
     }
 }

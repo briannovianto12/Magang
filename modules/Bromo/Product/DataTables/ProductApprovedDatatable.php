@@ -19,6 +19,7 @@ class ProductApprovedDatatable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $action = [
+                    'edit_datatable' => $data->id,
                     'show_url' => route("{$this->module}.show", $data->id),
                     'id' => $data->id
                 ];
@@ -40,7 +41,6 @@ class ProductApprovedDatatable extends DataTable
             'product.sku',
             'product.created_at',
             'product.updated_at',
-
             'shop.name as shop_name',
             'product_status.name as status'
         ])->join('shop', 'shop.id', '=', 'product.shop_id')
