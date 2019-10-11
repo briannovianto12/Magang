@@ -3,7 +3,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        loadSubmitedProduct();
+        loadApprovedProduct();
 
         $('#submited_tab').on('click', function () {
             loadSubmitedProduct();
@@ -26,47 +26,72 @@
                     ajax: "{{ route('product.submited') }}",
                     order: [],
                     scrollX: true,
-                    dom: "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'B>>" +
+                    dom: "<'row' <'col-sm-2 text-left'f> <'col-sm-2 text-left'l> <'col-sm-8 text-right'B>    >" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
                     buttons: [
                         {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
                     ],
                     columns: [{
-                        'data': 'DT_RowIndex',
-                        'name': 'DT_RowIndex',
-                        'orderable': false,
-                        'searchable': false,
-                        'width': '10%'
-                    }, {
-                        'data': 'id', 'name': 'id'
-                    }, {
-                        'data': 'sku', 'name': 'sku'
-                    }, {
-                        'data': 'name', 'name': 'name'
-                    }, {
-                        'data': 'shop_name', 'name': 'shop_name'
-                    }, {
-                        //     'data': 'condition_type', 'name': 'condition_type'
-                        // }, {
-                    //     'data': 'display_price', 'name': 'display_price'
-                    // }, {
-                        'data': 'category', 'name': 'category'
-                    }, {
-                        'data': 'created_at', 'name': 'created_at'
-                    }, {
-                        'data': 'status', 'name': 'status'
-                    }, {
                         'data': 'action',
                         'name': 'action',
-                        'width': '100px',
-                        'searchable': false,
+                        'width': '50px',
+                        'searchable': true,
                         'orderable': false,
                         'exportable': false,
                         'printable': false,
                         'footer': 'Action'
-                    }]
-                });
+                    },
+                    {
+                        'data': 'DT_RowIndex',
+                        'name': 'DT_RowIndex',
+                        'orderable': false,
+                        'searchable': false,
+                        'width': '50px'
+                    }, {
+                        'data': 'id', 'name': 'id'
+                    }, {
+                        'data': 'sku', 'name': 'sku', 'searchable': true
+                    }, {
+                        'data': 'name', 'name': 'name', 'searchable': true
+                    }, {
+                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
+                    }, {
+                        // //     'data': 'condition_type', 'name': 'condition_type'
+                        // // }, {
+                        // //     'data': 'display_price', 'name': 'display_price'
+                        // // }, {
+                        'data': 'category', 'name': 'category'
+                    }, {
+                        'data': 'updated_at', 'name': 'updated_at'
+                    }, {
+                        'data': 'status', 'name': 'status'
+                    },],
+                     responsive: {
+                        details: {
+                            type: 'column',
+                            target: 'tr',
+                            display: $.fn.dataTable.Responsive.display.modal({
+                                header: function (row) {
+                                    var data = row.data();
+                                    return 'Details for ' + data.name;
+                                }
+                            }),
+                            renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                                tableClass: 'table'
+                            })
+                        }
+                    }
+                }); 
+                    $("#myModal").on('show.bs.modal', function (e) {
+                    var triggerLink = $(e.relatedTarget);
+                    var id = triggerLink.data("id");
+                    var title = triggerLink.data("title");
+
+                    $("#modalTitle").text(title);
+                    $(this).find(".modal-body").html("<h5>id: "+id+"</h5>");
+                    }
+                    );
             }
 
         }
@@ -80,46 +105,47 @@
                     ajax: "{{ route('product.rejected') }}",
                     order: [],
                     scrollX: true,
-                    dom: "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'B>>" +
+                    dom: "<'row' <'col-sm-2 text-left'f> <'col-sm-2 text-left'l> <'col-sm-8 text-right'B>    >" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
                     buttons: [
                         {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
                     ],
                     columns: [{
+                        'data': 'action',
+                        'name': 'action',
+                        'width': '50px',
+                        'searchable': true,
+                        'orderable': false,
+                        'exportable': false,
+                        'printable': false,
+                        'footer': 'Action'
+                    },
+                    {
                         'data': 'DT_RowIndex',
                         'name': 'DT_RowIndex',
                         'orderable': false,
                         'searchable': false,
-                        'width': '10%'
+                        'width': '50px'
                     }, {
                         'data': 'id', 'name': 'id'
                     }, {
-                        'data': 'sku', 'name': 'sku'
+                        'data': 'sku', 'name': 'sku', 'searchable': true
                     }, {
-                        'data': 'name', 'name': 'name'
+                        'data': 'name', 'name': 'name', 'searchable': true
                     }, {
-                        'data': 'shop_name', 'name': 'shop_name'
+                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
                     }, {
-                        //     'data': 'condition_type', 'name': 'condition_type'
-                        // }, {
-                    //     'data': 'display_price', 'name': 'display_price'
-                    // }, {
+                        // //     'data': 'condition_type', 'name': 'condition_type'
+                        // // }, {
+                        // //     'data': 'display_price', 'name': 'display_price'
+                        // // }, {
                         'data': 'category', 'name': 'category'
                     }, {
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
                         'data': 'status', 'name': 'status'
-                    }, {
-                        'data': 'action',
-                        'name': 'action',
-                        'width': '100px',
-                        'searchable': false,
-                        'orderable': false,
-                        'exportable': false,
-                        'printable': false,
-                        'footer': 'Action'
-                    }]
+                    },]
                 });
             }
 
@@ -134,26 +160,37 @@
                     ajax: "{{ route('product.approved') }}",
                     order: [],
                     scrollX: true,
-                    dom: "<'row'<'col-sm-6 text-left'l><'col-sm-6 text-right'B>>" +
+                    dom: "<'row' <'col-sm-2 text-left'f> <'col-sm-2 text-left'l> <'col-sm-8 text-right'B>    >" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
                     buttons: [
                         {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
                     ],
-                    columns: [{
+                    columns: [
+                    {
+                        'data': 'action',
+                        'name': 'action',
+                        'width': '50px',
+                        'searchable': true,
+                        'orderable': false,
+                        'exportable': false,
+                        'printable': false,
+                        'footer': 'Action'
+                    },
+                    {
                         'data': 'DT_RowIndex',
                         'name': 'DT_RowIndex',
                         'orderable': false,
                         'searchable': false,
-                        'width': '10%'
+                        'width': '50px'
                     }, {
                         'data': 'id', 'name': 'id'
                     }, {
-                        'data': 'sku', 'name': 'sku'
+                        'data': 'sku', 'name': 'sku', 'searchable': true
                     }, {
-                        'data': 'name', 'name': 'name'
+                        'data': 'name', 'name': 'name', 'searchable': true
                     }, {
-                        'data': 'shop_name', 'name': 'shop_name'
+                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
                     }, {
                         // //     'data': 'condition_type', 'name': 'condition_type'
                         // // }, {
@@ -164,16 +201,7 @@
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
                         'data': 'status', 'name': 'status'
-                    }, {
-                        'data': 'action',
-                        'name': 'action',
-                        'width': '100px',
-                        'searchable': false,
-                        'orderable': false,
-                        'exportable': false,
-                        'printable': false,
-                        'footer': 'Action'
-                    }]
+                    }, ]
                 });
             }
 
@@ -194,6 +222,20 @@
                     switchEl.prop('checked', false);
                 }
 
+                $('#modal').modal('hide');
+            });
+        }
+        @endisset
+
+        @isset($data)
+        if ("{{ route('product.edit', $data->id) }}" === "{{ url()->current() }}") {
+            // var switchEl = $('#status');
+
+            switchEl.on('change', function () {
+                $('#modal').modal('show');
+            });
+
+            $('#cancel').on('click', function () {
                 $('#modal').modal('hide');
             });
         }
