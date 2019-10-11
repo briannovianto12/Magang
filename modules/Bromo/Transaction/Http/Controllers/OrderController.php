@@ -8,6 +8,7 @@ use Bromo\Transaction\DataTables\DeliveryOrderDataTable;
 use Bromo\Transaction\DataTables\ListOrderDataTable;
 use Bromo\Transaction\DataTables\NewOrderDatatable;
 use Bromo\Transaction\DataTables\ProcessOrderDataTable;
+use Bromo\Transaction\DataTables\RejectedOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
 use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderDeliveryTracking;
@@ -132,6 +133,19 @@ class OrderController extends Controller
      * @return JsonResponse
      */
     public function listOrder(ListOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module
+        ])->ajax();
+    }
+
+    /**
+     * Get Order list where status is Rejected only.
+     * @param RejectedOrderDataTable $datatable
+     * @return JsonResponse
+     */
+    public function rejectedOrder(RejectedOrderDataTable $datatable)
     {
         return $datatable->with([
             'model' => $this->model,
