@@ -429,32 +429,48 @@
             <div class="tab-pane" id="delivery_tracking">
                 @component('components._widget-list')
                     @slot('body')
-                        @isset($deliveryTracking)
+                        @isset($deliveryTrackings)
                             <div class="row mb-4">
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
                                         <div class="h3">Internal</div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Status') }}</span>
-                                            <span>{{ $deliveryTracking->internal->name ?? '-' }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Description') }}</span>
-                                            <span>{{ $deliveryTracking->internal->description ?? '-' }}</span>
-                                        </div>
+                                        @foreach($deliveryTrackings as $deliveryTracking)
+                                            <div class="m-widget28__tab-item row">
+                                                <div class="col-6">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Status') }}</span>
+                                                        <span>{{ $deliveryTracking->internal->name ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Description') }}</span>
+                                                        <span>{{ $deliveryTracking->internal->description ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
                                         <div class="h3">External</div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Status') }}</span>
-                                            <span>{{ $deliveryTracking->external->name ?? '-' }}</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Description') }}</span>
-                                            <span>{{ $deliveryTracking->external->description ?? '-' }}</span>
-                                        </div>
+                                        @foreach($deliveryTrackings as $deliveryTracking)
+                                            <div class="m-widget28__tab-item row">
+                                                <div class="col-6">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Status') }}</span>
+                                                        <span>{{ $deliveryTracking->external->name ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('Description') }}</span>
+                                                        <span>{{ $deliveryTracking->external->description ?? '-' }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
