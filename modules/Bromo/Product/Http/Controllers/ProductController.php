@@ -233,12 +233,11 @@ class ProductController extends Controller
 
     public function getProductInfo(Request $request, $id) {
         $product = Product::find($id);
-        $product_image = ($product->image_files);
-        foreach($product_image as &$image){
-            foreach($image as &$image){
-                $image = config('product.gcs_path') . "/" .  config('product.path.product')  .  $image;
-            }
+        $product_image_array = $product->image_files['filenames'];
+        if(count($product_image_array) > 0) {
+            $image = config('product.gcs_path') . "/" .  config('product.path.product')  .  $product_image_array[0];            
         }
+
         $current_category = DB::select("SELECT f_get_category_fulltext($product->category_id)");
 
         return response()->json([

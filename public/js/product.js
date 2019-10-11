@@ -148,65 +148,70 @@ function _edit( product_id ){
             });
 
             $('#btnUpdate').click(function(){
-              //swalQuestion('Update kategori produk', "Apakah anda yakin ?")
-              //.then((result) => {
-              //    if (result.value) {
-                    var category1 = $("#category1").val();
-                    var category2 = $("#category2").val();
-                    var category3 = $("#category3").val();
-                    var category4 = $("#category4").val();
-                    
-                    if( category1 == "") {
-                      alert("Pilih kategori!")
-                      $('#category1').focus()
-                      return
-                    }
-              
-                    var product_id = $(this).attr('data-product-id')
+              if(!confirm('Are you sure ?')) {
+                return
+              }
 
-                    $("#btnUpdate").attr("disabled", true);
-                    $("#btnUpdate").html("Harap tunggu");
-                    $.ajax({
-                      method: 'PUT',
-                      url: '/product/update/' + product_id,
-                      dataType : "json",
-                      data: {
-                        '_token': $('meta[name="csrf-token"]').attr('content'),
-                        maincategory : category1,
-                        secondcategory : category2,
-                        thirdcategory : category3,
-                        fourthcategory : category4
-                      },
-                      success: function(data){
-                        $('#btnUpdate').attr('disabled', false)
-                        swalSuccess(data, false, 2000)
-                        if ( data.status == 'OK') {
-                          Swal.fire({
-                            type: 'success',
-                            title: 'Edit produk \n' + data.nama_produk + '\nBerhasil!',
-                          }).then(function(){ 
-                            location.reload();
-                            }
-                          );  
-                        } if ( data.status == 'Failed') {
-                          Swal.fire({
-                            type: 'error',
-                            title: 'Masukkan kategori yang lengkap untuk kategori: \n' + data.category,
-                          }).then(function(){ 
-                            location.reload();
-                            }
-                          );
-                        } 
-                      },
-                      error: function(error){
-                        console.log(error)
-                        $('#btnUpdate').attr('disabled', false)
-                        swalError('Oopps ada kesalahan sistem')
+              var category1 = $("#category1").val();
+              var category2 = $("#category2").val();
+              var category3 = $("#category3").val();
+              var category4 = $("#category4").val();
+              
+              if( category1 == "") {
+                alert("Pilih kategori!")
+                $('#category1').focus()
+                return
+              }
+        
+              var product_id = $(this).attr('data-product-id')
+              $("#btnUpdate").attr("disabled", true);
+              $("#btnUpdate").html("Harap tunggu");
+              $.ajax({
+                method: 'PUT',
+                url: '/product/update/' + product_id,
+                dataType : "json",
+                data: {
+                  '_token': $('meta[name="csrf-token"]').attr('content'),
+                  maincategory : category1,
+                  secondcategory : category2,
+                  thirdcategory : category3,
+                  fourthcategory : category4
+                },
+                success: function(data){
+                  $('#btnUpdate').attr('disabled', false)
+                  swalSuccess(data, false, 2000)
+                  if ( data.status == 'OK') {
+                    Swal.fire({
+                      type: 'success',
+                      title: 'Edit produk \n' + data.nama_produk + '\nBerhasil!',
+                    }).then(function(){ 
+                      $('#product_approve').DataTable().ajax.reload(function(){
+                        $('#btnUpdate').removeAttr("disabled");
+                        $("#btnUpdate").html("Update");
+                        })
                       }
-                    });
-                   // btnClose.click()
-              //    }
-              //})
+                    );  
+                  } if ( data.status == 'Failed') {
+                    Swal.fire({
+                      type: 'error',
+                      title: 'Masukkan kategori yang lengkap untuk kategori: \n' + data.category,
+                    }).then(function(){ 
+                      // Success
+                      $('#product_approve').DataTable().ajax.reload(function(){
+                        $('#btnUpdate').removeAttr("disabled");
+                        $("#btnUpdate").html("Upda  te");
+                        })
+                      }
+                    );
+                  } 
+                },
+                error: function(error){
+                  console.log(error)
+                  $('#btnUpdate').attr('disabled', false)
+                  swalError('Oopps ada kesalahan sistem')
+                }
+              });
+              
             })
           }
         }).then((result) => {   
