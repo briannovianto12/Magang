@@ -48,6 +48,10 @@
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#cancel_order" role="tab">
                             <i class="la la-times"></i> {{ __('Pesanan Dibatalkan') }}</a>
                     </li>
+                    <li id="rejected_order_tab" class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#rejected_order" role="tab">
+                            <i class="la la-minus-circle"></i> {{ __('Pesanan Ditolak') }}</a>
+                    </li>
                     <li id="list_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#list_order" role="tab">
                             <i class="la la-history"></i> {{ __('Transaksi') }}</a>
@@ -199,6 +203,30 @@
                         </table>
                     </div>
                     <!--end:: Cancel Order Page-->
+
+                    <!--begin:: Rejected Order Page-->
+                    <div class="tab-pane" id="rejected_order" role="tabpanel">
+                        <table id="table_rejected_order"
+                            class="table table-striped table-bordered table-hover display"
+                            style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Code</th>
+                                <th>Buyer</th>
+                                <th>Seller</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!--end:: Rejected Order Page-->
 
                     <!--begin:: List Order Page-->
                     <div class="tab-pane" id="list_order" role="tabpanel">

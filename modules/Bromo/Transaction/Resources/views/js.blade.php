@@ -53,6 +53,9 @@
         loadListOrder: function () {
             Order.loadDataTable('table_list_order', "{{ route("order.list-order") }}", initColumns, orderColumnsForUpdated);
         },
+        loadRejectedOrder: function () {
+            Order.loadDataTable('table_rejected_order', "{{ route("order.rejected-order") }}", initColumns, orderColumnsForUpdated);
+        },
         loadDataTable: function (elem, route, getColumns, order = []) {
             if (!$.fn.dataTable.isDataTable("#" + elem)) {
                 $("#" + elem).DataTable({
@@ -101,6 +104,10 @@
 
             $('#list_order_tab').on('click', function () {
                 Order.loadListOrder();
+            });
+
+            $('#rejected_order_tab').on('click', function () {
+                Order.loadRejectedOrder();
             });
         }
     };

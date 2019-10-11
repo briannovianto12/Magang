@@ -20,4 +20,5 @@ Route::name('order.delivered-order')->get('/delivered-order', 'OrderController@d
 Route::name('order.success-order')->get('/success-order', 'OrderController@successOrder');
 Route::name('order.cancel-order')->get('/cancel-order', 'OrderController@cancelOrder');
 Route::name('order.list-order')->get('/list-order', 'OrderController@listOrder');
+Route::name('order.rejected-order')->get('/rejected-order', 'OrderController@rejectedOrder');
 Route::post('/order/{id}/', 'OrderController@changeStatusToDelivered');
