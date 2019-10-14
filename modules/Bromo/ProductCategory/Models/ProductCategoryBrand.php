@@ -15,6 +15,6 @@ class ProductCategoryBrand extends Pivot
 
     const CREATED_AT = null;
     public $incrementing = false;
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
     protected $table = 'product_category_brand';
 }
