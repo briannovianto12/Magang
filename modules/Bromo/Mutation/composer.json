@@ -1,0 +1,25 @@
+{
+    "name": "NBS/mutation",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\Mutation\\Providers\\MutationServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\Mutation\\": ""
+        }
+    }
+}
