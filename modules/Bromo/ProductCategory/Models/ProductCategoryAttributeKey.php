@@ -19,7 +19,7 @@ class ProductCategoryAttributeKey extends Pivot
         'updated_at' => 'timestamp'
     ];
     public $incrementing = false;
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
     protected $table = 'product_category_attribute_key';
     protected $fillable = [
         'category_id',
