@@ -20,7 +20,7 @@ class ProductBrandDataTable extends DataTable
                     'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];
-                if(auth()->user()->hasDirectPermission('edit_brand'))
+                if(auth()->user()->can('edit_brand'))
                     return view('theme::layouts.includes.actions', $action);
                 
             })

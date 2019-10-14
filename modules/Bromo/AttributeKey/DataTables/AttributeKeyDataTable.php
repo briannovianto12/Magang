@@ -23,7 +23,7 @@ class AttributeKeyDataTable extends DataTable
                     'delete_url' => route("{$this->module}.destroy", $data->id),
                     'id' => $data->id
                 ];
-                if(auth()->user()->hasDirectPermission('edit_attribute_key'))
+                if(auth()->user()->can('edit_attribute_key'))
                     return view('theme::layouts.includes.actions', $action);
             })
             ->rawColumns(['action'])
