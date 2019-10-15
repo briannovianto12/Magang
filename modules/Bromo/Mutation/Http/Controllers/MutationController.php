@@ -35,7 +35,6 @@ class MutationController extends Controller
             \Log::debug($data);
             return datatables()->of($data)->make(true);
         }
-        // \Log::debug($data);
         return view('mutation::index');
     }
 }
