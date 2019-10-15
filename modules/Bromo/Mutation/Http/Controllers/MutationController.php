@@ -43,7 +43,6 @@ class MutationController extends Controller
             })
             ->make(true);
         }
-        // \Log::debug($data);
         return view('mutation::index');
     }
 }
