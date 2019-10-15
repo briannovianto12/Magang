@@ -65,8 +65,10 @@
                     }, {
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
+                        'data': 'weight', 'name': 'weight'
+                    }, {
                         'data': 'status', 'name': 'status'
-                    },],
+                    }],
                      responsive: {
                         details: {
                             type: 'column',
@@ -144,8 +146,10 @@
                     }, {
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
+                        'data': 'weight', 'name': 'weight'
+                    }, {
                         'data': 'status', 'name': 'status'
-                    },]
+                    }]
                 });
             }
 
@@ -176,13 +180,6 @@
                         'exportable': false,
                         'printable': false,
                         'footer': 'Action'
-                    },
-                    {
-                        'data': 'DT_RowIndex',
-                        'name': 'DT_RowIndex',
-                        'orderable': false,
-                        'searchable': false,
-                        'width': '50px'
                     }, {
                         'data': 'id', 'name': 'id'
                     }, {
@@ -200,8 +197,17 @@
                     }, {
                         'data': 'updated_at', 'name': 'updated_at'
                     }, {
+                        'data': 'weight',
+                        'name': 'weight',
+                        'width': '50px',
+                        'searchable': true,
+                        'orderable': false,
+                        'exportable': false,
+                        'printable': false,
+                        'footer': 'weigth'
+                    }, {
                         'data': 'status', 'name': 'status'
-                    }, ]
+                    }]
                 });
             }
 

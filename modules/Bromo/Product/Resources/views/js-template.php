@@ -10,8 +10,6 @@
                   <div class="media">
                   <img width="435" class="mr-3" src="{{ items }}" alt="...">
                   <div class="media-body">
-                  <!-- <h5 class="mt-0">{{ data.name }}</h5>
-                  <h6 class="mt-0">{{ data.id }}</h6> -->
                   
                   </div>
                   </div>
@@ -32,7 +30,7 @@
                     <select class="form-control" id="category3" name="category3"></select>
                     <select class="form-control" id="category4" name="category4"></select>
 
-                   <button data-product-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnUpdate">Update</button>
+                   <button data-product-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnUpdate">Update Kategori</button>
                 </div>
             </form>
         </div>
@@ -43,4 +41,36 @@
     {{#categories}}
           <option value="{{ id }}">{{ name }}</option>
     {{/categories}}
+</script>
+
+
+<script id="edit-product-weight" type="x-tmpl-mustache">
+    <div class="t-item" data-id="{{ id }}" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order ID: {{ ids.order_id }}</h4>
+                <h4>Shipping Manifest ID: {{ ids.shipping_manifest_id }}</h4>
+            </div>
+            <div>
+            <br/>
+                <label>
+                    Current Weight:
+                </label>
+                <input id="curr-weight" class="form-control" type="text" placeholder="{{weight}} gr" readonly>
+                <br/>
+
+                <label>
+                    New Weight :
+                </label>
+                <input id="new-weight" class="form-control" type="number" min="100" placeholder="0 gr">
+                <br/><br/>
+            </div>
+            <form id="form-edit-weight">
+                <div class="form-group">
+                   <button data-product-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnUpdate">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </script>

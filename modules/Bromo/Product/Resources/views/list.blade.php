@@ -58,6 +58,7 @@
                             {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Submit Date</th>
+                            <th>Weight (gr)</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -82,6 +83,7 @@
                             {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Rejected Date</th>
+                            <th>Weight (gr)</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -96,7 +98,6 @@
                         <thead>
                         <tr>
                             <th>Action</th>                            
-                            <th>No</th>
                             <th>Product ID</th>
                             <th>SKU</th>
                             <th>Name</th>
@@ -106,6 +107,7 @@
                             {{--<th>Quantity</th>--}}
                             <th>Product Type</th>
                             <th>Approve Date</th>
+                            <th>Weight (gr)</th>
                             <th>Status</th>
                         </tr>
                         </thead>
