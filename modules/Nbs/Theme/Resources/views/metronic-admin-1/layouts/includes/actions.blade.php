@@ -24,10 +24,12 @@
         </a>
     @endisset
     @isset($edit_datatable)
-        {{-- <a href="#" onclick="_edit2('{{ $edit_datatable }}')" --}}
         <a href="#" onclick="_edit('{{ $edit_datatable }}')"
            class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
            title="Edit"><i class="la la-edit"></i>
         </a>
+    @endisset
+    @isset($edit_weight)
+        <a href="#" onclick="_editWeight('{{$edit_weight}}' )" title="Edit">{{ $weight }}</a>
     @endisset
 </div>

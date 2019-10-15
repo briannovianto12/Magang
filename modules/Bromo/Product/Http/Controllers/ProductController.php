@@ -239,11 +239,13 @@ class ProductController extends Controller
         }
 
         $current_category = DB::select("SELECT f_get_category_fulltext($product->category_id)");
+        $weight = $product->dimensions['after_packaging']['weight'];
 
         return response()->json([
             "data" => $product,
             "items" => $image,
             "current_category" => $current_category[0]->f_get_category_fulltext,
+            "weight" => $weight,
         ]);
     }
 
@@ -263,5 +265,33 @@ class ProductController extends Controller
     private function hasChild( $category_id ) {
         $has_child = ProductCategory::where('parent_id', $category_id)->count();
         return $has_child > 0;
+    }
+
+    public function updateWeight(Request $request, $id) {
+        if ( isset($request->newWeight)  ) {
+            $new_weight = $request->newWeight;
+        } else {
+            return response()->json([
+                "status" => "Failed"
+            ]);
+        }
+
+        // TODO use DB Transaction
+        // TODO update product weight log
+        $product = Product::findOrFail($id);
+        $dimensions = $product->dimensions;
+        $dimensions['after_packaging']['weight'] = $new_weight;
+        $dimensions['before_packaging']['weight'] = $new_weight;
+
+        $product->dimensions = $dimensions;
+
+        $product->save();
+
+        \Log::debug($product);
+
+        return response()->json([
+            "status" => "OK",
+            "nama_produk" => $product->name,
+        ]);
     }
 }

@@ -17,6 +17,14 @@ class ProductApprovedDatatable extends DataTable
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
+            ->addColumn('weight', function ($data) {
+                $weight = [
+                    'edit_weight' => $data->id,
+                    'weight' => $data->weight,
+                ];
+
+                return view('theme::layouts.includes.actions', $weight);
+            })
             ->addColumn('action', function ($data) {
                 $action = [
                     'edit_datatable' => $data->id,
@@ -26,7 +34,7 @@ class ProductApprovedDatatable extends DataTable
 
                 return view('theme::layouts.includes.actions', $action);
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'weight'])
             ->make(true);
     }
 
@@ -42,7 +50,8 @@ class ProductApprovedDatatable extends DataTable
             'product.created_at',
             'product.updated_at',
             'shop.name as shop_name',
-            'product_status.name as status'
+            'product_status.name as status',
+            'product.dimensions->after_packaging->weight as weight', 
         ])->join('shop', 'shop.id', '=', 'product.shop_id')
             ->join('product_status', 'product_status.id', '=', 'product.status')
             ->whereIn('product.status', [ProductStatus::PUBLISH, ProductStatus::UNPUBLISH]);

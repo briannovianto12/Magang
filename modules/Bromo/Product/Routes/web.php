@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('product.approved')->get('/approved', 'ProductController@approved');
 
     Route::name('product.edit')->put('/product/update/{id}', 'ProductController@updateCategory');
+    Route::name('product.edit-weight')->put('/product/update-weight/{id}', 'ProductController@updateWeight');
 
     Route::name('product.status')->put('/product-status/{id}', 'ProductController@status');
     Route::name('product.getInfo')->get('/product-info/{id}', 'ProductController@getProductInfo');
@@ -39,6 +40,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('unit-type', 'UnitTypeController');
     Route::name('unit-type')->get('/unit-type', 'UnitTypeController@index');
     
-    
-
 });

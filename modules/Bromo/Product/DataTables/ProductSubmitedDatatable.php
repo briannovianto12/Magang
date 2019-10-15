@@ -38,9 +38,9 @@ class ProductSubmitedDatatable extends DataTable
             'product.sku',
             'product.created_at',
             'product.updated_at',
-
             'shop.name as shop_name',
-            'product_status.name as status'
+            'product_status.name as status',
+            'product.dimensions->after_packaging->weight as weight', 
         ])->join('shop', 'shop.id', '=', 'product.shop_id')
             ->join('product_status', 'product_status.id', '=', 'product.status')
             ->where('product.status', ProductStatus::SUBMIT);

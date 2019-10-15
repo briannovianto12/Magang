@@ -199,7 +199,7 @@ function _edit( product_id ){
                       // Success
                       $('#product_approve').DataTable().ajax.reload(function(){
                         $('#btnUpdate').removeAttr("disabled");
-                        $("#btnUpdate").html("Upda  te");
+                        $("#btnUpdate").html("Update");
                         })
                       }
                     );
@@ -222,3 +222,99 @@ function _edit( product_id ){
         alert( "Oops terjadi kesalahan pada sistem" );
       }); 
     }
+
+
+function _editWeight( data_id ) {
+  var html = '';
+  // var product_id = toString(product_id);
+  console.log(data_id);
+  $.get('/product-info/' + data_id)
+  .done(function(data){
+    console.log(data.data.id);
+
+    var template = $('#edit-product-weight').html();
+    Mustache.parse(template);   // optional, speeds up future uses
+    html = Mustache.render(template, data);
+
+    Swal.fire({                              
+      // grow: 'fullscreen',
+      title: '<strong>Edit Produk Weight</strong>',
+      type: '',
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      focusConfirm: false,
+      customClass: 'swal2-overflow',
+      html: html,
+      width: 500,
+      onOpen: function(){
+        $('#btnUpdate').click(function(){
+          if(!confirm('Are you sure ?')) {
+            return
+        }
+        
+        var newWeight = $("#new-weight").val();
+              
+        if( newWeight == "") {
+          alert("Input nilai berat!")
+          $('#category1').focus()
+          return
+        }
+
+        var product_id = $(this).attr('data-product-id')
+        $("#btnUpdate").attr("disabled", true);
+        $("#btnUpdate").html("Harap tunggu");
+
+        $.ajax({
+          method: 'PUT',
+          url: '/product/update-weight/' + product_id,
+          dataType : "json",
+          data: {
+            '_token': $('meta[name="csrf-token"]').attr('content'),
+            newWeight : newWeight,
+          },
+          success: function(data){
+            $('#btnUpdate').attr('disabled', false)
+            swalSuccess(data, false, 2000)
+            if ( data.status == 'OK') {
+              Swal.fire({
+                type: 'success',
+                title: 'Edit produk \n' + data.nama_produk + '\nBerhasil!',
+              }).then(function(){ 
+                $('#product_approve').DataTable().ajax.reload(function(){
+                  $('#btnUpdate').removeAttr("disabled");
+                  $("#btnUpdate").html("Update");
+                  })
+                }
+              );  
+            } if ( data.status == 'Failed') {
+              Swal.fire({
+                type: 'error',
+                title: 'Gagal mengganti berat!',
+              }).then(function(){ 
+                // Success
+                $('#product_approve').DataTable().ajax.reload(function(){
+                  $('#btnUpdate').removeAttr("disabled");
+                  $("#btnUpdate").html("Update");
+                  })
+                }
+              );
+            } 
+          },
+          error: function(error){
+            console.log(error)
+            $('#btnUpdate').attr('disabled', false)
+            swalError('Oopps ada kesalahan sistem')
+          }
+        });
+        
+      })
+    }
+  }).then((result) => {   
+        return
+  })
+}).fail(function(e) {
+  console.log(e)
+  alert( "Oops terjadi kesalahan pada sistem" );
+}); 
+}
