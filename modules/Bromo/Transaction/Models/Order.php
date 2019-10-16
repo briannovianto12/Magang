@@ -35,7 +35,7 @@ class Order extends Model
         'shipping_snapshot' => 'array',
         'payment_snapshot' => 'array',
         'payment_details' => 'array',
-        'notes' => 'array',
+        'notes' => 'string',
         'payment_amount' => 'double',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
