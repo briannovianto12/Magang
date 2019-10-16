@@ -11,7 +11,7 @@
         {'data': 'seller_name', 'name': 'seller_name'},
         {'data': 'payment_method', 'name': 'payment_method'},
         {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
-        {'data': 'notes_admin', 'name': 'notes_admin', orderable: false, searchable: false},
+        {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
         {'data': 'updated_at', 'name': 'updated_at'},

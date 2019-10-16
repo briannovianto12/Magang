@@ -78,6 +78,10 @@
                                     <span>{{ __('Order No.') }}</span>
                                     <span>{{ $data->order_no }}</span>
                                 </div>
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Order Notes') }}</span>
+                                    <span>{{ $data->notes ?? '-' }}</span>
+                                </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
