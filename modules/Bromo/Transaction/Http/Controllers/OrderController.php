@@ -12,8 +12,11 @@ use Bromo\Transaction\DataTables\RejectedOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
 use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderDeliveryTracking;
+use Bromo\Transaction\Models\OrderShippingManifest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use DB;
@@ -167,7 +170,8 @@ class OrderController extends Controller
         //Get seller's data
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
-        $data['deliveryTracking'] = null;
+        $data['deliveryTrackings'] = null;
+        $data['hasShippingManifest'] = false;
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
                 $data['shippingInsuranceRate'] = 0;
@@ -182,10 +186,14 @@ class OrderController extends Controller
         }
         if(!empty(OrderDeliveryTracking::where('order_id', $id)->first())){
             $deliveryTrackings = OrderDeliveryTracking::where('order_id', $id)->get();
-            foreach($deliveryTrackings as $deliveryTracking){
-                $deliveryTrackingData[] = json_decode($deliveryTracking->data_json);
+            foreach($deliveryTrackings as $key => $deliveryTracking){
+                $deliveryTrackings[$key]['data_json'] = json_decode($deliveryTracking->data_json);
             }
-            $data['deliveryTrackings'] = $deliveryTrackingData;
+            $data['deliveryTrackings'] = $deliveryTrackings;
+        }
+        if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
+            $data['hasShippingManifest'] = true;
+            $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
         return view("{$this->module}::detail", $data);
     }
@@ -197,4 +205,43 @@ class OrderController extends Controller
         return back();
     }
 
+    public function getShippingManifestInfo($order_id){
+        $orderShippingManifest = OrderShippingManifest::where('order_id', $order_id)->first();
+        $currWeight = ceil($orderShippingManifest->weight/1000);
+        $currCost = $orderShippingManifest->cost;
+        if(!empty($orderShippingManifest->weight_correction) && !empty($orderShippingManifest->shipping_cost_correction)){
+            $currWeight = ceil($orderShippingManifest->weight_correction/1000);
+            $currCost = $orderShippingManifest->shipping_cost_correction;
+        }
+        $orderShippingManifest->order_id = strval($orderShippingManifest->order_id);
+        return response()->json([
+            "data" => $orderShippingManifest,
+            "data" => $orderShippingManifest->order_id,
+            "ids" => [
+                'order_id' => strval($orderShippingManifest->order_id),
+                'shipping_manifest_id' => strval($orderShippingManifest->id),
+            ],
+            "curr_detail" => [
+                'curr_weight' => $currWeight,
+                'curr_cost' => $currCost,
+            ],
+        ]);
+    }
+
+    public function updateShippingManifest(Request $request)
+    {
+        $orderShippingManifestId = $request->shippingmanifest;
+        $newweight = $request->newweight;
+        $newcost = $request->newcost;
+        $shippingManifest = OrderShippingManifest::find($orderShippingManifestId);
+        $shippingManifest->weight_correction = $newweight;
+        $shippingManifest->shipping_cost_correction = $newcost;
+        $shippingManifest->save();
+
+        return response()->json([
+            "status" => "OK",
+        ]);
+    }
+
 }
+

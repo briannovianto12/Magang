@@ -22,3 +22,5 @@ Route::name('order.cancel-order')->get('/cancel-order', 'OrderController@cancelO
 Route::name('order.list-order')->get('/list-order', 'OrderController@listOrder');
 Route::name('order.rejected-order')->get('/rejected-order', 'OrderController@rejectedOrder');
 Route::post('/order/{id}/', 'OrderController@changeStatusToDelivered');
+Route::name('order.getInfo')->get('/shipping-manifest-info/{order_id}', 'OrderController@getShippingManifestInfo');
+Route::name('order.edit')->put('/order/update/{id}', 'OrderController@updateShippingManifest');
