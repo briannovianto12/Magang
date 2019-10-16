@@ -16,7 +16,6 @@ class OrderShippingManifest extends Model
     use FormatDates,
         SnowFlakeTrait,
         TimezoneAccessor,
-        VersionModelTrait,
         ModifierModelTrait;
 
     protected $casts = [

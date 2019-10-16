@@ -16,7 +16,12 @@
 
 @section('scripts')
     <script src="{{ nbs_asset('vendor/fancybox/jquery.fancybox.js') }}"></script>
+    <script src="{{ nbs_asset('js/order.js') }}"></script>
+    <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+
     @include('transaction::js')
+    @include('transaction::js-template')
 @endsection
 
 @section('content')
@@ -164,10 +169,28 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Package Weight') }}</span>
-                                            <span>{!! ($data->shipping_weight/1000) !!} Kg</span>
+                                            <span>
+                                                {{ __('Package Weight') }}
+                                                @if($hasShippingManifest == true)
+                                                    <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
+                                                        <i class="fa fa-edit"></i>
+                                                        Edit
+                                                    </button>
+                                                @endif
+                                            </span>
+                                            <span>{!! ceil($shippingManifest->weight/1000) ?? '-' !!} Kg</span>
                                         </div>
                                     </div>
+                                    @if($shippingManifest->weight_correction != 0 || !isset($shippingManifest))
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    {{ __('Corrected Package Weight') }}
+                                                </span>
+                                                <span>{!! ceil($shippingManifest->weight_correction/1000) !!} Kg</span>
+                                            </div>
+                                        </div>
+                                    @endisset
                                 </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-12">
@@ -443,13 +466,13 @@
                                                 <div class="col-6">
                                                     <div class="m-widget28__tab-item">
                                                         <span>{{ __('Status') }}</span>
-                                                        <span>{{ $deliveryTracking->internal->name ?? '-' }}</span>
+                                                        <span>{{ $deliveryTracking->data_json->internal->name ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="m-widget28__tab-item">
                                                         <span>{{ __('Description') }}</span>
-                                                        <span>{{ $deliveryTracking->internal->description ?? '-' }}</span>
+                                                        <span>{{ $deliveryTracking->data_json->internal->description ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -464,13 +487,13 @@
                                                 <div class="col-6">
                                                     <div class="m-widget28__tab-item">
                                                         <span>{{ __('Status') }}</span>
-                                                        <span>{{ $deliveryTracking->external->name ?? '-' }}</span>
+                                                        <span>{{ $deliveryTracking->data_json->external->name ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="m-widget28__tab-item">
                                                         <span>{{ __('Description') }}</span>
-                                                        <span>{{ $deliveryTracking->external->description ?? '-' }}</span>
+                                                        <span>{{ $deliveryTracking->data_json->external->description ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
