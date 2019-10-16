@@ -59,6 +59,21 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Business Bank Account') }}</span>
+                                            <span>
+                                                @foreach($business_bank_accounts as $business_bank_account)
+                                                    @if($business_bank_account->is_default == true)
+                                                        <h5>Default Bank Account:</h5>
+                                                    @endif
+                                                    {!! $business_bank_account->account_no
+                                                    ." - "
+                                                    .$business_bank_account->account_owner_name
+                                                    ."<br>"
+                                                    .$business_bank_account->bank_name."<br>"."<br>"!!}
+                                                @endforeach
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                                 @isset($data->business)
@@ -74,22 +89,49 @@
                                             </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>
-                                                    {{ __('Business Address') }}
+                                                    {{ __('Default Business Address') }}
                                                     <button id="cpy-btn" class="btn btn-sm" style="background-color: white">
                                                         <i class="fa fa-clone"></i>
                                                         Copy
                                                     </button>
                                                 </span>
-                                                @if($business_address)
+                                                @if($business_addresses)
                                                     <span id="business-address">
-                                                            {!! nl2br($business_address->address_line 
-                                                            ."\n"
-                                                            .$business_address->subdistrict
-                                                            .', '.$business_address->district
-                                                            ."\n"
-                                                            .$business_address->city
-                                                            .', '.$business_address->province
-                                                            .' '.$business_address->postal_code) !!}
+                                                        @foreach($business_addresses as $business_address)
+                                                            @if($business_address->is_default == true)
+                                                                {!! nl2br($business_address->address_line 
+                                                                ."\n"
+                                                                .$business_address->subdistrict
+                                                                .', '.$business_address->district
+                                                                ."\n"
+                                                                .$business_address->city
+                                                                .', '.$business_address->province
+                                                                .' '.$business_address->postal_code) !!}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    {{ __('Business Address') }}
+                                                </span>
+                                                @if($business_addresses)
+                                                    <span id="business-address">
+                                                        @foreach($business_addresses as $business_address)
+                                                            @if($business_address->is_default == false)
+                                                                {!! nl2br($business_address->address_line 
+                                                                ."\n"
+                                                                .$business_address->subdistrict
+                                                                .', '.$business_address->district
+                                                                ."\n"
+                                                                .$business_address->city
+                                                                .', '.$business_address->province
+                                                                .' '.$business_address->postal_code) !!}
+                                                                <br>
+                                                                <br>
+                                                            @endif
+                                                        @endforeach
                                                     </span>
                                                 @else
                                                     <span>
