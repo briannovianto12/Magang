@@ -171,25 +171,33 @@
                                         <div class="m-widget28__tab-item">
                                             <span>
                                                 {{ __('Package Weight') }}
-                                                @if($hasShippingManifest == true)
+                                                @if(isset($shippingManifest))
                                                     <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                         <i class="fa fa-edit"></i>
                                                         Edit
                                                     </button>
                                                 @endif
                                             </span>
-                                            <span>{!! ceil($shippingManifest->weight/1000) ?? '-' !!} Kg</span>
+                                            <span>
+                                                @if(isset($shippingManifest))
+                                                    <span>{!! ceil($shippingManifest->weight/1000) ?? '-' !!} Kg</span>
+                                                @else
+                                                    <span>{!! ceil($data->shipping_weight/1000) ?? '-' !!} Kg</span>
+                                                @endif
+                                            </span>
                                         </div>
                                     </div>
-                                    @if($shippingManifest->weight_correction != 0 || !isset($shippingManifest))
-                                        <div class="col-6">
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    {{ __('Corrected Package Weight') }}
-                                                </span>
-                                                <span>{!! ceil($shippingManifest->weight_correction/1000) !!} Kg</span>
+                                    @isset($shippingManifest)
+                                        @if($shippingManifest->weight_correction != 0 || !isset($shippingManifest))
+                                            <div class="col-6">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>
+                                                        {{ __('Corrected Package Weight') }}
+                                                    </span>
+                                                    <span>{!! ceil($shippingManifest->weight_correction/1000) !!} Kg</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endisset
                                 </div>
                                 <div class="m-widget28__tab-item row">
