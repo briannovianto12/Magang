@@ -171,7 +171,6 @@ class OrderController extends Controller
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
         $data['deliveryTrackings'] = null;
-        $data['hasShippingManifest'] = false;
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
                 $data['shippingInsuranceRate'] = 0;
@@ -192,7 +191,6 @@ class OrderController extends Controller
             $data['deliveryTrackings'] = $deliveryTrackings;
         }
         if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
-            $data['hasShippingManifest'] = true;
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
         return view("{$this->module}::detail", $data);
