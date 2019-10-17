@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::name('product.unverified')->patch('/unverified/{id}', 'ProductController@unverified');
     Route::name('product.verified')->patch('/verified/{id}', 'ProductController@verified');
 
+    Route::name('product.edit-tags')->put('/product/update-tags/{id}', 'ProductController@updateTags');
+
     Route::resource('unit-type', 'UnitTypeController');
     Route::name('unit-type')->get('/unit-type', 'UnitTypeController@index');
     
