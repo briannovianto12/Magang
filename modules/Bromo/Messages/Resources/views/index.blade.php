@@ -4,6 +4,7 @@
 @endsection
 
 @section('scripts')
+  {{-- @include('messages::js') --}}
 @endsection
 
 @section('content')
@@ -12,6 +13,20 @@
           'portlet_head' => true,
           'portlet_title' => "List {$title}"])
         @slot('body')
+          <div class="col-6">
+            <form action="{{ route('messages.search') }}" method="get">
+                {{ method_field('GET') }}
+                {{ csrf_field() }}
+                {{-- <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Name or Phone Number">
+                    <div class="input-group-append">
+                      <button id="filter-search-btn" class="btn btn-dark" type="button">Search</button>
+                    </div>
+                </div> --}}
+                <input type="text" name="search" placeholder="Name or Phone Number">
+                <button id="filter-search-btn" class="btn btn-sm btn-dark" type="submit">Search</button>
+          </div>
+          <br>
             @can('view_messages')
               {{ $results->links() }}
               <table class="table">
