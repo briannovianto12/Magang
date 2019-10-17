@@ -66,17 +66,15 @@
                                 style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Code</th>
+
+                                    <th>Order No.</th>
                                     <th>Buyer</th>
                                     <th>Seller</th>
-                                    <th>Payment Method</th>
                                     <th>Amount</th>
                                     <th>Notes</th>
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -91,17 +89,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -115,17 +110,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -139,17 +131,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -163,17 +152,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -187,17 +173,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -211,17 +194,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -235,17 +215,14 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Code</th>
+                                <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Payment Method</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>

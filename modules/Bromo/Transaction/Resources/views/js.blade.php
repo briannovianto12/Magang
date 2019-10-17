@@ -2,25 +2,19 @@
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 <script type="text/javascript">
     var initColumns = [
-        {
-            'data': 'DT_RowIndex', 'name': 'DT_RowIndex',
-            'orderable': false, 'searchable': false, 'width': '50'
-        },
         {'data': 'order_no', 'name': 'order_no', searchacble:true},
         {'data': 'buyer_name', 'name': 'buyer_name'},
         {'data': 'seller_name', 'name': 'seller_name'},
-        {'data': 'payment_method', 'name': 'payment_method'},
         {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
         {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
         {'data': 'updated_at', 'name': 'updated_at'},
-        {'data': 'action', 'name': 'action', orderable: false, searchable: false}
     ];
 
     let orderColumnsForUpdated = [
-        [8, 'desc'],
-        [9, 'desc']
+        [6, 'desc'],
+        [7, 'desc']
     ];
 
     var Columns = function (data) {

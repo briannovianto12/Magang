@@ -9,7 +9,10 @@ abstract class OrderDatatable extends DataTable
     public function ajax()
     {
         return datatables($this->query())
-            ->addIndexColumn()
+            ->addColumn('order_no', function ($data) {
+                return '<a href="' . route('order.show', $data->id) .'">'.$data->order_no.'</a>';
+            })
+            ->rawColumns(['order_no'])
             ->editColumn('created_at', function ($data) {
                 return $data->created_at_formatted;
             })
@@ -22,21 +25,9 @@ abstract class OrderDatatable extends DataTable
             ->addColumn('buyer_name', function ($data) {
                 return $data->buyer_name;
             })
-            ->addColumn('payment_method', function ($data) {
-                return $data->payment_snapshot['name'] ?? '';
-            })
             ->addColumn('status_name', function ($data) {
                 return $data->orderStatus->name ?? '';
             })
-            ->addColumn('action', function ($data) {
-                $action = [
-                    'show_url' => route("order.show", $data->id),
-                    'id' => $data->id
-                ];
-
-                return view('theme::layouts.includes.actions', $action);
-            })
-            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -68,7 +59,6 @@ abstract class OrderDatatable extends DataTable
             'payment_amount',
             'buyer_snapshot',
             'shop_snapshot',
-            'payment_method_id',
             'payment_snapshot',
             'notes',
             'created_at',
