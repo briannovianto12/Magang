@@ -294,4 +294,22 @@ class ProductController extends Controller
             "nama_produk" => $product->name,
         ]);
     }
+
+    public function updateTags(Request $request, $id){
+
+        $product = Product::findOrFail($id);
+        $inputTags = json_decode($request->input('input-tags'));
+        if(empty($inputTags)){
+            return back()->with('errorMsg', 'Tags cannot be empty!');
+        } 
+        $updatedTags = null;
+        foreach($inputTags as $key => $inputTag){
+            $updatedTags[] = $inputTag->value;
+        }
+        //dd($updatedTags);
+        $product->tags = $updatedTags;
+        $product->save();
+
+        return back()->with('successMsg', 'Update Success!');;
+    }
 }

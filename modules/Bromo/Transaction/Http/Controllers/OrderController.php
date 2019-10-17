@@ -237,7 +237,7 @@ class OrderController extends Controller
         $shippingManifest->save();
 
         return response()->json([
-            "status" => "OK",
+            "status" => "Success",
         ]);
     }
 

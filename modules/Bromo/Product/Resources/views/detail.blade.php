@@ -1,6 +1,7 @@
 @extends('theme::layouts.master')
 
 @section('css')
+    <link href="{{ nbs_asset('css/tagify.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
     <style>
         #bromo .m-widget5 .m-widget5__item .m-widget5__content:last-child {
@@ -15,7 +16,10 @@
 @endsection
 
 @section('scripts')
-    @include('product::js')
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="{{ nbs_asset('js/jQuery.tagify.min.js') }}"></script>
+    <script src="{{ nbs_asset('js/tagify.min.js') }}"></script>
+    @include('product::js-detail')
 @endsection
 
 @section('content')
@@ -65,9 +69,46 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Tags') }}</span>
                                     <div>
-                                        @foreach($data->tags as $tag)
-                                            <span class="m-badge  m-badge--default m-badge--wide mt-2">{{ $tag }}</span>
-                                        @endforeach
+                                        @isset($data->tags)    
+                                            {!! 
+                                                $oriTags = "";
+                                                foreach($data->tags as $tag){
+                                                    if($oriTags == ""){
+                                                        $oriTags = $tag;
+                                                    }
+                                                    else{
+                                                        $oriTags = $oriTags.', '.$tag;
+                                                    }
+                                                }
+                                            !!}
+                                            <input name='default-tags' readonly value='{{ $oriTags }}'>
+                                            <button id="edit-tags-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
+                                                <i class="fa fa-edit"></i>
+                                                Edit
+                                            </button>
+                                            <br>
+                                            @if(session()->has('errorMsg'))
+                                                <div class="alert alert-danger">
+                                                    {{ session()->get('errorMsg') }}
+                                                </div>
+                                                <br>
+                                            @elseif(session()->has('successMsg'))
+                                                <div class="alert alert-success">
+                                                    {{ session()->get('successMsg') }}
+                                                </div>
+                                                <br>
+                                            @endif
+                                            <form action="{{ route('product.edit-tags', $data->id) }}" method="post">
+                                                {{ method_field('PUT') }}
+                                                {{ csrf_field() }}
+                                                <div id="input-form">
+                                                    Input new tags:
+                                                    <input name='input-tags' value='{{ $oriTags }}'>
+                                                    <br>
+                                                    <button id="update-tags-btn" class='btn btn-primary btn-sm' type='submit' style="border-radius: 4px">Update Tags</button> 
+                                                </div>
+                                            </form>
+                                        @endisset
                                     </div>
                                 </div>
                             </div>
