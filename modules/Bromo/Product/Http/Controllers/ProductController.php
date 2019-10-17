@@ -8,6 +8,7 @@ use Bromo\Product\DataTables\ProductSubmitedDatatable;
 use Bromo\Product\Models\Product;
 use Bromo\Product\Models\ProductStatus;
 use Bromo\ProductCategory\Models\ProductCategory;
+use Bromo\Product\Entities\ProductWeightLog;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -276,19 +277,46 @@ class ProductController extends Controller
             ]);
         }
 
+        $user = \Auth::user();
+
         // TODO use DB Transaction
         // TODO update product weight log
-        $product = Product::findOrFail($id);
-        $dimensions = $product->dimensions;
-        $dimensions['after_packaging']['weight'] = $new_weight;
-        $dimensions['before_packaging']['weight'] = $new_weight;
+        DB::beginTransaction();
+        try {
+            $product = Product::findOrFail($id);
 
-        $product->dimensions = $dimensions;
+            $old_weight = $product->dimensions;
 
-        $product->save();
+            $dimensions = $product->dimensions;
+            $dimensions['after_packaging']['weight'] = $new_weight;
+            $dimensions['before_packaging']['weight'] = $new_weight;
+            $product->dimensions = $dimensions;
+            \Log::debug($product);
+            $product->save();
 
-        \Log::debug($product);
+            $weight_log = New ProductWeightLog;
+            $weight_log->product_id = $product->id;
+            $weight_log->old_weight = $old_weight['after_packaging']['weight'];
+            
+            $product_dimensions = $product->dimensions;
+            $weight_log->new_weight = $new_weight;
+            $weight_log->updated_by = $user->id;
+            $weight_log->modifier_role_id = 1;
+            $weight_log->increment('version', 1);
 
+            $weight_log->save();
+            
+            DB::commit();
+
+
+        } catch(Exception $exception) {
+            report($exception);
+            DB::rollBack();
+            return response()->json([
+                "status" => "Failed"
+            ]);
+        }
+            
         return response()->json([
             "status" => "OK",
             "nama_produk" => $product->name,
