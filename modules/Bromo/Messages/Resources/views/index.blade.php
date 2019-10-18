@@ -4,7 +4,6 @@
 @endsection
 
 @section('scripts')
-  {{-- @include('messages::js') --}}
 @endsection
 
 @section('content')
@@ -17,14 +16,13 @@
             <form action="{{ route('messages.search') }}" method="get">
                 {{ method_field('GET') }}
                 {{ csrf_field() }}
-                {{-- <div class="input-group input-group-sm mb-3">
-                    <input type="text" class="form-control" placeholder="Name or Phone Number">
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" name="search" class="form-control" placeholder="Name or Phone Number">
                     <div class="input-group-append">
-                      <button id="filter-search-btn" class="btn btn-dark" type="button">Search</button>
+                      <button id="filter-search-btn" class="btn btn-dark" type="submit">Search</button>
                     </div>
-                </div> --}}
-                <input type="text" name="search" placeholder="Name or Phone Number">
-                <button id="filter-search-btn" class="btn btn-sm btn-dark" type="submit">Search</button>
+                </div>
+            </form>
           </div>
           <br>
             @can('view_messages')

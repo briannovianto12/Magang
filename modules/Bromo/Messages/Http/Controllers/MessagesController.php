@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Nbs\BaseResource\Http\Controllers\BaseResourceController;
 use Bromo\Messages\Entities\Message;
 
-class MessagesController extends Controller
+class MessagesController extends BaseResourceController
 {
     public function __construct(Message $model)
     {
@@ -16,7 +16,7 @@ class MessagesController extends Controller
         $this->page = 'Messages';
         $this->title = 'Messages';
         $this->model = $model;
-        //parent::__construct();
+        parent::__construct();
     }
 
     public function list(Request $request) {
@@ -48,9 +48,8 @@ class MessagesController extends Controller
         ]);
     }
 
-    public function show(Request $request) {
+    public function searchList(Request $request) {
         $searchVal = $request->input('search');
-        //dd($searchVal);
         if(empty($searchVal))
             return back()->withErrors(['The search bar is empty!']);
 
