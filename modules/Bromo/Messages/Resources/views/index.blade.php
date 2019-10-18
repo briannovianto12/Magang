@@ -14,8 +14,6 @@
         @slot('body')
           <div class="col-6">
             <form action="{{ route('messages.search') }}" method="get">
-                {{ method_field('GET') }}
-                {{ csrf_field() }}
                 <div class="input-group input-group-sm mb-3">
                     <input type="text" name="search" class="form-control" placeholder="Name or Phone Number">
                     <div class="input-group-append">
