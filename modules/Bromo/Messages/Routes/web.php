@@ -10,9 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('messages', 'MessagesController');
-
 Route::prefix('messages')->group(function() {
     Route::get('/', 'MessagesController@list')->name('messages.index');
-    Route::get('/search', 'MessagesController@show')->name('messages.search');
+    Route::get('/search', 'MessagesController@searchList')->name('messages.search');
+    Route::resource('messages', 'MessagesController')->except('index');
 });
+
