@@ -87,6 +87,14 @@
                                     <span>{{ $data->product_category ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
+                                    <span>{{ __('Shop Contact Person') }}</span>
+                                    <span>{{ $data->businessAddress->contact_person ?? '-'}}</span>
+                                </div>
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Shop Email') }}</span>
+                                    <span>{{ $data->contact_email ?? '-'}}</span>
+                                </div>
+                                <div class="m-widget28__tab-item">
                                     <span>{{ __('Tax No') }}</span>
                                     <span>{{ $data->tax_no ?? '-' }}</span>
                                 </div>
