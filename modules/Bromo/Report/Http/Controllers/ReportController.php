@@ -99,6 +99,14 @@ class ReportController extends Controller
         
     }
 
+    public function getTotalBuyCount(Request $request)
+    {        
+        $data['table'] = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
+        $data['table'] = $this->arrayPaginator($data['table'], $request);
+        return view('report::total_buy_count', $data);
+        
+    }
+
     public function arrayPaginator($array, $request){
         $page = Input::get('page', 1);
         $perPage = 25;
@@ -137,6 +145,43 @@ class ReportController extends Controller
         );
         $response->headers->set('Content-Type', 'application/vnd.ms-excel');
         $response->headers->set('Content-Disposition', 'attachment;filename="shopwithfewproduct.xls"');
+        $response->headers->set('Cache-Control','max-age=0');
+
+        return $response;
+    }
+
+    public function exportTotalBuyCount(){
+        $data = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
+        $spreadsheet = new Spreadsheet();
+        $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Shop Name');
+        $sheet->setCellValue('B1', 'Total Bought Product');
+        $sheet->setCellValue('C1', 'Full Name');
+        $sheet->setCellValue('D1', 'Province');
+        $sheet->setCellValue('E1', 'City');
+        $rows = 2;
+        
+        foreach($data as $data){
+            $sheet->setCellValue('A' . $rows, $data->name);
+            $sheet->setCellValue('B' . $rows, $data->count);
+            $sheet->setCellValue('C' . $rows, $data->full_name);
+            $sheet->setCellValue('D' . $rows, $data->province);
+            $sheet->setCellValue('E' . $rows, $data->city);
+            $rows++;
+        }
+
+        $writer = new Writer\Xlsx($spreadsheet);
+
+        $response =  new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            }
+        );
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Disposition', 'attachment;filename="totalbuycount.xls"');
         $response->headers->set('Cache-Control','max-age=0');
 
         return $response;
