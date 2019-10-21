@@ -31,6 +31,18 @@ abstract class OrderDatatable extends DataTable
             ->addColumn('status_name', function ($data) {
                 return $data->orderStatus->name ?? '';
             })
+            ->filterColumn('order_no', function($query, $keyword) {
+                $sql = "CONCAT(order_trx.order_no)  like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
+            ->filterColumn('buyer_name', function($query, $keyword) {
+                $sql = "CONCAT(order_trx.buyer_snapshot->>'full_name')  ilike ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
+            ->filterColumn('seller_name', function($query, $keyword) {
+                $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
             ->make(true);
     }
 
