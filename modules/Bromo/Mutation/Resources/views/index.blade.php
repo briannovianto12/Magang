@@ -39,7 +39,8 @@
                         <table class="table table-bordered table-striped" id="shop_log_mutation_table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Shop ID</th>
+                                <th>Shop Name</th>
+                                <th>Owner Name</th>
                                 <th>Mutation</th>
                                 <th>Remark</th>
                                 <th>Transaction Type</th>

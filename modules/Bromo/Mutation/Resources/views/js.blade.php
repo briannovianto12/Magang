@@ -18,8 +18,12 @@ $(document).ready(function(){
             },
             columns: [
             {
-                'data':'shop_id',
-                'name':'shop_id'
+                'data':'shop_name',
+                'name':'shop_name'
+            },
+            {
+                'data':'owner_name',
+                'name':'owner_name'
             },
             {
                 'data':'mutation',
