@@ -31,6 +31,12 @@ class MutationController extends Controller
                 ->get();
             }
             return datatables()->of($data)
+            ->editColumn('shop_name', function ($data) {
+                return $data->name;
+            })
+            ->editColumn('owner_name', function ($data) {
+                return $data->full_name;
+            })
             ->editColumn('mutation', function ($data) {
                 
                 return number_format($data->mutation, 0, 0, '.');
