@@ -23,10 +23,10 @@
             <div class="m-portlet__body">
                 <div class="container" style="width: 100%">    
                     <div class="row input-daterange">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
                         </div>
                         <div class="col-md-4">
