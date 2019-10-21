@@ -16,6 +16,7 @@ class RejectedOrderDataTable extends OrderDatatable
             ])
             ->with('orderStatus:id,name');
 
+        $query->addSelect('reject_notes');
         return $this->applyScopes($query);
     }
 }

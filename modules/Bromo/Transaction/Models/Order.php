@@ -36,6 +36,7 @@ class Order extends Model
         'payment_snapshot' => 'array',
         'payment_details' => 'array',
         'notes' => 'string',
+        'reject_notes' => 'string',
         'payment_amount' => 'double',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'

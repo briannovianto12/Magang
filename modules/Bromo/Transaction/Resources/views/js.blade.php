@@ -12,6 +12,18 @@
         {'data': 'updated_at', 'name': 'updated_at'},
     ];
 
+    var rejectedOrderColumns = [
+        {'data': 'order_no', 'name': 'order_no', searchacble:true},
+        {'data': 'buyer_name', 'name': 'buyer_name'},
+        {'data': 'seller_name', 'name': 'seller_name'},
+        {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
+        {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
+        {'data': 'reject_notes', 'name': 'reject_notes', orderable: false, searchable: false},
+        {'data': 'status_name', 'name': 'status_name', searchable: false},
+        {'data': 'created_at', 'name': 'created_at'},
+        {'data': 'updated_at', 'name': 'updated_at'},
+    ];
+
     let orderColumnsForUpdated = [
         [6, 'desc'],
         [7, 'desc']
@@ -48,7 +60,8 @@
             Order.loadDataTable('table_list_order', "{{ route("order.list-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadRejectedOrder: function () {
-            Order.loadDataTable('table_rejected_order', "{{ route("order.rejected-order") }}", initColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_rejected_order', "{{ route("order.rejected-order") }}", rejectedOrderColumns, [[7, 'desc'],
+        [8, 'desc']]);
         },
         loadDataTable: function (elem, route, getColumns, order = []) {
             if (!$.fn.dataTable.isDataTable("#" + elem)) {

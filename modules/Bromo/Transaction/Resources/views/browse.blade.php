@@ -199,6 +199,7 @@
                                 <th>Seller</th>
                                 <th>Amount</th>
                                 <th>Notes</th>
+                                <th>Reject Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
