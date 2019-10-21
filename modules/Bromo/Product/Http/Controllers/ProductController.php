@@ -288,10 +288,10 @@ class ProductController extends Controller
             $old_weight = $product->dimensions;
 
             $dimensions = $product->dimensions;
-            $dimensions['after_packaging']['weight'] = $new_weight;
-            $dimensions['before_packaging']['weight'] = $new_weight;
+            $dimensions['after_packaging']['weight'] = intval($new_weight);
+            $dimensions['before_packaging']['weight'] = intval($new_weight);
             $product->dimensions = $dimensions;
-            \Log::debug($product);
+
             $product->save();
 
             $weight_log = New ProductWeightLog;
@@ -303,7 +303,7 @@ class ProductController extends Controller
             $weight_log->updated_by = $user->id;
             $weight_log->modifier_role_id = 1;
             $weight_log->increment('version', 1);
-
+            
             $weight_log->save();
             
             DB::commit();
