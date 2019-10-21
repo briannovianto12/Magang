@@ -2,7 +2,7 @@
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 <script type="text/javascript">
     var initColumns = [
-        {'data': 'order_no', 'name': 'order_no', searchacble:true},
+        {'data': 'order_no', 'name': 'order_no', searchable:true},
         {'data': 'buyer_name', 'name': 'buyer_name'},
         {'data': 'seller_name', 'name': 'seller_name'},
         {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
@@ -13,7 +13,7 @@
     ];
 
     var rejectedOrderColumns = [
-        {'data': 'order_no', 'name': 'order_no', searchacble:true},
+        {'data': 'order_no', 'name': 'order_no', searchable:true},
         {'data': 'buyer_name', 'name': 'buyer_name'},
         {'data': 'seller_name', 'name': 'seller_name'},
         {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
@@ -72,9 +72,10 @@
                     order: order,
                     scrollX: true,
                     searchable: true,
-                    dom: "<'row'<'col-sm-8 text-left'l>    <'col-sm-3 text-right'f>  <'col-sm-1 text-right'B> >" +
+                    dom:
+                        "<'row'<'col-sm-8 text-left dataTables_pager'li> <'col-sm-3 text-right'f> <'col-sm-1 text-right'B>>" +
                         "<'row'<'col-sm-12'tr>>" +
-                        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+                        "<'row'<'col-sm-12 col-md-12 dataTables_pager'p>>",
                     buttons: [
                         {'extend': 'reload', 'text': '<i class="la la-refresh"></i> <span>Reload</span>'}
                     ],
