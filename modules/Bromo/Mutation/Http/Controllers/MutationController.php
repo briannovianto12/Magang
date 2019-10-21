@@ -27,7 +27,9 @@ class MutationController extends Controller
                 ->join('business_member','business.id', 'business_member.business_id')
                 ->join('user_profile','user_profile.id', 'business_member.user_id')
                 ->where('business_member.role', '1')
-                ->select('shop_log_mutation.*', 'shop.name', 'user_profile.full_name')
+                ->select('shop_log_mutation.id', 'shop_log_mutation.shop_id', 'shop_log_mutation.mutation',
+                        'shop_log_mutation.remark', 'shop_log_mutation.trx_type', 'shop_log_mutation.created_at',
+                        'shop_log_mutation.updated_at', 'shop.name', 'user_profile.full_name')
                 ->get();
             }
             \Log::debug($data);
