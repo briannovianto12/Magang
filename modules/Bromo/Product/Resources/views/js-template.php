@@ -49,8 +49,8 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order ID: {{ ids.order_id }}</h4>
-                <h4>Shipping Manifest ID: {{ ids.shipping_manifest_id }}</h4>
+                <h5>{{ data.name }}</h5>
+                <h6>{{ data.id }}</h6>
             </div>
             <div>
             <br/>
