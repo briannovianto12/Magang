@@ -52,6 +52,12 @@
                             <td>List of product that weight more than 500gr.</td>
                         </tr>
                     @endcan
+                    {{-- @can('view_total_buy_count') --}}
+                        <tr>
+                            <td><a href="{{ route('report.total_buy_count') }}">Total Buy Count</a></td>
+                            <td>List of total buy count.</td>
+                        </tr>
+                    {{-- @endcan --}}
                 </tbody>
             </table>
         </div>

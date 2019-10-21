@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::name('product_over_half_kilo')->get('/product-over-half-kilo', 'ReportController@getProductOverHalfKilo');
         //Route::get('/product-over-half-kilo/export/xlsx', 'ReportController@export')->name('product-over-half-kilo.export');
+
+        Route::name('total_buy_count')->get('/total-buy-count', 'ReportController@getTotalBuyCount');
+        Route::get('/total-buy-count/export/xlsx', 'ReportController@exportTotalBuyCount')->name('total-buy-count.export');
     });
     
 });
