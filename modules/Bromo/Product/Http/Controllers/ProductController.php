@@ -9,6 +9,7 @@ use Bromo\Product\Models\Product;
 use Bromo\Product\Models\ProductStatus;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Bromo\Product\Entities\ProductWeightLog;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -334,8 +335,9 @@ class ProductController extends Controller
         foreach($inputTags as $key => $inputTag){
             $updatedTags[] = $inputTag->value;
         }
-        //dd($updatedTags);
+        
         $product->tags = $updatedTags;
+        $product->updated_at = Carbon::now();
         $product->save();
 
         return back()->with('successMsg', 'Update Success!');;
