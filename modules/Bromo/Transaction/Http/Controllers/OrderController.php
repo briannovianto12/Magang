@@ -2,11 +2,13 @@
 
 namespace Bromo\Transaction\Http\Controllers;
 
+use Bromo\Transaction\DataTables\AcceptedOrderDataTable;
 use Bromo\Transaction\DataTables\CancelOrderDataTable;
 use Bromo\Transaction\DataTables\DeliveredOrderDataTable;
 use Bromo\Transaction\DataTables\DeliveryOrderDataTable;
 use Bromo\Transaction\DataTables\ListOrderDataTable;
 use Bromo\Transaction\DataTables\NewOrderDatatable;
+use Bromo\Transaction\DataTables\PaidOrderDataTable;
 use Bromo\Transaction\DataTables\ProcessOrderDataTable;
 use Bromo\Transaction\DataTables\RejectedOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
@@ -149,6 +151,22 @@ class OrderController extends Controller
      * @return JsonResponse
      */
     public function rejectedOrder(RejectedOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module
+        ])->ajax();
+    }
+
+    public function acceptedOrder(AcceptedOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module
+        ])->ajax();
+    }
+
+    public function paidOrder(PaidOrderDataTable $datatable)
     {
         return $datatable->with([
             'model' => $this->model,
