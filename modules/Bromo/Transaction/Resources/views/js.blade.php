@@ -120,8 +120,26 @@
         }
     };
 
+    
     $(document).ready(function () {
         Order.init();
+        document.getElementById("po-table-status").addEventListener('change', function(){
+            if(document.getElementById("po-table-status").value == "All"){
+                $('#table_process_order').DataTable().destroy();
+                Order.loadDataTable('table_process_order', "{{ route("order.process-order") }}", initColumns, orderColumnsForUpdated);
+                $('#table_process_order').DataTable().draw();
+            }
+            else if(document.getElementById("po-table-status").value == "Payment OK"){
+                $('#table_process_order').DataTable().destroy();
+                Order.loadDataTable('table_process_order', "{{ route("order.paid-order") }}", initColumns, orderColumnsForUpdated);
+                $('#table_process_order').DataTable().draw();
+            }
+            else if(document.getElementById("po-table-status").value == "Accepted"){
+                $('#table_process_order').DataTable().destroy();
+                Order.loadDataTable('table_process_order', "{{ route("order.accepted-order") }}", initColumns, orderColumnsForUpdated);
+                $('#table_process_order').DataTable().draw();
+            }
+        });
     });
 
     document.getElementById("origin-cpy-btn").addEventListener("click", copy_origin_address);

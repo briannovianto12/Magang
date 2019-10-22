@@ -84,6 +84,18 @@
 
                     <!--begin:: Process Order Page-->
                     <div class="tab-pane" id="process_order" role="tabpanel">
+                        <div class="btn-group">
+                            <strong class="mt-2 mr-2">
+                                Status:
+                            </strong>
+                            <div>
+                                <select id="po-table-status" class="custom-select custom-select-sm form-control form-control-sm">
+                                    <option value="All">All</option>
+                                    <option value="Payment OK">Payment OK</option>
+                                    <option value="Accepted">Accepted</option>
+                                </select> 
+                            </div>
+                        </div>
                         <table id="table_process_order"
                             class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
