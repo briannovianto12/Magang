@@ -330,7 +330,8 @@ class SellerController extends BaseResourceController
             $sheet->setCellValue('A' . $rows, $data->amount);
             $sheet->setCellValue('B' . $rows, $data->bank_code);
             $sheet->setCellValue('C' . $rows, $data->bank_account_name);
-            $sheet->setCellValueExplicit('D' . $rows, $data->bank_account_number, DataType::TYPE_STRING)->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+            $sheet->setCellValue('D' . $rows, $data->bank_account_number)->getStyle('D')->getNumberFormat();
+            $sheet->setCellValue('D' . $rows, $data->bank_account_number)->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
             $sheet->setCellValue('E' . $rows, $data->description);
             $sheet->setCellValue('F' . $rows, $data->email);
             $sheet->setCellValue('G' . $rows, $data->email_cc);
