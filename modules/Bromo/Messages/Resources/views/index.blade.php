@@ -15,7 +15,7 @@
           <div class="col-6">
             <form action="{{ route('messages.search') }}" method="get">
                 <div class="input-group input-group-sm mb-3">
-                    <input type="text" name="search" class="form-control" placeholder="Name or Phone Number">
+                    <input type="text" name="search" class="form-control" placeholder="Name or Phone Number" value="{{ $search_keyword }}">
                     <div class="input-group-append">
                       <button id="filter-search-btn" class="btn btn-dark" type="submit">Search</button>
                     </div>
