@@ -21,6 +21,7 @@ class MessagesController extends BaseResourceController
 
     public function list(Request $request) {
         
+        $searchVal = $request->get('search', "");
         $results = $this->model
         ->selectRaw( \DB::raw(" B.name as sender,
         G.full_name as sender_name, G.msisdn as sender_phone,
@@ -45,11 +46,13 @@ class MessagesController extends BaseResourceController
             'module' => $this->module,
             'page' => $this->page,
             'results' => $results,
+            'search_keyword' => $searchVal,
         ]);
     }
 
     public function searchList(Request $request) {
-        $searchVal = $request->input('search');
+
+        $searchVal = $request->get('search', "");
         if(empty($searchVal))
             return back()->withErrors(['The search bar is empty!']);
 
@@ -79,10 +82,11 @@ class MessagesController extends BaseResourceController
            ->simplePaginate(30);
         
         return view("messages::index", [
-        'title' => $this->title,
-        'module' => $this->module,
-        'page' => $this->page,
-        'results' => $results,
+            'title' => $this->title,
+            'module' => $this->module,
+            'page' => $this->page,
+            'results' => $results,
+            'search_keyword' => $searchVal,
         ]);
     }
 }
