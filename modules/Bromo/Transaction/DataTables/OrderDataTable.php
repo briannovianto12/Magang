@@ -13,7 +13,7 @@ abstract class OrderDatatable extends DataTable
                 return '<a href="' . route('order.show', $data->id) .'">'.$data->order_no.'</a>';
             })
             ->editColumn('payment_amount_formatted', function ($data) {
-                return '<div style="text-align:right">'.$data->payment_amount.'</div>';
+                return '<div style="text-align:right">'.number_format($data->payment_amount, 0, 0, '.').'</div>';
             })
             ->rawColumns(['order_no', 'payment_amount_formatted'])
             ->editColumn('created_at', function ($data) {
