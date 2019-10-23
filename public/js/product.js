@@ -259,6 +259,10 @@ function _editWeight( data_id ) {
           alert("Input nilai berat!")
           $('#category1').focus()
           return
+        } else if( newWeight <= 0) {
+          alert("Nilai berat harus lebih besar dari 0!")
+          $('#category1').focus()
+          return
         }
 
         var product_id = $(this).attr('data-product-id')
