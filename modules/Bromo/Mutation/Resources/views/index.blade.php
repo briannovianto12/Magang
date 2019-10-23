@@ -44,6 +44,7 @@
                                 <th>Mutation</th>
                                 <th>Remark</th>
                                 <th>Transaction Type</th>
+                                <th>Created At</th>
                             </tr>
                             </thead>
                         </table>

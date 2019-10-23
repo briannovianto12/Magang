@@ -37,7 +37,13 @@ $(document).ready(function(){
                 'data':'trx_type',
                 'name':'trx_type'
             },
-            ]
+            {
+                'data':'created_at',
+                'name':'created_at'
+            }
+            ],
+            "aaSorting": [[5,'asc']],
+            "iDisplayLength": 25,
         });
 
         $( table.table().container() ).removeClass( 'form-inline' );
