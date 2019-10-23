@@ -11,8 +11,7 @@
 |
 */
 Route::prefix('messages')->group(function() {
-    Route::get('/', 'MessagesController@list')->name('messages.index');
-    Route::get('/search', 'MessagesController@searchList')->name('messages.search');
+    Route::get('/', 'MessagesController@searchList')->name('messages.index');
     Route::resource('messages', 'MessagesController')->except('index');
 });
 
