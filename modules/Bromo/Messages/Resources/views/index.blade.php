@@ -13,7 +13,7 @@
           'portlet_title' => "List {$title}"])
         @slot('body')
           <div class="col-6">
-            <form action="{{ route('messages.search') }}" method="get">
+            <form action="{{ route('messages.index') }}" method="get">
                 <div class="input-group input-group-sm mb-3">
                     <input type="text" name="search" class="form-control" placeholder="Name or Phone Number" value="{{ $search_keyword }}">
                     <div class="input-group-append">
@@ -25,7 +25,7 @@
           <br>
             @can('view_messages')
               {{ $results->links() }}
-              <table class="table">
+              <table class="table table-bordered table-striped">
                   <thead>
                       <th>Sender</th>
                       <th>Receiver</th>
@@ -33,6 +33,11 @@
                       <th>Created At</th>
                   </thead>
                   <tbody>
+                      @if(count($results) == 0)
+                          <tr>
+                             <td colspan="4" class="text-center">No data found</td>
+                          </td>
+                      @endif
                       @foreach($results as $item)
                           <tr>
                               <td>
