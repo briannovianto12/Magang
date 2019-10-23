@@ -33,6 +33,7 @@
                                         <th>MSISDN</th>
                                         <th>City</th>
                                         <th>Province</th>
+                                        <th>Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,6 +46,7 @@
                                         <td> {{$row->msisdn}} </td>
                                         <td> {{$row->city}} </td>
                                         <td> {{$row->province}} </td>
+                                        <td> {{$row->created_at}} </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
