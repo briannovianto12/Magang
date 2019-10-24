@@ -17,26 +17,26 @@ class ProductCategoryDataTable extends DataTable
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
-            ->addColumn('action', function ($data) {
-                $action = [
-                    'edit_url' => route("{$this->module}.edit", $data->id),
-                    'attribute_url' => view('components.buttons._button-url', [
-                        'url' => route("{$this->module}.attributes", $data->id),
-                        'title' => 'Attribute',
-                        'iconClass' => 'la la-tags'
-                    ]),
-                    'brand_url' => view('components.buttons._button-url', [
-                        'url' => route("{$this->module}.brands", $data->id),
-                        'title' => 'Brand',
-                        'iconClass' => 'la la-diamond'
-                    ]),
-//                    'delete_url' => route("{$this->module}.destroy", $data->id),
-                    'id' => $data->id
-                ];
-                if(auth()->user()->can('edit_product_category'))
-                    return view('theme::layouts.includes.actions', $action);
-            })
-            ->rawColumns(['action'])
+            // ->addColumn('action', function ($data) {
+            //     $action = [
+            //         'edit_url' => route("{$this->module}.edit", $data->id),
+            //         'attribute_url' => view('components.buttons._button-url', [
+            //             'url' => route("{$this->module}.attributes", $data->id),
+            //             'title' => 'Attribute',
+            //             'iconClass' => 'la la-tags'
+            //         ]),
+            //         'brand_url' => view('components.buttons._button-url', [
+            //             'url' => route("{$this->module}.brands", $data->id),
+            //             'title' => 'Brand',
+            //             'iconClass' => 'la la-diamond'
+            //         ]),
+            //         'delete_url' => route("{$this->module}.destroy", $data->id),
+            //         'id' => $data->id
+            //     ];
+            //     if(auth()->user()->can('edit_product_category'))
+            //         return view('theme::layouts.includes.actions', $action);
+            // })
+            //->rawColumns(['action'])
             ->make(true);
     }
 
@@ -57,7 +57,7 @@ class ProductCategoryDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-            ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
+            // ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
                 'order' => [],
