@@ -15,7 +15,7 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Shop Name</th>
+                                        <th>Buyer Business Name</th>
                                         <th>Total Bought Product</th>
                                         <th>Full Name</th>
                                         <th>Province</th>
