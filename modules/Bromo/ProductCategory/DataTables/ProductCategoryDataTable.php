@@ -17,6 +17,8 @@ class ProductCategoryDataTable extends DataTable
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
+            // Hide Action on ProductCategoryDataTable
+            //
             // ->addColumn('action', function ($data) {
             //     $action = [
             //         'edit_url' => route("{$this->module}.edit", $data->id),
@@ -57,6 +59,8 @@ class ProductCategoryDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            // Hide Column "Action" on Screen
+            //
             // ->addAction(['width' => '150px', 'footer' => 'Action', 'exportable' => false, 'printable' => false])
             ->minifiedAjax()
             ->parameters([
