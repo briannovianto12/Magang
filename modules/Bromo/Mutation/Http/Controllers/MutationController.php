@@ -5,6 +5,7 @@ namespace Bromo\Mutation\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Carbon\Carbon;
 
 use DB;
 
@@ -51,6 +52,14 @@ class MutationController extends Controller
             ->rawColumns(['mutation'])
             ->make(true);
         }
-        return view('mutation::index');
+
+        $start = Carbon::now()->subDays(7);
+        $end = Carbon::now();
+
+        return view('mutation::index',
+        $data = [
+            'start' => $start,
+            'end' => $end
+        ]);
     }
 }
