@@ -466,46 +466,62 @@
                     @slot('body')
                         @isset($deliveryTrackings)
                             <div class="row mb-4">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="m-widget28__tab-items">
                                         <div class="h3">Internal</div>
-                                        @foreach($deliveryTrackings as $deliveryTracking)
-                                            <div class="m-widget28__tab-item row">
-                                                <div class="col-6">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Status') }}</span>
-                                                        <span>{{ $deliveryTracking->data_json->internal->name ?? '-' }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Description') }}</span>
-                                                        <span>{{ $deliveryTracking->data_json->internal->description ?? '-' }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                        <div class="m-widget28__tab-item row">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <th>Status</th>
+                                                    <th>Description</th>
+                                                    <th>Date</th>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($deliveryTrackings as $deliveryTracking)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $deliveryTracking->data_json->internal->name ?? '-' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $deliveryTracking->data_json->internal->description ?? '-' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $deliveryTracking->created_at ?? '-' }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="m-widget28__tab-items">
                                         <div class="h3">External</div>
-                                        @foreach($deliveryTrackings as $deliveryTracking)
-                                            <div class="m-widget28__tab-item row">
-                                                <div class="col-6">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Status') }}</span>
-                                                        <span>{{ $deliveryTracking->data_json->external->name ?? '-' }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Description') }}</span>
-                                                        <span>{{ $deliveryTracking->data_json->external->description ?? '-' }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                        <div class="m-widget28__tab-item row">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <th>Status</th>
+                                                    <th>Description</th>
+                                                    <th>Date</th>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($deliveryTrackings as $deliveryTracking)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $deliveryTracking->data_json->external->name ?? '-' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $deliveryTracking->data_json->external->description ?? '-' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $deliveryTracking->created_at ?? '-' }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
