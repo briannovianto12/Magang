@@ -50,8 +50,16 @@ $(document).ready(function(){
     }
 
     $('#filter').click(function(){
-        var from_date = $('#from_date').val();
-        var to_date = $('#to_date').val();
+        var from_date = $('#from_date').attr("placeholder");
+        var to_date = $('#to_date').attr("placeholder");
+        
+        if($('#to_date').val() != ''){
+            to_date = $('#to_date').val();
+        }
+        if($('#from_date').val() != ''){
+            from_date = $('#from_date').val();
+        }
+        
         if(from_date != '' &&  to_date != '' && (new Date(to_date) - new Date(from_date))/1000/60/60/24 <= 60){
             $('#shop_log_mutation_table').DataTable().destroy();
             load_data(from_date, to_date);
