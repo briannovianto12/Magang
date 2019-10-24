@@ -202,7 +202,7 @@ class OrderController extends Controller
             ];
         }
         if(!empty(OrderDeliveryTracking::where('order_id', $id)->first())){
-            $deliveryTrackings = OrderDeliveryTracking::where('order_id', $id)->get();
+            $deliveryTrackings = OrderDeliveryTracking::where('order_id', $id)->orderBy('created_at')->get();
             foreach($deliveryTrackings as $key => $deliveryTracking){
                 $deliveryTrackings[$key]['data_json'] = json_decode($deliveryTracking->data_json);
             }
@@ -211,6 +211,7 @@ class OrderController extends Controller
         if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
+        //dd($data['deliveryTrackings']);
         return view("{$this->module}::detail", $data);
     }
 
