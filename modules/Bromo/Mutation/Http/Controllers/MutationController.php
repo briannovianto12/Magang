@@ -43,9 +43,12 @@ class MutationController extends Controller
                 return $data->full_name;
             })
             ->editColumn('mutation', function ($data) {
-                
-                return number_format($data->mutation, 0, 0, '.');
+                return '<div style="text-align:right">'.number_format($data->mutation, 0, 0, '.').'</div>';
             })
+            ->editColumn('created_at', function ($data) {
+                return date("Y-m-d H:i:s", strtotime($data->created_at));
+            })
+            ->rawColumns(['mutation'])
             ->make(true);
         }
         return view('mutation::index');
