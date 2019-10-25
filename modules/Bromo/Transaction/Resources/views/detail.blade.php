@@ -275,7 +275,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Total Gross Cost') }}</span>
                                                 @if($shipingCostDetails['shipping_discount'] != 0)
@@ -285,14 +285,20 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Platform Discount') }}</span>
+                                                <span>IDR {{ number_format($data['shipping_service_snapshot']['shipper']['platform_discount']) ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('Cost After Discount') }}</span>
                                                 <span>IDR {{ number_format(($shipingCostDetails['shipping_gross_amount']) - ($shipingCostDetails['shipping_discount'])) ?? '-' }}</span>
                                             </div>
                                         </div>
                                         @isset($shippingInsuranceRate)
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <div class="m-widget28__tab-item">
                                                     <span>{{ __('Shipping Insurance') }}</span>
                                                     <span>IDR {{ number_format($shippingInsuranceRate) ?? '0' }}</span>
