@@ -321,12 +321,14 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Platform Discount') }}</span>
-                                            <span>IDR {{ number_format($data->payment_details['platform_discount']) ?? 0 }}</span>
+                                    @isset($data->payment_details['platform_discount'])
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('Platform Discount') }}</span>
+                                                <span>IDR {{ number_format($data->payment_details['platform_discount']) ?? 0 }}</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endisset
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Shipping Cost') }}</span>
