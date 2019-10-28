@@ -287,7 +287,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Platform Discount') }}</span>
+                                                <span>{{ __('Shipping Discount') }}</span>
                                                 <span>IDR {{ number_format($data['shipping_service_snapshot']['shipper']['platform_discount']) ?? 0 }}</span>
                                             </div>
                                         </div>
@@ -321,13 +321,19 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Platform Discount') }}</span>
+                                            <span>IDR {{ number_format($data->payment_details['platform_discount']) ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Shipping Cost') }}</span>
                                             <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Grand Total') }}</span>
                                             <h3 class="h4">IDR {{ number_format($data->payment_amount ?? 0) }}</h4>
