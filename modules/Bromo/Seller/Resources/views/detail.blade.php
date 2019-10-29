@@ -128,6 +128,7 @@
                                     <span>{{ __('Created At') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
                                 </div>
+                                @can('store_modify')
                                 <div id="approval" class="m-widget28__tab-item">
                                     @if(in_array($data->status, [
                                         \Bromo\Seller\Models\ShopStatus::REG_SUBMITTED,
@@ -145,6 +146,7 @@
                                         </button>
                                     @endif
                                 </div>
+                                @endcan
                             </div>
                         </div>
                         @isset($data->business)
