@@ -12,6 +12,8 @@ use Kreait\Firebase\Exception\Messaging\InvalidArgument;
 use Kreait\Firebase\Exception\Messaging\NotFound;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\AndroidConfig;
 use Nbs\BaseResource\Exceptions\FirebaseKeyNotFoundException;
 
 class FirebaseService
@@ -164,4 +166,39 @@ class FirebaseService
         }
     }
 
+    /**
+     *
+     * Send Fcm by Topic
+     *
+     * @param $topic
+     * @param $data
+     */
+    public function sendToTopic(string $topic, array $data)
+    {
+        $data['sound'] = 'default';
+        $message = CloudMessage::fromArray([
+            'topic' => $topic,
+            'notification' =>  $data
+        ]);
+
+        $config = AndroidConfig::fromArray([
+            'ttl' => '3600s',
+            'priority' => 'normal'
+        ]);
+
+        try {
+            $this->firebase->getMessaging()->send($message->withAndroidConfig($config));
+            Log::info('Send notification', [$message]);
+        } catch (IssuedInTheFuture $e) {
+            Log::error('FCM : ', [$e->getToken()]);
+        } catch (InvalidToken $e) {
+            Log::error('FCM: Invalid Token : ', [$e->getToken()]);
+        } catch (NotFound $e) {
+            Log::error('FCM: Token not found');
+        } catch (InvalidArgument $e) {
+            Log::error('FCM: Firebase Invalid Argument');
+        } catch (AuthenticationError $e) {
+            Log::error('FCM: Firebase Auth Error');
+        }
+    }
 }
