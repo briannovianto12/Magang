@@ -18,6 +18,7 @@
           'portlet_head' => true,
           'portlet_title' => "News Notification"])
         @slot('body')
+            @can('view_news_notification')
             <div class="row">
                 <div class="col-3">
                 </div>
@@ -62,6 +63,7 @@
                     </div>
                 </div>
             </div>
+            @endcan
         @endslot
 
         @slot('postfix')
