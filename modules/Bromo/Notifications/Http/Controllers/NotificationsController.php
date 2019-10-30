@@ -44,9 +44,14 @@ class NotificationsController extends Controller
             'body' => $request->body,
         ];
         
-        event(new NewsNotificationByTopic($data));
+        try{
+            event(new NewsNotificationByTopic($data));
+            return back()->with('successMsg', 'Success!');
+        }catch (Exception $exception){
+            return back()->with('warningMsg', 'Message has been requested, it will reached the recipient soon!');
+        }
 
-        return back()->with('successMsg', 'Success!');;
+        // return back()->with('successMsg', 'Success!');
     }
 
 }

@@ -29,6 +29,11 @@
                                 {{ session()->get('successMsg') }}
                             </div>
                             <br>
+                        @elseif(session()->has('warningMsg'))
+                            <div class="alert alert-warning">
+                                {{ session()->get('warningMsg') }}
+                            </div>
+                            <br>
                         @endif
                         <form method="post" action="{{ route('news.send') }}">
                             {{ csrf_field() }}
