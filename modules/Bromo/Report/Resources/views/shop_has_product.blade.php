@@ -4,7 +4,7 @@
 
     @component('components._portlet',[
           'portlet_head' => true,
-          'portlet_title' => "Shop has Product"])
+          'portlet_title' => "Shop with Product"])
         @slot('body')
             @can('view_shop_with_product')
                 <a href="{{ route('report.shop_has_product.export') }}" class="btn btn-success">Export to .xlsx</a>

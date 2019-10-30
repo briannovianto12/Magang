@@ -115,7 +115,62 @@ class ReportController extends Controller
         ['path' => $request->url(), 'query' => $request->query()]);
     }
 
-    public function export(){
+    public function export(Request $request){
+        
+        if($request->is('report/few-product/*')){
+            $writer = $this->exportFewProduct();
+            $fileName = "shopWithFewProduct";
+        }
+        else if($request->is('report/total-buy-count/*')){
+            $writer = $this->exportTotalBuyCount();
+            $fileName = "totalBuyCount";
+        }
+        else if($request->is('report/has_product/*')){
+            $writer = $this->exportHasProduct();
+            $fileName = "shopWithProduct";
+        }
+        else if($request->is('report/product-over-half-kilo/*')){
+            $writer = $this->exportOverHalfKilo();
+            $fileName = "productOverHalfKilo";
+        }
+
+        $response =  new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            }
+        );
+        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+        $response->headers->set('Content-Disposition', 'attachment;filename='.$fileName.'.xls');
+        $response->headers->set('Cache-Control','max-age=0');
+
+        return $response;
+    }
+
+    private function exportTotalBuyCount(){
+        $data = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
+        $spreadsheet = new Spreadsheet();
+        $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Shop Name');
+        $sheet->setCellValue('B1', 'Total Bought Product');
+        $sheet->setCellValue('C1', 'Full Name');
+        $sheet->setCellValue('D1', 'Province');
+        $sheet->setCellValue('E1', 'City');
+        $rows = 2;
+        
+        foreach($data as $data){
+            $sheet->setCellValue('A' . $rows, $data->name);
+            $sheet->setCellValue('B' . $rows, $data->count);
+            $sheet->setCellValue('C' . $rows, $data->full_name);
+            $sheet->setCellValue('D' . $rows, $data->province);
+            $sheet->setCellValue('E' . $rows, $data->city);
+            $rows++;
+        }
+
+        return new Writer\Xlsx($spreadsheet);
+    }
+
+    private function exportFewProduct(){
         $data = \DB::select("SELECT * FROM vw_store_with_published_product_less_than_ten");
         $spreadsheet = new Spreadsheet();
         $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
@@ -136,55 +191,61 @@ class ReportController extends Controller
             $rows++;
         }
 
-        $writer = new Writer\Xlsx($spreadsheet);
-
-        $response =  new StreamedResponse(
-            function () use ($writer) {
-                $writer->save('php://output');
-            }
-        );
-        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $response->headers->set('Content-Disposition', 'attachment;filename="shopwithfewproduct.xls"');
-        $response->headers->set('Cache-Control','max-age=0');
-
-        return $response;
+        return new Writer\Xlsx($spreadsheet);
     }
 
-    public function exportTotalBuyCount(){
-        $data = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
+    private function exportOverHalfKilo(){
+        $data = \DB::select("SELECT * FROM vw_product_w_with_more_than_half_a_kilo");
         $spreadsheet = new Spreadsheet();
         $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
         $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Shop Name');
-        $sheet->setCellValue('B1', 'Total Bought Product');
-        $sheet->setCellValue('C1', 'Full Name');
-        $sheet->setCellValue('D1', 'Province');
-        $sheet->setCellValue('E1', 'City');
+        $sheet->setCellValue('A1', 'Product ID');
+        $sheet->setCellValue('B1', 'Product Name');
+        $sheet->setCellValue('C1', 'Weight');
+        $sheet->setCellValue('D1', 'Shop ID');
+        $sheet->setCellValue('E1', 'Shop Name');
+        $sheet->setCellValue('F1', 'Address');
+        $sheet->setCellValue('G1', 'Owner Name');
+        $sheet->setCellValue('H1', 'Owner Phone Number');
         $rows = 2;
         
         foreach($data as $data){
-            $sheet->setCellValue('A' . $rows, $data->name);
-            $sheet->setCellValue('B' . $rows, $data->count);
-            $sheet->setCellValue('C' . $rows, $data->full_name);
-            $sheet->setCellValue('D' . $rows, $data->province);
-            $sheet->setCellValue('E' . $rows, $data->city);
+            $sheet->setCellValue('A' . $rows, $data->product_id);
+            $sheet->setCellValue('B' . $rows, $data->product_name);
+            $sheet->setCellValue('C' . $rows, $data->weight);
+            $sheet->setCellValue('D' . $rows, $data->shop_id);
+            $sheet->setCellValue('E' . $rows, $data->shop_name);
+            $sheet->setCellValue('F' . $rows, $data->address);
+            $sheet->setCellValue('G' . $rows, $data->owner_name);
+            $sheet->setCellValue('H' . $rows, $data->owner_phone_number);
             $rows++;
         }
 
-        $writer = new Writer\Xlsx($spreadsheet);
+        return new Writer\Xlsx($spreadsheet);
+    }
 
-        $response =  new StreamedResponse(
-            function () use ($writer) {
-                $writer->save('php://output');
-            }
-        );
-        $response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $response->headers->set('Content-Disposition', 'attachment;filename="totalbuycount.xls"');
-        $response->headers->set('Cache-Control','max-age=0');
+    private function exportHasProduct(){
+        $data = \DB::select("SELECT * FROM vw_store_with_published_product");
+        $spreadsheet = new Spreadsheet();
+        $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Shop Name');
+        $sheet->setCellValue('B1', 'Full Name');
+        $sheet->setCellValue('C1', 'Phone');
+        $sheet->setCellValue('D1', 'Address');
+        $sheet->setCellValue('E1', 'Total Published Product');
+        $rows = 2;
+        
+        foreach($data as $data){
+            $sheet->setCellValue('A' . $rows, $data->shop_name);
+            $sheet->setCellValue('B' . $rows, $data->full_name);
+            $sheet->setCellValue('C' . $rows, $data->msisdn);
+            $sheet->setCellValue('D' . $rows, $data->address_line);
+            $sheet->setCellValue('E' . $rows, $data->count);
+            $rows++;
+        }
 
-        return $response;
+        return new Writer\Xlsx($spreadsheet);
     }
 
 }
