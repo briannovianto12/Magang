@@ -7,7 +7,7 @@
           'portlet_title' => "Product Weighing more than Half Kilo"])
         @slot('body')
             @can('view_product_over_half_kilo')
-                <!-- <a href="{{ route('report.shop-with-few-product.export') }}" class="btn btn-success">Export to .xlsx</a> -->
+                <a href="{{ route('report.product-over-half-kilo.export') }}" class="btn btn-success">Export to .xlsx</a>
                 </div>
                 <div class="container-fluid">
                     <div class="row">
