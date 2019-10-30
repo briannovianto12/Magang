@@ -65,7 +65,8 @@
             "Bromo\\Unverified\\": "modules/Bromo/Unverified/",
             "Bromo\\Report\\": "modules/Bromo/Report/",
             "Bromo\\ContactCenter\\": "modules/Bromo/ContactCenter/",
-            "Bromo\\Mutation\\": "modules/Bromo/Mutation/"
+            "Bromo\\Mutation\\": "modules/Bromo/Mutation/",
+            "Bromo\\Notifications\\": "modules/Bromo/Notifications/"
 
         },
         "classmap": [
