@@ -15,12 +15,15 @@ abstract class OrderDatatable extends DataTable
             ->editColumn('payment_amount_formatted', function ($data) {
                 return '<div style="text-align:right">'.number_format($data->payment_amount, 0, 0, '.').'</div>';
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted'])
             ->editColumn('created_at', function ($data) {
                 return $data->created_at_formatted;
             })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
+            })
+            ->editColumn('payment_details_formatted', function ($data) {
+                $gross = (int)$data->payment_details['total_gross'];
+                return '<div style="text-align:right">'. number_format($gross, 0, 0, '.') .'</div>';
             })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
@@ -43,6 +46,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted'])
             ->make(true);
     }
 
@@ -74,7 +78,7 @@ abstract class OrderDatatable extends DataTable
             'payment_amount',
             'buyer_snapshot',
             'shop_snapshot',
-            'payment_snapshot',
+            'payment_details',
             'notes',
             'created_at',
             'updated_at'

@@ -70,7 +70,8 @@
                                     <th>Order No.</th>
                                     <th>Buyer</th>
                                     <th>Seller</th>
-                                    <th>Amount</th>
+                                    <th>Payment Amount</th>
+                                    <th>Total Gross</th>
                                     <th>Notes</th>
                                     <th>Status</th>
                                     <th>Created At</th>
@@ -104,7 +105,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -125,7 +127,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -146,7 +149,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -167,7 +171,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -188,7 +193,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
@@ -209,7 +215,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Reject Notes</th>
                                 <th>Status</th>
@@ -231,7 +238,8 @@
                                 <th>Order No.</th>
                                 <th>Buyer</th>
                                 <th>Seller</th>
-                                <th>Amount</th>
+                                <th>Payment Amount</th>
+                                <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
                                 <th>Created At</th>
