@@ -38,3 +38,24 @@
         </div>
     </div>
 </script>
+
+<script id="editStatus" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order ID: {{ data.id }}</h4>
+            </div>
+            <form id="form-edit-product">
+                <div class="form-group">
+                    <label>
+                        Current Weight:
+                    </label>
+                    <input id="changeNotes" class="form-control" type="text" placeholder="Notes">
+                    <br/>
+                   <button data-product-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnEditStatus">Edit Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
