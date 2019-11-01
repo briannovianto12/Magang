@@ -63,7 +63,7 @@
                                         </div>
                                     </div>
                                     
-                                    {{-- @can('change_order_to_delivered') --}}
+                                    @can('change_order_to_delivered')
                                     @if($data->status == 8)
                                     <div class ="col-6">
                                         <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
@@ -71,7 +71,7 @@
                                         </button>
                                     </div>
                                     @endif
-                                    {{-- @endcan --}}
+                                    @endcan
                                    
                                 </div>
                                 <div class="m-widget28__tab-item">
