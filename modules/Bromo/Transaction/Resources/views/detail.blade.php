@@ -62,18 +62,17 @@
                                             @endif
                                         </div>
                                     </div>
-                                    {{--
+                                    
+                                    {{-- @can('change_order_to_delivered') --}}
                                     @if($data->status == 8)
                                     <div class ="col-6">
-                                        <form action="{{ url('/order/'.$data->id) ?? '#' }}" method="POST">
-                                            {{csrf_field()}}
-                                            <button class="btn btn-success">
-                                                Delivered
-                                            </button>
-                                        </form>
+                                        <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
+                                            Change Status to "Delivered"
+                                        </button>
                                     </div>
                                     @endif
-                                    --}}
+                                    {{-- @endcan --}}
+                                   
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Ordered Date') }}</span>

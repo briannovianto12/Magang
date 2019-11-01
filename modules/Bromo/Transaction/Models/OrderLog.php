@@ -12,8 +12,7 @@ class OrderLog extends Model
 {
     use FormatDates,
         SnowFlakeTrait,
-        TimezoneAccessor,
-        VersionModelTrait;
+        TimezoneAccessor;
 
     const CREATED_AT = null;
 
@@ -40,14 +39,14 @@ class OrderLog extends Model
      *
      * @var string
      */
-    protected $table = 'order_log';
+    protected $table = 'order_trx_log';
 
     /**
      * The storage format of the model's date columns.
      *
      * @var string
      */
-    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
 
     /**
      * The attributes that are mass assignable.

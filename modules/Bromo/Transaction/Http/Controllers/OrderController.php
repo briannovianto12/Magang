@@ -2,6 +2,7 @@
 
 namespace Bromo\Transaction\Http\Controllers;
 
+use Bromo\Auth\Models\Admin;
 use Bromo\Transaction\DataTables\AcceptedOrderDataTable;
 use Bromo\Transaction\DataTables\CancelOrderDataTable;
 use Bromo\Transaction\DataTables\DeliveredOrderDataTable;
@@ -14,6 +15,7 @@ use Bromo\Transaction\DataTables\RejectedOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
 use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderDeliveryTracking;
+use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -215,11 +217,27 @@ class OrderController extends Controller
         return view("{$this->module}::detail", $data);
     }
 
-    public function changeStatusToDelivered($id){
+    public function changeStatusToDelivered(Request $request, $id){
+
         $order = Order::findOrFail($id);
         DB::select("SELECT public.fs_change_order_to_delivered('$order->order_no')");
 
-        return back();
+        $notes = "Order has been delivered";
+        if(!empty($request->input('notes'))){
+            $notes = $request->input('notes');
+        }
+
+        $log = OrderLog::select()
+                        ->orderBy('updated_at', 'desc')
+                        ->first();
+        $log->modified_by = auth()->user()->id;
+        $log->modifier_role = auth()->user()->role_id;
+        $log->notes = $notes;
+        $log->save();
+
+        return response()->json([
+            "status" => "Success",
+        ]);
     }
 
     public function getShippingManifestInfo($order_id){
@@ -257,6 +275,15 @@ class OrderController extends Controller
 
         return response()->json([
             "status" => "Success",
+        ]);
+    }
+
+    public function getOrderInfo($order_id)
+    {
+        $order = Order::find($order_id);
+
+        return response()->json([
+            "data" => $order
         ]);
     }
 
