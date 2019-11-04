@@ -44,12 +44,12 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order ID: {{ data.id }}</h4>
+                <h4>Order No. {{ data.order_no }}</h4>
             </div>
             <form id="form-edit-product">
                 <div class="form-group">
                     <label>
-                        Current Weight:
+                        Notes:
                     </label>
                     <input id="changeNotes" class="form-control" type="text" placeholder="Notes">
                     <br/>
