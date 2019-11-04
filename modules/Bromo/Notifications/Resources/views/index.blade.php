@@ -49,7 +49,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="message-title">Title</label>
-                                <input type="text" class="form-control" id="message-title" name="title" placeholder="Enter Message Title">
+                                <input type="text" class="form-control" id="message-title" name="title" placeholder="Enter Message Title" maxlength="40">
+                                <span id="title-chars">40</span> characters remaining
                             </div>
                             <div class="form-group">
                                 <label for="message-body">Body</label>

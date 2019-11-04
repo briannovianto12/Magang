@@ -28,7 +28,7 @@ class NotificationsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'topic' => 'required',
-            'title' => 'required',
+            'title' => 'required|max:40',
             'body' => 'required',
         ]);
 
