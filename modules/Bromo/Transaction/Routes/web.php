@@ -27,3 +27,5 @@ Route::name('order.change-status')->get('/order/change-status/{id}/', 'OrderCont
 Route::name('order.getInfo')->get('/shipping-manifest-info/{order_id}', 'OrderController@getShippingManifestInfo');
 Route::name('order.edit')->put('/order/update/{id}', 'OrderController@updateShippingManifest');
 Route::name('order.getOrderInfo')->get('/order-info/{order_id}', 'OrderController@getOrderInfo');
+Route::name('order.getOrderInternalNotes')->get('/internal-notes/{order_id}', 'OrderController@getOrderInternalNotes');
+Route::name('order.addOrderInternalNotes')->post('/internal-notes/{order_id}', 'OrderController@addNewInternalNotes');

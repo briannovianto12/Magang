@@ -6,6 +6,9 @@
 
 @section('scripts')
     @include("{$module}::js")
+    @include('transaction::js-template')
+    <script src="{{ nbs_asset('js/order.js') }}"></script>
+    <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -66,7 +69,6 @@
                                 style="width: 100%">
                                 <thead>
                                 <tr>
-
                                     <th>Order No.</th>
                                     <th>Buyer</th>
                                     <th>Seller</th>
@@ -76,6 +78,7 @@
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -111,6 +114,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -133,6 +137,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -155,6 +160,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -177,6 +183,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -199,6 +206,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -222,6 +230,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -244,6 +253,7 @@
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
