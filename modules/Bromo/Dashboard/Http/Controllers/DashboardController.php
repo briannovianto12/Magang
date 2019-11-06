@@ -33,6 +33,9 @@ class DashboardController extends Controller
         ];
         $data['summary'] = $this->getSummary();
         $data['order_statistics'] = $this->getOrderStatistics();
+        $data['order_statistics_total'] = $this->getOrderStatisticsTotal();
+        // dd($data['order_statistics_total']);
+
         $user = auth()->user();
         
         if($user->role_id == -1){
@@ -84,6 +87,11 @@ class DashboardController extends Controller
 
     private function getOrderStatistics(){
         $data = \DB::select("SELECT * FROM vw_order_statistics");
+        return $data;
+    }
+
+    private function getOrderStatisticsTotal(){
+        $data = \DB::select("SELECT * FROM vw_order_statistics_total");
         return $data;
     }
 }

@@ -222,6 +222,16 @@
                     </table>
                 </div>
             </div>
+
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                <div class="col-md-12">
+                    <br/>
+                    <h5>Total With Order Status Accepted, Payment OK, Shipped, Delivered, Success: </h5>
+                    <p>Total Last Month: {{ $order_statistics_total[0]->count_last_month }}</p>
+                    <p>Total This Month: {{ $order_statistics_total[0]->this_month }}</p>
+                    <p>Total Last Seven Days: {{ $order_statistics_total[0]->last_seven_days }}</p>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
