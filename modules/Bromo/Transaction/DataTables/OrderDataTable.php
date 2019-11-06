@@ -34,6 +34,12 @@ abstract class OrderDatatable extends DataTable
             ->addColumn('status_name', function ($data) {
                 return $data->orderStatus->name ?? '';
             })
+            ->addColumn('action', function ($data) {
+                $action = [
+                    'internal_notes' => $data->id
+                ];
+                return view('theme::layouts.includes.actions', $action);
+            })
             ->filterColumn('order_no', function($query, $keyword) {
                 $sql = "CONCAT(order_trx.order_no)  like ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
@@ -46,7 +52,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted'])
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action'])
             ->make(true);
     }
 
@@ -81,7 +87,7 @@ abstract class OrderDatatable extends DataTable
             'payment_details',
             'notes',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
     }
 }

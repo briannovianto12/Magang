@@ -15,6 +15,7 @@ use Bromo\Transaction\DataTables\RejectedOrderDataTable;
 use Bromo\Transaction\DataTables\SuccessOrderDataTable;
 use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderDeliveryTracking;
+use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
 use Illuminate\Contracts\View\Factory;
@@ -24,6 +25,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use DB;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -284,6 +286,30 @@ class OrderController extends Controller
 
         return response()->json([
             "data" => $order
+        ]);
+    }
+
+    public function getOrderInternalNotes($order_id)
+    {
+        $internal_notes = OrderInternalNotes::where('order_id', $order_id)->orderBy('created_at')->get();
+
+        return response()->json([
+            "data" => $internal_notes,
+            "order_id" => $order_id
+        ]);
+    }
+
+    public function addNewInternalNotes(Request $request, $order_id)
+    {
+        $new_internal_notes = new OrderInternalNotes;
+        $new_internal_notes->order_id = $order_id;
+        $new_internal_notes->internal_notes = $request->input('notes');
+        $new_internal_notes->inputted_by = auth()->user()->id;
+        $new_internal_notes->inputter_role = auth()->user()->role_id;
+        $new_internal_notes->save();
+
+        return response()->json([
+            "status" => "Success",
         ]);
     }
 

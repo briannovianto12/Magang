@@ -11,6 +11,7 @@
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
         {'data': 'updated_at', 'name': 'updated_at'},
+        {'data': 'action', 'name': 'action'},
     ];
 
     var rejectedOrderColumns = [
@@ -24,6 +25,7 @@
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
         {'data': 'updated_at', 'name': 'updated_at'},
+        {'data': 'action', 'name': 'action'},
     ];
 
     let orderColumnsForUpdated = [

@@ -59,3 +59,35 @@
         </div>
     </div>
 </script>
+
+<script id="internalNotes" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order ID: {{ order_id }}</h4>
+            </div>
+            <br/>
+            <div>
+                <label>
+                    Internal Notes:
+                </label>
+                {{#data}}
+                    <input class="form-control" type="text" placeholder="{{internal_notes}}" readonly>
+                    <br/>
+                {{/data}}
+            </div>
+            <br/>
+            <form id="form-internal-notes">
+                <div class="form-group" method="POST">
+                    <label>
+                        Add Notes:
+                    </label>
+                    <input id="newInternalNotes" class="form-control" type="text" placeholder="Notes">
+                    <br/>
+                   <button data-order-id="{{ order_id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnAddInternalNotes">Add Notes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

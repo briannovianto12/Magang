@@ -32,4 +32,7 @@
     @isset($edit_weight)
         <a href="#" onclick="_editWeight('{{$edit_weight}}' )" title="Edit">{{ $weight }}</a>
     @endisset
+    @isset($internal_notes)
+        <a href="#" onclick="_internalNotes('{{$internal_notes}}' )" title="Internal Notes">Internal Notes</a>
+    @endisset
 </div>
