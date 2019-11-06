@@ -58,6 +58,12 @@
                             <td>List of total buy count.</td>
                         </tr>
                     {{-- @endcan --}}
+                    {{-- @can('view_shop_with_active_status') --}}
+                        <tr>
+                            <td><a href="{{ route('report.shop_with_active_status') }}">Shop With Active Status</a></td>
+                            <td>List of shop with active status.</td>
+                        </tr>
+                    {{-- @endcan --}}
                 </tbody>
             </table>
         </div>

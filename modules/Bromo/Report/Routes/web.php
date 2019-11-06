@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::name('total_buy_count')->get('/total-buy-count', 'ReportController@getTotalBuyCount');
         Route::get('/total-buy-count/export/xlsx', 'ReportController@export')->name('total-buy-count.export');
+
+        Route::name('shop_with_active_status')->get('/active-status', 'ReportController@getStoreWithActiveStatus');
+        Route::get('/active-status/export/xlsx', 'ReportController@export')->name('shop-with-active-status.export');
     });
     
 });

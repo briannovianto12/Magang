@@ -107,6 +107,14 @@ class ReportController extends Controller
         
     }
 
+    public function getStoreWithActiveStatus(Request $request)
+    {        
+        $data['table'] = \DB::select("SELECT * FROM vw_store_with_active_status");
+        $data['table'] = $this->arrayPaginator($data['table'], $request);
+        return view('report::shop_with_active_status', $data);
+        
+    }
+
     public function arrayPaginator($array, $request){
         $page = Input::get('page', 1);
         $perPage = 25;
@@ -133,6 +141,10 @@ class ReportController extends Controller
             $writer = $this->exportOverHalfKilo();
             $fileName = "productOverHalfKilo";
         }
+        else if($request->is('report/active-status/*')){
+            $writer = $this->exportActiveStatus();
+            $fileName = "shopWithActiveStatus";
+        }
 
         $response =  new StreamedResponse(
             function () use ($writer) {
@@ -140,7 +152,7 @@ class ReportController extends Controller
             }
         );
         $response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $response->headers->set('Content-Disposition', 'attachment;filename='.$fileName.'.xls');
+        $response->headers->set('Content-Disposition', 'attachment;filename='.$fileName.'.xlsx');
         $response->headers->set('Cache-Control','max-age=0');
 
         return $response;
@@ -248,4 +260,29 @@ class ReportController extends Controller
         return new Writer\Xlsx($spreadsheet);
     }
 
+    private function exportActiveStatus(){
+        $data = \DB::select("SELECT * FROM vw_store_with_active_status");
+        $spreadsheet = new Spreadsheet();
+        $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Shop Name');
+        $sheet->setCellValue('B1', 'Full Name');
+        $sheet->setCellValue('C1', 'Phone');
+        $sheet->setCellValue('D1', 'Address');
+        $sheet->setCellValue('E1', 'Province');
+        $sheet->setCellValue('F1', 'City');
+        $rows = 2;
+        
+        foreach($data as $data){
+            $sheet->setCellValue('A' . $rows, $data->shop_name);
+            $sheet->setCellValue('B' . $rows, $data->full_name);
+            $sheet->setCellValue('C' . $rows, $data->msisdn);
+            $sheet->setCellValue('D' . $rows, $data->address_line);
+            $sheet->setCellValue('E' . $rows, $data->province);
+            $sheet->setCellValue('F' . $rows, $data->city);
+            $rows++;
+        }
+
+        return new Writer\Xlsx($spreadsheet);
+    }
 }
