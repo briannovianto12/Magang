@@ -207,15 +207,28 @@
                                         <td style="text-align: left">Canceled</td>
                                     @elseif($order_statistic->status == 31)
                                         <td style="text-align: left">Rejected</td>
+                                    @elseif($order_statistic->status == 99)
+                                        <td style="text-align: left"><b>Accepted + Payment OK +<br/> 
+                                          Shipped + Delivered + Success</b></td>
                                     @else
                                         <td style="text-align: left">{{ $order_statistic->status ?? '-' }}</td>
                                     @endif
+                                    @if($order_statistic->status == 99)
+                                    <td><b>{{ $order_statistic->count_last_month }}</b></td>
+                                    <td><b>IDR {{ number_format($order_statistic->amount_last_month, 0, 0, '.') }}</b></td>
+                                    <td><b>{{ $order_statistic->this_month }}</b></td>
+                                    <td><b>IDR {{ number_format($order_statistic->amount_this_month, 0, 0, '.') }}</b></td>
+                                    <td><b>{{ $order_statistic->last_seven_days }}</b></td>
+                                    <td><b>IDR {{ number_format($order_statistic->amount_last_seven_days, 0, 0, '.') }}</b></td>
+                                    @else
                                     <td>{{ $order_statistic->count_last_month }}</td>
                                     <td>IDR {{ number_format($order_statistic->amount_last_month, 0, 0, '.') }}</td>
                                     <td>{{ $order_statistic->this_month }}</td>
                                     <td>IDR {{ number_format($order_statistic->amount_this_month, 0, 0, '.') }}</td>
                                     <td>{{ $order_statistic->last_seven_days }}</td>
                                     <td>IDR {{ number_format($order_statistic->amount_last_seven_days, 0, 0, '.') }}</td>
+                                    @endif
+                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -223,15 +236,6 @@
                 </div>
             </div>
 
-            <div class="row m-row--no-padding m-row--col-separator-xl">
-                <div class="col-md-12">
-                    <br/>
-                    <h5>Total With Order Status Accepted, Payment OK, Shipped, Delivered, Success: </h5>
-                    <p>Total Last Month: {{ $order_statistics_total[0]->count_last_month }}</p>
-                    <p>Total This Month: {{ $order_statistics_total[0]->this_month }}</p>
-                    <p>Total Last Seven Days: {{ $order_statistics_total[0]->last_seven_days }}</p>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

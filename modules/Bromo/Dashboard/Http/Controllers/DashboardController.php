@@ -33,8 +33,19 @@ class DashboardController extends Controller
         ];
         $data['summary'] = $this->getSummary();
         $data['order_statistics'] = $this->getOrderStatistics();
-        $data['order_statistics_total'] = $this->getOrderStatisticsTotal();
-        // dd($data['order_statistics_total']);
+        
+        $totals = $this->getOrderStatisticsTotal();
+        if(isset($totals) && count($totals) > 0) {
+            $data['order_statistics'][] = (object)[
+                "status" => $totals[0]->status,
+                "count_last_month" => $totals[0]->count_last_month,
+                "this_month" => $totals[0]->this_month,
+                "last_seven_days" => $totals[0]->last_seven_days,
+                "amount_last_month" => $totals[0]->amount_last_month,
+                "amount_this_month" => $totals[0]->amount_this_month,
+                "amount_last_seven_days" => $totals[0]->amount_last_seven_days,
+            ];
+        }
 
         $user = auth()->user();
         
@@ -86,12 +97,12 @@ class DashboardController extends Controller
     }
 
     private function getOrderStatistics(){
-        $data = \DB::select("SELECT * FROM vw_order_statistics");
+        $data = \DB::select("SELECT status,count_last_month,this_month,last_seven_days,amount_last_month,amount_this_month,amount_last_seven_days FROM vw_order_statistics");
         return $data;
     }
 
     private function getOrderStatisticsTotal(){
-        $data = \DB::select("SELECT * FROM vw_order_statistics_total");
+        $data = \DB::select("SELECT 99 as status, count_last_month,amount_last_month,this_month,amount_this_month,last_seven_days,amount_last_seven_days FROM vw_order_statistics_total");
         return $data;
     }
 }
