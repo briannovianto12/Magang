@@ -38,8 +38,8 @@ class OrderDatatable extends DataTable
                 'order_trx.updated_at, '.
                 'f_get_order_description(order_trx.id) as item_desc, ' . 
                 'shop.name as shop_name, '.
-                'user_profile.full_name as seller_full_name_name, '.
-                'user_profile.msisdn as seller_phone, ' .
+                'vw_business_contact_person.pickup_person_name as seller_full_name_name, '.
+                'vw_business_contact_person.pickup_person_phone as seller_phone, ' .
 
                 // 'order_status.name as status, ' . 
 
@@ -81,15 +81,15 @@ class OrderDatatable extends DataTable
             ->join('order_status', 'order_status.id', '=', 'order_trx.status')
             ->join('shop', 'shop.id', '=', 'order_trx.shop_id')
             ->join('business', 'business.id', '=', 'shop.business_id')
-            ->join('business_member', 'business_member.business_id', '=', 'shop.business_id')
-            ->join('user_profile', 'user_profile.id', '=', 'business_member.user_id')
-            ->leftjoin('shipping_courier', 'shipping_courier.id', '=', 'order_trx.shipping_courier_id')
-            ->leftJoin('order_shipping_manifest','order_trx.id','=','order_shipping_manifest.order_id')
-            ->join('admin','admin.id','=','order_shipping_manifest.user_admin_id')
+            ->join('vw_business_contact_person', 'business.id', '=', 'vw_business_contact_person.business_id')
+            // ->join('business_member', 'business_member.business_id', '=', 'shop.business_id')
+            // ->join('user_profile', 'user_profile.id', '=', 'business_member.user_id')
+            ->join('shipping_courier', 'shipping_courier.id', '=', 'order_trx.shipping_courier_id')
+            ->Join('order_shipping_manifest','order_trx.id','=','order_shipping_manifest.order_id')
             ->join('logistic_organizer_status', 'logistic_organizer_status.id', 'order_shipping_manifest.logistic_organizer_status' )
-            ->where('order_trx.payment_status', PaymentStatus::PAYMENT_SUCCESS)
+            ->leftjoin('admin','admin.id','=','order_shipping_manifest.user_admin_id')
             ->where('shipping_courier.provider_id', 3)
-            ->whereIn('order_shipping_manifest.logistic_organizer_status', $this->status)
+            ->where('order_shipping_manifest.logistic_organizer_status', $this->status)
             ->orderBy('order_trx.created_at', 'desc');
 
             // id, order no, buyer name, shop name, payment method, status, updated at
