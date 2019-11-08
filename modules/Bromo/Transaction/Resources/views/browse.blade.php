@@ -123,6 +123,18 @@
 
                     <!--begin:: Delivery Order Page-->
                     <div class="tab-pane" id="delivery_order" role="tabpanel">
+                        <div class="btn-group">
+                            <strong class="mt-2 mr-2">
+                                Pick-Up Status:
+                            </strong>
+                            <div>
+                                <select id="deliveryo-table-status" class="custom-select custom-select-sm form-control form-control-sm">
+                                    <option value="All" selected="true">All</option>
+                                    <option value="true">Picked Up</option>
+                                    <option value="false">Not Picked Up</option>
+                                </select> 
+                            </div>
+                        </div>
                         <table id="table_delivery_order"
                             class="table table-striped table-bordered table-hover display"
                             style="width: 100%">
@@ -135,6 +147,7 @@
                                 <th>Total Gross</th>
                                 <th>Notes</th>
                                 <th>Status</th>
+                                <th>Picked Up</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th>Action</th>

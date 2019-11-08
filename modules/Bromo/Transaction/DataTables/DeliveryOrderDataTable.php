@@ -9,11 +9,19 @@ class DeliveryOrderDataTable extends OrderDatatable
 
     public function query()
     {
-        $query = $this->model
+        $defaultQuery = $this->model
             ->select($this->getColumns())
             ->where('status', OrderStatus::SHIPPED)
             ->with('orderStatus:id,name');
 
-        return $this->applyScopes($query);
+        $finalQuery = $defaultQuery;
+        if($this->is_shipped === true){
+            $finalQuery = $defaultQuery->where('is_picked_up', true);
+        }
+        else if($this->is_shipped === false){
+            $finalQuery = $defaultQuery->where('is_picked_up', false);
+        }
+
+        return $this->applyScopes($finalQuery);
     }
 }

@@ -28,6 +28,20 @@
         {'data': 'action', 'name': 'action'},
     ];
 
+    var deliveryOrderColumns = [
+        {'data': 'order_no', 'name': 'order_no', searchable:true},
+        {'data': 'buyer_name', 'name': 'buyer_name'},
+        {'data': 'seller_name', 'name': 'seller_name'},
+        {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
+        {'data': 'payment_details_formatted', 'name': 'payment_details'},
+        {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
+        {'data': 'status_name', 'name': 'status_name', searchable: false},
+        {'data': 'is_picked_up', 'name': 'status_name'},
+        {'data': 'created_at', 'name': 'created_at'},
+        {'data': 'updated_at', 'name': 'updated_at'},
+        {'data': 'action', 'name': 'action'},
+    ];
+
     let orderColumnsForUpdated = [
         [6, 'desc'],
         [7, 'desc']
@@ -49,7 +63,7 @@
             Order.loadDataTable('table_process_order', "{{ route("order.process-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadDeliveryOrder: function () {
-            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", initColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, orderColumnsForUpdated);
         },
         loadDeliveredOrder: function () {
             Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", initColumns, orderColumnsForUpdated);
@@ -142,6 +156,24 @@
                 $('#table_process_order').DataTable().destroy();
                 Order.loadDataTable('table_process_order', "{{ route("order.accepted-order") }}", initColumns, orderColumnsForUpdated);
                 $('#table_process_order').DataTable().draw();
+            }
+        });
+
+        document.getElementById("deliveryo-table-status").addEventListener('change', function(){
+            if(document.getElementById("deliveryo-table-status").value == "All"){
+                $('#table_delivery_order').DataTable().destroy();
+                Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                $('#table_delivery_order').DataTable().draw();
+            }
+            else if(document.getElementById("deliveryo-table-status").value == "true"){
+                $('#table_delivery_order').DataTable().destroy();
+                Order.loadDataTable('table_delivery_order', "{{ route("order.shipped-delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                $('#table_delivery_order').DataTable().draw();
+            }
+            else if(document.getElementById("deliveryo-table-status").value == "false"){
+                $('#table_delivery_order').DataTable().destroy();
+                Order.loadDataTable('table_delivery_order', "{{ route("order.not-shipped-delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                $('#table_delivery_order').DataTable().draw();
             }
         });
     });

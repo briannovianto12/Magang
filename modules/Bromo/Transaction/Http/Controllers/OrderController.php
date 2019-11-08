@@ -178,6 +178,24 @@ class OrderController extends Controller
         ])->ajax();
     }
 
+    public function shippedDeliveryOrder(DeliveryOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module,
+            'is_shipped' => true
+        ])->ajax();
+    }
+
+    public function notShippedDeliveryOrder(DeliveryOrderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module,
+            'is_shipped' => false
+        ])->ajax();
+    }
+
     /**
      * Get the detail of product.
      *
