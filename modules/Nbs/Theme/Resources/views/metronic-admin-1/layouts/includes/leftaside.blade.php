@@ -127,6 +127,14 @@
                 </a>
             </li>
             @endcan
+            @can('view_logistic_organizer')
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('logistic.mobile-index') }}" aria-haspopup="true">
+                <a href="{{ route('logistic.mobile-index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-newspaper-o"></i>
+                    <span class="m-menu__link-text">Logistic Organizer</span>
+                </a>
+            </li>
+            @endcan
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
