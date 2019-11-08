@@ -12,6 +12,7 @@
         "ext-pdo": "*",
         "fideloper/proxy": "^4.0",
         "hafael/laraflake": "^1.2",
+        "intervention/image": "^2.5",
         "jenssegers/date": "^3.4",
         "kreait/firebase-php": "^4.13",
         "laravel/framework": "5.8.*",
@@ -66,7 +67,8 @@
             "Bromo\\Report\\": "modules/Bromo/Report/",
             "Bromo\\ContactCenter\\": "modules/Bromo/ContactCenter/",
             "Bromo\\Mutation\\": "modules/Bromo/Mutation/",
-            "Bromo\\Notifications\\": "modules/Bromo/Notifications/"
+            "Bromo\\Notifications\\": "modules/Bromo/Notifications/",
+            "Bromo\\Logistic\\": "modules/Bromo/Logistic/"
 
         },
         "classmap": [

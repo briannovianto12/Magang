@@ -63,6 +63,10 @@ class DashboardController extends Controller
             $user->syncRoles('Support');
         }else if($user->role_id == 6){
             $user->syncRoles('ContactCenter');
+        }else if($user->role_id == 7){
+            $user->syncRoles('Test');
+        }else if($user->role_id == 8){
+            $user->syncRoles('LogisticOrganizer');
         }
         $data['user'] = $user;
         return view('dashboard::index', $data);

@@ -1,0 +1,14 @@
+{
+    "name": "Logistic",
+    "alias": "logistic",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Bromo\\Logistic\\Providers\\LogisticServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
