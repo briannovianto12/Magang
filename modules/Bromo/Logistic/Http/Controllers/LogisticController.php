@@ -149,7 +149,12 @@ class LogisticController extends Controller
         $shipping_manifest = OrderShippingManifest::where( 'order_id', $order_id )->first();
         $admin = Admin::where('id', $shipping_manifest->user_admin_id)->first();
         // dd($shipping_manifest->pickup_details_snapshot);
-
+        if($admin==null){
+            $admin_name ='';
+        } else {
+            $admin_name = $admin->name;
+        }
+ 
         $shop_info = DB::table('order_trx')
             ->select('shop.name as name', 'user_profile.msisdn as msisdn', 
             "order_trx.orig_address_snapshot->notes as notes",
@@ -192,7 +197,7 @@ class LogisticController extends Controller
             "items" => $items,
             "order_info" => $items[0]->name,
             "pickup_status" => $shipping_manifest->logistic_organizer_status,
-            "penjemput" => $admin->name,
+            "penjemput" => $admin_name,
         ];
 
         return view("{$this->module}::detail-mobile", $data);
