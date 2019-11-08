@@ -25,6 +25,13 @@ abstract class OrderDatatable extends DataTable
                 $gross = (int)$data->payment_details['total_gross'];
                 return '<div style="text-align:right">'. number_format($gross, 0, 0, '.') .'</div>';
             })
+            ->editColumn('is_picked_up', function ($data) {
+                if($data->is_picked_up == true){
+                    return '<div class="fas fa-check-circle" style="color: green"></div>';
+                }else if($data->is_picked_up == false){
+                    return '<div class="fas fa-times-circle" style="color: red"></div>';
+                }
+            })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
             })
@@ -52,7 +59,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action'])
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up'])
             ->make(true);
     }
 
@@ -86,6 +93,7 @@ abstract class OrderDatatable extends DataTable
             'shop_snapshot',
             'payment_details',
             'notes',
+            'is_picked_up',
             'created_at',
             'updated_at',
         ];
