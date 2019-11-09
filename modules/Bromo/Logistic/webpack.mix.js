@@ -11,7 +11,7 @@ mix.options({
 })
 mix.setPublicPath('../../public').mergeManifest();
 
-mix.js(__dirname + '/Resources/assets/js/util.js', 'js/logistic.js')
+mix.js(__dirname + '/Resources/assets/js/logistic.js', 'js/logistic.js')
     .sass( __dirname + '/Resources/assets/sass/app.scss', 'css/logistic.css');
 
 if (mix.inProduction()) {
