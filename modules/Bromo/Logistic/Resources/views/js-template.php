@@ -19,6 +19,7 @@
                             <img width="100" class="mr-3" src="{{ gcs_path }}{{ logo }}" alt="..." style="padding:10px">
                             <div class="media-body">
                                 <h5><b> {{ shop_name }}</h5></b>
+                                <span>Pembeli:<b style="color: Blue"> {{ buyer_name }}</span></b><br/>
                                 <span>Ekspedisi:<b style="color: Blue"> {{ courier_name }}</span></b><br/>
                                 <span>Barang Siap Kirim:<b> {{ expected_date }}</span></b><br/>
                                 {{#penjemput}}
