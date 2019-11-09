@@ -112,13 +112,13 @@
         @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::IN_PROCESS_PICKUP)
         {{-- if status is in process --}}
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="location.href='/logistic-mobile';" id="btnProses" type="button" class="btn btn-secondary"> Kembali Ke Home</button>
+            <button onclick="location.href='{{ route('logistic.mobile-index') }}';" id="btnProses" type="button" class="btn btn-secondary"> Kembali Ke Home</button>
         </div>
         <div class="pull-down" style="padding: 5px 10px">
             <button onclick="_performCancelPickup('{{ $order->id }}')" id="btnBatalJemput" type="button" class="btn btn-danger"> Batal Jemput</button>
         </div>
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="location.href='/pickup/{{$order->id}}';" id="btnProses" type="button" class="btn btn-success"> Proses Kirim</button>
+            <button onclick="location.href='{{ route('logistic.pickup', ['id' => $order->id]) }}';" id="btnProses" type="button" class="btn btn-success"> Proses Kirim</button>
         </div>
         @endif
 
