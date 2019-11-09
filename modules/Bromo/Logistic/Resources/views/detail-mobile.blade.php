@@ -27,6 +27,9 @@
                     <h5><span class="badge badge-info badge-title"> Informasi Order </span></h5> 
                     
                     <div class="detail">
+                        @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::PICKED_UP)
+                            <div class="status-name"><b><h4>Barang sudah terkirim</h4></b></div>                            
+                        @endif
                         <div>Nomor Order: </div>
                         <div><b><h3>{{ $order->order_no }}</h3></b></div>
                         <div>Nama Penjual: </div>
