@@ -39,6 +39,9 @@
                             {{ $shop_info->address_line }} </h4></b>
 
                             <br/>
+                            Nama Pembeli:
+                            <div class="subtitle-name"><b><h5>{{ $destination_info['full_name'] }}</h5></b></div>
+                            <br/>
                             Catatan dari Pembeli:
                             <b><h4>{{  $shop_info->notes }}</h4></b>
                         </address>    
