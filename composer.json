@@ -68,6 +68,7 @@
             "Bromo\\ContactCenter\\": "modules/Bromo/ContactCenter/",
             "Bromo\\Mutation\\": "modules/Bromo/Mutation/",
             "Bromo\\Notifications\\": "modules/Bromo/Notifications/",
+            "Bromo\\Tools\\": "modules/Bromo/Tools/",
             "Bromo\\Logistic\\": "modules/Bromo/Logistic/"
 
         },
