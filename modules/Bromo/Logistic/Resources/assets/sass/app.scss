@@ -1,0 +1,27 @@
+#logistic-detail {
+  .detail {
+    padding: 0px 15px;
+    font-size: 14px;
+  }
+  .badge.badge-title {
+    display: block;
+    padding: 10px 10px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  .subtitle-name {
+    color: #6600cc;
+  }
+  .img-item {
+    padding: 3px 3px;
+  }
+  .status-name {
+    color: #468847;
+  }
+}
+.content {
+  background: white;
+}
+.m-footer {
+  display: none;
+}

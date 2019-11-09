@@ -160,7 +160,7 @@ window._performCancelPickup = function( order_id ) {
     },
     success: function(data){
         if ( data.status == 'OK' ) {
-          swalSuccess('Pickup dibatalkan', false, 2000)
+          swalSuccess('Status order menjadi menunggu dipickup', false, 2000)
 
           location.reload(true);
 
@@ -186,7 +186,7 @@ window._performPickUpOrder = function( order_id ) {
     data: new FormData(this),
     success: function(data){
         // if ( data.status == 'OK' ) {
-        swalSuccess('Pesanan diterima', false, 2000)
+        swalSuccess('Status order menjadi dijemput', false, 2000)
 
         location.reload(true);
 

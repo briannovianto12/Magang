@@ -182,22 +182,34 @@ class LogisticController extends Controller
             "building_name" => $order->dest_address_snapshot['building_name']
         ];
 
-        // dd($shipping_manifest);
-        $items = OrderItem::select(
-            ["product_name as name", "shipping_weight",
-             "product_variant_name as variant_name", 
-             "product_image_file as image", "qty"]//, "created_at", "updated_at"]
-            )->where("order_trx_id", $order_id )->get();
+        // Get order info
+        $order_description = \DB::select("SELECT f_get_order_description ($order_id)");
+        $order_info = [
+            "description" => current($order_description)->f_get_order_description,
+            "system_weight" => $shipping_manifest->weight * 0.001,
+        ];
+
+        $order_images = DB::table('order_trx_images')
+            ->select( "filename as filename")
+            ->where('order_trx_images.order_id', $order_id)
+            ->get();
+
+        $array_order_images = [];
+        if(count($order_images) > 0) {
+            foreach($order_images as $image) {
+                $array_order_images[] = config('logistic.gcs_path') . '/orders/' . $image->filename;
+            }
+        }  
         
         $data = [
             "order" => $order,
             "shop_info" => $shop_info,
             "courier_info" => $courier_info,
             "destination_info" => $destination_info,
-            "items" => $items,
-            "order_info" => $items[0]->name,
+            "order_info" => $order_info,
             "pickup_status" => $shipping_manifest->logistic_organizer_status,
             "penjemput" => $admin_name,
+            "images" => $array_order_images,
         ];
 
         return view("{$this->module}::detail-mobile", $data);
@@ -334,19 +346,17 @@ class LogisticController extends Controller
 
             $data = [
                 "weight" => $request->weight, 
-                "item_price" => $request->item_price,
                 "total_price" => $request->total_price,
                 "awb_filename" => "$order_id/$file_awb_name",
                 "paket_filename" => "$order_id/$file_paket_name",
             ];
 
-            // if ($upload === false) {
-            //     new Exception('Error on upload');
-            // }    
+            $airwaybill = ($request->airwaybill) ? $request->airwaybill : ''; 
 
             // $shipping_manifest = OrderShippingManifest::where('order_id', '=', $order_id)->first();
             OrderShippingManifest::where('order_id', '=', $order_id)
             ->update([
+                'airwaybill' => $airwaybill,
                 'logistic_details_snapshot' => json_encode($data),
                 'logistic_organizer_status' => TraditionalLogisticStatus::PICKED_UP,
                 ]

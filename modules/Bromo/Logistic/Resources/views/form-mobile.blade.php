@@ -3,8 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}">
         <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/logistic.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/fs-modal.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/logistic.css') }}">
     <style>
         .content, .bg-white {
             background-color: white;
@@ -84,16 +83,9 @@
                         </div>
 
                         <div class="form-group bg-white">
-                            <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Input Harga Satuan Pengiriman (Wajib Diisi) </span></h5> 
-                            <div style="padding: 20px">
-                                <input type="number" min="0" class="form-control" placeholder="Harga satuan" style="padding: 10px" name="item_price" id="item_price" required/>
-                            </div>
-                        </div>
-
-                        <div class="form-group bg-white">
                             <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Input Total Harga Pengiriman Paket (Wajib Diisi) </span></h5> 
                             <div style="padding: 20px">
-                                <input type="number" min="0" class="form-control" placeholder="Harga total" style="padding: 10px" name="total_price" id="total_price" required/>
+                                <input type="text" min="0" class="number form-control" placeholder="Harga total" style="padding: 10px" name="total_price" id="total_price" required/>
                             </div>
                         </div>
 
@@ -130,24 +122,15 @@
                             <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Rangkuman Order # {{ $order_no }} </span></h5> 
                             <div class="show" style="padding: 10px"> 
                                 <span>
-                                    Berat: <input type="text" class="show_total_price show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_weight"> </a> 
+                                    Berat in <b>Kilogram</b>: <input type="text" class="show-review review-weight" id="weight-review" readonly>
                                 </span>
                                 <br/>
                                 <span>
-                                    Harga satuan pengiriman: <input type="text" class="show_total_price show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_item_price"> </a>
+                                    Harga total: <b>Rp. <input type="text" class="show-review" readonly></b>
                                 </span>
                                 <br/>
                                 <span>
-                                    Harga total: <input type="text" class="show_total_price show-review" style="padding: 10px"  readonly>
-
-                                    <a class="show_total_price"> </a>
-                                </span>
-                                <br/>
-                                <span>
-                                    Airwaybill: <input type="text" class="show_airwaybill show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_airwaybill"> </a>
+                                    Airwaybill: <input type="text" class="show_airwaybill show-review" readonly>
                                 </span>
                                 <br/>
                             </div>

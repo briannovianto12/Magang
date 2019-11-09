@@ -1,8 +1,8 @@
 <script src="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ nbs_asset('vendor/datatables/buttons.server-side.js') }}"></script>
 <script src="{{ nbs_asset('js/lang.js?v=201908190001') }}"></script>
-<script src="{{ nbs_asset('js/logistic.js') }}"></script>
-<script src="{{ nbs_asset('js/fs-modal.min.js') }}"></script>
+<script src="{{ mix('js/logistic.js') }}"></script>
+<script src="{{ nbs_asset('js/jquery.number.min.js') }}"></script>
 <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
 <script type="text/javascript">
 
@@ -108,12 +108,19 @@
             }
         }
 
+        function formatNumber(num) {
+          return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+        }
+
+        $('.number').number(true,0, ',', '.');
 
         $('.review').click(function () {
             var formValues = [];
                 // get values from inputs in first fieldset
                 $('.field1 :input').each(function () {
-                    formValues.push($(this).val());
+                    var number = formatNumber($(this).val())
+                    formValues.push(number);
+                    console.log(number)
                 });
                 
                 formValues.pop();
@@ -123,7 +130,7 @@
                 // set values in second fieldset
                 $('.field2 :input').each(function (index) {
                     if (formValues[index]) {
-                        $(this).val(formValues[index]);  
+                        $(this).val(formValues[index]);
                     }
                 });
 
