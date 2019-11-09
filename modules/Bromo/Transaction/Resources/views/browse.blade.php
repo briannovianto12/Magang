@@ -5,9 +5,10 @@
 @endsection
 
 @section('scripts')
-    @include("{$module}::js")
-    @include('transaction::js-template')
+    @include("transaction::js")
+    @include("transaction::js-template")
     <script src="{{ nbs_asset('js/order.js') }}"></script>
+    <script src="{{ nbs_asset('js/order-internal-notes.js') }}"></script>
     <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
 @endsection
 
