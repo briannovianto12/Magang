@@ -4,12 +4,7 @@
     <link rel="stylesheet" href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}">
         <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
     <link rel="stylesheet" href="{{ mix('css/logistic.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/fs-modal.min.css') }}">
-    <style>
-        .content {
-            background-color: white;
-        }
-    </style>
+    
 @endsection
 
 
@@ -32,56 +27,68 @@
                     <h5><span class="badge badge-info badge-title"> Informasi Order </span></h5> 
                     
                     <div class="detail">
-                        <div class="subtitle-name"><b><h5>Nama Penjual: {{ $shop_info->name }}</h5></b></div>
-                        <address class="font-weight-bold">
-                            Telpon Penjual:{{  $shop_info->msisdn }} <br/>
-                            Alamat Penjual: {{  $shop_info->building_name }} /
-                            {{ $shop_info->address_line }} 
+                        <div>Nomor Order: </div>
+                        <div><b><h3>{{ $order->order_no }}</h3></b></div>
+                        <div>Nama Penjual: </div>
+                        <div class="subtitle-name"><b><h5>{{ $shop_info->name }}</h5></b></div>
+                        <address>
+                            Telpon Penjual:
+                            <b><h3>{{  $shop_info->msisdn }}</h3></b><br/>
+                            Alamat Penjual:
+                            <b><h4>{{  $shop_info->building_name }} /
+                            {{ $shop_info->address_line }} </h4></b>
 
-                            <br/><br/>
-                            Catatan dari Pembeli: {{  $shop_info->notes }} <br/>
+                            <br/>
+                            Catatan dari Pembeli:
+                            <b><h4>{{  $shop_info->notes }}</h4></b>
                         </address>    
                         <br/>
                     </div>
                 </div>
-                <br/>
+                
 
                 <div class="content">
-                    <h5><span class="badge badge-info badge-title"> Informasi Ekspedisi</span></h5> 
+                    <h5><span class="badge badge-warning badge-title"> Informasi Ekspedisi</span></h5> 
 
                     <div class="detail">
                         <div class="subtitle-name"><b><h5>{{ $courier_info['courier_name'] }}</h5></b></div>
-                        <address class="font-weight-bold" style="padding: 10px">
-                            Permintaan dipickup: {{  $courier_info['expected_date'] }} <br/>
-                            Catatan pickup: {{  $courier_info['pickup_instruction'] }}
+                        <address>
+                            Permintaan dipickup: 
+                            <b><h3>{{  $courier_info['expected_date'] }}</h3></b><br/>
+                            Catatan pickup:
+                            <b><h4>{{  $courier_info['pickup_instruction'] }}</h4></b>
                         </address>   
                         <br/> 
                     </div>
                 </div>
-                <br/>
+                
 
                 <div class="content">
-                    <h5><span class="badge badge-info badge-title"> Informasi Isi Paket </span></h5> 
+                    <h5><span class="badge badge-danger badge-title"> Informasi Isi Paket </span></h5> 
 
-                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{ $order_info['description'] }} </h5><i class="fa fa-chevron-down"></i></b></a>
-                    <div style="display: none; padding: 10px">
-                        <address class="font-weight-bold" style="padding: 10px">
-                            Berat menurut sistem: {{ $order_info['system_weight'] }} Kg
+                    <div class="detail">
+                        <div class="subtitle-name"><b><h5>{{ $order_info['description'] }} </h5></b></div>
+                        <address>
+                            Berat menurut sistem:
+                            <b><h3>{{ $order_info['system_weight'] }} KG</h3></b>
                         </address>    
                         <br/>
                     </div>
                 </div>
-                <br/>
+                
 
                 <div class="content">
-                    <h5><span class="badge badge-info badge-title"> Informasi Tujuan </span></h5> 
+                    <h5><span class="badge badge-success badge-title"> Informasi Tujuan / Penerima</span></h5> 
 
-                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{$destination_info['full_name']}} </h5><i class="fa fa-chevron-down"></i></b></a> 
-                    <div class="show" style="display: none; padding: 10px">
-                        <address class="font-weight-bold" style="padding: 10px">
-                            Telpon: {{  $destination_info['msisdn'] }}<br/>
-                            Alamant: {{   $destination_info['building_name'] }} /
-                            {{ $destination_info['address_line'] }}
+                    <div class="detail">
+                        <div><b><h5>{{$destination_info['full_name']}} </h5></b></div> 
+                        <address>
+                            Telpon:<br/>
+                            <b></h4>{{  $destination_info['msisdn'] }}</h4></b>
+                            <br/>
+                            Alamat:<br/>
+                            <b></h4>{{   $destination_info['building_name'] }} /
+                            {{ $destination_info['address_line'] }}</h4></b>
                         </address>    
                         <br/>
                     </div>
