@@ -93,7 +93,21 @@
                         <br/>
                     </div>
                 </div>
-                <br/>
+
+                <div class="content">
+                    <h5><span class="badge badge-primary badge-title">Lampiran Foto</span></h5> 
+
+                    <div class="detail">
+                        @if(count($images) > 0)
+                            @foreach ( $images as $key => $value )
+                                <img class="img-fluid img-item" src="{{ $value }}" width="80%" />
+                            @endforeach
+                        @else
+                            <span>Belum ada foto</span>
+                        @endif
+                    </div>
+                
+                </div>
             </div>
         </div>
     </div>

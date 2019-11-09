@@ -21,6 +21,8 @@ class LogisticServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        require_once __DIR__ . '/../Helpers/functions.php';
+        
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
