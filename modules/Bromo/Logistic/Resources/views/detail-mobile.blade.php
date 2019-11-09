@@ -3,7 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}">
         <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/logistic.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/logistic.css') }}">
     <link rel="stylesheet" href="{{ nbs_asset('css/fs-modal.min.css') }}">
     <style>
         .content {
@@ -25,19 +25,21 @@
 
 @section('content')
 
-    <div class="container">
+    <div id="logistic-detail">
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="content">
-                    <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Informasi Order </span></h5> 
+                    <h5><span class="badge badge-info badge-title"> Informasi Order </span></h5> 
                     
-                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b> <h5>{{ $shop_info->name }}</h5> <i class="fa fa-chevron-down icon-align-right" style="align: right"></i></b></a>
-                    <div style="display: none; padding: 10px">
-                        <address class="font-weight-bold" style="padding: 10px">
-                            Catatan: {{  $shop_info->notes }} <br/>
-                            Telpon: {{  $shop_info->msisdn }} <br/>
-                            Alamat: {{  $shop_info->building_name }} /
+                    <div class="detail">
+                        <div class="subtitle-name"><b><h5>Nama Penjual: {{ $shop_info->name }}</h5></b></div>
+                        <address class="font-weight-bold">
+                            Telpon Penjual:{{  $shop_info->msisdn }} <br/>
+                            Alamat Penjual: {{  $shop_info->building_name }} /
                             {{ $shop_info->address_line }} 
+
+                            <br/><br/>
+                            Catatan dari Pembeli: {{  $shop_info->notes }} <br/>
                         </address>    
                         <br/>
                     </div>
@@ -45,12 +47,12 @@
                 <br/>
 
                 <div class="content">
-                    <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Informasi Ekspedisi</span></h5> 
+                    <h5><span class="badge badge-info badge-title"> Informasi Ekspedisi</span></h5> 
 
-                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{ $courier_info['courier_name'] }} </h5><i class="fa fa-chevron-down"></i></b></a>
-                    <div style="display: none; padding: 10px">
+                    <div class="detail">
+                        <div class="subtitle-name"><b><h5>{{ $courier_info['courier_name'] }}</h5></b></div>
                         <address class="font-weight-bold" style="padding: 10px">
-                            Siap dipickup: {{  $courier_info['expected_date'] }} <br/>
+                            Permintaan dipickup: {{  $courier_info['expected_date'] }} <br/>
                             Catatan pickup: {{  $courier_info['pickup_instruction'] }}
                         </address>   
                         <br/> 
@@ -59,7 +61,7 @@
                 <br/>
 
                 <div class="content">
-                    <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Informasi Isi Paket </span></h5> 
+                    <h5><span class="badge badge-info badge-title"> Informasi Isi Paket </span></h5> 
 
                     <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{ $order_info['description'] }} </h5><i class="fa fa-chevron-down"></i></b></a>
                     <div style="display: none; padding: 10px">
@@ -72,7 +74,7 @@
                 <br/>
 
                 <div class="content">
-                    <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Informasi Tujuan </span></h5> 
+                    <h5><span class="badge badge-info badge-title"> Informasi Tujuan </span></h5> 
 
                     <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{$destination_info['full_name']}} </h5><i class="fa fa-chevron-down"></i></b></a> 
                     <div class="show" style="display: none; padding: 10px">

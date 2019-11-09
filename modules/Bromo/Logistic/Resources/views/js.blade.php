@@ -1,7 +1,7 @@
 <script src="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
 <script src="{{ nbs_asset('vendor/datatables/buttons.server-side.js') }}"></script>
 <script src="{{ nbs_asset('js/lang.js') }}"></script>
-<script src="{{ nbs_asset('js/logistic.js') }}"></script>
+<script src="{{ mix('js/logistic.js') }}"></script>
 <script src="{{ nbs_asset('js/fs-modal.min.js') }}"></script>
 <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
 <script type="text/javascript">
