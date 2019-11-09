@@ -40,7 +40,7 @@ class OrderDatatable extends DataTable
                 'shop.name as shop_name, '.
                 'vw_business_contact_person.pickup_person_name as seller_full_name_name, '.
                 'vw_business_contact_person.pickup_person_phone as seller_phone, ' .
-                'order_trx.buyer_snapshot->>\'full_name\' as buyer_name, ' .
+                'order_trx.buyer_snapshot->>\'full_name\' as buyer_full_name, ' .
 
                 // 'order_status.name as status, ' . 
 
