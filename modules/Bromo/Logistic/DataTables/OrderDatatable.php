@@ -89,7 +89,7 @@ class OrderDatatable extends DataTable
             ->join('logistic_organizer_status', 'logistic_organizer_status.id', 'order_shipping_manifest.logistic_organizer_status' )
             ->leftjoin('admin','admin.id','=','order_shipping_manifest.user_admin_id')
             ->where('shipping_courier.provider_id', 3)
-            ->where('order_shipping_manifest.logistic_organizer_status', $this->status)
+            ->whereIn('order_shipping_manifest.logistic_organizer_status', $this->status)
             ->orderBy('order_trx.created_at', 'desc');
 
             // id, order no, buyer name, shop name, payment method, status, updated at
