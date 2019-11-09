@@ -182,20 +182,19 @@ class LogisticController extends Controller
             "building_name" => $order->dest_address_snapshot['building_name']
         ];
 
-        // dd($shipping_manifest);
-        $items = OrderItem::select(
-            ["product_name as name", "shipping_weight",
-             "product_variant_name as variant_name", 
-             "product_image_file as image", "qty"]//, "created_at", "updated_at"]
-            )->where("order_trx_id", $order_id )->get();
+        // Get order info
+        $order_description = \DB::select("SELECT f_get_order_description ($order_id)");
+        $order_info = [
+            "description" => current($order_description)->f_get_order_description,
+            "system_weight" => $shipping_manifest->weight * 0.001,
+        ];
         
         $data = [
             "order" => $order,
             "shop_info" => $shop_info,
             "courier_info" => $courier_info,
             "destination_info" => $destination_info,
-            "items" => $items,
-            "order_info" => $items[0]->name,
+            "order_info" => $order_info,
             "pickup_status" => $shipping_manifest->logistic_organizer_status,
             "penjemput" => $admin_name,
         ];

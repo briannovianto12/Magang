@@ -61,10 +61,10 @@
                 <div class="content">
                     <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Informasi Isi Paket </span></h5> 
 
-                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{ $order_info }} </h5><i class="fa fa-chevron-down"></i></b></a>
+                    <a href="#" onclick="$(this).next().fadeToggle()" style="padding: 10px; display:block;"><b><h5>{{ $order_info['description'] }} </h5><i class="fa fa-chevron-down"></i></b></a>
                     <div style="display: none; padding: 10px">
                         <address class="font-weight-bold" style="padding: 10px">
-                            
+                            Berat menurut sistem: {{ $order_info['system_weight'] }} Kg
                         </address>    
                         <br/>
                     </div>
