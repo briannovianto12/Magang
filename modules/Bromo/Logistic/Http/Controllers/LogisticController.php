@@ -188,6 +188,18 @@ class LogisticController extends Controller
             "description" => current($order_description)->f_get_order_description,
             "system_weight" => $shipping_manifest->weight * 0.001,
         ];
+
+        $order_images = DB::table('order_trx_images')
+            ->select( "filename as filename")
+            ->where('order_trx_images.order_id', $order_id)
+            ->get();
+
+        $array_order_images = [];
+        if(count($order_images) > 0) {
+            foreach($order_images as $image) {
+                $array_order_images[] = config('logistic.gcs_path') . '/orders/' . $image->filename;
+            }
+        }  
         
         $data = [
             "order" => $order,
@@ -197,6 +209,7 @@ class LogisticController extends Controller
             "order_info" => $order_info,
             "pickup_status" => $shipping_manifest->logistic_organizer_status,
             "penjemput" => $admin_name,
+            "images" => $array_order_images,
         ];
 
         return view("{$this->module}::detail-mobile", $data);
