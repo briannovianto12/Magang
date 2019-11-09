@@ -123,9 +123,8 @@
                             <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Rangkuman Order # {{ $order_no }} </span></h5> 
                             <div class="show" style="padding: 10px"> 
                                 <span>
-                                    Berat: <input type="text" class="show-review review-weight" id="weight-review" readonly>Kg
+                                    Berat in <b>Kilogram</b>: <input type="text" class="show-review review-weight" id="weight-review" readonly>
                                 </span>
-                                <br/>
                                 <br/>
                                 <span>
                                     Harga total: <b>Rp. <input type="text" class="show-review" readonly></b>

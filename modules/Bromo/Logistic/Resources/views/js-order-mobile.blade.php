@@ -140,17 +140,5 @@
         $('.previous').click(function () {
             $('.current').removeClass('current').hide().prev().show().addClass('current');
         });
-
-        var input = $( "#weight-review" );
-
-
-        $('.width-dynamic').on('input', function() {
-    var inputWidth = $(this).textWidth();
-    $(this).css({
-        width: inputWidth
-    })
-}).trigger('input');
-
-
     });
 </script>
