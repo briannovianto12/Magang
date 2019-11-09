@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}">
         <link rel="stylesheet" href="{{ nbs_asset('vendor/fancybox/jquery.fancybox.css') }}">
     <link rel="stylesheet" href="{{ mix('css/logistic.css') }}">
-    
 @endsection
 
 

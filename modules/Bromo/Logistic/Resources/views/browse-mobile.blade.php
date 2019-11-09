@@ -1,8 +1,7 @@
 @extends('logistic::layouts.master')
 @section('css')
     <link rel="stylesheet" href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/logistic.css') }}">
-    <link rel="stylesheet" href="{{ nbs_asset('css/fs-modal.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/logistic.css') }}">
     <style>
     .content {
         background-color: white;
