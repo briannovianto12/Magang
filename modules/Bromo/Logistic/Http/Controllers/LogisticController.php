@@ -346,19 +346,17 @@ class LogisticController extends Controller
 
             $data = [
                 "weight" => $request->weight, 
-                "item_price" => $request->item_price,
                 "total_price" => $request->total_price,
                 "awb_filename" => "$order_id/$file_awb_name",
                 "paket_filename" => "$order_id/$file_paket_name",
             ];
 
-            // if ($upload === false) {
-            //     new Exception('Error on upload');
-            // }    
+            $airwaybill = ($request->airwaybill) ? $request->airwaybill : ''; 
 
             // $shipping_manifest = OrderShippingManifest::where('order_id', '=', $order_id)->first();
             OrderShippingManifest::where('order_id', '=', $order_id)
             ->update([
+                'airwaybill' => $airwaybill,
                 'logistic_details_snapshot' => json_encode($data),
                 'logistic_organizer_status' => TraditionalLogisticStatus::PICKED_UP,
                 ]
