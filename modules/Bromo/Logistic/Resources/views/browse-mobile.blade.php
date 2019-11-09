@@ -45,7 +45,7 @@
             <div class="form-group">
             <select id="selectStatus" class="d-xs-block d-md-none form-control"> 
                 
-                <option value="#confirm" selected>Menunggu Di Pickup</option>  
+                <option value="#confirm" selected>Menunggu Pickup</option>  
                 <option value="#process">Dalam Proses</option>  
                 <option value="#sent">Sudah Dijemput</option> 
                 <option value="#transaction">Semua Status</option> 
