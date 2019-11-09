@@ -130,24 +130,19 @@
                             <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Rangkuman Order # {{ $order_no }} </span></h5> 
                             <div class="show" style="padding: 10px"> 
                                 <span>
-                                    Berat: <input type="text" class="show_total_price show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_weight"> </a> 
+                                    Berat: <input type="text" class="show-review" readonly> Kg                                 
                                 </span>
                                 <br/>
                                 <span>
-                                    Harga satuan pengiriman: <input type="text" class="show_total_price show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_item_price"> </a>
+                                    Harga satuan pengiriman: <b>Rp. </b><input type="text" class="show-review" readonly>                                
                                 </span>
                                 <br/>
                                 <span>
-                                    Harga total: <input type="text" class="show_total_price show-review" style="padding: 10px"  readonly>
-
-                                    <a class="show_total_price"> </a>
+                                    Harga total: <b>Rp. </b><input type="text" class="show-review" readonly>
                                 </span>
                                 <br/>
                                 <span>
-                                    Airwaybill: <input type="text" class="show_airwaybill show-review"  style="padding: 10px"  readonly>
-                                    <a class="show_airwaybill"> </a>
+                                    Airwaybill: <input type="text" class="show_airwaybill show-review" readonly>
                                 </span>
                                 <br/>
                             </div>
