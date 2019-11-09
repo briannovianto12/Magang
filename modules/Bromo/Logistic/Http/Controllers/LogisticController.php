@@ -157,7 +157,7 @@ class LogisticController extends Controller
  
         $shop_info = DB::table('order_trx')
             ->select('shop.name as name', 'user_profile.msisdn as msisdn', 
-            "order_trx.orig_address_snapshot->notes as notes",
+            "order_trx.notes as notes",
             "order_trx.orig_address_snapshot->building_name as building_name",
             "order_trx.orig_address_snapshot->address_line as address_line"
             )
