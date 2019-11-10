@@ -61,7 +61,7 @@
                                 Nama Penerima: {{ $penerima }}<br/>
                             </span>
                             <span>
-                                Alamat Pengiriman: {{ $address_line }}<br/>
+                                Alamat Penerima: {{ $address_line }}<br/>
                             </span>
                             <span>
                                 Gedung: {{ $building_name }}
