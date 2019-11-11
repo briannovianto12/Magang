@@ -6,10 +6,12 @@ use Bromo\Buyer\Models\Business;
 use Bromo\Buyer\Models\Buyer;
 use Bromo\Buyer\Models\BuyerStatus;
 use Bromo\Seller\Models\Shop;
+use Bromo\Transaction\Models\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\BaseResource\Traits\VersionModelTrait;
+use Nbs\BaseResource\Traits\ModifierModelTrait;
 use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class Order extends Model
@@ -17,7 +19,8 @@ class Order extends Model
     use FormatDates,
         SnowFlakeTrait,
         TimezoneAccessor,
-        VersionModelTrait;
+        VersionModelTrait,
+        ModifierModelTrait;
 
     /**
      * The attributes that should be cast to native types.
@@ -100,7 +103,8 @@ class Order extends Model
         'expired_at',
         'modified_by',
         'modifier_role',
-        'version'
+        'version',
+        'is_picked_up'
     ];
 
     /*
@@ -126,7 +130,7 @@ class Order extends Model
 
     public function logs()
     {
-        return $this->hasMany(OrderLog::class, 'order_trx_id');
+        return $this->hasMany(OrderLog::class, 'id');
     }
 
     public function orderItems()
@@ -317,5 +321,43 @@ class Order extends Model
         return number_format($this->shipping_service_snapshot['cost']) ?? '-';
     }
 
+    private function saveByStatus(int $status): void
+    {
+        $this->status = $status;
+        $this->refreshModifierField();
+        $this->refreshStatus();
+        if ($this->save()) {
+            $this->updateVersionFromAdmin();
+            $this->createLog();
+        }
+    }
 
+    public function createLog(): void
+    {
+        $this->logs()->create($this->getAttributes());
+    }
+
+    /**
+     * Actions to change status to SHIPPED
+     * @throws Exception
+     */
+    public function shippedOrder(): void
+    {
+        if ($this->status > OrderStatus::SUCCESS) {
+            throw new Exception('Order already success');
+        }
+
+        $this->saveByStatus(OrderStatus::SUCCESS);
+    }
+
+    public function getVersionName()
+    {
+        return 'version';
+    }
+
+    private function refreshStatus()
+    {
+        $this->status = OrderStatus::SUCCESS;
+        $this->is_picked_up = true;
+    }
 }

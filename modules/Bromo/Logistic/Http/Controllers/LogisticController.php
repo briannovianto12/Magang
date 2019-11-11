@@ -6,7 +6,7 @@ use Bromo\Logistic\DataTables\OrderDatatable;
 use App\Http\Controllers\Controller;
 use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderStatus;
-use Bromo\Transaction\Models\OrderItem;
+use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\ShippingCourier;
 use Bromo\Transaction\Models\OrderShippingManifest;
 use Bromo\Auth\Models\Admin;
@@ -319,7 +319,7 @@ class LogisticController extends Controller
 
         DB::beginTransaction();
         try {
-            \Log::debug($request->all());
+            $order = Order::findOrFail($order_id);
 
             $path = '/orders/';
             
@@ -362,12 +362,14 @@ class LogisticController extends Controller
                 ]
             );
 
-            $logistic_images = New LogisticTrxImages;
+            $order->shippedOrder();
+
+            $logistic_images = new LogisticTrxImages;
             $logistic_images->order_id = $order_id;
             $logistic_images->filename = "$order_id/$file_paket_name";
             $logistic_images->save();
 
-            $logistic_images = New LogisticTrxImages;
+            $logistic_images = new LogisticTrxImages;
             $logistic_images->order_id = $order_id;
             $logistic_images->filename = "$order_id/$file_awb_name";
             $logistic_images->save();
