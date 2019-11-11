@@ -54,6 +54,7 @@ class OrderLog extends Model
      * @var array
      */
     protected $fillable = [
+        'log_id',
         'id',
         'shipping_courier_id',
         'shipping_service_code',
@@ -73,7 +74,8 @@ class OrderLog extends Model
         'expired_at',
         'modified_by',
         'modifier_role',
-        'version'
+        'version',
+        'is_picked_up'
     ];
 
     /*
