@@ -44,7 +44,7 @@
                     <select class="form-control" id="subdistrict" name="subdistrict"></select> 
                     <br>
                     <label for="postal-code">Postal Code</label>
-                    <input id="postal-code" class="form-control" type="text" value="test" readonly>
+                    <input id="postal-code" class="form-control" type="text" placeholder="Postal Code" readonly>
                 </div>
             </div>
         </div>
