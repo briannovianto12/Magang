@@ -113,12 +113,14 @@
                     </a>
                 </li>
             @endcan
+            @can('view_seller_balance_log')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.index') }}" aria-haspopup="true">
                 <a href="{{ route('mutation.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-newspaper-o"></i>
-                    <span class="m-menu__link-text">Mutation</span>
+                    <span class="m-menu__link-text">Seller Balance Log</span>
                 </a>
             </li>
+            @endcan
             @can('view_news_notification')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
                 <a href="{{ route('news') }}" class="m-menu__link">

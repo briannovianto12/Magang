@@ -18,8 +18,9 @@
 @section('content')
     @component('components._portlet',[
           'portlet_head' => true,
-          'portlet_title' => "Shop Log Mutation"])
+          'portlet_title' => "Seller Balance Log"])
         @slot('body')
+            @can('view_seller_balance_log')
             <div class="m-portlet__body">
                 <div class="container" style="width: 100%">    
                     <div class="row input-daterange">
@@ -50,11 +51,12 @@
                         </table>
                     </div>
                 </div>
-            </div>        
+            </div>
+            @endcan        
         @endslot
 
         @slot('postfix')
-            Shop Log Mutation
+            Seller Balance Log
         @endslot
     @endcomponent
     
