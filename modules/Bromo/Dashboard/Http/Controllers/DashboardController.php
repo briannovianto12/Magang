@@ -47,28 +47,6 @@ class DashboardController extends Controller
             ];
         }
 
-        $user = auth()->user();
-        
-        if($user->role_id == -1){
-            $user->syncRoles('SuperAdministrator');
-        }else if($user->role_id == 1){
-            $user->syncRoles('Administrator');
-        }else if($user->role_id == 2){
-            $user->syncRoles('Merchandiser');
-        }else if($user->role_id == 3){
-            $user->syncRoles('Sales');
-        }else if($user->role_id == 4){
-            $user->syncRoles('Finance');
-        }else if($user->role_id == 5){
-            $user->syncRoles('Support');
-        }else if($user->role_id == 6){
-            $user->syncRoles('ContactCenter');
-        }else if($user->role_id == 7){
-            $user->syncRoles('Test');
-        }else if($user->role_id == 8){
-            $user->syncRoles('LogisticOrganizer');
-        }
-        $data['user'] = $user;
         return view('dashboard::index', $data);
         
     }

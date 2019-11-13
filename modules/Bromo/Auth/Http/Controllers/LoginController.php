@@ -4,6 +4,7 @@ namespace Bromo\Auth\Http\Controllers;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Routing\Controller;
+use DB;
 
 class LoginController extends Controller
 {
@@ -14,7 +15,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected function redirectTo()
+    {
+        $user = auth()->user();
+        $adminRole = DB::table('admin_role')->select('name')->where('id', $user->role_id)->first();
+        $user->syncRoles($adminRole->name);
+        $data['user'] = $user;
+
+        return '/dashboard';
+    }
 
     /**
      * Create a new controller instance.
