@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use DB;
-
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -101,9 +101,63 @@ class ReportController extends Controller
 
     public function getTotalBuyCount(Request $request)
     {        
-        $data['table'] = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
-        $data['table'] = $this->arrayPaginator($data['table'], $request);
-        return view('report::total_buy_count', $data);
+        $start = Carbon::now()->subDays(7);
+        $end = Carbon::now();
+        
+        if(request()->ajax()){
+            if(!empty($request->from_date) && !empty($request->to_date)){
+                $start = Carbon::parse($request->from_date);
+                $end = Carbon::parse($request->to_date);
+
+                if($request->from_date == $request->to_date){
+                    $start = Carbon::parse($request->from_date)->subDay();
+                    $end = Carbon::parse($request->to_date);
+                }
+            }
+            $data = DB::select(DB::raw("
+                WITH summary as (
+                    SELECT order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, business_id, B.name,
+                    (A.payment_details->>'total_gross')::numeric as gross_amount
+                    FROM order_trx A
+                    INNER JOIN business B ON A.business_id = B.id
+                    
+                    WHERE payment_status = 10
+                    AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN '$start' AND '$end'
+                    GROUP BY order_no, business_id, B.name, to_char(A.created_at,'YYYY-MM-DD'), (A.payment_details->>'total_gross')::numeric
+                    ORDER BY to_char(A.created_at,'YYYY-MM-DD'), business_id
+                )
+                SELECT 
+                x.business_id, 
+                name, 
+                COUNT(1), 
+                SUM(gross_amount) as total_gross, 
+                order_date,
+                zz.full_name,
+                min(y.province::text) AS province,
+                min(y.city::text) AS city
+                FROM summary x
+                JOIN business_address y ON x.business_id::bigint = y.business_id
+                JOIN business_member z ON x.business_id::bigint = z.business_id AND z.role = 1
+                JOIN user_profile zz ON z.user_id = zz.id
+                GROUP BY x.order_no, x.business_id, name, order_date, zz.full_name
+                ORDER BY x.order_no DESC
+            "));
+
+            return datatables()->of($data)
+            ->editColumn('total_gross', function ($data) {
+                return '<div style="text-align:right">'.number_format($data->total_gross, 0, 0, '.').'</div>';
+            })
+            ->editColumn('count', function ($data) {
+                return '<div style="text-align:right">'.$data->count.'</div>';
+            })
+            ->rawColumns(['total_gross', 'count'])
+            ->make(true);
+        }
+
+        return view('report::total_buy_count', $data = [
+            'start' => $start,
+            'end' => $end
+        ]);
         
     }
 
@@ -159,23 +213,27 @@ class ReportController extends Controller
     }
 
     private function exportTotalBuyCount(){
-        $data = \DB::select("SELECT * FROM vw_buyer_totalbuy_count");
+        $data = \DB::select("SELECT name, count, total_gross, full_name, province, city, order_date FROM vw_buyer_totalbuy_count_filter");
         $spreadsheet = new Spreadsheet();
         $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Shop Name');
         $sheet->setCellValue('B1', 'Total Bought Product');
-        $sheet->setCellValue('C1', 'Full Name');
-        $sheet->setCellValue('D1', 'Province');
-        $sheet->setCellValue('E1', 'City');
+        $sheet->setCellValue('C1', 'Total Gross');
+        $sheet->setCellValue('D1', 'Full Name');
+        $sheet->setCellValue('E1', 'Province');
+        $sheet->setCellValue('F1', 'City');
+        $sheet->setCellValue('G1', 'Order Date');
         $rows = 2;
         
         foreach($data as $data){
             $sheet->setCellValue('A' . $rows, $data->name);
             $sheet->setCellValue('B' . $rows, $data->count);
-            $sheet->setCellValue('C' . $rows, $data->full_name);
-            $sheet->setCellValue('D' . $rows, $data->province);
-            $sheet->setCellValue('E' . $rows, $data->city);
+            $sheet->setCellValue('C' . $rows, $data->total_gross);
+            $sheet->setCellValue('D' . $rows, $data->full_name);
+            $sheet->setCellValue('E' . $rows, $data->province);
+            $sheet->setCellValue('F' . $rows, $data->city);
+            $sheet->setCellValue('G' . $rows, $data->order_date);
             $rows++;
         }
 
