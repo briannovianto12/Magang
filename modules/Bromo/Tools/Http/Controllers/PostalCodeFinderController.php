@@ -104,16 +104,16 @@ class PostalCodeFinderController extends Controller
     public function getSubdistricts($district_id){
 
         $subdistricts = Subdistrict::where('district_id', $district_id)->where('id', 'like', '200%')->get();
-
+        
         return response()->json([
             "subdistricts" => $subdistricts,
         ]);
     }
 
     public function getPostalCode($subdistrict_id){
-
-        $postal_code = Subdistrict::where('id', $subdistrict_id)->first()->postal_code;
-
+        
+        $postal_code = Subdistrict::whereRaw("id = '$subdistrict_id'")->first()->postal_code;
+        
         return response()->json([
             "postal_code" => $postal_code,
         ]);
