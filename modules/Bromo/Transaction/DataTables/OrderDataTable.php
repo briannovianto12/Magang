@@ -3,6 +3,7 @@
 namespace Bromo\Transaction\DataTables;
 
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder;
 
 abstract class OrderDatatable extends DataTable
 {
