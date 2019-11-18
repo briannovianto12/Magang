@@ -23,6 +23,9 @@ Route::name('order.list-order')->get('/list-order', 'OrderController@listOrder')
 Route::name('order.rejected-order')->get('/rejected-order', 'OrderController@rejectedOrder');
 Route::name('order.accepted-order')->get('/accepted-order', 'OrderController@acceptedOrder');
 Route::name('order.paid-order')->get('/paid-order', 'OrderController@paidOrder');
+Route::post('/order/{id}/', 'OrderController@changeStatusToDelivered');
+Route::name('order.getInfo')->get('/order-info/{order_id}', 'OrderController@getOrderInfo');
+Route::name('order.edit')->put('/order/update/{id}', 'OrderController@updateShippingManifest');
 Route::name('order.shipped-delivery-order')->get('/delivery-order/shipped', 'OrderController@shippedDeliveryOrder');
 Route::name('order.not-shipped-delivery-order')->get('/delivery-order/not-shipped', 'OrderController@notShippedDeliveryOrder');
 Route::name('order.change-status')->get('/order/change-status/{id}/', 'OrderController@changeStatusToDelivered');
