@@ -5,10 +5,9 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ nbs_asset('js/tools.js') }}"></script>
+    <script src="{{ mix('js/postal-code-finder.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.js') }}"></script>
-    {{-- @include("tools::js-potal-code-finder") --}}
 @endsection
 
 @section('content')
@@ -28,6 +27,7 @@
                 <div class="col-6">
                     <label for="province">Province</label>
                     <select class="form-control" id="province" name="province">
+                        <option value="" selected></option>
                         @foreach ($provinces as $province)
                             <option value="{{ $province->id }}">{{ $province->name }}</option>
                         @endforeach    
@@ -35,7 +35,6 @@
                     <br>
                     <label for="city">City</label>
                     <select class="form-control" id="city" name="city"></select> 
-                    {{-- <button id="load-city-btn" style="display: none"></button> --}}
                     <br>
                     <label for="district">District</label>
                     <select class="form-control" id="district" name="district"></select> 
