@@ -91,3 +91,26 @@
         </div>
     </div>
 </script>
+
+<script id="rejectOrder" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order No. {{ data.order_no }}</h4>
+            </div>
+            <form id="form-edit-product" action="POST">
+                {{ method_field('PUT') }}
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label>
+                        Reject Notes:
+                    </label>
+                    <input id="rejectNotes" class="form-control" type="text" placeholder="Notes">
+                    <br/>
+                   <button data-order-id="{{ data.id }}" type="button" class="btn btn-danger btn-lg btn-block" id="btnRejectOrder">Reject Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

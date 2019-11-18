@@ -10,17 +10,13 @@ use Bromo\Transaction\Models\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
-use Nbs\BaseResource\Traits\VersionModelTrait;
-use Nbs\BaseResource\Traits\ModifierModelTrait;
 use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class Order extends Model
 {
     use FormatDates,
         SnowFlakeTrait,
-        TimezoneAccessor,
-        VersionModelTrait,
-        ModifierModelTrait;
+        TimezoneAccessor;
 
     /**
      * The attributes that should be cast to native types.
