@@ -67,6 +67,7 @@
             "Bromo\\Report\\": "modules/Bromo/Report/",
             "Bromo\\ContactCenter\\": "modules/Bromo/ContactCenter/",
             "Bromo\\Mutation\\": "modules/Bromo/Mutation/",
+            "Bromo\\Refund\\": "modules/Bromo/Refund/",
             "Bromo\\Notifications\\": "modules/Bromo/Notifications/",
             "Bromo\\Tools\\": "modules/Bromo/Tools/",
             "Bromo\\Logistic\\": "modules/Bromo/Logistic/"
