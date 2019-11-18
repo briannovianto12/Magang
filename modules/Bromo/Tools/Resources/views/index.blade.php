@@ -27,11 +27,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <td>
-                        <a href="{{ route('postalCodeFinder.index') }}">
-                            Postal Code Finder
-                        </a>
-                    </td>
+                    <tr>
+                        <td>
+                            <a href="{{ route('postalCodeFinder.index') }}">
+                                Postal Code Finder
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ route('shipping-simulation.index') }}">
+                                Shipping Simulation
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

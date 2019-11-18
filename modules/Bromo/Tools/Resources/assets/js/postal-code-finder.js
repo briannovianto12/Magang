@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    //SEPARATOR
+    
     $("#province").change(function(){
         var province = $(this).children("option:selected").val();
         $('#city').find('option').remove();

@@ -5,6 +5,8 @@
     "/css/logistic.css": "/css/logistic.css?id=ebe2f8d892fff94eae93",
     "/js/order-internal-notes.js": "/js/order-internal-notes.js?id=0412e0120ec42c00579d",
     "/js/postal-code-finder.js": "/js/postal-code-finder.js?id=3973d179681d3ab7447e",
-    "/js/tools.js": "/js/tools.js?id=9cab63fd74da9c31c188",
-    "/css/tools.css": "/css/tools.css?id=d41d8cd98f00b204e980"
+    "/js/tools.js": "/js/tools.js?id=6916b664bed4d7dd421b",
+    "/css/tools.css": "/css/tools.css?id=d41d8cd98f00b204e980",
+    "/js/shipping-simulation.js": "/js/shipping-simulation.js?id=8a9b4d66dc7fd6b7ae81",
+    "/css/shipping-simulation.css": "/css/shipping-simulation.css?id=c0023e9b54d4dc88da4a"
 }
