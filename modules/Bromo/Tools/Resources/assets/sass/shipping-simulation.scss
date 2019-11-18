@@ -1,0 +1,40 @@
+#package-value-static{
+    text-align: left;
+    width: 30px;
+    height: 35px;
+    border: 1px solid #b0daed;
+    border-right: 0px;
+    background: white;
+}
+#package-value{
+    border: 1px solid #b0daed;
+    height: 35px;
+    border-left: 0px;
+    margin: 0 0 0 -7px;
+}
+#package-weight-static{
+    text-align: left;
+    width: 20px;
+    height: 35px;
+    border: 1px solid #b0daed;
+    border-left: 0px;
+    border-right: 0px;
+    background: white;
+    margin: 0 0 0 -40px;
+}
+#package-weight{
+    border: 1px solid #b0daed;
+    height: 35px;
+}
+#shipper-list{
+    display: none;
+}
+#regular-shipper-list{
+    display: none;
+}
+#express-shipper-list{
+    display: none;
+}
+#trucking-shipper-list{
+    display: none;
+}
