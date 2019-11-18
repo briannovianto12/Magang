@@ -16,10 +16,10 @@
 
 @section('scripts')
     <script src="{{ nbs_asset('vendor/fancybox/jquery.fancybox.js') }}"></script>
-    <script src="{{ nbs_asset('js/order.js') }}"></script>
-    <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
+    <script src="{{ asset('js/order.js') }}"></script>
+    <script src="{{ mix('js/reject-order.js') }}"></script>
+    <script src="{{ asset('js/mustache.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-
     @include('transaction::js')
     @include('transaction::js-template')
 @endsection
@@ -42,7 +42,7 @@
                             <div class="m-widget28__tab-items">
                                 <h3><b>ORDER INFO</b></h3>
                                 <div class="m-widget28__tab-item row">
-                                    <div class="col-6">
+                                    <div class="col-3">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Order Status') }}</span>
                                             @if($data->status == 1 || $data->status == 3 || $data->status == 4)
@@ -62,17 +62,26 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                     @can('change_order_to_delivered')
-                                    @if($data->status == 8)
-                                    <div class ="col-6">
-                                        <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
-                                            Change Status to "Delivered"
-                                        </button>
-                                    </div>
-                                    @endif
+                                        <div class="col-5">
+                                            @if($data->status == 8)
+                                                <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
+                                                    Change Status to "Delivered"
+                                                </button>
+                                            @endif
+                                        </div>
                                     @endcan
-                                   
+
+                                    @can('reject_order')
+                                        <div class="col-3 ml-4">
+                                            @if($data->status == 8 || $data->status == 5 || $data->status == 2)
+                                                <button class="btn btn-danger" onclick="_rejectOrder('{{ $data->id }}')">
+                                                    Reject Order
+                                                </button>
+                                            @endif
+                                        </div>
+                                    @endcan
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Ordered Date') }}</span>

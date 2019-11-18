@@ -7,9 +7,10 @@
 @section('scripts')
     @include("transaction::js")
     @include("transaction::js-template")
-    <script src="{{ nbs_asset('js/order.js') }}"></script>
-    <script src="{{ nbs_asset('js/order-internal-notes.js') }}"></script>
-    <script src="{{ nbs_asset('js/mustache.min.js') }}"></script>
+    <script src="{{ asset('js/order.js') }}"></script>
+    <script src="{{ mix('js/order-internal-notes.js') }}"></script>
+    <script src="{{ mix('js/reject-order.js') }}"></script>
+    <script src="{{ asset('js/mustache.min.js') }}"></script>
 @endsection
 
 @section('content')

@@ -18,6 +18,7 @@ use Bromo\Transaction\Models\OrderDeliveryTracking;
 use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
+use Bromo\Transaction\Models\OrderStatus;
 use Bromo\Transaction\Services\ShipperShippingApiService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -309,5 +310,29 @@ class OrderController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function rejectOrder(Request $request, $id){
+
+        $notes = $request->input('reject_notes');
+
+        $order = Order::findOrFail($id);
+        $order->status = OrderStatus::REJECTED;
+        
+        $log = new OrderLog;
+        $log_version = OrderLog::where('id', $id)->orderBy('version', 'desc')->first()->version;
+        $log->id = $id;
+        $log->version = $log_version+1;
+        $log->modified_by = auth()->user()->id;
+        $log->modifier_role = auth()->user()->role_id;
+        $log->notes = $notes;
+        
+        $order->save();
+        $log->save();
+
+        return response()->json([
+            "status" => "Success",
+        ]);
+    }
+
 }
 

@@ -136,7 +136,7 @@ function _changeStatus( order_id ){
 
         Swal.fire({                              
           // grow: 'fullscreen',
-          title: '<strong>Internal Notes</strong>',
+          title: '<strong>Edit Order Status</strong>',
           type: '',
           showCloseButton: false,
           showCancelButton: false,
