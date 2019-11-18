@@ -170,12 +170,14 @@
                                         <div class="m-widget28__tab-item">
                                             <span>
                                                 {{ __('Package Weight') }}
-                                                {{-- @if(isset($shippingManifest))
-                                                    <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
-                                                        <i class="fa fa-edit"></i>
-                                                        Edit
-                                                    </button>
-                                                @endif --}}
+                                                @if(isset($shippingManifest))
+                                                    @if(!isset($usingNinjavan))
+                                                        <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
+                                                            <i class="fa fa-edit"></i>
+                                                            Edit
+                                                        </button>
+                                                    @endif
+                                                @endif
                                             </span>
                                             <span>
                                                 @if(isset($shippingManifest))

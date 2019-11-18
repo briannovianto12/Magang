@@ -18,12 +18,15 @@ use Bromo\Transaction\Models\OrderDeliveryTracking;
 use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
+use Bromo\Transaction\Services\ShipperShippingApiService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use Modules\Bromo\HostToHost\Services\RequestService;
 use DB;
 use Carbon\Carbon;
 
@@ -211,6 +214,9 @@ class OrderController extends Controller
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
         $data['deliveryTrackings'] = null;
+        if($data['data']->shipping_courier_id == 1){
+            $data['usingNinjavan'] = true;
+        }
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
                 $data['shippingInsuranceRate'] = 0;
@@ -260,20 +266,19 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getShippingManifestInfo($order_id){
+    public function getOrderInfo($order_id){
         $orderShippingManifest = OrderShippingManifest::where('order_id', $order_id)->first();
-        $currWeight = ceil($orderShippingManifest->weight/1000);
-        $currCost = $orderShippingManifest->cost;
+        $order = Order::where('id', $order_id)->first();
+        $currWeight = ceil($order->shipping_weight/1000);
+        $currCost = $order->shipping_service_snapshot['shipper']['finalRate'];
         if(!empty($orderShippingManifest->weight_correction) && !empty($orderShippingManifest->shipping_cost_correction)){
             $currWeight = ceil($orderShippingManifest->weight_correction/1000);
             $currCost = $orderShippingManifest->shipping_cost_correction;
         }
-        $orderShippingManifest->order_id = strval($orderShippingManifest->order_id);
         return response()->json([
             "data" => $orderShippingManifest,
-            "data" => $orderShippingManifest->order_id,
             "ids" => [
-                'order_id' => strval($orderShippingManifest->order_id),
+                'order_id' => strval($order->id),
                 'shipping_manifest_id' => strval($orderShippingManifest->id),
             ],
             "curr_detail" => [
@@ -292,44 +297,17 @@ class OrderController extends Controller
         $shippingManifest->weight_correction = $newweight;
         $shippingManifest->shipping_cost_correction = $newcost;
         $shippingManifest->save();
-
-        return response()->json([
-            "status" => "Success",
-        ]);
+        $service = new ShipperShippingApiService();
+        try {
+            $new_weight = $newweight/1000;
+            return $service->updateOrder($shippingManifest->tracking_id, $new_weight);
+        }catch (\Exception $exception) {
+            report($exception);
+            return response()->json([
+                'status' => 'Failed',
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
-
-    public function getOrderInfo($order_id)
-    {
-        $order = Order::find($order_id);
-
-        return response()->json([
-            "data" => $order
-        ]);
-    }
-
-    public function getOrderInternalNotes($order_id)
-    {
-        $internal_notes = OrderInternalNotes::where('order_id', $order_id)->orderBy('created_at')->get();
-
-        return response()->json([
-            "data" => $internal_notes,
-            "order_id" => $order_id
-        ]);
-    }
-
-    public function addNewInternalNotes(Request $request, $order_id)
-    {
-        $new_internal_notes = new OrderInternalNotes;
-        $new_internal_notes->order_id = $order_id;
-        $new_internal_notes->internal_notes = $request->input('notes');
-        $new_internal_notes->inputted_by = auth()->user()->id;
-        $new_internal_notes->inputter_role = auth()->user()->role_id;
-        $new_internal_notes->save();
-
-        return response()->json([
-            "status" => "Success",
-        ]);
-    }
-
 }
 
