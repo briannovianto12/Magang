@@ -23,12 +23,12 @@ class RefundDatatable extends DataTable
                 return $data->updated_at_formatted;
             })
             ->editColumn('order_refunded', function ($data) {
-                $text = "false";
+                $text = "No";
                 if($data->order_refunded == true){
-                    $text = "True";
+                    $text = "Yes";
                 }
                 else{
-                    $text = "False";
+                    $text = "No";
                 }
                 return $text;
             })
@@ -43,7 +43,13 @@ class RefundDatatable extends DataTable
                 }
                 return view('theme::layouts.includes.actions', $action);
             })
-            ->rawColumns(['action'])
+            ->editColumn('payment_amount', function ($data) {
+                return number_format($data->payment_amount, 0, 0, '.');
+            })
+            ->editColumn('refund_date', function ($data) {
+                return date("d M Y", strtotime($data->refund_date));
+            })
+            ->rawColumns(['action', 'payment_amount', 'refund_date'])
             ->make(true);
     }
 
