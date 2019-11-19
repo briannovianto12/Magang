@@ -137,6 +137,9 @@
         
                 </div>
             </div>
+            <div class="mt-5" id="shipper-list-error">
+                <h5>No Data</h5><br>
+            </div>
         </div>
     </div>
 @endsection

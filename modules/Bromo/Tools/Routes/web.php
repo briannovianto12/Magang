@@ -25,4 +25,3 @@ Route::prefix('tools')->group(function() {
         Route::name('shipping-simulation.simulateShipping')->get('/simulate', 'ShippingSimulationController@simulateShipping');
     });
 });
-
