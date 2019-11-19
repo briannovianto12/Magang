@@ -334,5 +334,29 @@ class OrderController extends Controller
         ]);
     }
 
+    public function getOrderInternalNotes($order_id)
+    {
+        $internal_notes = OrderInternalNotes::where('order_id', $order_id)->orderBy('created_at')->get();
+
+        return response()->json([
+            "data" => $internal_notes,
+            "order_id" => $order_id
+        ]);
+    }
+
+    public function addNewInternalNotes(Request $request, $order_id)
+    {
+        $new_internal_notes = new OrderInternalNotes;
+        $new_internal_notes->order_id = $order_id;
+        $new_internal_notes->internal_notes = $request->input('notes');
+        $new_internal_notes->inputted_by = auth()->user()->id;
+        $new_internal_notes->inputter_role = auth()->user()->role_id;
+        $new_internal_notes->save();
+
+        return response()->json([
+            "status" => "Success",
+        ]);
+    }
+
 }
 
