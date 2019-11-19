@@ -19,7 +19,7 @@ class ShippingSimulationController extends Controller
      */
     public function index()
     {
-        $data['provinces'] = Province::where('id', 'like', '200%')->get();
+        $data['provinces'] = Province::where('id', 'like', '200%')->orderBy('name', 'asc')->get();
         
         return view('tools::shipping-simulation', $data);
     }
@@ -84,65 +84,39 @@ class ShippingSimulationController extends Controller
         //
     }
 
-    public function getCities($province_id){
-
-        $cities = City::where('province_id', $province_id)->where('id', 'like', '200%')->get();
-
-        return response()->json([
-            "cities" => $cities,
-        ]);
-    }
-
-    public function getDistricts($city_id){
-
-        $districts = District::where('city_id', $city_id)->where('id', 'like', '200%')->get();
-
-        return response()->json([
-            "districts" => $districts,
-        ]);
-    }
-
-    public function getSubdistricts($district_id){
-
-        $subdistricts = Subdistrict::where('district_id', $district_id)->where('id', 'like', '200%')->get();
-
-        return response()->json([
-            "subdistricts" => $subdistricts,
-        ]);
-    }
-
-    public function getPostalCode($subdistrict_id){
-
-        $postal_code = Subdistrict::whereRaw("id, $subdistrict_id")->first()->postal_code;
-
-        return response()->json([
-            "postal_code" => $postal_code,
-        ]);
-    }
-
     public function simulateShipping(Request $request){
 
         $service = new ShipperShippingApiService;
         $response = json_decode($service->simulateShipping($request->all()));
         $shipping_methods = $response->data->logistic;
-        foreach($shipping_methods as $shipping_method){
-            if($shipping_method->name == "regular"){
-                $regular_shippers[] = $shipping_method;
+        $data = null;
+        
+        if(!empty($shipping_methods)){
+            foreach($shipping_methods as $shipping_method){
+                if($shipping_method->name == "regular"){
+                    $regular_shippers[] = $shipping_method;
+                }
+                else if($shipping_method->name == "express"){
+                    $express_shippers[] = $shipping_method;
+                }
+                else if($shipping_method->name == "trucking"){
+                    $trucking_shippers[] = $shipping_method;
+                }
             }
-            else if($shipping_method->name == "express"){
-                $express_shippers[] = $shipping_method;
+            
+            if(!empty($regular_shippers)){
+                $data['regular_shippers'] = $regular_shippers;
             }
-            else if($shipping_method->name == "trucking"){
-                $trucking_shippers[] = $shipping_method;
+            if(!empty($express_shippers)){
+                $data['express_shippers'] = $express_shippers;
+            }
+            if(!empty($trucking_shippers)){
+                $data['trucking_shippers'] = $trucking_shippers;
             }
         }
-        
-        $data['regular_shippers'] = $regular_shippers;
-        $data['express_shippers'] = $express_shippers;
-        $data['trucking_shippers'] = $trucking_shippers;
 
         return response()->json([
             "shippers" => $data,
-        ]);;
+        ]);
     }
 }

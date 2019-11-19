@@ -85,8 +85,8 @@ class PostalCodeFinderController extends Controller
 
     public function getCities($province_id){
 
-        $cities = City::where('province_id', $province_id)->where('id', 'like', '200%')->get();
-
+        $cities = City::where('province_id', $province_id)->where('id', 'like', '200%')->orderBy('name', 'asc')->get();
+        
         return response()->json([
             "cities" => $cities,
         ]);
@@ -94,7 +94,7 @@ class PostalCodeFinderController extends Controller
 
     public function getDistricts($city_id){
 
-        $districts = District::where('city_id', $city_id)->where('id', 'like', '200%')->get();
+        $districts = District::where('city_id', $city_id)->where('id', 'like', '200%')->orderBy('name', 'asc')->get();
 
         return response()->json([
             "districts" => $districts,
@@ -103,7 +103,7 @@ class PostalCodeFinderController extends Controller
 
     public function getSubdistricts($district_id){
 
-        $subdistricts = Subdistrict::where('district_id', $district_id)->where('id', 'like', '200%')->get();
+        $subdistricts = Subdistrict::where('district_id', $district_id)->where('id', 'like', '200%')->orderBy('name', 'asc')->get();
         
         return response()->json([
             "subdistricts" => $subdistricts,
