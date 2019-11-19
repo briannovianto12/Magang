@@ -135,7 +135,7 @@
                 </a>
             </li>
             @endcan
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
                 <a href="{{ route('tools.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-wrench"></i>
                     <span class="m-menu__link-text">Tools</span>
