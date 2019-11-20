@@ -135,12 +135,14 @@
                 </a>
             </li>
             @endcan
+            @can('view_tools')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
                 <a href="{{ route('tools.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-wrench"></i>
                     <span class="m-menu__link-text">Tools</span>
                 </a>
             </li>
+            @endcan
             @can('view_logistic_organizer')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('logistic.mobile-index') }}" aria-haspopup="true">
                 <a href="{{ route('logistic.mobile-index') }}" class="m-menu__link">
