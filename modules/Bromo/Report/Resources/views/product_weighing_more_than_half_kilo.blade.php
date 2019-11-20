@@ -1,5 +1,9 @@
 @extends('theme::layouts.master')
 
+@section('scripts')
+    @include('report::js')
+@endsection
+
 @section('content')
 
     @component('components._portlet',[
@@ -28,7 +32,17 @@
                                 <tbody>
                                     @foreach($table as $row)
                                     <tr>
-                                        <td> {{$row->product_id }} </td>
+                                        <td>
+                                            <span id="product-id-span">
+                                                {{$row->product_id }}
+                                            </span> 
+                                            <span>
+                                                <button id="product-id-cpy-btn" class="btn btn-sm">
+                                                    <i class="fa fa-clone"></i>
+                                                    Copy
+                                                </button>
+                                            </span>
+                                        </td>
                                         <td> {{$row->product_name }} </td>
                                         <td> {{$row->weight }} </td>
                                         <td> {{$row->shop_id }} </td>
