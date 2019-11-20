@@ -33,6 +33,35 @@ abstract class OrderDatatable extends DataTable
                     return '<div class="fas fa-times-circle" style="color: red"></div>';
                 }
             })
+            ->editColumn('status_name', function ($data) {
+                if($data->orderStatus->id == 1){
+                    return '<div style="color: #696969">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 2){
+                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 4){
+                    return '<div style="color: #696969">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 5){
+                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 6){
+                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 7){
+                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 8){
+                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 9){
+                    return '<div style="color: #02BFB5">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 10){
+                    return '<div style="color: #27AE60">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 20){
+                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 21){
+                    return '<div style="color: #27AE60">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 30){
+                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                }else if($data->orderStatus->id == 31){
+                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                }
+            })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
             })
@@ -60,7 +89,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up'])
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up', 'status_name'])
             ->make(true);
     }
 
