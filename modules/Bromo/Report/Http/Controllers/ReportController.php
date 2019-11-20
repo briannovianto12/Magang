@@ -93,7 +93,7 @@ class ReportController extends Controller
 
     public function getProductOverHalfKilo(Request $request)
     {        
-        $data['table'] = \DB::select("SELECT * FROM vw_product_w_with_more_than_half_a_kilo");
+        $data['table'] = \DB::select("SELECT * FROM vw_product_w_with_more_than_half_a_kilo ORDER BY weight DESC");
         $data['table'] = $this->arrayPaginator($data['table'], $request);
         return view('report::product_weighing_more_than_half_kilo', $data);
         
