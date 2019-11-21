@@ -135,6 +135,12 @@
                 </a>
             </li>
             @endcan
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('banner.index') }}" aria-haspopup="true">
+                <a href="{{ route('banner.index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-photo"></i>
+                    <span class="m-menu__link-text">Banner</span>
+                </a>
+            </li>
             @can('view_tools')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
                 <a href="{{ route('tools.index') }}" class="m-menu__link">
