@@ -18,7 +18,7 @@ class PostalCodeFinderController extends Controller
      */
     public function index()
     {
-        $data['provinces'] = Province::where('id', 'like', '200%')->get();
+        $data['provinces'] = Province::where('id', 'like', '200%')->orderBy('name', 'asc')->get();
         
         return view('tools::postal-code-finder', $data);
     }
