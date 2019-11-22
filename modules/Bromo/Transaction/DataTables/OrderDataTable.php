@@ -35,31 +35,31 @@ abstract class OrderDatatable extends DataTable
             })
             ->editColumn('status_name', function ($data) {
                 if($data->orderStatus->id == 1){
-                    return '<div style="color: #696969">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-placed">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 2){
-                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-accepted">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 4){
-                    return '<div style="color: #696969">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-payment-pending">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 5){
-                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-payment-ok">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 6){
-                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-packaging">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 7){
-                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-packaged">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 8){
-                    return '<div style="color: #8A2BE2">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-shipped">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 9){
-                    return '<div style="color: #02BFB5">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-delivered">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 10){
-                    return '<div style="color: #27AE60">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-success">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 20){
-                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-complained">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 21){
-                    return '<div style="color: #27AE60">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-complained-resolved">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 30){
-                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-canceled">'.$data->orderStatus->name.'</span>';
                 }else if($data->orderStatus->id == 31){
-                    return '<div style="color: #FF0000">'.$data->orderStatus->name.'</div>';
+                    return '<span class="badge badge-rejected">'.$data->orderStatus->name.'</span>';
                 }
             })
             ->addColumn('seller_name', function ($data) {
