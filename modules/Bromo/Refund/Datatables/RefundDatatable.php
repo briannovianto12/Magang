@@ -44,7 +44,7 @@ class RefundDatatable extends DataTable
                 return view('theme::layouts.includes.actions', $action);
             })
             ->editColumn('payment_amount', function ($data) {
-                return number_format($data->payment_amount, 0, 0, '.');
+                return '<div style="text-align:right">'.number_format($data->payment_amount, 0, 0, '.').'</div>';
             })
             ->editColumn('refund_date', function ($data) {
                 return date("d M Y", strtotime($data->refund_date));
