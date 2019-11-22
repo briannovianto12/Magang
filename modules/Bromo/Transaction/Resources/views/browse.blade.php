@@ -2,6 +2,7 @@
 
 @section('css')
     <link href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{  mix('css/transaction.css') }}">
 @endsection
 
 @section('scripts')
