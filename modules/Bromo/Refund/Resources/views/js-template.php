@@ -11,26 +11,20 @@
 
             <div>
                 <br/>
-                <strong>Input Refunded Date :<br/> 
+                <strong>Input Refund Details:<br/> 
                 </strong>
                 <br/>
             </div>
 
             <form id="form-edit-product">
                 <div class="form-group">
-                    <label for="refundDateInput" class="col-2 col-form-label"><strong>Date</strong></label>
-                    <div class="col">
-                        <input class="form-control" type="date" id="refundDateInput">
-                    </div>
-                    <label for="refundTimeInput" class="col-2 col-form-label"><strong>Time</strong></label>
-                    <div class="col">
-                        <input class="form-control" type="time" value="00:00:00" id="refundTimeInput">
-                    </div>
-                    <label for="refundNotes" class="col-2 col-form-label"><strong>Notes</strong></label>
-                    <div class="col">
-                        <input class="form-control" type="text" placeholder="Notes" id="refundNotes">
-                    </div>
-                   <button data-product-id="{{ id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnRefundOrder">Update Refund Status</button>
+                    <input style="width: 100%" required data-toggle="datepicker" class="form-control-lg" id="refundDateInput" name="refundDateInput" type="text" readonly placeholder="Tanggal Refund" />
+                </div>
+                <div class="form-group">
+                    <textarea style="width: 100%; height: 120px" class="form-control-lg" id="refundNotes" name="refundNotes" placeholder="Catatan Refund"></textarea>
+                </div>
+                   
+                <button data-product-id="{{ id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnRefundOrder">Update Refund Status</button>
                 </div>
             </form>
         </div>
