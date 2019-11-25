@@ -114,7 +114,28 @@ class ReportController extends Controller
                     $end = Carbon::parse($request->to_date);
                 }
             }
-            $data = DB::select(DB::raw("
+            $data = $this->totalBuyQuery($start, $end);
+
+            return datatables()->of($data)
+            ->editColumn('total_gross', function ($data) {
+                return '<div style="text-align:right">'.number_format($data->total_gross, 0, 0, '.').'</div>';
+            })
+            ->editColumn('count', function ($data) {
+                return '<div style="text-align:right">'.$data->count.'</div>';
+            })
+            ->rawColumns(['total_gross', 'count'])
+            ->make(true);
+        }
+
+        return view('report::total_buy_count', $data = [
+            'start' => $start,
+            'end' => $end
+        ]);
+        
+    }
+
+    private function totalBuyQuery($start, $end) {
+        $query = DB::select(DB::raw("
                 WITH summary as (
                     SELECT A.id, order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, 
                     business_id, B.name,
@@ -122,7 +143,7 @@ class ReportController extends Controller
                     FROM order_trx A
                     INNER JOIN business B ON A.business_id = B.id
                     WHERE payment_status = 10
-                    AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN '$start' AND '$end'
+                    AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN ? AND ?
                     ORDER BY to_char(A.created_at,'YYYY-MM-DD'), business_id
                 ), summary_with_count AS ( 
                     SELECT 
@@ -145,24 +166,11 @@ class ReportController extends Controller
                 JOIN business_member Z ON X.business_id = Z.business_id AND Z.role = 1 --Owner
                 JOIN user_profile ZZ ON Z.user_id = ZZ.id
                 WHERE row_number = 1;
-            "));
+            ")
+        ,[$start, $end]);
+    
+            return $query;
 
-            return datatables()->of($data)
-            ->editColumn('total_gross', function ($data) {
-                return '<div style="text-align:right">'.number_format($data->total_gross, 0, 0, '.').'</div>';
-            })
-            ->editColumn('count', function ($data) {
-                return '<div style="text-align:right">'.$data->count.'</div>';
-            })
-            ->rawColumns(['total_gross', 'count'])
-            ->make(true);
-        }
-
-        return view('report::total_buy_count', $data = [
-            'start' => $start,
-            'end' => $end
-        ]);
-        
     }
 
     public function getStoreWithActiveStatus(Request $request)
@@ -188,7 +196,7 @@ class ReportController extends Controller
             $fileName = "shopWithFewProduct";
         }
         else if($request->is('report/total-buy-count/*')){
-            $writer = $this->exportTotalBuyCount();
+            $writer = $this->exportTotalBuyCount($request);
             $fileName = "totalBuyCount";
         }
         else if($request->is('report/has_product/*')){
@@ -216,8 +224,21 @@ class ReportController extends Controller
         return $response;
     }
 
-    private function exportTotalBuyCount(){
-        $data = \DB::select("SELECT name, count, total_gross, full_name, province, city, order_date FROM vw_buyer_totalbuy_count_filter");
+    public function exportTotalBuyCount(Request $request){
+        $start = Carbon::now()->subDays(7);
+        $end = Carbon::now();        
+
+        if(!empty($request->query('from_date')) && !empty($request->query('to_date'))){
+            $start = Carbon::parse($request->from_date);
+            $end = Carbon::parse($request->to_date);
+            if($request->from_date == $request->to_date){
+                $start = Carbon::parse($request->from_date)->subDay();
+                $end = Carbon::parse($request->to_date);
+            }
+        }
+
+        $data = $this->totalBuyQuery($start, $end);
+        
         $spreadsheet = new Spreadsheet();
         $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
         $sheet = $spreadsheet->getActiveSheet();
@@ -227,7 +248,7 @@ class ReportController extends Controller
         $sheet->setCellValue('D1', 'Full Name');
         $sheet->setCellValue('E1', 'Province');
         $sheet->setCellValue('F1', 'City');
-        $sheet->setCellValue('G1', 'Order Date');
+        // $sheet->setCellValue('G1', 'Order Date');
         $rows = 2;
         
         foreach($data as $data){
@@ -237,7 +258,7 @@ class ReportController extends Controller
             $sheet->setCellValue('D' . $rows, $data->full_name);
             $sheet->setCellValue('E' . $rows, $data->province);
             $sheet->setCellValue('F' . $rows, $data->city);
-            $sheet->setCellValue('G' . $rows, $data->order_date);
+            // $sheet->setCellValue('G' . $rows, $data->order_date);
             $rows++;
         }
 
