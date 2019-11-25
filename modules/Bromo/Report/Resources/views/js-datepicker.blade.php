@@ -43,10 +43,6 @@
                     {
                         'data':'city',
                         'name':'city'
-                    },
-                    {
-                        'data':'order_date',
-                        'name':'order_date'
                     }
                     ],
                     "iDisplayLength": 25,

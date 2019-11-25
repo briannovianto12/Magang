@@ -54,7 +54,6 @@
                                         <th>Full Name</th>
                                         <th>Province</th>
                                         <th>City</th>
-                                        <th>Order Date</th>
                                     </tr>
                                 </thead>
                             </table>

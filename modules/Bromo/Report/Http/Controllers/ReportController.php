@@ -116,31 +116,35 @@ class ReportController extends Controller
             }
             $data = DB::select(DB::raw("
                 WITH summary as (
-                    SELECT order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, business_id, B.name,
+                    SELECT A.id, order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, 
+                    business_id, B.name,
                     (A.payment_details->>'total_gross')::numeric as gross_amount
                     FROM order_trx A
                     INNER JOIN business B ON A.business_id = B.id
-                    
                     WHERE payment_status = 10
                     AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN '$start' AND '$end'
-                    GROUP BY order_no, business_id, B.name, to_char(A.created_at,'YYYY-MM-DD'), (A.payment_details->>'total_gross')::numeric
                     ORDER BY to_char(A.created_at,'YYYY-MM-DD'), business_id
+                ), summary_with_count AS ( 
+                    SELECT 
+                      x.business_id, 
+                      name, 
+                      COUNT(1), 
+                      SUM(gross_amount) as total_gross
+                      FROM summary x
+                      GROUP BY x.business_id, name
+                ), summary_with_address AS (
+                    SELECT SWC.business_id, name, count, total_gross, BA.id as address_id, 
+                    ROW_NUMBER() OVER (PARTITION BY SWC.business_id ORDER BY SWC.business_id)
+                    FROM summary_with_count SWC JOIN business_address BA ON SWC.business_id = BA.business_id
                 )
-                SELECT 
-                x.business_id, 
-                name, 
-                COUNT(1), 
-                SUM(gross_amount) as total_gross, 
-                order_date,
-                zz.full_name,
-                min(y.province::text) AS province,
-                min(y.city::text) AS city
-                FROM summary x
-                JOIN business_address y ON x.business_id::bigint = y.business_id
-                JOIN business_member z ON x.business_id::bigint = z.business_id AND z.role = 1
-                JOIN user_profile zz ON z.user_id = zz.id
-                GROUP BY x.order_no, x.business_id, name, order_date, zz.full_name
-                ORDER BY x.order_no DESC
+                SELECT X.business_id, name, count, total_gross,
+                  Y.province, Y.city,
+                  ZZ.full_name
+                FROM summary_with_address X
+                JOIN business_address Y ON X.address_id = Y.id
+                JOIN business_member Z ON X.business_id = Z.business_id AND Z.role = 1 --Owner
+                JOIN user_profile ZZ ON Z.user_id = ZZ.id
+                WHERE row_number = 1;
             "));
 
             return datatables()->of($data)
