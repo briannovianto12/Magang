@@ -6,7 +6,8 @@
             $('.input-daterange').datepicker({
                 todayBtn:'linked',
                 format:'yyyy-mm-dd',
-                autoclose:true
+                autoclose:true,
+                orientation: "bottom auto",
             });
         
             load_data();
@@ -43,10 +44,6 @@
                     {
                         'data':'city',
                         'name':'city'
-                    },
-                    {
-                        'data':'order_date',
-                        'name':'order_date'
                     }
                     ],
                     "iDisplayLength": 25,
@@ -82,6 +79,24 @@
                 $('#to_date').val('');
                 $('#total-count-table').DataTable().destroy();
                 load_data();
+            });
+
+            $('#exportTotalBuy').click(function(){
+                var from_date = $('#from_date').attr("placeholder");
+                var to_date = $('#to_date').attr("placeholder");
+                
+                if($('#to_date').val() != ''){
+                    to_date = $('#to_date').val();
+                }
+                if($('#from_date').val() != ''){
+                    from_date = $('#from_date').val();
+                }
+                
+                if(from_date != '' &&  to_date != '' && (new Date(to_date) - new Date(from_date))/1000/60/60/24 <= 60){
+                    window.open( '/report/total-buy-count/export/xlsx?from_date=' + from_date + '&to_date=' + to_date , '_blank')
+                }else{
+                    alert((new Date(to_date) - new Date(from_date))/1000/60/60/24);
+                }
             });
         });
 </script>

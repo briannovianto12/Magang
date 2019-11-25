@@ -32,6 +32,12 @@
     @isset($edit_weight)
         <a href="#" onclick="_editWeight('{{$edit_weight}}' )" title="Edit">{{ $weight }}</a>
     @endisset
+    @isset($change_refund_status)
+        <a href="#" onclick="_refundOrder('{{$change_refund_status}}' )"
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Change Status Refund"><i class="la la-edit"></i>
+        </a>
+    @endisset
     @isset($internal_notes)
         <a href="#" onclick="_internalNotes('{{$internal_notes}}' )" title="Internal Notes">Internal Notes</a>
     @endisset

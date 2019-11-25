@@ -26,7 +26,7 @@
         @slot('body')
             {{-- @can('view_total_buy_count') --}}
                 <div>
-                    <a href="{{ route('report.total-buy-count.export') }}" class="btn btn-success">Export to .xlsx</a>
+                    <a href="#" id="exportTotalBuy" class="btn btn-success">Export to .xlsx</a>
                     <br/><br/>
                     <div class="row input-daterange">
                         <div class="col-md-3">
@@ -49,12 +49,11 @@
                                 <thead>
                                     <tr>
                                         <th>Buyer Business Name</th>
-                                        <th>Total Bought Product</th>
+                                        <th>Total Order Paid</th>
                                         <th>Total Gross</th>
                                         <th>Full Name</th>
                                         <th>Province</th>
                                         <th>City</th>
-                                        <th>Order Date</th>
                                     </tr>
                                 </thead>
                             </table>

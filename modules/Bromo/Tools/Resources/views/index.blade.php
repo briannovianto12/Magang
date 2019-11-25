@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    @can('view_tools')
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
@@ -27,14 +28,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <td>
-                        <a href="{{ route('postalCodeFinder.index') }}">
-                            Postal Code Finder
-                        </a>
-                    </td>
+                    <tr>
+                        <td>
+                            <a href="{{ route('postalCodeFinder.index') }}">
+                                Postal Code Finder
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ route('shipping-simulation.index') }}">
+                                Shipping Simulation
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    @endcan
 
 @endsection

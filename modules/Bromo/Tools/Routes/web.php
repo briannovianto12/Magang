@@ -20,5 +20,8 @@ Route::prefix('tools')->group(function() {
         Route::name('postalCodeFinder.getSubdistricts')->get('/district/{district_id}', 'PostalCodeFinderController@getSubdistricts');
         Route::name('postalCodeFinder.getPostalCode')->get('/subdistrict/{subdistrict_id}', 'PostalCodeFinderController@getPostalCode');
     });
+    Route::resource('shipping-simulation', 'ShippingSimulationController')->except('show');;
+    Route::prefix('shipping-simulation')->group(function() {
+        Route::name('shipping-simulation.simulateShipping')->get('/simulate', 'ShippingSimulationController@simulateShipping');
+    });
 });
-

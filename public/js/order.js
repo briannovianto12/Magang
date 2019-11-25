@@ -48,14 +48,13 @@ window.swalQuestion = function ( title, text, type, input, inputOptions) {
 }
 
 function _edit( order_id ){
-      var html = '';
 
       console.log(order_id);
-      $.get('/shipping-manifest-info/' + order_id)
+      $.get('/order-info/' + order_id)
       .done(function(data){
         var template = $('#edit').html();
         Mustache.parse(template);   // optional, speeds up future uses
-        html = Mustache.render(template, data);
+        var html = Mustache.render(template, data);
 
         Swal.fire({                              
           // grow: 'fullscreen',
@@ -70,21 +69,20 @@ function _edit( order_id ){
           width: 500,
           onOpen: function(){
             var currCost = parseInt($('#curr-cost').attr('placeholder').replace ( /[^\d.]/g, '' ));
-            var currWeight = parseFloat($('#curr-weight').attr('placeholder'));
-            var baseCost = currCost/(Math.ceil(currWeight)*1000);
+            var currWeight = Math.ceil(parseFloat($('#curr-weight').attr('placeholder')));
             var newWeight = 0;
             var newCost = 0;
             $('#new-weight').change(function(){
-                var newWeight = Math.ceil(parseInt($(this).val()))*1000;
-                var newCost = Math.ceil((newWeight)*baseCost);
+                newWeight = Math.ceil(parseInt($(this).val()));
+                newCost = Math.ceil(((newWeight)/Math.ceil(currWeight))*currCost);
                 $('#new-cost').attr('placeholder', "IDR ".concat(newCost.toString()).concat(".00"));
             });
 
             $('#btnUpdate').click(function(){
                 if(!confirm('Are you sure ?')) {
                     return
-                    }
-                var newWeight = parseFloat($('#new-weight').val())*1000;
+                }
+                var newWeight = Math.ceil(parseFloat($('#new-weight').val())*1000);
                 var newCost = parseInt($('#new-cost').attr('placeholder').replace ( /[^\d.]/g, '' ));
                 var shippingManifestId = data.ids.shipping_manifest_id;
                 console.log(shippingManifestId);
@@ -112,7 +110,6 @@ function _edit( order_id ){
                         );  
                     },
                     error: function(error){
-                        console.log(error)
                         $('#btnUpdate').attr('disabled', false)
                         swalError('Oopps ada kesalahan sistem')
                     }
@@ -139,7 +136,7 @@ function _changeStatus( order_id ){
 
         Swal.fire({                              
           // grow: 'fullscreen',
-          title: '<strong>Internal Notes</strong>',
+          title: '<strong>Edit Order Status</strong>',
           type: '',
           showCloseButton: false,
           showCancelButton: false,

@@ -3,6 +3,7 @@
 namespace Bromo\Transaction\DataTables;
 
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Builder;
 
 abstract class OrderDatatable extends DataTable
 {
@@ -32,6 +33,35 @@ abstract class OrderDatatable extends DataTable
                     return '<div class="fas fa-times-circle" style="color: red"></div>';
                 }
             })
+            ->editColumn('status_name', function ($data) {
+                if($data->orderStatus->id == 1){
+                    return '<span class="badge badge-placed">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 2){
+                    return '<span class="badge badge-accepted">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 4){
+                    return '<span class="badge badge-payment-pending">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 5){
+                    return '<span class="badge badge-payment-ok">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 6){
+                    return '<span class="badge badge-packaging">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 7){
+                    return '<span class="badge badge-packaged">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 8){
+                    return '<span class="badge badge-shipped">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 9){
+                    return '<span class="badge badge-delivered">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 10){
+                    return '<span class="badge badge-success">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 20){
+                    return '<span class="badge badge-complained">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 21){
+                    return '<span class="badge badge-complained-resolved">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 30){
+                    return '<span class="badge badge-canceled">'.$data->orderStatus->name.'</span>';
+                }else if($data->orderStatus->id == 31){
+                    return '<span class="badge badge-rejected">'.$data->orderStatus->name.'</span>';
+                }
+            })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
             })
@@ -59,7 +89,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up'])
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up', 'status_name'])
             ->make(true);
     }
 

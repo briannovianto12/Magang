@@ -93,7 +93,7 @@ class ReportController extends Controller
 
     public function getProductOverHalfKilo(Request $request)
     {        
-        $data['table'] = \DB::select("SELECT * FROM vw_product_w_with_more_than_half_a_kilo");
+        $data['table'] = \DB::select("SELECT * FROM vw_product_w_with_more_than_half_a_kilo ORDER BY weight DESC");
         $data['table'] = $this->arrayPaginator($data['table'], $request);
         return view('report::product_weighing_more_than_half_kilo', $data);
         
@@ -114,34 +114,7 @@ class ReportController extends Controller
                     $end = Carbon::parse($request->to_date);
                 }
             }
-            $data = DB::select(DB::raw("
-                WITH summary as (
-                    SELECT order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, business_id, B.name,
-                    (A.payment_details->>'total_gross')::numeric as gross_amount
-                    FROM order_trx A
-                    INNER JOIN business B ON A.business_id = B.id
-                    
-                    WHERE payment_status = 10
-                    AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN '$start' AND '$end'
-                    GROUP BY order_no, business_id, B.name, to_char(A.created_at,'YYYY-MM-DD'), (A.payment_details->>'total_gross')::numeric
-                    ORDER BY to_char(A.created_at,'YYYY-MM-DD'), business_id
-                )
-                SELECT 
-                x.business_id, 
-                name, 
-                COUNT(1), 
-                SUM(gross_amount) as total_gross, 
-                order_date,
-                zz.full_name,
-                min(y.province::text) AS province,
-                min(y.city::text) AS city
-                FROM summary x
-                JOIN business_address y ON x.business_id::bigint = y.business_id
-                JOIN business_member z ON x.business_id::bigint = z.business_id AND z.role = 1
-                JOIN user_profile zz ON z.user_id = zz.id
-                GROUP BY x.order_no, x.business_id, name, order_date, zz.full_name
-                ORDER BY x.order_no DESC
-            "));
+            $data = $this->totalBuyQuery($start, $end);
 
             return datatables()->of($data)
             ->editColumn('total_gross', function ($data) {
@@ -159,6 +132,45 @@ class ReportController extends Controller
             'end' => $end
         ]);
         
+    }
+
+    private function totalBuyQuery($start, $end) {
+        $query = DB::select(DB::raw("
+                WITH summary as (
+                    SELECT A.id, order_no, to_char(A.created_at,'YYYY-MM-DD') as order_date, 
+                    business_id, B.name,
+                    (A.payment_details->>'total_gross')::numeric as gross_amount
+                    FROM order_trx A
+                    INNER JOIN business B ON A.business_id = B.id
+                    WHERE payment_status = 10
+                    AND to_char(A.created_at,'YYYY-MM-DD') BETWEEN ? AND ?
+                    ORDER BY to_char(A.created_at,'YYYY-MM-DD'), business_id
+                ), summary_with_count AS ( 
+                    SELECT 
+                      x.business_id, 
+                      name, 
+                      COUNT(1), 
+                      SUM(gross_amount) as total_gross
+                      FROM summary x
+                      GROUP BY x.business_id, name
+                ), summary_with_address AS (
+                    SELECT SWC.business_id, name, count, total_gross, BA.id as address_id, 
+                    ROW_NUMBER() OVER (PARTITION BY SWC.business_id ORDER BY SWC.business_id)
+                    FROM summary_with_count SWC JOIN business_address BA ON SWC.business_id = BA.business_id
+                )
+                SELECT X.business_id, name, count, total_gross,
+                  Y.province, Y.city,
+                  ZZ.full_name
+                FROM summary_with_address X
+                JOIN business_address Y ON X.address_id = Y.id
+                JOIN business_member Z ON X.business_id = Z.business_id AND Z.role = 1 --Owner
+                JOIN user_profile ZZ ON Z.user_id = ZZ.id
+                WHERE row_number = 1;
+            ")
+        ,[$start, $end]);
+    
+            return $query;
+
     }
 
     public function getStoreWithActiveStatus(Request $request)
@@ -184,7 +196,7 @@ class ReportController extends Controller
             $fileName = "shopWithFewProduct";
         }
         else if($request->is('report/total-buy-count/*')){
-            $writer = $this->exportTotalBuyCount();
+            $writer = $this->exportTotalBuyCount($request);
             $fileName = "totalBuyCount";
         }
         else if($request->is('report/has_product/*')){
@@ -212,8 +224,21 @@ class ReportController extends Controller
         return $response;
     }
 
-    private function exportTotalBuyCount(){
-        $data = \DB::select("SELECT name, count, total_gross, full_name, province, city, order_date FROM vw_buyer_totalbuy_count_filter");
+    public function exportTotalBuyCount(Request $request){
+        $start = Carbon::now()->subDays(7);
+        $end = Carbon::now();        
+
+        if(!empty($request->query('from_date')) && !empty($request->query('to_date'))){
+            $start = Carbon::parse($request->from_date);
+            $end = Carbon::parse($request->to_date);
+            if($request->from_date == $request->to_date){
+                $start = Carbon::parse($request->from_date)->subDay();
+                $end = Carbon::parse($request->to_date);
+            }
+        }
+
+        $data = $this->totalBuyQuery($start, $end);
+        
         $spreadsheet = new Spreadsheet();
         $speadsheet = $spreadsheet->getDefaultStyle()->getFont()->setName('Courier');
         $sheet = $spreadsheet->getActiveSheet();
@@ -223,7 +248,7 @@ class ReportController extends Controller
         $sheet->setCellValue('D1', 'Full Name');
         $sheet->setCellValue('E1', 'Province');
         $sheet->setCellValue('F1', 'City');
-        $sheet->setCellValue('G1', 'Order Date');
+        // $sheet->setCellValue('G1', 'Order Date');
         $rows = 2;
         
         foreach($data as $data){
@@ -233,7 +258,7 @@ class ReportController extends Controller
             $sheet->setCellValue('D' . $rows, $data->full_name);
             $sheet->setCellValue('E' . $rows, $data->province);
             $sheet->setCellValue('F' . $rows, $data->city);
-            $sheet->setCellValue('G' . $rows, $data->order_date);
+            // $sheet->setCellValue('G' . $rows, $data->order_date);
             $rows++;
         }
 

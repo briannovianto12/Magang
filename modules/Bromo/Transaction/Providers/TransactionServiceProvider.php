@@ -55,6 +55,14 @@ class TransactionServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../Config/config.php', 'transaction'
         );
+
+        $this->publishes([
+            __DIR__ . '/../Config/shippingv2.php' => config_path('shippingv2.php'),
+        ], 'shippingv2');
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/shippingv2.php', 'shippingv2'
+        );
     }
 
     /**
