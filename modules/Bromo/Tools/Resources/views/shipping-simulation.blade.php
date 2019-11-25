@@ -125,16 +125,19 @@
                 </div>
             </form>
             <div id="shipper-list">
-                <div class="mt-5" id="regular-shipper-list">
-                    <h5>Regular Shipper - Waktu Pengiriman 1-3 Hari</h5><br>
+                <h5 id="regular-shipper-list-header" class="mt-5">Regular Shipper - Waktu Pengiriman 1-3 Hari</h5><br>
+                <div id="regular-shipper-list">
+                    
 
                 </div>
-                <div class="mt-5" id="express-shipper-list">
-                    <h5>Express Shipper - Waktu Pengiriman 1-2 Hari</h5><br>
+                <h5 id="express-shipper-list-header" class="mt-5">Express Shipper - Waktu Pengiriman 1-2 Hari</h5><br>
+                <div id="express-shipper-list">
+                    
         
                 </div>
-                <div class="mt-5" id="trucking-shipper-list">
-                    <h5>Trucking Shipper - Waktu Pengiriman 3-4 Hari</h5><br>
+                <h5 id="trucking-shipper-list-header" class="mt-5">Trucking Shipper - Waktu Pengiriman 3-4 Hari</h5><br>
+                <div id="trucking-shipper-list">
+                    
         
                 </div>
             </div>

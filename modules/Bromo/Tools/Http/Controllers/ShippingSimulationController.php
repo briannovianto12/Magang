@@ -90,7 +90,7 @@ class ShippingSimulationController extends Controller
         $response = json_decode($service->simulateShipping($request->all()));
         $shipping_methods = $response->data->logistic;
         $data = null;
-        
+        //dd($shipping_methods);
         if(!empty($shipping_methods)){
             foreach($shipping_methods as $shipping_method){
                 if($shipping_method->name == "regular"){

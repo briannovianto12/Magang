@@ -118,56 +118,71 @@ $( document ).ready(function() {
         $('#package-value').attr('value', "IDR ".concat(value.toString()).concat(".00"));
     });
     $("#btn-simulate").click(function(e) {
+        $("#shipper-list").hide();
+        $("#regular-shipper-list").empty();
+        $("#express-shipper-list").empty();
+        $("#trucking-shipper-list").empty();  
         e.preventDefault();
-        $.ajax({
-          method: 'GET',
-          url: '/tools/shipping-simulation/simulate',
-          contentType: 'Appiclation/Json',
-          dataType: 'json',
-          data: $('#simulation-form').serialize(),
-          processData: false,
-          success: function success(data) {
-            
-            if(data['shippers'] != null){
-                $("#shipper-list-error").hide();
-                if(data['shippers']['regular_shippers'] !== 'undefined'){
-                    if(data['shippers']['regular_shippers'][0]['options']['length'] != 0){
-                        data['shippers']['regular_shippers'][0]['options'].forEach(function(option){
-                            var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                            var html = '<div class="row"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
-                            $("#regular-shipper-list").append(html);
-                        });
-                        $("#regular-shipper-list").show();
+        if($('#package-weight').val() == "" || $('#package-value').val() == "" || $('#package-sizet').val() == "" || $('#destination-postal-code').val() == "" || $('#origin-postal-code').val() == ""){
+            alert("Please fill all the field!");
+        }else{
+            $.ajax({
+            method: 'GET',
+            url: '/tools/shipping-simulation/simulate',
+            contentType: 'Appiclation/Json',
+            dataType: 'json',
+            data: $('#simulation-form').serialize(),
+            processData: false,
+            success: function success(data) {
+                if(data['shippers'] != null){
+                    if(typeof data['shippers']['regular_shippers'] !== 'undefined'){
+                        if(data['shippers']['regular_shippers'][0]['options']['length'] != 0){
+                            data['shippers']['regular_shippers'][0]['options'].forEach(function(option){
+                                var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
+                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                $("#regular-shipper-list").append(html);
+                            });
+                            $("#regular-shipper-list").show();
+                        }
+                    }else{
+                        $("#regular-shipper-list-header").hide();
+                        $("#regular-shipper-list").hide();
                     }
-                }
-                if(data['shippers']['express_shippers'] !== 'undefined'){
-                    if(data['shippers']['express_shippers'][0]['options']['length'] != 0){
-                        data['shippers']['express_shippers'][0]['options'].forEach(function(option){
-                            var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                            var html = '<div class="row"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
-                            $("#express-shipper-list").append(html);
-                        });
-                        $("#express-shipper-list").show();
+                    if(typeof data['shippers']['express_shippers'] !== 'undefined'){
+                        if(data['shippers']['express_shippers'][0]['options']['length'] != 0){
+                            data['shippers']['express_shippers'][0]['options'].forEach(function(option){
+                                var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
+                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                $("#express-shipper-list").append(html);
+                            });
+                            $("#express-shipper-list").show();
+                        }
+                    }else{
+                        $("#express-shipper-list-header").hide();
+                        $("#express-shipper-list").hide();
                     }
-                }
-                if(data['shippers']['trucking_shippers'] !== 'undefined'){
-                    if(data['shippers']['trucking_shippers'][0]['options']['length'] != 0){
-                        data['shippers']['trucking_shippers'][0]['options'].forEach(function(option){
-                            var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                            var html = '<div class="row"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
-                            $("#trucking-shipper-list").append(html);
-                        });
-                        $("#trucking-shipper-list").show();
+                    if(typeof data['shippers']['trucking_shippers'] !== 'undefined'){
+                        if(data['shippers']['trucking_shippers'][0]['options']['length'] != 0){
+                            data['shippers']['trucking_shippers'][0]['options'].forEach(function(option){
+                                var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
+                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                $("#trucking-shipper-list").append(html);
+                            });
+                            $("#trucking-shipper-list").show();
+                        }
+                    }else{
+                        $("#trucking-shipper-list-header").hide();
+                        $("#trucking-shipper-list").hide();
                     }
+                    $("#shipper-list").show();
                 }
-                $("#shipper-list").show();
+                else{
+                    $("#shipper-list").hide();
+                    $("#shipper-list-error").show();
+                }
             }
-            else{
-                $("#shipper-list").hide();
-                $("#shipper-list-error").show();
-            }
-          }
-        });
+            });
+        }
         
     });
     
