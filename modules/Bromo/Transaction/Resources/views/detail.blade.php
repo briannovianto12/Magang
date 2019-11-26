@@ -180,7 +180,7 @@
                                             <span>
                                                 {{ __('Package Weight') }}
                                                 @if(isset($shippingManifest))
-                                                    @if(!isset($usingNinjavan))
+                                                    @if(!isset($unsupportedShipper))
                                                         <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                             <i class="fa fa-edit"></i>
                                                             Edit

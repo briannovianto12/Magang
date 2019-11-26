@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippingCourier extends Model
 {
+
+    CONST SHIPPING_PROVIDER_NINJAVAN = 1;
+    CONST SHIPPING_PROVIDER_KURIR_EKSPEDISI = 3;
     const CREATED_AT = null;
+
     /**
      * The attributes that should be cast to native types.
      *
