@@ -19,6 +19,7 @@ class Shop extends Model
         VersionModelTrait;
 
     public $casts = [
+        'id' => 'string',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp'
     ];
