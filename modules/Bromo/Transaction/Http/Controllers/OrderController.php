@@ -19,6 +19,7 @@ use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
 use Bromo\Transaction\Models\OrderStatus;
+use Bromo\Transaction\Models\ShippingCourier;
 use Bromo\Transaction\Services\ShipperShippingApiService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -215,8 +216,8 @@ class OrderController extends Controller
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
         $data['deliveryTrackings'] = null;
-        if($data['data']->shipping_courier_id == 1){
-            $data['usingNinjavan'] = true;
+        if($data['data']->shippingCourier->provider_id == ShippingCourier::SHIPPING_PROVIDER_KURIR_EKSPEDISI || $data['data']->shippingCourier->provider_id == ShippingCourier::SHIPPING_PROVIDER_NINJAVAN){
+            $data['unsupportedShipper'] = true;
         }
         if(!empty($data['data']['shipping_service_snapshot']['shipper'])){
             if ( empty($data['data']['shipping_service_snapshot']['shipper']['use_insurance']) ) {
