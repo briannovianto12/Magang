@@ -15,6 +15,9 @@
           'portlet_head' => true,
           'portlet_title' => "List of {$title}"])
         @slot('body')
+            @can('view_popular_shops')
+                <a href="{{ route('popular-shop.index') }}" class="btn btn-link">Go to Popular Shops</a>
+            @endcan
             @can('view_store')
                 {!! $dataTable->table() !!}
             @endcan
