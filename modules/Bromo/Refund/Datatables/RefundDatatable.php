@@ -75,8 +75,7 @@ class RefundDatatable extends DataTable
          )
         ->join('shop', 'shop.id', '=', 'order_refund.shop_id')
         ->join('user_profile', 'user_profile.id', '=', 'order_refund.buyer_id')
-        ->join('order_trx', 'order_trx.id', '=', 'order_refund.order_id')
-        ->orderBy('order_refund.id');
+        ->join('order_trx', 'order_trx.id', '=', 'order_refund.order_id');
 
         return $this->applyScopes($query);
     }
