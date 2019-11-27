@@ -41,5 +41,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('unit-type', 'UnitTypeController');
     Route::name('unit-type')->get('/unit-type', 'UnitTypeController@index');
-    
+
+    Route::prefix('popular-product')->group(function () {
+        Route::name('popular-product.index')->get('/', 'PopularProductController@index');
+        Route::name('popular-product.get-list')->get('/get-list', 'PopularProductController@getPopularProducts');
+        Route::name('popular-product.search')->get('/search/{product_name}', 'PopularProductController@getRegularProduct');
+        Route::name('popular-product.update-index')->post('/update-index', 'PopularProductController@updatePopularProductIndex');
+        Route::name('popular-product.delete')->delete('/{product_id}', 'PopularProductController@destroy');
+        Route::name('popular-product.add')->post('/add', 'PopularProductController@addToPopularProduct');
+
+    });
 });
