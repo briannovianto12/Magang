@@ -24,6 +24,9 @@
             </div>
         </div>
         <div class="m-portlet__body">
+            {{-- @can('view_popular_shops') --}}
+                <a href="{{ route('popular-product.index') }}" class="btn btn-link">Go to Popular Product</a>
+            {{-- @endcan --}}
             <ul class="nav nav-tabs  m-tabs-line m-tabs-line--info" role="tablist">
 
                 <li class="nav-item m-tabs__item">
