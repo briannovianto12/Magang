@@ -11,12 +11,16 @@ use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
 use Nbs\BaseResource\Traits\SnowFlakeTrait;
 use Nbs\BaseResource\Utils\TimezoneAccessor;
+use Nbs\BaseResource\Traits\VersionModelTrait;
+use Nbs\BaseResource\Traits\ModifierModelTrait;
 
 class Order extends Model
 {
     use FormatDates,
         SnowFlakeTrait,
-        TimezoneAccessor;
+        TimezoneAccessor,
+        VersionModelTrait,
+        ModifierModelTrait;
 
     /**
      * The attributes that should be cast to native types.
