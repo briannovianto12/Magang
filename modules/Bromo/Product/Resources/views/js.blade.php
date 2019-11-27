@@ -55,7 +55,7 @@
                     }, {
                         'data': 'name', 'name': 'name', 'searchable': true
                     }, {
-                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
+                        'data': 'shop_name', 'name': 'shop.name', 'searchable': true
                     }, {
                         // //     'data': 'condition_type', 'name': 'condition_type'
                         // // }, {
@@ -136,7 +136,7 @@
                     }, {
                         'data': 'name', 'name': 'name', 'searchable': true
                     }, {
-                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
+                        'data': 'shop_name', 'name': 'shop.name', 'searchable': true
                     }, {
                         // //     'data': 'condition_type', 'name': 'condition_type'
                         // // }, {
@@ -187,7 +187,7 @@
                     }, {
                         'data': 'name', 'name': 'name', 'searchable': true
                     }, {
-                        'data': 'shop_name', 'name': 'shop_name', 'searchable': false
+                        'data': 'shop_name', 'name': 'shop.name', 'searchable': true
                     }, {
                         // //     'data': 'condition_type', 'name': 'condition_type'
                         // // }, {
