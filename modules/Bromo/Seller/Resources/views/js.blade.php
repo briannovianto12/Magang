@@ -98,7 +98,6 @@
                 }
             });
         });
-
     })
 
     document.getElementById("cpy-btn").addEventListener("click", copy_address);
@@ -112,5 +111,44 @@
         document.execCommand("Copy");
         textArea.remove();
         alert('Text Copied!');
+    }
+
+    function swalSuccess( message, showConfirmButton, timer ) {
+        Swal.fire({
+          position: 'top',
+          type: 'success',
+          text: message,
+          showConfirmButton: (showConfirmButton==undefined) ? true : false,
+          timer: (timer) ? timer : null,
+        })
+    }
+
+    function _verifyBank(route) {
+        swal({
+            title: "Are you sure?",
+            type: "question",
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {_method: 'POST'},
+                    success: function (response) {
+                        location.reload();  
+                    },
+                    error: function () {
+                        swal(
+                            'Oh Snap!',
+                            'Look like something wen\'t wrong.',
+                            'error'
+                        )
+                    }
+                });
+            }
+        });
     }
 </script>
