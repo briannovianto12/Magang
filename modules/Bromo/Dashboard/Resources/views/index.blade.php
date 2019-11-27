@@ -1,6 +1,7 @@
 @extends('theme::layouts.master')
 
 @section('content')
+    @can("view_dashboard_total_stats")
     <!--begin:: Widgets/Stats-->
     <div class="m-portlet ">
         <div class="m-portlet__body  m-portlet__body--no-padding">
@@ -86,7 +87,9 @@
             </div>
         </div>
     </div>
+    @endcan
 
+    @can("view_dashboard_total_stats")
     <div class="m-portlet ">
         <div class="m-portlet__body  m-portlet__body--no-padding">
             <div class="row m-row--no-padding m-row--col-separator-xl">
@@ -171,7 +174,9 @@
             </div>
         </div>
     </div>
+    @endcan
 
+    @can("view_dashboard_total_orders")
     <div class="m-portlet ">
         <div class="m-portlet__body  m-portlet__body--no-padding">
             <div class="row m-row--no-padding m-row--col-separator-xl">
@@ -238,6 +243,7 @@
 
         </div>
     </div>
+    @endcan
 @endsection
 
 @section('scripts')

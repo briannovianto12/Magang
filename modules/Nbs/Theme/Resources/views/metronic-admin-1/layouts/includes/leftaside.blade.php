@@ -121,12 +121,14 @@
                 </a>
             </li>
             @endcan
+            @can('view_refund')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('refund.index') }}" aria-haspopup="true">
                 <a href="{{ route('refund.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-money"></i>
                     <span class="m-menu__link-text">Refund</span>
                 </a>
             </li>
+            @endcan
             @can('view_news_notification')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
                 <a href="{{ route('news') }}" class="m-menu__link">
@@ -135,12 +137,14 @@
                 </a>
             </li>
             @endcan
+            @can('view_banner')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('banner.index') }}" aria-haspopup="true">
                 <a href="{{ route('banner.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-photo"></i>
                     <span class="m-menu__link-text">Banner</span>
                 </a>
             </li>
+            @endcan
             @can('view_tools')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
                 <a href="{{ route('tools.index') }}" class="m-menu__link">

@@ -181,10 +181,12 @@
                                                 {{ __('Package Weight') }}
                                                 @if(isset($shippingManifest))
                                                     @if(!isset($unsupportedShipper))
+                                                        @can("edit_order_weight")
                                                         <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                             <i class="fa fa-edit"></i>
                                                             Edit
                                                         </button>
+                                                        @endcan
                                                     @endif
                                                 @endif
                                             </span>
