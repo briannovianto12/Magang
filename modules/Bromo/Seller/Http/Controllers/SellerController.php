@@ -10,6 +10,8 @@ use Bromo\Seller\DataTables\SellerDataTable;
 use Bromo\Seller\Models\Shop;
 use Bromo\Seller\Models\ShopRegistrationLog;
 use Bromo\Seller\Models\ShopStatus;
+use Bromo\Seller\Entities\BankAccountLogs;
+use Bromo\Seller\Entities\BankAccount;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -375,5 +377,56 @@ class SellerController extends BaseResourceController
         ];
         $data = array_merge($this->pageData, $this->requiredData);
         return view($this->getDetailView(), $data);
+    }
+
+    public function verifyBankAccount($bank_account)
+    {
+        // dd($bank_account);
+        DB::beginTransaction();
+        try {
+            $bank_account = BankAccount::findOrFail($bank_account);
+
+            $latestUpdateLog = BankAccountLogs::query()
+                ->where('business_id', $bank_account->business_id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            $bank_account_logs = New BankAccountLogs;
+                $bank_account_logs->bank_account_id = $bank_account->bank_id;
+                $bank_account_logs->business_bank_account_id = $bank_account->id;
+                $bank_account_logs->business_id = $bank_account->business_id;
+                $bank_account_logs->account_no = $bank_account->account_no;
+                $bank_account_logs->account_owner_name = $bank_account->account_owner_name;
+                $bank_account_logs->bank_id = $bank_account->bank_id;
+                $bank_account_logs->bank_name = $bank_account->bank_name;
+                $bank_account_logs->is_default = $bank_account->is_default;
+                $bank_account_logs->is_verified = True;
+                $bank_account_logs->modified_by = auth()->user()->id;
+                $bank_account_logs->modifier_role = Admin::ADMIN;
+            $bank_account_logs->save();
+
+            BankAccount::where('id', '=', $bank_account->id)
+            ->update([
+                'is_verified' => True
+                ]
+            );
+
+            DB::commit();
+
+            return response()->json('OK', Response::HTTP_OK);
+
+        } catch (Exception $exception) {
+            report($exception);
+            DB::rollBack();
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                return response()->json([
+                    'message' => $exception->getMessage()
+                ], $exception->getCode());
+            }
+
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

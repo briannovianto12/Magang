@@ -69,6 +69,7 @@
                 </div>
             </div>
             <!--end::Modal-->
+
             @component('components._widget-list')
                 @slot('body')
                     <div class="row">
@@ -156,20 +157,25 @@
                                         <span>{{ __('Business Bank Account') }}</span>
                                         <span>  
                                             @foreach($business_bank_account as $bank_account)
-                                                @if($bank_account->account_no != $data->businessBankAccount->account_no)    
+                                                    
                                                     {!! $bank_account->account_no
                                                     .' - '
-                                                    .$bank_account->bank_name 
-                                                    .'<br>'
-                                                    .$bank_account->account_owner_name.'<br>'.'<br>' ?? '-'!!}
-                                                @elseif($bank_account->account_no == $data->businessBankAccount->account_no)    
-                                                    {!! $bank_account->account_no
-                                                    .' - '
-                                                    .$bank_account->bank_name 
-                                                    .' - PRIMARY'
-                                                    .'<br>'
-                                                    .$bank_account->account_owner_name.'<br>'.'<br>' ?? '-'!!}
-                                                @endif
+                                                    .$bank_account->bank_name !!}
+                                                    @can('verify_bank_account')
+                                                        @if($bank_account->is_verified == false)
+                                                            <a href="#" onclick='_verifyBank("{{ route("{$module}.verify-bank-account", $bank_account->id) }}")'
+                                                                class="badge badge-pill badge-primary verify-bank">
+                                                                Verify {{ $bank_account->id }}
+                                                            </a>
+                                                        @elseif($bank_account->is_verified == true)
+                                                            <span class="badge badge-pill badge-success">
+                                                                Verified
+                                                                <br/>
+                                                            </span>
+                                                        @endif
+                                                    @endcan                                                    
+                                                    {!!'<br>'
+                                                    .$bank_account->account_owner_name.'<br><br>' ?? '-'!!} 
                                             @endforeach
                                         </span>
                                     </div>
