@@ -1,4 +1,7 @@
 $( document ).ready(function() {
+
+    init();
+
     //Origin Address
     $("#origin-province").change(function(){
         var province = $(this).children("option:selected").val();
@@ -115,7 +118,7 @@ $( document ).ready(function() {
     //Form
     $('#package-weight').change(function(){
         var value = $('#package-value').val();
-        $('#package-value').attr('value', "IDR ".concat(value.toString()).concat(".00"));
+        $('#package-value').attr('value', "Rp. ".concat(value.toString()).concat(".00"));
     });
     $("#btn-simulate").click(function(e) {
         $("#shipper-list").hide();
@@ -135,55 +138,73 @@ $( document ).ready(function() {
             processData: false,
             success: function success(data) {
                 if(data['shippers'] != null){
+                    $(".shipper-list-error").hide();
                     if(typeof data['shippers']['regular_shippers'] !== 'undefined'){
                         if(data['shippers']['regular_shippers'][0]['options']['length'] != 0){
                             data['shippers']['regular_shippers'][0]['options'].forEach(function(option){
                                 var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                var html = '<div class="row removeable"><div class="col-2"><img src="'+option['logo_url']+'"></div><div class="col-8 ml-5"><h5>'+option['name']+' ('+option['min_day']+' - '+option['max_day']+' Day)'+'</h5><h5>Rp. '+formatNumber(rateAfterDiscount)+' '+' <strike>Rp. ' +formatNumber(option['finalRate'])+ '</strike></h5></div></div>'
                                 $("#regular-shipper-list").append(html);
                             });
                             $("#regular-shipper-list").show();
                         }
                     }else{
-                        $("#regular-shipper-list-header").hide();
                         $("#regular-shipper-list").hide();
                     }
                     if(typeof data['shippers']['express_shippers'] !== 'undefined'){
                         if(data['shippers']['express_shippers'][0]['options']['length'] != 0){
                             data['shippers']['express_shippers'][0]['options'].forEach(function(option){
                                 var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                var html = '<div class="row removeable"><div class="col-2"><img src="'+option['logo_url']+'"></div><div class="col-8 ml-5"><h5>'+option['name']+' ('+option['min_day']+' - '+option['max_day']+' Day)'+'</h5><h5>Rp. '+formatNumber(rateAfterDiscount)+' '+' <strike>Rp. ' +formatNumber(option['finalRate'])+ '</strike></h5></div></div>'
                                 $("#express-shipper-list").append(html);
                             });
                             $("#express-shipper-list").show();
                         }
                     }else{
-                        $("#express-shipper-list-header").hide();
                         $("#express-shipper-list").hide();
                     }
                     if(typeof data['shippers']['trucking_shippers'] !== 'undefined'){
                         if(data['shippers']['trucking_shippers'][0]['options']['length'] != 0){
                             data['shippers']['trucking_shippers'][0]['options'].forEach(function(option){
                                 var rateAfterDiscount = option['finalRate'] - option['platform_discount'];
-                                var html = '<div class="row removeable"><div class="col-1"><img src="'+option['logo_url']+'"></div><div class="col-3 ml-5"><h5>'+option['name']+'</h5><h5> IDR '+rateAfterDiscount+' <strike> IDR ' +option['finalRate']+ '</strike></h5></div></div>'
+                                var html = '<div class="row removeable"><div class="col-2"><img src="'+option['logo_url']+'"></div><div class="col-8 ml-5"><h5>'+option['name']+' ('+option['min_day']+' - '+option['max_day']+' Day)'+'</h5><h5>Rp. '+formatNumber(rateAfterDiscount)+' '+' <strike>Rp. ' +formatNumber(option['finalRate'])+ '</strike></h5></div></div>'
                                 $("#trucking-shipper-list").append(html);
                             });
                             $("#trucking-shipper-list").show();
                         }
                     }else{
-                        $("#trucking-shipper-list-header").hide();
                         $("#trucking-shipper-list").hide();
                     }
                     $("#shipper-list").show();
                 }
                 else{
                     $("#shipper-list").hide();
-                    $("#shipper-list-error").show();
+                    $(".shipper-list-error").show();
                 }
             }
             });
         }
         
     });
+
+    function init(){
+        $('#origin-province').val("");
+        $('#origin-city').find('option').remove();
+        $('#origin-district').find('option').remove();
+        $('#origin-subdistrict').find('option').remove();
+        $('#origin-postal-code').val("");
+        $('#destination-province').val("");
+        $('#destination-city').find('option').remove();
+        $('#destination-district').find('option').remove();
+        $('#destination-subdistrict').find('option').remove();
+        $('#destination-postal-code').val("");
+        $('#package-weight').val("");
+        $('#package-value').val("");
+        $('#package-size').val("");
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    }
     
 });
