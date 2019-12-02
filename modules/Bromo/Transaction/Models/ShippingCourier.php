@@ -18,7 +18,7 @@ class ShippingCourier extends Model
      */
     public $casts = [
         'id' => 'string',
-        'updated_at' => 'timestamp'
+        'updated_at' => 'timestamps'
     ];
     /**
      * The table associated with the model.
@@ -31,5 +31,12 @@ class ShippingCourier extends Model
         'provider_key',
         'name'
     ];
+
+    protected $dateFormat = 'Y-m-d H:i:s.uO';
+
+    public function getDates()
+    {
+        return [];
+    }
 
 }
