@@ -2,6 +2,7 @@
 
 @section('css')
     <link href="{{ nbs_asset('vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ mix('css/potal-code-finder.css') }}">
 @endsection
 
 @section('scripts')
@@ -24,8 +25,7 @@
         </div>
         <div class="m-portlet__body">
             <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-6" id="form-container">
                     <label for="province">Province</label>
                     <select class="form-control" id="province" name="province">
                         <option value="" selected></option>
@@ -42,8 +42,9 @@
                     <br>
                     <label for="subdistrict">Subdistrict</label>
                     <select class="form-control" id="subdistrict" name="subdistrict"></select> 
-                    <br>
-                    <label for="postal-code">Postal Code</label>
+                </div>
+                <div class="col-6" id="result-container">
+                    <h5>Postal Code</h5>
                     <input id="postal-code" class="form-control" type="text" placeholder="Postal Code" readonly>
                 </div>
             </div>
