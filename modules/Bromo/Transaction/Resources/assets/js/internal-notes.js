@@ -18,7 +18,16 @@ window._internalNotes = function _internalNotes( order_id ){
         html: html,
         width: 500,
         onOpen: function(){
-          $('#btnAddInternalNotes').click(function(){
+            $('#internal-notes-table').DataTable({searching: false, info: false, processing: true,
+                ajax: '/internal-notes/table/'+order_id,
+                columns: [
+                    {data: 'internal_notes', name: 'internal_notes'},
+                    {data: 'admin_name', name: 'admin_name'},
+                ],
+                iDisplayLength: 5,
+                dom: '<"top">rt<"bottom"p><"clear">', ordering: false, pagingType: "simple_numbers"});        
+            $('#internal-notes-table').DataTable().draw();
+            $('#btnAddInternalNotes').click(function(){
               var notes = $("#newInternalNotes").val();
               if(!confirm('Are you sure ?')) {
                   return
@@ -39,13 +48,9 @@ window._internalNotes = function _internalNotes( order_id ){
                       Swal.fire({
                           type: 'success',
                           title: 'Success!',
-                          }).then(function(){ 
-                              location.reload();
-                          }
-                      );  
+                          });  
                   },
                   error: function(error){
-                      console.log(error)
                       $('#btnAddInternalNotes').attr('disabled', false)
                       swalError('Internal Error')
                   }
@@ -56,7 +61,6 @@ window._internalNotes = function _internalNotes( order_id ){
             return
       })
     }).fail(function(e) {
-      console.log(e)
       alert( "Internal Error" );
     }); 
 }

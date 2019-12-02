@@ -9,6 +9,7 @@ use Bromo\Transaction\DataTables\DeliveredOrderDataTable;
 use Bromo\Transaction\DataTables\DeliveryOrderDataTable;
 use Bromo\Transaction\DataTables\ListOrderDataTable;
 use Bromo\Transaction\DataTables\NewOrderDatatable;
+use Bromo\Transaction\DataTables\OrderInternalNotesDataTable;
 use Bromo\Transaction\DataTables\PaidOrderDataTable;
 use Bromo\Transaction\DataTables\ProcessOrderDataTable;
 use Bromo\Transaction\DataTables\RejectedOrderDataTable;
@@ -279,8 +280,8 @@ class OrderController extends Controller
         }
         return response()->json([
             "data" => $orderShippingManifest,
+            'order_no' => strval($order->no),
             "ids" => [
-                'order_id' => strval($order->id),
                 'shipping_manifest_id' => strval($orderShippingManifest->id),
             ],
             "curr_detail" => [
@@ -335,14 +336,21 @@ class OrderController extends Controller
         ]);
     }
 
-    public function getOrderInternalNotes($order_id)
+    public function getOrderInternalNotes($order_id, OrderInternalNotes $model, OrderInternalNotesDataTable $datatable)
     {
-        $internal_notes = OrderInternalNotes::where('order_id', $order_id)->orderBy('created_at')->get();
+        //$internal_notes = OrderInternalNotes::where('order_id', $order_id)->orderBy('created_at', 'desc')->get();
+        $order_no = Order::where('id', $order_id)->first()->order_no;
 
         return response()->json([
-            "data" => $internal_notes,
-            "order_id" => $order_id
+            "order_no" => $order_no
         ]);
+    }
+
+    public function getOrderInternalNotesTable($order_id, OrderInternalNotes $model, OrderInternalNotesDataTable $datatable){
+        return $datatable->with([
+            'model' => $model,
+            'order_id' => $order_id,
+        ])->ajax();
     }
 
     public function addNewInternalNotes(Request $request, $order_id)
