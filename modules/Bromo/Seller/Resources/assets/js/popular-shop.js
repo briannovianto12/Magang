@@ -4,7 +4,16 @@ $( document ).ready(function() {
     $("#shop-search-form").submit(function(e) {
         e.preventDefault();
     });
-    $("#btn-search-shop").click(search_shop);
+
+    $("#btn-search-shop").click(function(){
+        if ( $("#shop-searchbar").val() == "" ) {
+            alert("Searchbar is empty!");
+        }
+        else{
+            search_shop();
+        }
+    });
+
     $("#shop-searchbar").keyup(function(event) {
         event.preventDefault();
         if (event.keyCode === 13) {
