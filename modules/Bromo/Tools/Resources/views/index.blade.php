@@ -42,6 +42,13 @@
                             </a>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ route('courier-business-mapping.index') }}">
+                                Manage Courier Business Mapping
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
