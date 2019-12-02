@@ -1,4 +1,12 @@
 {
+    "/js/custom.js": "/js/custom.js?id=9eb30ba205e677324dc8",
+    "/css/custom.css": "/css/custom.css?id=5502dc8812e247e51e5c",
+    "/js/logistic.js": "/js/logistic.js?id=ba15ee5fb61939ee4743",
+    "/css/logistic.css": "/css/logistic.css?id=ebe2f8d892fff94eae93",
+    "/js/reject-order.js": "/js/reject-order.js?id=fbbf32793cd628538e9c",
+    "/js/transaction.js": "/js/transaction.js?id=b68e097c3d6686033bf7",
+    "/css/transaction.css": "/css/transaction.css?id=4fa4353126603f8884e7",
+    "/js/order-internal-notes.js": "/js/order-internal-notes.js?id=38aa5ae2cf63b3d59c6c",
     "/js/courier-business-mapping.js": "/js/courier-business-mapping.js?id=254733681d9ef77912e2",
     "/js/courier-business-mapping-form.js": "/js/courier-business-mapping-form.js?id=546b1956199f1ef698a6",
     "/js/postal-code-finder.js": "/js/postal-code-finder.js?id=3973d179681d3ab7447e",

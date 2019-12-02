@@ -65,17 +65,18 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order ID: {{ order_id }}</h4>
+                <h4>Order No: {{ order_no }}</h4>
             </div>
             <br/>
-            <div>
-                <label>
-                    Internal Notes:
-                </label>
-                {{#data}}
-                    <input class="form-control" type="text" placeholder="{{internal_notes}}" readonly>
-                    <br/>
-                {{/data}}
+            <div class="d-flex justify-content-center">
+                <table id="internal-notes-table" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Internal Notes</th>
+                            <th>Inputted By</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
             <br/>
             <form id="form-internal-notes">
