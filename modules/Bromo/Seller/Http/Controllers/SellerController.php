@@ -330,7 +330,7 @@ class SellerController extends BaseResourceController
         $rows = 2;
 
         foreach($data as $data){
-            $sheet->setCellValueExplicit('A' . $rows, $data->amount, DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('A' . $rows, intval($data->amount), DataType::TYPE_STRING);
             $sheet->setCellValue('B' . $rows, $data->bank_code);
             $sheet->setCellValue('C' . $rows, $data->bank_account_name);
             $sheet->setCellValueExplicit('D' . $rows, $data->bank_account_number, DataType::TYPE_STRING)->getStyle('D');
