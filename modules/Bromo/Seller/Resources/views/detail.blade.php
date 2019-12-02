@@ -169,7 +169,7 @@
                                                         @if($bank_account->is_verified == false)
                                                             <a href="#" onclick='_verifyBank("{{ route("{$module}.verify-bank-account", $bank_account->id) }}")'
                                                                 class="badge badge-pill badge-primary verify-bank">
-                                                                Verify {{ $bank_account->id }}
+                                                                Verify
                                                             </a>
                                                         @elseif($bank_account->is_verified == true)
                                                             <span class="badge badge-pill badge-success">
