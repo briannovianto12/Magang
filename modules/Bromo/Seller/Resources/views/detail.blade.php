@@ -161,10 +161,8 @@
                                                     {!! $bank_account->account_no
                                                     .' - '
                                                     .$bank_account->bank_name !!}
-                                                    @if($bank_account->is_default == true)
-                                                    {!! 
-                                                    '<b class="badge badge-pill badge-warning text">Primary</b>' !!}
-                                                    @endif
+                                                    {{-- TODO Change to new screen to verify bank account --}}
+                                                    {{-- 
                                                     @can('verify_bank_account')
                                                         @if($bank_account->is_verified == false)
                                                             <a href="#" onclick='_verifyBank("{{ route("{$module}.verify-bank-account", $bank_account->id) }}")'
@@ -177,7 +175,8 @@
                                                                 <br/>
                                                             </span>
                                                         @endif
-                                                    @endcan                                                    
+                                                    @endcan                                                     
+                                                    --}}                                                  
                                                     {!!'<br>'
                                                     .$bank_account->account_owner_name.'<br><br>' ?? '-'!!} 
                                             @endforeach
