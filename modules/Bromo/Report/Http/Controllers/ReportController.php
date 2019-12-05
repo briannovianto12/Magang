@@ -245,9 +245,6 @@ class ReportController extends Controller
         $sheet->setCellValue('A1', 'Shop Name');
         $sheet->setCellValue('B1', 'Total Bought Product');
         $sheet->setCellValue('C1', 'Total Gross');
-        $sheet->setCellValue('D1', 'Full Name');
-        $sheet->setCellValue('E1', 'Province');
-        $sheet->setCellValue('F1', 'City');
         // $sheet->setCellValue('G1', 'Order Date');
         $rows = 2;
         
@@ -255,9 +252,6 @@ class ReportController extends Controller
             $sheet->setCellValue('A' . $rows, $data->name);
             $sheet->setCellValue('B' . $rows, $data->count);
             $sheet->setCellValue('C' . $rows, $data->total_gross);
-            $sheet->setCellValue('D' . $rows, $data->full_name);
-            $sheet->setCellValue('E' . $rows, $data->province);
-            $sheet->setCellValue('F' . $rows, $data->city);
             // $sheet->setCellValue('G' . $rows, $data->order_date);
             $rows++;
         }
