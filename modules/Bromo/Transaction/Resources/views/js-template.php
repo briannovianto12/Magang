@@ -74,21 +74,28 @@
                         <tr>
                             <th>Internal Notes</th>
                             <th>Inputted By</th>
+                            <th>Created At</th>
                         </tr>
                     </thead>
                 </table>
             </div>
             <br/>
-            <form id="form-internal-notes">
-                <div class="form-group" method="POST">
-                    <label>
-                        Add Notes:
-                    </label>
-                    <input id="newInternalNotes" class="form-control" type="text" placeholder="Notes">
-                    <br/>
-                   <button data-order-id="{{ order_id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnAddInternalNotes">Add Notes</button>
+            <div>
+            </div>
+            <div class="row">`
+                <div class="col-6 offset-3">
+                    <form id="form-internal-notes">
+                        <div class="form-group" method="POST">
+                            <label>
+                                <b>Add Notes:</b>
+                            </label>
+                            <input id="newInternalNotes" class="form-control" type="text" placeholder="Notes">
+                            <br/>
+                        <button data-order-id="{{ order_id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnAddInternalNotes">Add Notes</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </script>

@@ -7,22 +7,23 @@ window._internalNotes = function _internalNotes( order_id ){
       html = Mustache.render(template, data);
   
       Swal.fire({                              
-        // grow: 'fullscreen',
+        grow: 'fullscreen',
         title: '<strong>Edit Order Status</strong>',
         type: '',
-        showCloseButton: false,
+        showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: false,
         focusConfirm: false,
         customClass: 'swal2-overflow',
         html: html,
-        width: 500,
+        //width: 1000,
         onOpen: function(){
             $('#internal-notes-table').DataTable({searching: false, info: false, processing: true,
                 ajax: '/internal-notes/table/'+order_id,
                 columns: [
                     {data: 'internal_notes', name: 'internal_notes'},
                     {data: 'admin_name', name: 'admin_name'},
+                    {data: 'created_at', name: 'created_at'},
                 ],
                 iDisplayLength: 5,
                 dom: '<"top">rt<"bottom"p><"clear">', ordering: false, pagingType: "simple_numbers"});        
