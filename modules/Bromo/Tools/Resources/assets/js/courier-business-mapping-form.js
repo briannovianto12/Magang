@@ -47,9 +47,11 @@ $( document ).ready(function() {
                     courier_id : $('#courier-selection').val()
                 },
                 success: function success(data) {
+                    clear();
                     alert("Data Added!");
                 },
                 error: function error(err) {
+                    clear();
                     alert(JSON.parse(err.responseText).error);
                 }
             });
@@ -109,12 +111,9 @@ $( document ).ready(function() {
     }
 
     function init(){
-        $('#selected-seller').val("");
-        $('#selected-buyer').val("");
-        $("#seller-searchbar").val("");
-        $("#buyer-searchbar").val("");
+        
+        clear();
 
-        $("#seller-searchbar").val("");
         $("#seller-search-form").submit(function(e) {
             e.preventDefault();
         });
@@ -135,6 +134,13 @@ $( document ).ready(function() {
                 $("#btn-search-buyer").click();
             }
         });
+    }
+
+    function clear(){
+        $('#selected-seller').val("");
+        $('#selected-buyer').val("");
+        $("#seller-searchbar").val("");
+        $("#buyer-searchbar").val("");
     }
  
 });

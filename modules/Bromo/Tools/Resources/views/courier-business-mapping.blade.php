@@ -16,7 +16,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Manage Courier Business Mapping
+                        Courier Business Mapping
                     </h3>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     </select> 
                 </div>
             </div>
-            <a href="{{ route('courier-business-mapping.create') }}" class="btn btn-link">Go to Popular Shops</a>
+            <a href="{{ route('courier-business-mapping.create') }}" class="btn btn-link">Register New Mapping</a>
             <div class="table-responsive">
                 <table id="table-courier-business-mapping" class="table table-striped table-bordered display" style="width: 100%;">
                     <thead>
