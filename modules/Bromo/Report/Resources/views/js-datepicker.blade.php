@@ -32,18 +32,6 @@
                     {
                         'data':'total_gross',
                         'name':'total_gross'
-                    },
-                    {
-                        'data':'full_name',
-                        'name':'full_name'
-                    },
-                    {
-                        'data':'province',
-                        'name':'province'
-                    },
-                    {
-                        'data':'city',
-                        'name':'city'
                     }
                     ],
                     "iDisplayLength": 25,

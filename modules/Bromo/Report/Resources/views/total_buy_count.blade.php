@@ -51,9 +51,6 @@
                                         <th>Buyer Business Name</th>
                                         <th>Total Order Paid</th>
                                         <th>Total Gross</th>
-                                        <th>Full Name</th>
-                                        <th>Province</th>
-                                        <th>City</th>
                                     </tr>
                                 </thead>
                             </table>
