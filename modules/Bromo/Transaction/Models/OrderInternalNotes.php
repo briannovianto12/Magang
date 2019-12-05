@@ -3,9 +3,12 @@
 namespace Bromo\Transaction\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Nbs\BaseResource\Utils\TimezoneAccessor;
 
 class OrderInternalNotes extends Model
 {
+    use TimezoneAccessor;
+
     /**
      * The attributes that should be cast to native types.
      *
