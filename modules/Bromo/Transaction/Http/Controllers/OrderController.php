@@ -270,19 +270,25 @@ class OrderController extends Controller
     }
 
     public function getOrderInfo($order_id){
-        $orderShippingManifest = OrderShippingManifest::where('order_id', $order_id)->first();
+        $orderShippingManifest = null;
+        if(OrderShippingManifest::where('order_id', $order_id)->first() != null){
+            $orderShippingManifest = strval(OrderShippingManifest::where('order_id', $order_id)->first()->id);
+        }
+        
         $order = Order::where('id', $order_id)->first();
         $currWeight = ceil($order->shipping_weight/1000);
         $currCost = $order->shipping_service_snapshot['shipper']['finalRate'];
-        if(!empty($orderShippingManifest->weight_correction) && !empty($orderShippingManifest->shipping_cost_correction)){
-            $currWeight = ceil($orderShippingManifest->weight_correction/1000);
-            $currCost = $orderShippingManifest->shipping_cost_correction;
+        if(!empty($orderShippingManifest)){
+            if(!empty($orderShippingManifest->weight_correction) && !empty($orderShippingManifest->shipping_cost_correction)){
+                $currWeight = ceil($orderShippingManifest->weight_correction/1000);
+                $currCost = $orderShippingManifest->shipping_cost_correction;
+            }
         }
         return response()->json([
             "data" => $orderShippingManifest,
             'order_no' => strval($order->no),
             "ids" => [
-                'shipping_manifest_id' => strval($orderShippingManifest->id),
+                'shipping_manifest_id' => $orderShippingManifest,
             ],
             "curr_detail" => [
                 'curr_weight' => $currWeight,

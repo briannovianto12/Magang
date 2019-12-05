@@ -46,7 +46,6 @@ window._rejectOrder = function _rejectOrder( order_id ){
                       );  
                   },
                   error: function(error){
-                      console.log(error)
                       $('#btnRejectOrder').attr('disabled', false)
                       swalError('Internal Error')
                   }
@@ -57,7 +56,6 @@ window._rejectOrder = function _rejectOrder( order_id ){
             return
       })
     }).fail(function(e) {
-      console.log(e)
       alert( "Internal Error" );
     }); 
   }
