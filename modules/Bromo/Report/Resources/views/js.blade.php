@@ -3,18 +3,16 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        document.getElementById("product-id-cpy-btn").addEventListener("click", copy_product_id);
-
-        function copy_product_id() {
-            var copyText = document.getElementById("product-id-span");
+        $(".product-id-cpy-btn").click(function(){
+            var copyText = $(this).attr("data-id");
             var textArea = document.createElement("textarea");
-            textArea.value = copyText.textContent;
+            textArea.value = copyText;
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand("Copy");
             textArea.remove();
             alert('Text Copied!');
-        }
+        });
 
         @isset($data)
         if ("{{ route('report.show', $data->id) }}" === "{{ url()->current() }}") {

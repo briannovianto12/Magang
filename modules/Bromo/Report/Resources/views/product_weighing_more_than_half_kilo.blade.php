@@ -37,7 +37,7 @@
                                                 {{$row->product_id }}
                                             </span> 
                                             <span>
-                                                <button id="product-id-cpy-btn" class="btn btn-sm">
+                                                <button data-id="{{$row->product_id }}" class="btn btn-sm product-id-cpy-btn">
                                                     <i class="fa fa-clone"></i>
                                                     Copy
                                                 </button>
