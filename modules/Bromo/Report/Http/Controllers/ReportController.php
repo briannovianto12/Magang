@@ -11,6 +11,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
@@ -299,7 +300,7 @@ class ReportController extends Controller
         $rows = 2;
         
         foreach($data as $data){
-            $sheet->setCellValue('A' . $rows, $data->product_id);
+            $sheet->setCellValueExplicit('A' . $rows, intval($data->product_id), DataType::TYPE_STRING);
             $sheet->setCellValue('B' . $rows, $data->product_name);
             $sheet->setCellValue('C' . $rows, $data->weight);
             $sheet->setCellValue('D' . $rows, $data->shop_id);
