@@ -12,17 +12,22 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\HasRoles;
 use Bromo\Auth\Models\Admin;
+use Bromo\Dashboard\Repositories\DashboardRepository;
 
 class DashboardController extends Controller
 {
+    protected $dashboardRepository;
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
 
-    public function __construct()
+    public function __construct(DashboardRepository $dashboardRepository)
     {
         $this->middleware('auth');
+
+        $this->dashboardRepository = $dashboardRepository;
     }
 
     public function index()
@@ -52,12 +57,12 @@ class DashboardController extends Controller
     }
 
     private function getSummary(){
-        $totalRegisteredSeller = DB::select("SELECT public.f_get_total_seller()");
-        $totalRegisteredUser = DB::select("SELECT public.f_get_total_user()");
-        $totalRegisteredSellerWithProduct = DB::select("SELECT public.f_get_sellers_with_total_product()");
-        $totalRegisteredSku = DB::table('product')->count();
-        $totalPublishedSku = DB::table('product')->where('status', ProductStatus::PUBLISH)->count();
-        $totalUnpublishedSku = DB::table('product')->where('status', '!=', ProductStatus::PUBLISH)->count();
+        $totalRegisteredSeller = $this->dashboardRepository->getTotalRegisteredSeller();
+        $totalRegisteredUser = $this->dashboardRepository->getTotalRegisteredUser();
+        $totalRegisteredSellerWithProduct = $this->dashboardRepository->getTotalRegisteredSellerWithProduct();
+        $totalRegisteredSku = $this->dashboardRepository->getTotalRegisteredSku();
+        $totalPublishedSku = $this->dashboardRepository->getTotalPublishedSku();
+        $totalUnpublishedSku = $this->dashboardRepository->getTotalUnpublishedSku();
         
         return [
             'total_registered_seller' => $totalRegisteredSeller[0]->f_get_total_seller,
@@ -79,12 +84,10 @@ class DashboardController extends Controller
     }
 
     private function getOrderStatistics(){
-        $data = \DB::select("SELECT status,count_last_month,this_month,last_seven_days,amount_last_month,amount_this_month,amount_last_seven_days FROM vw_order_statistics");
-        return $data;
+        $orderStatistics = $this->dashboardRepository->getOrderStatistics();
     }
 
     private function getOrderStatisticsTotal(){
-        $data = \DB::select("SELECT 99 as status, count_last_month,amount_last_month,this_month,amount_this_month,last_seven_days,amount_last_seven_days FROM vw_order_statistics_total");
-        return $data;
+        $orderStatisticsTotal = $this->dashboardRepository->getOrderStatisticsTotal();
     }
 }

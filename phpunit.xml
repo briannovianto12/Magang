@@ -16,6 +16,12 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
+
+        <!-- Test for module Dashboard -->
+        <testsuite name="Dashboard">
+            <directory suffix="Test.php">./modules/Bromo/Dashboard/Tests</directory>
+        </testsuite>
+
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
