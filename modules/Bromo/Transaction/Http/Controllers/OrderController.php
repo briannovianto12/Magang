@@ -242,7 +242,7 @@ class OrderController extends Controller
         if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
-        
+        //dd($data);
         return view("{$this->module}::detail", $data);
     }
 

@@ -42,7 +42,8 @@ class Order extends Model
         'reject_notes' => 'string',
         'payment_amount' => 'double',
         'created_at' => 'timestamp',
-        'updated_at' => 'timestamp'
+        'updated_at' => 'timestamp',
+        'special_id' => 'string'
     ];
 
     /**
