@@ -36,6 +36,11 @@ class DashboardServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->singleton('Bromo\Dashboard\Repositories\DashboardRepository', function ($app) {
+            return new \Bromo\Dashboard\Repositories\DashboardRepositoryImpl();
+        });
+
     }
 
     /**
