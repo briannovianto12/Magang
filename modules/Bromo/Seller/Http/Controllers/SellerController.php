@@ -339,7 +339,7 @@ class SellerController extends BaseResourceController
             $sheet->setCellValue('F' . $rows, $data->email);
             $sheet->setCellValue('G' . $rows, $data->email_cc);
             $sheet->setCellValue('H' . $rows, $data->email_bcc);
-            $sheet->setCellValue('I' . $rows, $data->external_id);
+            $sheet->setCellValue('I' . $rows, $data->external_id, DataType::TYPE_STRING);
             $sheet->setCellValue('J' . $rows, $data->shop_name);
             $rows++;
         }
