@@ -85,9 +85,11 @@ class DashboardController extends Controller
 
     private function getOrderStatistics(){
         $orderStatistics = $this->dashboardRepository->getOrderStatistics();
+        return $orderStatistics;
     }
 
     private function getOrderStatisticsTotal(){
         $orderStatisticsTotal = $this->dashboardRepository->getOrderStatisticsTotal();
+        return $orderStatisticsTotal;
     }
 }
