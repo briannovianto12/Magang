@@ -164,19 +164,24 @@
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
                                 <h3><b>SHIPPING</b></h3>
-                                @if(isset($data->shippingManifest()->get()[0]->airwaybill) || isset($data->special_id))
-                                    @if($data->shippingManifest()->get()[0]->airwaybill != "")
+                                <div class="m-widget28__tab-item row">
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Airwaybill No.') }}</span>
-                                            <span>{{ $data->shippingManifest()->get()[0]->airwaybill ?? '-' }}</span>
+                                            @if(empty($data->shippingManifest()->first()->airwaybill))
+                                                <span>-</span>
+                                            @else
+                                                <span>{{ $data->shippingManifest()->first()->airwaybill }}</span>
+                                            @endif
                                         </div>
-                                        @else
+                                    </div>
+                                    <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Special ID') }}</span>
                                             <span>{{ $data->special_id ?? '-' }}</span>
                                         </div>
-                                    @endif
-                                @endif
+                                    </div>
+                                </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
