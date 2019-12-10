@@ -167,7 +167,7 @@
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Airwaybill No.') }}</span>
+                                            <span>{{ __('Nomor Airwaybill') }}</span>
                                             @if(empty($data->shippingManifest()->first()->airwaybill))
                                                 <span>-</span>
                                             @else
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Special ID') }}</span>
+                                            <span>{{ __('Nomor Pickup') }}</span>
                                             <span>{{ $data->special_id ?? '-' }}</span>
                                         </div>
                                     </div>
