@@ -161,6 +161,12 @@
                 </a>
             </li>
             @endcan
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('export.index') }}" aria-haspopup="true">
+                <a href="{{ route('export.index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-download"></i>
+                    <span class="m-menu__link-text">Exports</span>
+                </a>
+            </li>
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
