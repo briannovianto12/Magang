@@ -1,0 +1,25 @@
+{
+    "name": "NBS/freqaskedquestion",
+    "description": "",
+    "authors": [
+        {
+            "name": "Web NBS",
+            "email": "web@nbs.co.id"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bromo\\FreqAskedQuestion\\Providers\\FreqAskedQuestionServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bromo\\FreqAskedQuestion\\": ""
+        }
+    }
+}
