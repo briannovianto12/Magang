@@ -72,7 +72,8 @@
             "Bromo\\Notifications\\": "modules/Bromo/Notifications/",
             "Bromo\\Tools\\": "modules/Bromo/Tools/",
             "Bromo\\Logistic\\": "modules/Bromo/Logistic/",
-            "Bromo\\Export\\": "modules/Bromo/Export/"
+            "Bromo\\Export\\": "modules/Bromo/Export/",
+            "Bromo\\FreqAskedQuestion\\": "modules/Bromo/FreqAskedQuestion/"
 
         },
         "classmap": [
