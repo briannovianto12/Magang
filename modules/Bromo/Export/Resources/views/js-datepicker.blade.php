@@ -22,7 +22,7 @@
                 }
 
                 if((new Date(to_date) - new Date(from_date))/1000/60/60/24 > 31){
-                    alert('Date Difference can not be more than 31 days');
+                    alert('Maximum date difference is 31 days');
                     e.preventDefault();
                 }
 

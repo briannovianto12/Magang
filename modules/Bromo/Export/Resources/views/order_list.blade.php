@@ -59,7 +59,11 @@
                             <button id="exportOrderListBtn" class="mt-5 btn btn-success">Export to .xlsx</button>
                         </div>
                     </div>
-                    <br>
+                    <hr>
+                    <div class="ml-2 row" style="color: red">
+                        <b>Notes: &nbsp;</b>
+                        Maximum date difference is 31 days
+                    </div>
                     
                 </form>
             </div>
