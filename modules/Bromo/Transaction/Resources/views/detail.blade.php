@@ -28,10 +28,10 @@
 
     @component('components._portlet', [
           'portlet_head' => true,
-          'portlet_title' => sprintf("Detail %s: %s", $title, $data->order_no),
+          'portlet_title' => __('transaction::messages.detail_title', ['title' => $title, 'name' => $data->order_no]),
           'url_manage' => true,
           'url_back' => route("order.index"),
-          'postfix_back' => 'Back',
+          'postfix_back' => __('transaction::messages.back'),
           'body_class' => 'pt-0'])
         @slot('body')
 
@@ -40,25 +40,25 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
-                                <h3><b>ORDER INFO</b></h3>
+                                <h3><b>{{ __('transaction::messages.order_info') }}</b></h3>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-3">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Order Status') }}</span>
+                                            <span>{{ __('transaction::messages.order_status') }}</span>
                                             @if($data->status == 1 || $data->status == 3 || $data->status == 4)
-                                                <span style="color:red">{{ 'Awaiting Payment' }}</span>
+                                                <span style="color:red">{{ __('transaction::messages.awaiting_payment') }}</span>
                                             @elseif($data->status == 5)
-                                                <span style="color:#39b54a">{{ 'Awaiting Seller Confirmation' }}</span>
+                                                <span style="color:#39b54a">{{ __('transaction::messages.awaiting_seller_confirmation') }}</span>
                                             @elseif($data->status == 2 || $data->status == 6 || $data->status == 7)
-                                                <span style="color:#39b54a">{{ 'Awaiting Shipment' }}</span>
+                                                <span style="color:#39b54a">{{ __('transaction::messages.awaiting_shipment') }}</span>
                                             @elseif($data->status == 8)
-                                                <span style="color:#39b54a">{{ 'On Delivery' }}</span>
+                                                <span style="color:#39b54a">{{ __('transaction::messages.on_delivery') }}</span>
                                             @elseif($data->status == 9)
-                                                <span style="color:#39b54a">{{ 'Delivered' }}</span>
+                                                <span style="color:#39b54a">{{ __('transaction::messages.delivered') }}</span>
                                             @elseif($data->status == 10)
-                                                <span style="color:#39b54a">{{ 'Success' }}</span>
+                                                <span style="color:#39b54a">{{ __('transaction::messages.success') }}</span>
                                             @elseif($data->status == 30 || $data->status == 31)
-                                                <span style="color:red">{{ 'Canceled' }}</span>
+                                                <span style="color:red">{{ __('transaction::messages.canceled') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                         <div class="col-5">
                                             @if($data->status == 8)
                                                 <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
-                                                    Change Status to "Delivered"
+                                                    {{ __('transaction::messages.change_order_status_to_delivered') }}
                                                 </button>
                                             @endif
                                         </div>
@@ -77,28 +77,28 @@
                                         <div class="col-3 ml-4">
                                             @if($data->status == 8 || $data->status == 5 || $data->status == 2)
                                                 <button class="btn btn-danger" onclick="_rejectOrder('{{ $data->id }}')">
-                                                    Reject Order
+                                                    {{ __('transaction::messages.reject_order') }}
                                                 </button>
                                             @endif
                                         </div>
                                     @endcan
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Ordered Date') }}</span>
+                                    <span>{{ __('transaction::messages.ordered_date') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Order No.') }}</span>
+                                    <span>{{ __('transaction::messages.order_no') }}</span>
                                     <span>{{ $data->order_no }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Order Notes') }}</span>
+                                    <span>{{ __('transaction::messages.order_notes') }}</span>
                                     <span>{{ $data->notes ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Seller Name') }}</span>
+                                            <span>{{ __('transaction::messages.seller_name') }}</span>
                                             <span>
                                                 {{ $sellerData->full_name }}
                                             </span>
@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Seller Shop') }}</span>
+                                            <span>{{ __('transaction::messages.seller_shop') }}</span>
                                             <span>
                                                 <a href="{{ url('/store/'.$data->shop_id) }}">
                                                     {{ $data->shop_snapshot['name'] }}
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Seller Phone') }}</span>
+                                            <span>{{ __('transaction::messages.seller_phone') }}</span>
                                             <span>
                                                 {{ $sellerData->msisdn }}
                                             </span>
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Seller Email') }}</span>
+                                            <span>{{ __('transaction::messages.seller_email') }}</span>
                                             <span>
                                                 {{ $data->seller->contact_email ?? '-' }}
                                             </span>
@@ -134,7 +134,7 @@
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Buyer Name') }}</span>
+                                            <span>{{ __('transaction::messages.buyer_name') }}</span>
                                             <span>
                                                 <a href="{{ url('/buyer/'.$data->buyer->id) }}">
                                                     {{ $data->buyer_name }}
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Buyer Phone') }}</span>
+                                            <span>{{ __('transaction::messages.buyer_phone') }}</span>
                                             <span>
                                                 {{ $data->buyer_phone_no }}
                                             </span>
@@ -152,7 +152,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Buyer Email') }}</span>
+                                            <span>{{ __('transaction::messages.buyer_email') }}</span>
                                             <span>
                                                 {{ $data->buyer_email ?? '-' }}
                                             </span>
@@ -163,11 +163,11 @@
                         </div>
                         <div class="col-6">
                             <div class="m-widget28__tab-items">
-                                <h3><b>SHIPPING</b></h3>
+                                <h3><b>{{ __('transaction::messages.shipping') }}</b></h3>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Nomor Airwaybill') }}</span>
+                                            <span>{{ __('transaction::messages.airwaybill_no') }}</span>
                                             @if(empty($data->shippingManifest()->first()->airwaybill))
                                                 <span>-</span>
                                             @else
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Nomor Pickup') }}</span>
+                                            <span>{{ __('transaction::messages.pick_up_no') }}</span>
                                             <span>{{ $data->special_id ?? '-' }}</span>
                                         </div>
                                     </div>
@@ -185,20 +185,20 @@
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Courier') }}</span>
+                                            <span>{{ __('transaction::messages.courier') }}</span>
                                             <span>{!! $data->shipping_service_code !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                {{ __('Package Weight') }}
+                                                {{ __('transaction::messages.package_weight') }}
                                                 @if(isset($shippingManifest))
                                                     @if(!isset($unsupportedShipper))
                                                         @can("edit_order_weight")
                                                         <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                             <i class="fa fa-edit"></i>
-                                                            Edit
+                                                            {{ __('transaction::messages.edit') }}
                                                         </button>
                                                         @endcan
                                                     @endif
@@ -218,7 +218,7 @@
                                             <div class="col-6">
                                                 <div class="m-widget28__tab-item">
                                                     <span>
-                                                        {{ __('Corrected Package Weight') }}
+                                                        {{ __('transaction::messages.corrected_package_weight') }}
                                                     </span>
                                                     <span>{!! ceil($shippingManifest->weight_correction/1000) !!} Kg</span>
                                                 </div>
@@ -230,29 +230,29 @@
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                <h5><b>Origin Address</b></h5>
+                                                <h5><b>{{ __('transaction::messages.origin_address') }}</b></h5>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Building Name') }}</span>
+                                            <span>{{ __('transaction::messages.building_name') }}</span>
                                             <span>{!! $data->orig_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Notes') }}</span>
+                                            <span>{{ __('transaction::messages.notes') }}</span>
                                             <span>{!! $data->orig_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                {{ __('Pick Up Address') }}
+                                                {{ __('transaction::messages.pick_up_address') }}
                                                 <button id="origin-cpy-btn" class="btn btn-sm" style="background-color: white">
                                                     <i class="fa fa-clone"></i>
-                                                    Copy
+                                                    {{ __('transaction::messages.copy') }}
                                                 </button>
                                             </span>
                                             <span id="origin-address">{!! nl2br($data->origin_address) !!}</span>
@@ -263,29 +263,29 @@
                                     <div class="col-10">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                <h5><b>Destination Address</b></h5>
+                                                <h5><b>{{ __('transaction::messages.destination_address') }}</b></h5>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Building Name') }}</span>
+                                            <span>{{ __('transaction::messages.building_name') }}</span>
                                             <span>{!! $data->dest_address_snapshot['building_name'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Notes') }}</span>
+                                            <span>{{ __('transaction::messages.notes') }}</span>
                                             <span>{!! $data->dest_address_snapshot['notes'] !!}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                {{ __('Pick Up Address') }}
+                                                {{ __('transaction::messages.pick_up_address') }}
                                                 <button id="dest-cpy-btn" class="btn btn-sm" style="background-color: white">
                                                     <i class="fa fa-clone"></i>
-                                                    Copy
+                                                    {{ __('transaction::messages.copy') }}
                                                 </button>
                                             </span>
                                             <span id="destination-address">{!! nl2br($data->destination_address) !!}</span>
@@ -297,13 +297,13 @@
                                         <div class="col-12">
                                             <div class="m-widget28__tab-item">
                                                 <span>
-                                                    <h5><b>Shipping Cost Details</b></h5>
+                                                    <h5><b>{{ __('transaction::messages.shipping_cost_details') }}</b></h5>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Total Gross Cost') }}</span>
+                                                <span>{{ __('transaction::messages.total_gross_cost') }}</span>
                                                 @if($shipingCostDetails['shipping_discount'] != 0)
                                                     <span><del>IDR {{ number_format($shipingCostDetails['shipping_gross_amount']) ?? '-' }}</del></span>
                                                 @else
@@ -313,20 +313,20 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Shipping Discount') }}</span>
+                                                <span>{{ __('transaction::messages.shipping_discount') }}</span>
                                                 <span>IDR {{ number_format($data['shipping_service_snapshot']['shipper']['platform_discount']) ?? 0 }}</span>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Cost After Discount') }}</span>
+                                                <span>{{ __('transaction::messages.cost_after_discount') }}</span>
                                                 <span>IDR {{ number_format(($shipingCostDetails['shipping_gross_amount']) - ($shipingCostDetails['shipping_discount'])) ?? '-' }}</span>
                                             </div>
                                         </div>
                                         @isset($shippingInsuranceRate)
                                             <div class="col-6">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Shipping Insurance') }}</span>
+                                                    <span>{{ __('transaction::messages.shipping_insurance') }}</span>
                                                     <span>IDR {{ number_format($shippingInsuranceRate) ?? '0' }}</span>
                                                 </div>
                                             </div>
@@ -337,33 +337,33 @@
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>
-                                                <h5><b>Payment Details</b></h5>
+                                                <h5><b>{{ __('transaction::messages.payment_details') }}</b></h5>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Total Gross Amount') }}</span>
+                                            <span>{{ __('transaction::messages.total_gross_amount') }}</span>
                                             <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
                                         </div>
                                     </div>
                                     @isset($data->payment_details['platform_discount'])
                                         <div class="col-4">
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Platform Discount') }}</span>
+                                                <span>{{ __('transaction::messages.platform_discount') }}</span>
                                                 <span>IDR {{ number_format($data->payment_details['platform_discount']) ?? 0 }}</span>
                                             </div>
                                         </div>
                                     @endisset
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Shipping Cost') }}</span>
+                                            <span>{{ __('transaction::messages.shipping_cost') }}</span>
                                             <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Grand Total') }}</span>
+                                            <span>{{ __('transaction::messages.grand_total') }}</span>
                                             <h3 class="h4">IDR {{ number_format($data->payment_amount ?? 0) }}</h4>
                                         </div>
                                     </div>
@@ -383,12 +383,12 @@
         @slot('tab_head')
             <li class="nav-item m-tabs__item">
                 <a class="nav-link m-tabs__link active" data-toggle="tab" href="#item_detail" role="tab">
-                Item Detail
+                    {{ __('transaction::messages.item_detail') }}
                 </a>
             </li>
             <li class="nav-item m-tabs__item">
                 <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivery_tracking" role="tab">
-                Delivery Tracking
+                    {{ __('transaction::messages.delivery_tracking') }}
                 </a>
             </li>
         @endslot
@@ -404,19 +404,19 @@
                                         <div class="m-widget28__tab-items">
                                             <div class="h4">{{ $item->product_name ?? '-' }}</div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Variant') }}</span>
+                                                <span>{{ __('transaction::messages.variant') }}</span>
                                                 <span>{{ $item->product_variant_name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Note') }}</span>
+                                                <span>{{ __('transaction::messages.note') }}</span>
                                                 <span>{{ $item->note ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Status') }}</span>
+                                                <span>{{ __('transaction::messages.status') }}</span>
                                                 <span>{{ $item->orderItemStatus->name ?? '-' }}</span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Product Image') }}</span>
+                                                <span>{{ __('transaction::messages.product_image') }}</span>
                                                 <span>
                                                     <a data-fancybox data-type="image"
                                                        href="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}">
@@ -434,7 +434,7 @@
                                             <div class="m-widget28__tab-item row">
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>Unit Price and Gross Amount</span>
+                                                        <span>{{ __('transaction::messages.unit_price_and_gross_amount') }}</span>
                                                         <span>
                                                             IDR {{ number_format($item->payment_details->unit_price) }} <br>
                                                             IDR {{ number_format($item->payment_details->gross_amount) }}
@@ -443,19 +443,19 @@
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Tax') }}</span>
+                                                        <span>{{ __('transaction::messages.tax') }}</span>
                                                         <span>IDR {{ number_format($item->payment_details->tax_base ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('VAT') }}</span>
+                                                        <span>{{ __('transaction::messages.vat') }}</span>
                                                         <span>IDR {{ number_format($item->payment_details->vat ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Discount') }}</span>
+                                                        <span>{{ __('transaction::messages.discount') }}</span>
                                                         <span>IDR {{ number_format($item->payment_details->discount_amount ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
@@ -463,13 +463,13 @@
                                             <div class="m-widget28__tab-item row">
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Quantity') }}</span>
+                                                        <span>{{ __('transaction::messages.quantity') }}</span>
                                                         <span>{{ $item->qty ?? '' }} {{ $item->unit_type ?? '-'}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Margin Rate') }}</span>
+                                                        <span>{{ __('transaction::messages.margin_rate') }}</span>
                                                         <span>{{ $item->payment_details->margin_rate }}%</span>
                                                     </div>
                                                 </div>
@@ -477,19 +477,19 @@
                                             <div class="m-widget28__tab-item row">
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Amount') }}</span>
+                                                        <span>{{ __('transaction::messages.amount') }}</span>
                                                         <span>IDR {{ number_format($item->payment_amount ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <div class="m-widget28__tab-item">
-                                                        <span>{{ __('Settlement') }}</span>
+                                                        <span>{{ __('transaction::messages.settlement') }}</span>
                                                         <span>IDR {{ number_format($item->settlement_amount ?? 0) ?? '-' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <span>{{ __('Shipping Weight') }}</span>
+                                                <span>{{ __('transaction::messages.shipping_weight') }}</span>
                                                 <span>{{ ($item->shipping_weight) ?? '0' }} gr</span>
                                             </div>
                                         </div>
@@ -508,13 +508,13 @@
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <div class="m-widget28__tab-items">
-                                        <div class="h3">Internal</div>
+                                        <div class="h3">{{ __('transaction::messages.internal') }}</div>
                                         <div class="m-widget28__tab-item row">
                                             <table class="table table-bordered table-striped">
                                                 <thead>
-                                                    <th>Status</th>
-                                                    <th>Description</th>
-                                                    <th>Date</th>
+                                                    <th>{{ __('transaction::messages.status') }}</th>
+                                                    <th>{{ __('transaction::messages.description') }}</th>
+                                                    <th>{{ __('transaction::messages.date') }}</th>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($deliveryTrackings as $deliveryTracking)
@@ -537,13 +537,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="m-widget28__tab-items">
-                                        <div class="h3">External</div>
+                                        <div class="h3">{{ __('transaction::messages.external') }}</div>
                                         <div class="m-widget28__tab-item row">
                                             <table class="table table-bordered table-striped">
                                                 <thead>
-                                                    <th>Status</th>
-                                                    <th>Description</th>
-                                                    <th>Date</th>
+                                                    <th>{{ __('transaction::messages.status') }}</th>
+                                                    <th>{{ __('transaction::messages.description') }}</th>
+                                                    <th>{{ __('transaction::messages.date') }}</th>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($deliveryTrackings as $deliveryTracking)
@@ -583,7 +583,7 @@
                         <i class="flaticon-notes"></i>
                     </span>
                         <h3 class="m-portlet__head-text">
-                            Shipping Manifest Plan
+                            {{ __('transaction::messages.shipping_manifest_plan') }}
                         </h3>
                     </div>
                 </div>
@@ -607,31 +607,31 @@
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Weight') }}</span>
+                                            <span>{{ __('transaction::messages.weight') }}</span>
                                             <span>{{ $manifest->weight ?? '-' }}</span>
                                         </div>
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Cost') }}</span>
+                                            <span>{{ __('transaction::messages.cost') }}</span>
                                             <span>IDR {{ number_format($manifest->cost ?? 0) ?? '-' }}</span>
                                         </div>
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Airwaybill') }}</span>
+                                            <span>{{ __('transaction::messages.airwaybill') }}</span>
                                             <span>{{ $manifest->airwaybill ?? '-' }}</span>
                                         </div>
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Carrier') }}</span>
+                                            <span>{{ __('transaction::messages.carrier') }}</span>
                                             <span>{{ '-' }}</span>
                                         </div>--}}
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Status') }}</span>
+                                            <span>{{ __('transaction::messages.status') }}</span>
                                             <span>{{ $manifest->shippingStatus->name ?? '' }}</span>
                                         </div>
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Created Date') }}</span>
+                                            <span>{{ __('transaction::messages.created_date') }}</span>
                                             <span>{{ $manifest->created_at_formatted }}</span>
                                         </div>
                                     </div>
@@ -639,20 +639,20 @@
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Carrier') }}</span>
+                                            <span>{{ __('transaction::messages.carrier') }}</span>
                                             <span>-</span>
                                         </div>
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Receiver') }}</span>
+                                            <span>{{ __('transaction::messages.receiver') }}</span>
                                             <span>-</span>
                                         </div>
 
                                         <div class="m-widget28__tab-item">
-                                            <span>{{ __('Action for Delivered') }}</span>
+                                            <span>{{ __('transaction::messages.action_for_delivered') }}</span>
                                             <span>
                                                 <button type="button" class="btn btn-success">
-                                                    Delivered
+                                                    {{ __('transaction::messages.delivered') }}
                                                 </button>
                                             </span>
                                         </div>
@@ -661,24 +661,24 @@
                             </div>
                             <hr class="mb-5">
                         @empty
-                            Shipping Manifest not yet created
+                            {{ __('transaction::messages.shipping_manifest_alert') }}
                         @endforelse
 
                         @forelse($data->itemShipment()->get() as $itemShipment)
                             <div class="row mb-4">
                                 <div class="col-6">
                                     <div class="m-widget28__tab-items">
-                                        <div class="h4">Item Shipment of #{{ $loop->iteration }}</div>
+                                        <div class="h4">{{__('transaction::messages.item_shipment_no', ['loop' => $loop->iteration]) }}</div>
                                         <div class="m-widget28__tab-item row">
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Product') }}</span>
+                                                    <span>{{ __('transaction::messages.product') }}</span>
                                                     <span>{{ $itemShipment->item_snapshot['product_name'] ?? '' }}</span>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Total Qty') }}</span>
+                                                    <span>{{ __('transaction::messages.total_qty') }}</span>
                                                     <span>{{ $itemShipment->qty_total }}</span>
                                                 </div>
                                             </div>
@@ -686,25 +686,25 @@
                                         <div class="m-widget28__tab-item row">
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Shipped') }}</span>
+                                                    <span>{{ __('transaction::messages.shipped') }}</span>
                                                     <span>{{ $itemShipment->qty_shipped }}</span>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Delivered') }}</span>
+                                                    <span>{{ __('transaction::messages.delivered') }}</span>
                                                     <span>{{ $itemShipment->qty_delivered }}</span>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Accepted') }}</span>
+                                                    <span>{{ __('transaction::messages.accepted') }}</span>
                                                     <span>{{ $itemShipment->qty_accepted }}</span>
                                                 </div>
                                             </div>
                                             <div class="col-3">
                                                 <div class="m-widget28__tab-item">
-                                                    <span>{{ __('Rejected') }}</span>
+                                                    <span>{{ __('transaction::messages.rejected') }}</span>
                                                     <span>{{ $itemShipment->qty_rejected }}</span>
                                                 </div>
                                             </div>

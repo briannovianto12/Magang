@@ -20,7 +20,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        List of {{ $title }}
+                        {{ __('transaction::messages.transaction_title', ['title' => $title]) }}
                     </h3>
                 </div>
             </div>
@@ -31,36 +31,36 @@
                     <li class="nav-item m-tabs__item">
                         <a id="new_order_tab" class="nav-link m-tabs__link active" data-toggle="tab" href="#new_order"
                         role="tab">
-                            <i class="la la-shopping-cart"></i> {{ __('Pesanan Dibuat') }}
+                            <i class="la la-shopping-cart"></i> {{ __('transaction::messages.order_new') }}
                         </a>
                     </li>
                     <li id="process_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#process_order" role="tab">
-                            <i class="la la-hourglass-2"></i> {{ __('Pesanan Diproses') }}</a>
+                            <i class="la la-hourglass-2"></i> {{ __('transaction::messages.order_process') }}</a>
                     </li>
                     <li id="delivery_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivery_order" role="tab">
-                            <i class="la la-truck"></i> {{ __('Pesanan Dikirim') }}</a>
+                            <i class="la la-truck"></i> {{ __('transaction::messages.order_delivery') }}</a>
                     </li>
                     <li id="delivered_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#delivered_order" role="tab">
-                            <i class="la la-home"></i> {{ __('Sampai Tujuan') }}</a>
+                            <i class="la la-home"></i> {{ __('transaction::messages.order_delivered') }}</a>
                     </li>
                     <li id="success_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#success_order" role="tab">
-                            <i class="la la-check"></i> {{ __('Pesanan Sukses') }}</a>
+                            <i class="la la-check"></i> {{ __('transaction::messages.order_success') }}</a>
                     </li>
                     <li id="cancel_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#cancel_order" role="tab">
-                            <i class="la la-times"></i> {{ __('Pesanan Dibatalkan') }}</a>
+                            <i class="la la-times"></i> {{ __('transaction::messages.order_cancel') }}</a>
                     </li>
                     <li id="rejected_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#rejected_order" role="tab">
-                            <i class="la la-minus-circle"></i> {{ __('Pesanan Ditolak') }}</a>
+                            <i class="la la-minus-circle"></i> {{ __('transaction::messages.order_rejected') }}</a>
                     </li>
                     <li id="list_order_tab" class="nav-item m-tabs__item">
                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#list_order" role="tab">
-                            <i class="la la-history"></i> {{ __('Transaksi') }}</a>
+                            <i class="la la-history"></i> {{ __('transaction::messages.order_list') }}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -72,16 +72,16 @@
                                 style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th>Order No.</th>
-                                    <th>Buyer</th>
-                                    <th>Seller</th>
-                                    <th>Payment Amount</th>
-                                    <th>Total Gross</th>
-                                    <th>Notes</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
-                                    <th>Action</th>
+                                    <th>{{ __('transaction::messages.order_no') }}</th>
+                                    <th>{{ __('transaction::messages.buyer') }}</th>
+                                    <th>{{ __('transaction::messages.seller') }}</th>
+                                    <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                    <th>{{ __('transaction::messages.total_gross') }}</th>
+                                    <th>{{ __('transaction::messages.notes') }}</th>
+                                    <th>{{ __('transaction::messages.status') }}</th>
+                                    <th>{{ __('transaction::messages.created_at') }}</th>
+                                    <th>{{ __('transaction::messages.updated_at') }}</th>
+                                    <th>{{ __('transaction::messages.action') }}</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -93,13 +93,13 @@
                     <div class="tab-pane" id="process_order" role="tabpanel">
                         <div class="btn-group">
                             <strong class="mt-2 mr-2">
-                                Status:
+                                {{ __('transaction::messages.status_order_process') }}
                             </strong>
                             <div>
                                 <select id="po-table-status" class="custom-select custom-select-sm form-control form-control-sm">
-                                    <option value="All">All</option>
-                                    <option value="Payment OK">Payment OK</option>
-                                    <option value="Accepted">Accepted</option>
+                                    <option value="All">{{ __('transaction::messages.all') }}</option>
+                                    <option value="Payment OK">{{ __('transaction::messages.payment_ok') }}</option>
+                                    <option value="Accepted">{{ __('transaction::messages.accepted') }}</option>
                                 </select> 
                             </div>
                         </div>
@@ -108,16 +108,16 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -128,13 +128,13 @@
                     <div class="tab-pane" id="delivery_order" role="tabpanel">
                         <div class="btn-group">
                             <strong class="mt-2 mr-2">
-                                Pick-Up Status:
+                                {{ __('transaction::messages.pick_up_status') }}
                             </strong>
                             <div>
                                 <select id="deliveryo-table-status" class="custom-select custom-select-sm form-control form-control-sm">
-                                    <option value="All" selected="true">All</option>
-                                    <option value="true">Picked Up</option>
-                                    <option value="false">Not Picked Up</option>
+                                    <option value="All" selected="true">{{ __('transaction::messages.all') }}</option>
+                                    <option value="true">{{ __('transaction::messages.picked_up') }}</option>
+                                    <option value="false">{{ __('transaction::messages.not_picked_up') }}</option>
                                 </select> 
                             </div>
                         </div>
@@ -143,17 +143,17 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Picked Up</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.picked_up') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -167,16 +167,16 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -190,16 +190,16 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -213,16 +213,16 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -236,17 +236,17 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Reject Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.reject_notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -260,16 +260,16 @@
                             style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Order No.</th>
-                                <th>Buyer</th>
-                                <th>Seller</th>
-                                <th>Payment Amount</th>
-                                <th>Total Gross</th>
-                                <th>Notes</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
+                                <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.buyer') }}</th>
+                                <th>{{ __('transaction::messages.seller') }}</th>
+                                <th>{{ __('transaction::messages.payment_amount') }}</th>
+                                <th>{{ __('transaction::messages.total_gross') }}</th>
+                                <th>{{ __('transaction::messages.notes') }}</th>
+                                <th>{{ __('transaction::messages.status') }}</th>
+                                <th>{{ __('transaction::messages.created_at') }}</th>
+                                <th>{{ __('transaction::messages.updated_at') }}</th>
+                                <th>{{ __('transaction::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
