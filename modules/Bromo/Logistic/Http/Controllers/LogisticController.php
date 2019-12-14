@@ -316,7 +316,6 @@ class LogisticController extends Controller
      */
     public function storePickupInfo( Request $request, $order_id )
     {
-
         DB::beginTransaction();
         try {
             $order = Order::findOrFail($order_id);
@@ -346,7 +345,8 @@ class LogisticController extends Controller
 
             $data = [
                 "weight" => $request->weight, 
-                "total_price" => $request->total_price,
+                "total_price" => str_replace('.', '', $request->total_price),
+                "platform_discount" => str_replace('.', '', $request->platform_discount),
                 "awb_filename" => "$order_id/$file_awb_name",
                 "paket_filename" => "$order_id/$file_paket_name",
             ];

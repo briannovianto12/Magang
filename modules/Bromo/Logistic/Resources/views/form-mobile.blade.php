@@ -90,6 +90,13 @@
                         </div>
 
                         <div class="form-group bg-white">
+                                <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Input Discount Dari Grosenia (Wajib Diisi) </span></h5> 
+                                <div style="padding: 20px">
+                                    <input type="text" min="0" class="number form-control" placeholder="Discount" style="padding: 10px" name="platform_discount" id="platform_discount" required/>
+                                </div>
+                            </div>
+
+                        <div class="form-group bg-white">
                             <h5><span class="badge badge-info" style="display:block; padding: 10px 10px; text-align: left;"> Input Airwaybill (Opsional) </span></h5> 
                             <div style="padding: 20px">
                                 <input type="text" class="form-control" placeholder="No. Resi" style="padding: 10px" name="airwaybill" id="airwaybill"/>
@@ -127,6 +134,10 @@
                                 <br/>
                                 <span>
                                     Harga total: <b>Rp. <input type="text" class="show-review" readonly></b>
+                                </span>
+                                <br/>
+                                <span>
+                                    Discount: <b>Rp. <input type="text" class="show-review" readonly></b>
                                 </span>
                                 <br/>
                                 <span>
