@@ -27,8 +27,8 @@
         'modalId' => 'verify',
         'method' => 'PATCH',
         'route' => route("{$module}.verified", $data->id),
-        'title' => __('Verify Product'),
-        'body' => 'Are you sure ?'
+        'title' => __('product::messages.verify_product'),
+        'body' => __('product::messages.are_you_sure')
     ])
     @endcomponent
 
@@ -36,16 +36,16 @@
         'modalId' => 'reject',
         'method' => 'PATCH',
         'route' => route("{$module}.unverified", $data->id),
-        'title' => __('Reject Product'),
+        'title' => __('product::messages.reject_product'),
         'body' => ['textarea' => ['name' => 'notes']],
     ])
     @endcomponent
     @component('components._portlet', [
           'portlet_head' => true,
-          'portlet_title' => sprintf("Detail %s: %s", $title, $data->name),
+          'portlet_title' => __('product::messages.detail_title', ['title' => $title, 'name' => $data->name]),
           'url_manage' => true,
           'url_back' => route("$module.index"),
-          'postfix_back' => 'Back',
+          'postfix_back' => __('product::messages.back'),
           'body_class' => 'pt-0'])
         @slot('body')
 
@@ -55,19 +55,19 @@
                         <div class="col-4">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Product ID') }}</span>
+                                    <span>{{ __('product::messages.product_id') }}</span>
                                     <span>{{ $data->id }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Category') }}</span>
+                                    <span>{{ __('product::messages.category') }}</span>
                                     <span>{{ $data->category ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Brand') }}</span>
+                                    <span>{{ __('product::messages.brand') }}</span>
                                     <span>{{ $data->brand ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Tags') }}</span>
+                                    <span>{{ __('product::messages.tags') }}</span>
                                     <div>
                                         @isset($data->tags)    
                                             {!! 
@@ -84,7 +84,7 @@
                                             <input name='default-tags' readonly value='{{ $oriTags }}'>
                                             <button id="edit-tags-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                 <i class="fa fa-edit"></i>
-                                                Edit
+                                                {{ __('product::messages.edit') }}
                                             </button>
                                             <br>
                                             @if(session()->has('errorMsg'))
@@ -102,10 +102,10 @@
                                                 {{ method_field('PUT') }}
                                                 {{ csrf_field() }}
                                                 <div id="input-form">
-                                                    Input new tags:
+                                                    {{ __('product::messages.input_new_tags') }}
                                                     <input name='input-tags' value='{{ $oriTags }}'>
                                                     <br>
-                                                    <button id="update-tags-btn" class='btn btn-primary btn-sm' type='submit' style="border-radius: 4px">Update Tags</button> 
+                                                    <button id="update-tags-btn" class='btn btn-primary btn-sm' type='submit' style="border-radius: 4px">{{ __('product::messages.update_tags') }}</button> 
                                                 </div>
                                             </form>
                                         @endisset
@@ -117,19 +117,19 @@
                         <div class="col-4">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('SKU') }}</span>
+                                    <span>{{ __('product::messages.sku') }}</span>
                                     <span>{{ $data->sku ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Unit') }}</span>
+                                    <span>{{ __('product::messages.unit') }}</span>
                                     <span>{{ $data->unit_type ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Condition') }}</span>
+                                    <span>{{ __('product::messages.condition') }}</span>
                                     <span>{{ $data->condition_type ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Price') }}</span>
+                                    <span>{{ __('product::messages.price') }}</span>
                                     @if($data->price_min != $data->price_max)
                                         <span>IDR {{ number_format($data->price_min) ?? '-' }} - IDR {{ number_format($data->price_max) ?? '-' }}</span>
                                     @else
@@ -142,11 +142,11 @@
                         <div class="col-4">
                             <div class="m-widget28__tab-items">
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Store') }}</span>
+                                    <span>{{ __('product::messages.store') }}</span>
                                     <span>{{ $data->shop->name ?? '-' }}</span>
                                 </div>
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Published') }}</span>
+                                    <span>{{ __('product::messages.published') }}</span>
                                     @if(
                                     ($data->status === \Bromo\Product\Models\ProductStatus::PUBLISH ) ||
                                     ($data->status === \Bromo\Product\Models\ProductStatus::UNPUBLISH ))
@@ -167,12 +167,12 @@
                                         <button type="button" class="btn btn-danger m-btn m-btn--custom"
                                                 data-toggle="modal" data-target="#reject"
                                                 data-route="{{ route("{$module}.unverified", $data->id) }}">
-                                            Reject
+                                            {{ __('product::messages.reject') }}
                                         </button>
                                         <button type="button" class="btn btn-success m-btn m-btn--custom"
                                                 data-toggle="modal" data-target="#verify"
                                                 data-route="{{ route("{$module}.verified", $data->id) }}">
-                                            Verify
+                                            {{ __('product::messages.verify') }}
                                         </button>
                                     </div>
                                 @endif
@@ -192,7 +192,7 @@
 
             @component('components._portlet', [
             'portlet_head' => true,
-            'portlet_title' => sprintf("Images"),
+            'portlet_title' => __('product::messages.images'),
             'body_class' => 'pt-0'])
                 @slot('body')
 
@@ -221,7 +221,7 @@
 
             @component('components._portlet', [
             'portlet_head' => true,
-            'portlet_title' => sprintf("Descriptions"),
+            'portlet_title' => __('product::messages.descriptions'),
             'body_class' => 'pt-0'])
                 @slot('body')
 
@@ -241,7 +241,7 @@
         <div class="col-6">
             @component('components._portlet', [
             'portlet_head' => true,
-            'portlet_title' => sprintf("Product Attribute"),
+            'portlet_title' => __('product::messages.product_attribute'),
             'body_class' => 'pt-0'])
                 @slot('body')
 
@@ -250,7 +250,7 @@
                             <div class="row">
                                 @isset($data->attributes)
                                     <div class="col-6">
-                                        <h6>Product Attributes</h6>
+                                        <h6>{{ __('product::messages.product_attributes') }}</h6>
                                         <ul class="m-nav">
                                             @foreach($data->attributes ?? [] as $key => $attribute)
                                                 <li class="m-nav__section m-nav__section--first">
@@ -266,7 +266,7 @@
 
                                 @isset($data->dimensions)
                                     <div class="col-6">
-                                        <h6>Dimensions</h6>
+                                        <h6>{{ __('product::messages.dimensions') }}</h6>
                                         <ul class="m-nav">
                                             @foreach($data->dimensions ?? [] as $key => $dimension)
                                                 <li class="m-nav__section m-nav__section--first">
@@ -297,7 +297,7 @@
         <div class="col-12">
             @component('components._portlet', [
             'portlet_head' => true,
-            'portlet_title' => sprintf("Variants"),
+            'portlet_title' => __('product::messages.variants'),
             'body_class' => 'pt-0'])
                 @slot('body')
 
@@ -312,19 +312,19 @@
                                                 <div class="col-3" style="border-right: 1px solid #dddddd">
                                                     <ul class="m-nav">
                                                         <li class="m-nav__section m-nav__section--first">
-                                                            <span class="m-nav__section-text">Variant</span>
+                                                            <span class="m-nav__section-text">{{ __('product::messages.variant') }}</span>
                                                         </li>
                                                         <li class="m-nav__item mb-2">
                                                             <b class="m-nav__link-text">{{ $variant->name ?? '-' }}</b>
                                                         </li>
                                                         <li class="m-nav__section m-nav__section--first">
-                                                            <span class="m-nav__section-text">SKU</span>
+                                                            <span class="m-nav__section-text">{{ __('product::messages.sku') }}</span>
                                                         </li>
                                                         <li class="m-nav__item mb-2">
                                                             <b class="m-nav__link-text">{{ $variant->sku ?? '-' }}</b>
                                                         </li>
                                                         <li class="m-nav__section m-nav__section--first">
-                                                            <span class="m-nav__section-text">SKU Seller</span>
+                                                            <span class="m-nav__section-text">{{ __('product::messages.sku_seller') }}</span>
                                                         </li>
                                                         <li class="m-nav__item mb-2">
                                                             <b class="m-nav__link-text">{{ $variant->seller_sku ?? '-' }}</b>
@@ -340,26 +340,26 @@
                                                                     <div class="m-widget5__content">
                                                                         <div class="m-widget5__section">
                                                                             <h4 class="m-widget5__title">
-                                                                                Option-{{ $key + 1 }}</h4>
-                                                                            <span class="m-widget5__desc">Margin: 0%</span>
+                                                                                {{ __('product::messages.option', ['key' => $key + 1]) }}</h4>
+                                                                            <span class="m-widget5__desc">{{ __('product::messages.margin') }}</span>
                                                                             <div class="m-widget5__info">
                                                                                 <ul class="list-inline">
                                                                                     <li class="list-inline-item">
-                                                                                        <span class="m-widget5__author">Base Price : </span>
+                                                                                        <span class="m-widget5__author">{{ __('product::messages.base_price') }}</span>
                                                                                         <span class="m-widget5__info-date m--font-info">IDR {{ number_format($option->price_comp_base) ?? 0 }}</span>
                                                                                         </br>
-                                                                                        <span class="m-widget5__author">Display Price : </span>
+                                                                                        <span class="m-widget5__author">{{ __('product::messages.display_price') }}</span>
                                                                                         <span class="m-widget5__info-date m--font-info">IDR {{ number_format($option->price) ?? 0 }}</span>
                                                                                     </li>
                                                                                     <li class="list-inline-item">
-                                                                                        <span class="m-widget5__author">Quantity Product : </span>
+                                                                                        <span class="m-widget5__author">{{ __('product::messages.quantity_product') }}</span>
                                                                                         <span class="m-widget5__info-date m--font-info">{{ $option->unit_qty ?? 0 }} {{ $option->unit_type ?? '' }}</span>
                                                                                     </li>
                                                                                     <li class="list-inline-item">
-                                                                                        <span class="m-widget5__author">Minimum : </span>
+                                                                                        <span class="m-widget5__author">{{ __('product::messages.minimum') }}</span>
                                                                                         <span class="m-widget5__info-date m--font-info">{{ $option->qty_min ?? 0 }} {{ $option->unit_type ?? '' }}</span>
                                                                                         </br>
-                                                                                        <span class="m-widget5__author">Maximum : </span>
+                                                                                        <span class="m-widget5__author">{{ __('product::messages.maximum') }}</span>
                                                                                         <span class="m-widget5__info-date m--font-info">{{ $option->qty_max ?? 0 }} {{ $option->unit_type ?? '' }}</span>
                                                                                     </li>
                                                                                 </ul>
@@ -397,14 +397,14 @@
                {{ csrf_field() }}
                {{ method_field('PUT') }}
                <div class="modal-header">
-                   <h5 class="modal-title title">Change Status</h5>
+                   <h5 class="modal-title title">{{ __('product::messages.change_status') }}</h5>
                </div>
                <div class="modal-body">
-                   <p>Are you sure change status of data?</p>
+                   <p>{{ __('product::messages.status_alert') }}</p>
                </div>
                <div class="modal-footer">
-                   <button id="cancel" type="button" class="btn btn-secondary">Cancel</button>
-                   <button type="submit" class="btn btn-primary">Yes</button>
+                   <button id="cancel" type="button" class="btn btn-secondary">{{ __('product::messages.cancel') }}</button>
+                   <button type="submit" class="btn btn-primary">{{ __('product::messages.yes') }}</button>
                </div>
            </form>
            </div>
