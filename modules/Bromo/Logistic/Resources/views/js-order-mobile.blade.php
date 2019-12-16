@@ -7,7 +7,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        
         $.fn.dataTable.ext.errMode = 'throw';
 
         if ("{{ route('logistic.mobile-index') }}" === "{{ url()->current() }}") {
@@ -18,7 +18,6 @@
             
             // Add handle to change status order
             $('#selectStatus').change(function(event){
-                // console.log($(event.target).val())
                 var current_tag = $(event.target).val(); 
                 $('a[role="tab"][href="'+current_tag+'"]').click()
                 document.location.href = current_tag;
@@ -115,26 +114,32 @@
         $('.number').number(true,0, ',', '.');
 
         $('.review').click(function () {
-            var formValues = [];
-                // get values from inputs in first fieldset
-                $('.field1 :input').each(function () {
-                    var number = formatNumber($(this).val())
-                    formValues.push(number);
-                    console.log(number)
-                });
-                
-                formValues.pop();
-                formValues.pop(); //remove the button from input values
-                console.log(formValues);
-                
-                // set values in second fieldset
-                $('.field2 :input').each(function (index) {
-                    if (formValues[index]) {
-                        $(this).val(formValues[index]);
-                    }
-                });
 
-            $('.current').removeClass('current').hide().next().show().addClass('current');
+            var platformDiscount = parseInt($('#platform_discount').val());
+            var totalPrice = parseInt($('#total_price').val());
+
+            if(platformDiscount < 0 || !(platformDiscount <= totalPrice) || totalPrice <= 0){
+                alert('Periksa Kembali Data Yang Di Input');
+            }
+            else{
+                var formValues = [];
+                    // get values from inputs in first fieldset
+                    $('.field1 :input').each(function () {
+                        var number = formatNumber($(this).val());
+                        formValues.push(number);
+                    });
+                    
+                    formValues.pop();
+                    formValues.pop(); //remove the button from input values
+                    
+                    // set values in second fieldset
+                    $('.field2 :input').each(function (index) {
+                        if (formValues[index]) {
+                            $(this).val(formValues[index]);
+                        }
+                    });
+                $('.current').removeClass('current').hide().next().show().addClass('current');
+            }
         });
 
         $('.previous').click(function () {
