@@ -20,24 +20,24 @@
                 <li class="nav-item m-tabs__item">
                     <a id="confirm_tab" class="nav-link m-tabs__link active" data-toggle="tab" href="#confirm"
                        role="tab">
-                        <i class="la la-hourglass-2"></i> Menunggu Pickup</a>
+                        <i class="la la-hourglass-2"></i> {{ __('logistic::messages.waiting_for_pick_up') }} </a>
                 </li>
                 
                 {{-- Status menunggu di proses disini sudah diaccept oleh kurir organizer --}}
                 <li id="process_tab" class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#process" role="tab">
-                        <i class="la la-taxi"></i> Dalam Proses</a>
+                        <i class="la la-taxi"></i> {{ __('logistic::messages.in_process') }} </a>
                 </li>
 
                 {{-- Status sudah dijemput disini sudah dijemput oleh kurir --}}
                 <li id="sent_tab" class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#sent" role="tab">
-                        <i class="la la-taxi"></i> Sudah Dijemput</a>
+                        <i class="la la-taxi"></i> {{ __('logistic::messages.picked_up') }} </a>
                 </li>
 
                 <li id="transaction_tab" class="nav-item m-tabs__item">
                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#transaction" role="tab">
-                        <i class="la la-archive"></i> Semua Status</a>
+                        <i class="la la-archive"></i> {{ __('logistic::messages.all_status') }} </a>
                 </li>
             </ul>
             </nav>
@@ -45,10 +45,10 @@
             <div class="form-group">
             <select id="selectStatus" class="d-xs-block d-md-none form-control"> 
                 
-                <option value="#confirm" selected>Menunggu Pickup</option>  
-                <option value="#process">Dalam Proses</option>  
-                <option value="#sent">Sudah Dijemput</option> 
-                <option value="#transaction">Semua Status</option> 
+                <option value="#confirm" selected>{{ __('logistic::messages.waiting_for_pick_up') }}</option>  
+                <option value="#process">{{ __('logistic::messages.in_process') }}</option>  
+                <option value="#sent">{{ __('logistic::messages.picked_up') }}</option> 
+                <option value="#transaction">{{ __('logistic::messages.all_status') }}</option> 
             </select> 
             </div>
             <div class="tab-content">
@@ -60,7 +60,7 @@
                             style="width: 100%">
                             <thead class="d-none">
                             <tr>
-                                <th>All Info</th>
+                                <th>{{ __('logistic::messages.all_info') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -76,7 +76,7 @@
                             style="width: 100%">
                             <thead class="d-none">
                             <tr>
-                                <th>All Info</th>
+                                <th>{{ __('logistic::messages.all_info') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -91,7 +91,7 @@
                             style="width: 100%">
                             <thead class="d-none">
                             <tr>
-                                <th>All Info</th>
+                                <th>{{ __('logistic::messages.all_info') }}</th>
                             </tr>
                             </thead>
                         </table>
@@ -106,7 +106,7 @@
                             style="width: 100%">
                             <thead class="d-none">
                             <tr>
-                                <th>All Info</th>
+                                <th>{{ __('logistic::messages.all_info') }}</th>
                             </tr>
                             </thead>
                         </table>
