@@ -104,6 +104,7 @@ return [
 
     //S
     'seller' => 'Seller',
+    'seller_discount' => 'Seller Discount',
     'seller_email' => 'Seller Email',
     'seller_name' => 'Seller Name',
     'seller_phone' => 'Seller Phone',
