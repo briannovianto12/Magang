@@ -341,17 +341,20 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('transaction::messages.total_gross_amount') }}</span>
-                                            <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
-                                        </div>
-                                    </div>
+
                                     @isset($data->payment_details['platform_discount'])
                                         <div class="col-4">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('transaction::messages.platform_discount') }}</span>
                                                 <span>IDR {{ number_format($data->payment_details['platform_discount']) ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    @endisset
+                                    @isset($data->payment_details['total_discount'])
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('transaction::messages.seller_discount') }}</span>
+                                                <span>IDR {{ number_format($data->payment_details['total_discount']) ?? 0 }}</span>
                                             </div>
                                         </div>
                                     @endisset
@@ -361,6 +364,13 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.total_gross_amount') }}</span>
+                                            <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
+                                        </div>
+                                    </div>
+
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('transaction::messages.grand_total') }}</span>
