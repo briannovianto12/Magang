@@ -23,28 +23,28 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="content">
-                    <h5><span class="badge badge-info badge-title"> Informasi Order </span></h5> 
+                    <h5><span class="badge badge-info badge-title"> <th>{{ __('logistic::messages.order_information') }}</th> </span></h5> 
                     
                     <div class="detail">
                         @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::PICKED_UP)
-                            <div class="status-name"><b><h4>Barang sudah terkirim</h4></b></div>                            
+                            <div class="status-name"><b><h4><th>{{ __('logistic::messages.package_shipped') }}</th></h4></b></div>                            
                         @endif
-                        <div>Nomor Order: </div>
+                        <div>{{ __('logistic::messages.order_number') }}</div>
                         <div><b><h3>{{ $order->order_no }}</h3></b></div>
-                        <div>Nama Penjual: </div>
+                        <div>{{ __('logistic::messages.seller_name') }}</div>
                         <div class="subtitle-name"><b><h5>{{ $shop_info->name }}</h5></b></div>
                         <address>
-                            Telpon Penjual:
+                            {{ __('logistic::messages.seller_phone') }}
                             <b><h3>{{  $shop_info->msisdn }}</h3></b><br/>
-                            Alamat Penjual:
+                            {{ __('logistic::messages.seller_address') }}
                             <b><h4>{{  $shop_info->building_name }} /
                             {{ $shop_info->address_line }} </h4></b>
 
                             <br/>
-                            Nama Pembeli:
+                            {{ __('logistic::messages.buyer_name') }}
                             <div class="subtitle-name"><b><h5>{{ $destination_info['full_name'] }}</h5></b></div>
                             <br/>
-                            Catatan dari Pembeli:
+                            {{ __('logistic::messages.buyer_notes') }}
                             <b><h4>{{  $shop_info->notes }}</h4></b>
                         </address>    
                         <br/>
@@ -53,14 +53,14 @@
                 
 
                 <div class="content">
-                    <h5><span class="badge badge-warning badge-title"> Informasi Ekspedisi</span></h5> 
+                    <h5><span class="badge badge-warning badge-title">{{ __('logistic::messages.expedition_info') }}</span></h5> 
 
                     <div class="detail">
                         <div class="subtitle-name"><b><h5>{{ $courier_info['courier_name'] }}</h5></b></div>
                         <address>
-                            Permintaan dipickup: 
+                            {{ __('logistic::messages.pick_up_request') }}
                             <b><h3>{{  $courier_info['expected_date'] }}</h3></b><br/>
-                            Catatan pickup:
+                            {{ __('logistic::messages.pick_up_notes') }}
                             <b><h4>{{  $courier_info['pickup_instruction'] }}</h4></b>
                         </address>   
                         <br/> 
@@ -69,12 +69,12 @@
                 
 
                 <div class="content">
-                    <h5><span class="badge badge-danger badge-title"> Informasi Isi Paket </span></h5> 
+                    <h5><span class="badge badge-danger badge-title">{{ __('logistic::messages.package_info') }}</span></h5> 
 
                     <div class="detail">
                         <div class="subtitle-name"><b><h5>{{ $order_info['description'] }} </h5></b></div>
                         <address>
-                            Berat menurut sistem:
+                            {{ __('logistic::messages.weight_by_system') }}
                             <b><h3>{{ $order_info['system_weight'] }} KG</h3></b>
                         </address>    
                         <br/>
@@ -83,15 +83,15 @@
                 
 
                 <div class="content">
-                    <h5><span class="badge badge-success badge-title"> Informasi Tujuan / Penerima</span></h5> 
+                    <h5><span class="badge badge-success badge-title">{{ __('logistic::messages.destination_info') }}</span></h5> 
 
                     <div class="detail">
                         <div><b><h5>{{$destination_info['full_name']}} </h5></b></div> 
                         <address>
-                            Telpon:<br/>
+                            {{ __('logistic::messages.phone') }}<br/>
                             <b></h4>{{  $destination_info['msisdn'] }}</h4></b>
                             <br/>
-                            Alamat:<br/>
+                            {{ __('logistic::messages.address') }}<br/>
                             <b></h4>{{   $destination_info['building_name'] }} /
                             {{ $destination_info['address_line'] }}</h4></b>
                         </address>    
@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="content">
-                    <h5><span class="badge badge-primary badge-title">Lampiran Foto</span></h5> 
+                    <h5><span class="badge badge-primary badge-title">{{ __('logistic::messages.photo_attachment') }}</span></h5> 
 
                     <div class="detail">
                         @if(count($images) > 0)
@@ -108,7 +108,7 @@
                                 <img class="img-fluid img-item" src="{{ $value }}" width="80%" />
                             @endforeach
                         @else
-                            <span>Belum ada foto</span>
+                            <span>{{ __('logistic::messages.photo_not_exist') }}</span>
                         @endif
                     </div>
                 
@@ -121,29 +121,29 @@
         {{-- if status is waiting confirmation --}}
         @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::WAITING_PICKUP)
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="window.history.go(-1); return false;" id="btnTolak" type="button" class="btn btn-secondary"> Kembali</button>
+            <button onclick="window.history.go(-1); return false;" id="btnTolak" type="button" class="btn btn-secondary">{{ __('logistic::messages.go_back') }}</button>
         </div>
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="_performAcceptPickup('{{ $order->id }}')" id="btnTerima" type="button" class="btn btn-success"> OK, Saya Jemput</button>
+            <button onclick="_performAcceptPickup('{{ $order->id }}')" id="btnTerima" type="button" class="btn btn-success">{{ __('logistic::messages.accept_pick_up') }}</button>
         </div>
         @endif
 
         @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::IN_PROCESS_PICKUP)
         {{-- if status is in process --}}
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="location.href='{{ route('logistic.mobile-index') }}';" id="btnProses" type="button" class="btn btn-secondary"> Kembali Ke Home</button>
+            <button onclick="location.href='{{ route('logistic.mobile-index') }}';" id="btnProses" type="button" class="btn btn-secondary">{{ __('logistic::messages.go_back_to_home') }}</button>
         </div>
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="_performCancelPickup('{{ $order->id }}')" id="btnBatalJemput" type="button" class="btn btn-danger"> Batal Jemput</button>
+            <button onclick="_performCancelPickup('{{ $order->id }}')" id="btnBatalJemput" type="button" class="btn btn-danger">{{ __('logistic::messages.cancel_pick_up') }}</button>
         </div>
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="location.href='{{ route('logistic.pickup', ['id' => $order->id]) }}';" id="btnProses" type="button" class="btn btn-success"> Proses Kirim</button>
+            <button onclick="location.href='{{ route('logistic.pickup', ['id' => $order->id]) }}';" id="btnProses" type="button" class="btn btn-success">{{ __('logistic::messages.proceed') }}</button>
         </div>
         @endif
 
         @if($pickup_status == Bromo\Logistic\Entities\TraditionalLogisticStatus::PICKED_UP)
         <div class="pull-down" style="padding: 5px 10px">
-            <button onclick="window.history.go(-1); return false;" id="btnTolak" type="button" class="btn btn-secondary"> Kembali</button>
+            <button onclick="window.history.go(-1); return false;" id="btnTolak" type="button" class="btn btn-secondary">{{ __('logistic::messages.expedition_info') }}</button>
         </div>
         @endif
     </div>

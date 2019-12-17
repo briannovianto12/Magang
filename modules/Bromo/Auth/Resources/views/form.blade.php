@@ -27,7 +27,7 @@
 
                     <div class="m-login__signin">
                         <div class="m-login__head">
-                            <h3 class="m-login__title">Sign In To Continue</h3>
+                            <h3 class="m-login__title"> {{ __('auth::messages.sign_in_to_continue') }} </h3>
                         </div>
                         <form id="form" class="m-form m-form--fit" method="POST"
                               action="{{ route('post.login') }}">
@@ -37,7 +37,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="la la-user"></i></span>
                                     </div>
-                                    <input type="email" class="form-control m-input" placeholder="Your email address"
+                                    <input type="email" class="form-control m-input" placeholder="{{ __('auth::messages.your_email_address') }}"
                                            id="email" name="email" value="{{ old('email') }}" required="">
                                 </div>
                                 <div class="ml-4">
@@ -55,7 +55,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="la la-lock"></i></span>
                                     </div>
-                                    <input type="password" class="form-control m-input" placeholder="Your password"
+                                    <input type="password" class="form-control m-input" placeholder="{{ __('auth::messages.your_password') }}"
                                            id="password" name="password" required="">
                                 </div>
                                 <div class="ml-4">
@@ -71,7 +71,7 @@
                             <div class="m-login__form-action text-center">
                                 <button type="submit" id="submit"
                                         class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
-                                    Submit
+                                    {{ __('auth::messages.submit') }}
                                 </button>
                             </div>
                         </form>

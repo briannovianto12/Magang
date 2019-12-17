@@ -17,7 +17,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Popular Product
+                        {{ __('product::messages.popular_product') }}
                     </h3>
                 </div>
             </div>
@@ -27,32 +27,32 @@
                 <div id="regular-product-list" class="col-6">
                     <form id="product-search-form" class="form-inline" method="GET">
                         <input id="product-searchbar" name="search-product-name" class="form-control" type="text" placeholder="Search Product">
-                        <button id="btn-search-product" type="button" class="btn btn-dark">Search</button>
+                        <button id="btn-search-product" type="button" class="btn btn-dark">{{ __('product::messages.search') }}</button>
                     </form>
                     <h6 class="mt-2">
-                        Please click on Update Index once you have finished updating the list of popular product.    
+                        {{ __('product::messages.reminder') }}
                     </h6>
                     <div class="mt-3" id="list-regular-product">
                         <table id="table-regular-product" class="table table-responsive table-striped table-bordered display">
                             <thead class="text-center">
                             <tr>
-                                <th>Regular Product</th>
-                                <th>Seller</th>
-                                <th>Action</th>
+                                <th>{{ __('product::messages.regular_product') }}</th>
+                                <th>{{ __('product::messages.seller') }}</th>
+                                <th>{{ __('product::messages.action') }}</th>
                             </tr>
                             </thead>
                         </table>
                     </div>        
                 </div>
                 <div class="col-6" id="popular-product-list">
-                    <button id="btn-update-index" type="button" class="btn btn-dark">Update Index</button>
+                    <button id="btn-update-index" type="button" class="btn btn-dark">{{ __('product::messages.update_index') }}</button>
                     <div id="list-popular-product" class="mt-3">
                         <table id="table-popular-product" class="table table-responsive table-striped table-bordered display">
                             <thead class="text-center">
                             <tr>
-                                <th>Popular Product</th>
-                                <th>Seller</th>
-                                <th>Action</th>
+                                <th>{{ __('product::messages.popular_product') }}</th>
+                                <th>{{ __('product::messages.seller') }}</th>
+                                <th>{{ __('product::messages.action') }}</th>
                             </tr>
                         </table>
                     </div>        
