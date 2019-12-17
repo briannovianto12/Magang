@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    @can('view_exports')
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
@@ -36,5 +37,6 @@
             </table>
         </div>
     </div>
+    @endcan
 
 @endsection

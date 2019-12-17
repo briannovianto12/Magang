@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+    @can('view_export_order_list')
     @component('components._portlet',[
           'portlet_head' => true,
           'portlet_title' => "Export Order List"])
@@ -69,5 +70,6 @@
             </div>
         @endslot
     @endcomponent
+    @endcan
 
 @endsection

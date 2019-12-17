@@ -161,12 +161,14 @@
                 </a>
             </li>
             @endcan
+            @can('view_exports')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('export.index') }}" aria-haspopup="true">
                 <a href="{{ route('export.index') }}" class="m-menu__link">
                     <i class="m-menu__link-icon la la-download"></i>
                     <span class="m-menu__link-text">Exports</span>
                 </a>
             </li>
+            @endcan
             @can('view_faq')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('freqaskedquestion.index') }}" aria-haspopup="true">
                 <a href="{{ route('faq.index') }}" class="m-menu__link">
