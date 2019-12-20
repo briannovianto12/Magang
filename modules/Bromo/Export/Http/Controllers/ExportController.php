@@ -100,7 +100,7 @@ class ExportController extends Controller
         
         if($request->is('export/order-list/*')){
             $writer = $this->exportOrder($request);
-            $fileName = "orderList";
+            $fileName = "export-order-" . date("Y-m-d-H-i-s",time());
         }
         
         $response =  new StreamedResponse(
