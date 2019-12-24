@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Bromo\Notifications\Events\NewsNotificationByTopic;
+use Bromo\Notifications\Entities\NewsNotification;
 use Validator;
 
 class NotificationsController extends Controller
@@ -43,6 +44,12 @@ class NotificationsController extends Controller
             'title' => $request->title,
             'body' => $request->body,
         ];
+
+        $notification = new NewsNotification;
+        $notification->topic = $request->topic;
+        $notification->title = $request->title;
+        $notification->body = $request->body;
+        $notification->save();
         
         try{
             event(new NewsNotificationByTopic($data));
