@@ -10,6 +10,7 @@ $( document ).ready(function() {
     function load_table(){
         $('#table-courier-business-mapping').DataTable().destroy();
         $('#table-courier-business-mapping').DataTable({processing: true,
+            serverSide: true,
             ajax: '/tools/courier-business-mapping/get-table',
             columns: [
                 {data: 'seller_name', name: 'seller_name'},
@@ -28,6 +29,7 @@ $( document ).ready(function() {
     function load_filtered_table(courier_id){
         $('#table-courier-business-mapping').DataTable().destroy();
         $('#table-courier-business-mapping').DataTable({processing: true,
+            serverSide: true,
             ajax: '/tools/courier-business-mapping/get-filtered-table/'+courier_id,
             columns: [
                 {data: 'seller_name', name: 'seller_name'},
