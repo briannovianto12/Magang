@@ -6,14 +6,16 @@ $( document ).ready(function() {
     load_expedition_couriers();
 
     $(document).on('click', '.btn-add-seller', function(e) {
-        sellerId = $('#table-seller').DataTable().row($(this).parents('tr')).data()['id'];
-        sellerName = $('#table-seller').DataTable().row($(this).parents('tr')).data()['shop_name']
+        var tr = $(this).closest('li').length ? $(this).closest('li') : $(this).closest('tr');
+        sellerId = $('#table-seller').DataTable().row(tr).data()['id'];
+        sellerName = $('#table-seller').DataTable().row(tr).data()['shop_name']
         $('#selected-seller').val(sellerName);
     });
 
     $(document).on('click', '.btn-add-buyer', function(e) {
-        buyerId = $('#table-buyer').DataTable().row($(this).parents('tr')).data()['id'];
-        buyerName = $('#table-buyer').DataTable().row($(this).parents('tr')).data()['buyer_name']
+        var tr = $(this).closest('li').length ? $(this).closest('li') : $(this).closest('tr');
+        buyerId = $('#table-buyer').DataTable().row(tr).data()['id'];
+        buyerName = $('#table-buyer').DataTable().row(tr).data()['buyer_name']
         $('#selected-buyer').val(buyerName);
     });
 
@@ -76,6 +78,8 @@ $( document ).ready(function() {
         else{
             $('#table-seller').DataTable().destroy();
             $('#table-seller').DataTable({searching: false, info: false, processing: true,
+                serverSide: true,
+                responsive: true,
                 ajax:'/tools/courier-business-mapping/search-seller/'+keyword,
                 columns: [
                     {data: 'shop_id', name: 'shop_id'},
@@ -86,6 +90,7 @@ $( document ).ready(function() {
                 ],
                 dom: '<"top"l>rt<"bottom"p><"clear">', ordering: false, pagingType: "simple_numbers"});        
             $('#table-seller').DataTable().draw();
+            $("#list-seller").show();
         }
     }
 
@@ -98,6 +103,8 @@ $( document ).ready(function() {
         else{
             $('#table-buyer').DataTable().destroy();
             $('#table-buyer').DataTable({searching: false, info: false, processing: true,
+                serverSide: true,
+                responsive: true,
                 ajax:'/tools/courier-business-mapping/search-buyer/'+keyword,
                 columns: [
                     {data: 'buyer_name', name: 'buyer_name'},
@@ -107,13 +114,15 @@ $( document ).ready(function() {
                 ],
                 dom: '<"top"l>rt<"bottom"p><"clear">', ordering: false, pagingType: "simple_numbers"});        
             $('#table-buyer').DataTable().draw();
+            $("#list-buyer").show();
         }
     }
 
     function init(){
         
         clear();
-
+        $("#list-seller").hide();
+        $("#list-buyer").hide();
         $("#seller-search-form").submit(function(e) {
             e.preventDefault();
         });

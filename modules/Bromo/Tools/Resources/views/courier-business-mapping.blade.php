@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="m-portlet__body">
-            <div class="btn-group">
+            <div class="btn-group col-sm-12">
                 <strong class="mt-2 mr-2">
                     Filter by Courier:
                 </strong>

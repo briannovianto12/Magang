@@ -11,7 +11,26 @@ class CourierBusinessMappingDataTable extends DataTable
 {
     public function ajax()
     {
+        $keyword = $this->request()->has('search.value');
         return datatables($this->query())
+            ->filterColumn('seller_name', function($query, $keyword) {
+                if ($keyword) {
+                    $keyword = $this->request()->input('search.value');
+                    $query->where(DB::raw('B.name'), 'ILIKE', "%{$keyword}%");
+                }
+            })
+            ->filterColumn('buyer_name', function($query, $keyword) {
+                if ($keyword) {
+                    $keyword = $this->request()->input('search.value');
+                    $query->where(DB::raw('C.name'), 'ILIKE', "%{$keyword}%");
+                }
+            })
+            ->filterColumn('buyer_phone_number', function($query, $keyword) {
+                if ($keyword) {
+                    $keyword = $this->request()->input('search.value');
+                    $query->where(DB::raw('F.msisdn'), 'ILIKE', "%{$keyword}%");
+                }
+            })
             ->make(true);
     }
 

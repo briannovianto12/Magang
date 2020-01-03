@@ -27,24 +27,24 @@
             <div class="row">
                 <form id="cbm-form" class="form-inline" method="POST">
                     {{ csrf_field() }}
-                    <div class="col-3">
+                    <div class="col-12 col-sm-3 col-md-3 mb-2">
                         <input type="text" id="selected-seller" name="selected-seller" placeholder="Select Seller" disabled/>
                     </div>
-                    <div class="col-3">
+                    <div class="col-12 col-sm-3 col-md-3 mb-2">
                         <input type="text" id="selected-buyer" name="selected-buyer" placeholder="Select Buyer" disabled/>
                     </div>
-                    <div class="col-3">
+                    <div class="col-12 col-sm-3 col-md-3 mb-2">
                         <select class="form-control" id="courier-selection" name="courier-selection">
                             <option value="" selected>Select Courier</option>
                         </select> 
                     </div>
-                    <div class="col-3 pl-4">
+                    <div class="col-12 col-sm-3 col-md-3 pl-4">
                         <button id="btn-submit-form" type="button" class="btn btn-primary btn-block">Submit</button>
                     </div>
                 </form>
             </div>
             <div id="search-area" class="row mt-5">
-                <div id="seller-list" class="col-7">
+                <div id="seller-list" class="col-12 col-sm-7 col-md-6 pb-5">
                     <form id="seller-search-form" class="form-inline" method="GET">
                         <input id="seller-searchbar" name="search-seller-name" class="form-control" type="text" placeholder="Search Shop">
                         <button id="btn-search-seller" type="button" class="btn btn-dark">Search</button>
@@ -54,7 +54,7 @@
                             <thead class="text-center">
                                 <tr>
                                     <th>Shop ID</th>
-                                    <th>Shop Name</th>
+                                    <th>Shop <br>Name</th>
                                     <th>Status</th>
                                     <th>Contact Person</th>
                                     <th>Action</th>
@@ -63,7 +63,7 @@
                         </table>
                     </div>        
                 </div>
-                <div id="buyer-list" class="col-5">
+                <div id="buyer-list" class="col-12 col-sm-5 col-md-6">
                         <form id="buyer-search-form" class="form-inline" method="GET">
                             <input id="buyer-searchbar" name="search-buyer-name" class="form-control" type="text" placeholder="Search Buyer">
                             <button id="btn-search-buyer" type="button" class="btn btn-dark">Search</button>
@@ -72,9 +72,9 @@
                             <table id="table-buyer" class="table table-responsive table-striped display">
                                 <thead class="text-center">
                                     <tr>
-                                        <th>Buyer Name</th>
-                                        <th>Owner Name</th>
-                                        <th>Phone Number</th>
+                                        <th>Buyer <br>Name</th>
+                                        <th>Owner <br>Name</th>
+                                        <th>Phone <br>Number</th>
                                         <th>Add</th>
                                     </tr>
                                 </thead>

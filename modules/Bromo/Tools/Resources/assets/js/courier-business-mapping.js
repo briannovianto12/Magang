@@ -4,19 +4,28 @@ $( document ).ready(function() {
     load_expedition_couriers();
 
     $('#courier-filter').change(function(){
-        load_filtered_table($('#courier-filter').val());
+        if($('#courier-filter').val() == "All"){
+            load_table();
+        }
+        else{
+            load_filtered_table($('#courier-filter').val());
+        }
     });
 
     function load_table(){
         $('#table-courier-business-mapping').DataTable().destroy();
         $('#table-courier-business-mapping').DataTable({processing: true,
             serverSide: true,
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            responsive: true,
             ajax: '/tools/courier-business-mapping/get-table',
             columns: [
                 {data: 'seller_name', name: 'seller_name'},
                 {data: 'buyer_name', name: 'buyer_name'},
                 {data: 'buyer_phone_number', name: 'buyer_phone_number'},
-                {data: 'courier_name', name: 'courier_name'},
+                {data: 'courier_name', name: 'courier_name', searchable: false},
                 {data: 'remark', name: 'remark', searchable: false},
             ],
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
@@ -30,12 +39,16 @@ $( document ).ready(function() {
         $('#table-courier-business-mapping').DataTable().destroy();
         $('#table-courier-business-mapping').DataTable({processing: true,
             serverSide: true,
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            responsive: true,
             ajax: '/tools/courier-business-mapping/get-filtered-table/'+courier_id,
             columns: [
                 {data: 'seller_name', name: 'seller_name'},
                 {data: 'buyer_name', name: 'buyer_name'},
                 {data: 'buyer_phone_number', name: 'buyer_phone_number'},
-                {data: 'courier_name', name: 'courier_name'},
+                {data: 'courier_name', name: 'courier_name', searchable: false},
                 {data: 'remark', name: 'remark', searchable: false},
             ],
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
