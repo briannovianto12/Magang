@@ -55,6 +55,6 @@ class UpdatePasswordController extends Controller
         
         $admin->save();
     
-        return view('theme::dashboard');
+        return redirect()->route('dashboard');
     }
 }
