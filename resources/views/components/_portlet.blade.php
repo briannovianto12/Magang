@@ -81,6 +81,19 @@
                     @endisset
                 </div>
             @endisset
+
+            @isset($url)
+                <div class="m-portlet__head-tools">
+                    <a href="#" onclick="window.location.href='{{ $url }}'"
+                       class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
+                        <span>
+                            <i class="la la-plus"></i>
+                            <!-- <span>@isset($postfix) {{$postfix}} @endisset</span> -->
+                            <span>Tambah</span>
+                        </span>
+                    </a>
+                </div>
+            @endisset
         </div>
     @endisset
     <div class="m-portlet__body @isset($body_class) {{$body_class}} @endisset">
