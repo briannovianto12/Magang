@@ -22,6 +22,7 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "predis/predis": "^1.1",
         "rmccue/requests": "^1.7",
+        "sofa/eloquence": "^6.0",
         "spatie/laravel-permission": "^3.0",
         "spatie/laravel-sluggable": "^2.1",
         "yajra/laravel-datatables-buttons": "^4"
@@ -73,7 +74,8 @@
             "Bromo\\Tools\\": "modules/Bromo/Tools/",
             "Bromo\\Logistic\\": "modules/Bromo/Logistic/",
             "Bromo\\Export\\": "modules/Bromo/Export/",
-            "Bromo\\FreqAskedQuestion\\": "modules/Bromo/FreqAskedQuestion/"
+            "Bromo\\FreqAskedQuestion\\": "modules/Bromo/FreqAskedQuestion/",
+            "Bromo\\Payout\\": "modules/Bromo/Payout/"
 
         },
         "classmap": [

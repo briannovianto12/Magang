@@ -41,4 +41,30 @@
     @isset($internal_notes)
         <a href="#" onclick="_internalNotes('{{$internal_notes}}' )" title="Internal Notes">Internal Notes</a>
     @endisset
+
+    @isset($approve)
+        <a href="#" onclick="_send('{{$approve}}' )" 
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Approve">
+        <i class="la la-check"></i>
+        </a>
+    @endisset
+    @isset($void)
+        <a href="#" onclick="_send('{{$void}}' )" 
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Void">
+        <i class="la la-ban"></i>
+        </a> 
+    @endisset
+    @isset($send_link)
+        <a href="#" onclick="_send('{{$send_link}}' )" 
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Send Link">
+        <i class="la la-send"></i>
+        </a>
+    @endisset
+    @isset($waiting_approval)
+        <a title="Waiting Approval">{{ $waiting_approval }}</a>
+    @endisset
+
 </div>

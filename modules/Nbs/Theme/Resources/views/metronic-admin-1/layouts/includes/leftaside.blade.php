@@ -169,6 +169,15 @@
                 </a>
             </li>
             @endcan
+            @can('view_payout')
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('payout.index') }}" aria-haspopup="true">
+                <a href="{{ route('payout.index') }}" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-money"></i>
+                    <span class="m-menu__link-text">Payout</span>
+                </a>
+            </li>
+            @endcan
+
             @can('view_faq')
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('freqaskedquestion.index') }}" aria-haspopup="true">
                 <a href="{{ route('faq.index') }}" class="m-menu__link">
