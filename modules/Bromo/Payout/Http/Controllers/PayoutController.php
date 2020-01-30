@@ -89,7 +89,7 @@ class PayoutController extends Controller
         } catch (Exception $exception) {
             report($exception);
         }
-        return redirect()->back()->with(['error' => 'Unable to process request. Error:'.json_encode($exception->getMessage(), true)]);
+        return redirect()->back()->with(['error' => json_encode($exception->getMessage(), true)]);
     }
 
     public function getData(Request $request)
@@ -295,26 +295,29 @@ class PayoutController extends Controller
                 return $content_json;
             }
         } catch (RequestException $exception) {
-            Log::error('Exception Get Message : ' . $exception->getMessage());
+            Log::error('Exception Get Message : ' . $exception->getResponse()->getBody());
+            $body = json_decode($exception->getResponse()->getBody());
+
+            // Client error: `POST intra-api.grosenia.co.id/v1/admin/payout` resulted in a `400 Bad Request` response: {"code":"400","message":"Nilai Payout maksimal 300000"}
 
             if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
                 Log::error($exception->getMessage());
-                throw new Exception('Internal Server Error');
+                throw new Exception($body->message);
             }
 
             if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Something wen\'t wrong');
+                throw new Exception($body->message);
             }
 
             if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Unauthorized');
+                throw new Exception($body->message);
 
             }
             if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Forbidden');
+                throw new Exception($body->message);
             }
         }
     }
@@ -348,25 +351,26 @@ class PayoutController extends Controller
             }
         } catch (RequestException $exception) {
             Log::error('Exception Get Message : ' . $exception->getMessage());
+            $body = json_decode($exception->getResponse()->getBody());
 
             if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
                 Log::error($exception->getMessage());
-                throw new Exception('Internal Server Error');
+                throw new Exception($body->message);
             }
 
             if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Something wen\'t wrong');
+                throw new Exception($body->message);
             }
 
             if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Unauthorized');
+                throw new Exception($body->message);
             }
 
             if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
                 Log::error($exception->getMessage());
-                throw new Exception('Bad Request, Forbidden');
+                throw new Exception($body->message);
             }
         }
     }
@@ -385,7 +389,7 @@ class PayoutController extends Controller
         $formatted_posts = [];
 
         foreach ($posts as $post) {
-            $formatted_posts[] = ['id' => $post->msisdn, 'text' => $post->full_name];
+            $formatted_posts[] = ['id' => $post->msisdn, 'text' => $post->msisdn   . ', ' . $post->full_name ];
         }
 
         return \Response::json($formatted_posts);
