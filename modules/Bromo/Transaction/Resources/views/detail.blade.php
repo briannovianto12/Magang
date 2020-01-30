@@ -18,6 +18,7 @@
     <script src="{{ nbs_asset('vendor/fancybox/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('js/order.js') }}"></script>
     <script src="{{ mix('js/reject-order.js') }}"></script>
+    <script src="{{ mix('js/transaction.js') }}"></script>
     <script src="{{ asset('js/mustache.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
     @include('transaction::js')
@@ -181,6 +182,24 @@
                                             <span>{{ $data->special_id ?? '-' }}</span>
                                         </div>
                                     </div>
+                                    
+                                    @can("update_airwaybill")
+                                    <div class="col-6">
+                                        <div class="m-widget28__tab-item">
+                                            @if( empty($data->shippingManifest()->first()->airwaybill)
+                                            && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED 
+                                            || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED 
+                                            || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
+                                                <button class="btn btn-success" onclick="_updateAwbShippingManifest('{{ $data->id }}')">
+                                                    Update Airwaybill
+                                                </button>
+                                                <br/>
+                                                <br/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endcan
+
                                 </div>
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">

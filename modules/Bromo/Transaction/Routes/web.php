@@ -36,3 +36,6 @@ Route::name('order.getOrderInternalNotes')->get('/internal-notes/{order_id}', 'O
 Route::name('order.getOrderInternalNotesTable')->get('/internal-notes/table/{order_id}', 'OrderController@getOrderInternalNotesTable');
 Route::name('order.addOrderInternalNotes')->post('/internal-notes/{order_id}', 'OrderController@addNewInternalNotes');
 Route::name('order.rejectOrder')->put('/order/reject-order/{order_id}', 'OrderController@rejectOrder');
+
+Route::name('order.updateAwbShippingManifest')->post('/order/{order_id}/update-awb', 'OrderController@updateAwbShippingManifest');
+
