@@ -140,47 +140,6 @@
 
         $('.number').number(true,0, ',', '.');
 
-        $('.review').click(function () {
-
-            var amount = parseInt($('#amount').val());
-
-            var selectedReason = $("#reason option:selected").html();
-            var selectedUser = $("#created_for option:selected").html() + " " + $("#created_for option:selected").val();
-            console.log(selectedReason);
-
-            if(amount < 0 ){
-                alert('Periksa Kembali Data Yang Di Input');
-            }
-            else{
-                var formValues = [];
-                    
-                    $('.field1 :input').each(function () {
-                        var item = $(this).val();
-                        formValues.push(item);
-                    });
-                    
-                    formValues[0] = formatNumber(formValues[0]);
-                    formValues[1] = selectedReason;
-                    formValues = arrayRemove(formValues, 2);
-                    formValues[3] = selectedUser;
-
-                    formValues.pop(); //remove the button from input values
-                    console.log(formValues);
-
-                    // set values in second fieldset
-                    $('.field2 :input').each(function (index) {
-                        if (formValues[index]) {
-                            $(this).val(formValues[index]);
-                        }
-                    });
-                $('.current').removeClass('current').hide().next().show().addClass('current');
-            }
-        });
-
-        $('.previous').click(function () {
-            $('.current').removeClass('current').hide().prev().show().addClass('current');
-        });
-
         $('#created_for').select2({
             placeholder: "Choose user...",
             minimumInputLength: 2,

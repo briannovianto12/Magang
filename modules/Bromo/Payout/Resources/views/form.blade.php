@@ -52,9 +52,8 @@
 
                                 <br/>
 
-                                <form action="{{ route('payout.create')}}" method="POST">
+                                <form action="{{ route('payout.create')}}" method="POST" onSubmit="return confirm('Do you want to submit?')">
                                     {{ csrf_field() }}
-                                    <fieldset class="field1 current">
                                     
                                         <div class="form-group bg-white">
                                             <h5><span> Amount </span></h5> 
@@ -89,52 +88,9 @@
 
                                         <div class="form-group d-flex justify-content-center">
                                             <div class="pull-down" style="padding: 5px 10px">
-                                                <button type="button" class="review btn btn-success" value="Review">Continue</button>
+                                                <button type="submit" class="btn btn-success submit" >Submit</button>
                                             </div>
                                         </div>
-                                    </fieldset>
-
-                                    <fieldset class="field2">
-                                        <div class="content">
-                                            <h5><span> Payout Summary </span></h5> 
-                                            <div class="show" style="padding: 10px"> 
-                                                Amount 
-                                                <span>
-                                                    <b> <input type="text" class="form-control" readonly></b>
-                                                </span>
-                                                <br/>
-                                                Reason 
-                                                <span>
-                                                    <b> <input type="text" class="form-control" readonly></b>
-                                                </span>
-                                                <br/>
-                                                Additional Notes 
-                                                <span>
-                                                    <b> <input type="text" class="form-control" readonly></b>
-                                                </span>                                                
-                                                <br/>
-
-                                                <br/>
-                                                Created For
-                                                <span>
-                                                    <b> <input type="text" class="form-control" readonly></b>
-                                                </span>
-                                                <br/>
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <div class="form-group d-flex justify-content-center">
-                                            <div class="pull-down" style="padding: 5px 10px">
-                                                <button type="button" name="previous" class="previous btn btn-secondary" > Previous </button>
-                                            </div>
-                                            <div class="pull-down" style="padding: 5px 10px">
-                                                <button type="submit" class="btn btn-success" >Submit</button>
-                                            </div>
-                                        </div>
-                                    
-                                        <label for="Previous">
-                                        </label>
-                                    </fieldset>    
                                 </form>
 
                             </div>
