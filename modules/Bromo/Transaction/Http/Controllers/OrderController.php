@@ -19,6 +19,7 @@ use Bromo\Transaction\Models\OrderDeliveryTracking;
 use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
 use Bromo\Transaction\Models\OrderShippingManifest;
+use Bromo\Transaction\Models\OrderShippingManifestLog;
 use Bromo\Transaction\Models\OrderStatus;
 use Bromo\Transaction\Models\ShippingCourier;
 use Bromo\Transaction\Services\ShipperShippingApiService;
@@ -286,7 +287,7 @@ class OrderController extends Controller
         }
         return response()->json([
             "data" => $orderShippingManifest,
-            'order_no' => strval($order->no),
+            'order_no' => strval($order->order_no),
             "ids" => [
                 'shipping_manifest_id' => $orderShippingManifest,
             ],
@@ -371,6 +372,48 @@ class OrderController extends Controller
         return response()->json([
             "status" => "Success",
         ]);
+    }
+
+    public function updateAwbShippingManifest(Request $request, $order_id)
+    {   
+        $new_airwaybill = $request->new_airwaybill;
+        $order_no = $request->order_no;
+        $id = $request->shipping_manifest_id;
+        
+        try {
+            $update_airwaybill = DB::select("SELECT public.fs_update_awb_for_order_shipping_manifest('$order_no', '$new_airwaybill');");
+            \Log::debug($update_airwaybill);
+
+            if ($update_airwaybill[0]->fs_update_awb_for_order_shipping_manifest == 'OK') {
+                
+
+                $log = new OrderShippingManifestLog;
+                $log_version = OrderShippingManifestLog::where('id', $id)->orderBy('version', 'desc')->first()->version;
+                $log->id = $id;
+                $log->version = $log_version+1;
+                $log->modified_by = auth()->user()->id;
+                $log->modifier_role = auth()->user()->role_id;
+                $log->airwaybill = $new_airwaybill;
+                $log->save();
+
+                return response()->json([
+                    "status" => "OK",
+                    "message" => "Success! Airwaybill Updated!"
+                ]);
+            } else {
+                return response()->json([
+                    "status" => "Error",
+                    "message" => "Error! Can Not Update Airwaybill!"
+                ]);
+            }
+
+        } catch (\Exception $exception) {
+            report($exception);
+            return response()->json([
+                'status' => 'Failed',
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }        
     }
 
 }

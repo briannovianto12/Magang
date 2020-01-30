@@ -122,3 +122,23 @@
         </div>
     </div>
 </script>
+
+<script id="update-awb" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order No. {{ order_no }}</h4>
+            </div>
+            <form id="form-update-awb">
+                <div class="form-group">
+                    <label>
+                    </label>
+                    <input id="newAwb" class="form-control" type="text" placeholder="New Airwaybill" name="new_airwaybill">
+                    <br/>
+                   <button data-order-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnUpdateAwb">Update Airwaybill</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
