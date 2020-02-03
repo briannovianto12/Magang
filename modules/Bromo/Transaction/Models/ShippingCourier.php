@@ -8,6 +8,7 @@ class ShippingCourier extends Model
 {
 
     CONST SHIPPING_PROVIDER_NINJAVAN = 1;
+    CONST SHIPPING_PROVIDER_SHIPPER = 2;
     CONST SHIPPING_PROVIDER_KURIR_EKSPEDISI = 3;
     const CREATED_AT = null;
 

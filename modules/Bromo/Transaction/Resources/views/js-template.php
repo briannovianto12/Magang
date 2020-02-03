@@ -123,6 +123,41 @@
     </div>
 </script>
 
+<script id="pickup" type="x-tmpl-mustache">
+    <div class="t-item" data-id="{{ id }}" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <h5>Atur waktu untuk pengambilan oleh kurir</h5>
+                <br>
+                <h5><b>Estimasi pengambilan sampai H+1</b></h5>
+                <h5><b>(Senin-Sabtu)</b></h5>
+                <br/><br/> 
+            </div>
+            <form>
+                <div class="form-group">
+                    <input style="width: 100%" required data-toggle="datepicker" class="form-control-lg" id="pickup_date" name="pickup_date" type="text" readonly placeholder="Tanggal Pickup" />
+                </div>
+                <div class="form-group">
+                    <textarea style="width: 100%; height: 120px" class="form-control-lg" id="pickup_instruction" name="pickup_instruction" placeholder="Catatan untuk Pickup (Opsional)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Berat (kg) - dibulatkan ke atas kg terdekat</label>
+                    <input readonly value="{{ shipping_weight }}" style="width: 100%" class="form-control-lg" id="weight" name="weight" type="text" placeholder="Berat (kg)" />
+                </div>
+
+                <h4>Keterangan Ukuran Paket</h4>
+                <ul class="size_list">
+                    <li>Kecil (1-3 kg)</li>
+                    <li>Sedang (4-8 kg)</li>
+                    <li>Besar (9+ kg)</li>
+                </ul>
+                 
+                <button data-order-id="{{ id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnKirim">Kirim</button>
+            </form>
+        </div>
+    </div>
+</script>
+
 <script id="update-awb" type="x-tmpl-mustache">
     <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
         <div>
