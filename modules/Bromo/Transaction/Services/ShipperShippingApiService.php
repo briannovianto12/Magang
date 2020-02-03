@@ -37,6 +37,19 @@ class ShipperShippingApiService
 
     private const UPDATE_WEIGHT = '/order/ORDER_ID';    
 
+    private const CREATE_ORDER = '/order/create';
+    private const ACTIVATION_ORDER = '/order/activate?order_id=ORDER_ID';
+    private const CANCEL_ORDER = '/order/ORDER_ID/cancel';
+    private const GET_TRACKING_ID = '/order?id=ORDER_ID';
+    private const GET_ORDER_DETAILS = '/order/ORDER_ID';
+
+    public const PACKAGE_TYPE_DOCUMENT = 1;
+    public const PACKAGE_TYPE_SMALL = 2;
+    public const PACKAGE_TYPE_MEDIUM = 3;
+
+    public const COD_TYPE_NONE = 0;
+    public const COD_TYPE_YES = 1;
+
     public function __construct()
     {
         $this->httpClient = new Client();
@@ -139,13 +152,13 @@ class ShipperShippingApiService
         }
     }
 
-    private function getSizeBasedOnWeight ( $weight_in_kg ) {
+    public function getSizeBasedOnWeight ( $weight_in_kg ) {
         if ( $weight_in_kg <= 3) return "S";
         if ( $weight_in_kg <= 8) return "M";
         return "L";
     }
 
-    private function getVolumeBasedOnSize ( $size ) {
+    public function getVolumeBasedOnSize ( $size ) {
         switch( $size ) {
             case "S":
                return [
@@ -168,5 +181,219 @@ class ShipperShippingApiService
         }
     }
 
+    public function createOrder( $params ) {
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Auth-Key' => $this->auth_key,
+        ];
+
+        try {
+            $response = $this->httpClient->request('POST', $this->getBaseUrl() . self::CREATE_ORDER, [
+                'json' => $params,
+                'headers' => $headers
+            ]);
+
+            if ($response->getStatusCode() == Response::HTTP_OK) {
+                $content = $response->getBody()->getContents();
+                $content_json = json_decode($content);
+                
+                // Getting order ID
+                if(isset($content_json) && isset($content_json->error)){
+                    throw new Exception($content_json->message);
+                }
+
+                if(isset($content_json) && isset($content_json->status)) {
+                    if ($content_json->status != 'success') {
+                        throw new Exception($content_json->data->content);
+                    }
+                }
+                return $content_json->data->id;
+            }
+        } catch (RequestException $exception) {
+            Log::error('Exception Get Message : ' . $exception->getMessage());
+            // Log::error('Response: ' . isset($exception->getResponse()->getBody()->getContents()));
+            // TODO use isset to get json response
+
+            if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
+                throw new Exception('Internal Server Error');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                throw new Exception('Bad Request, Something wen\'t wrong');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
+                throw new Exception('Bad Request, Unauthorized');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
+                throw new Exception('Bad Request, Forbidden');
+                Log::error($exception->getMessage());
+            }
+        }
+    }
+
+        /**
+     * Activate order to pickup
+     * 
+     * @param order_id shipper order_id
+     */
+    public function activateOrder( $order_id ) {
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Auth-Key' => $this->auth_key,
+        ];
+
+        try {
+         
+            $response = $this->httpClient->request('PUT', $this->getBaseUrl() . str_replace('ORDER_ID', $order_id, self::ACTIVATION_ORDER), [
+                'headers' => $headers
+            ]);
+
+            if ($response->getStatusCode() == Response::HTTP_OK) {
+                $content = json_decode($response->getBody()->getContents());
+    
+                if(isset($content) && isset($content->status)) {
+                    if($content->status != 'success'){
+                        throw new Exception($content->data->content);
+                    }
+                }
+                return $content;
+            }
+        } catch (Exception $exception) {
+            Log::error('Exception Get Message : ' . $exception->getMessage());// , json_decode($exception->getResponse()->getBody()->getContents(), true));
+
+            if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
+                throw new Exception('Internal Server Error');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                throw new Exception('Bad Request, Something wen\'t wrong');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
+                throw new Exception('Bad Request, Unauthorized');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
+                throw new Exception('Bad Request, Forbidden');
+                Log::error($exception->getMessage());
+            }
+        }
+    }
+
+    /**
+     * Get Tracking ID
+     * 
+     * @param order_id shipper order_id
+     * @return string get tracking ID
+     */
+    public function getTrackingID( $order_id ) {
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Auth-Key' => $this->auth_key,
+        ];
+
+        try {
+         
+            $response = $this->httpClient->request('GET', $this->getBaseUrl() . str_replace('ORDER_ID', $order_id, self::GET_TRACKING_ID), [
+                'headers' => $headers
+            ]);
+
+            if ($response->getStatusCode() == Response::HTTP_OK) {
+                $content = json_decode($response->getBody()->getContents());
+
+                if(isset($content) && isset($content->status)) {
+                    if($content->status != 'success'){
+                        throw new Exception($content->data->content);
+                    }
+                    return $content->data->id;
+                }
+            }
+        } catch (RequestException $exception) {
+            Log::error('Exception Get Message : ' . $exception->getMessage(), json_decode($exception->getResponse()->getBody()->getContents(), true));
+
+            if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
+                throw new Exception('Internal Server Error');
+            }
+
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                throw new Exception('Bad Request, Something wen\'t wrong');
+            }
+
+            if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
+                throw new Exception('Bad Request, Unauthorized');
+            }
+
+            if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
+                throw new Exception('Bad Request, Forbidden');
+            }
+        }
+    }
+
+    /**
+     * Cancel Order
+     * 
+     * @param order_id shipper order_id
+     * @return string message
+     */
+    public function cancelOrder( $order_id ) {
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Auth-Key' => $this->auth_key,
+        ];
+
+        try {
+         
+            $response = $this->httpClient->request('PUT', $this->getBaseUrl() . str_replace('ORDER_ID', $order_id, self::CANCEL_ORDER), [
+                'headers' => $headers
+            ]);
+
+            if ($response->getStatusCode() == Response::HTTP_OK) {
+                $content = json_decode($response->getBody()->getContents());
+               
+                if($content->status != 'success') {
+                    throw new Exception($content->data->content);
+                }
+                return $content->data->message;
+            }
+        } catch (RequestException $exception) {
+            Log::error('Exception Get Message : ' . $exception->getMessage());// , json_decode($exception->getResponse()->getBody()->getContents(), true));
+
+            if ($exception->getCode() == Response::HTTP_INTERNAL_SERVER_ERROR) {
+                throw new Exception('Internal Server Error');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_BAD_REQUEST) {
+                throw new Exception('Bad Request, Something wen\'t wrong');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_UNAUTHORIZED) {
+                throw new Exception('Bad Request, Unauthorized');
+                Log::error($exception->getMessage());
+            }
+
+            if ($exception->getCode() == Response::HTTP_FORBIDDEN) {
+                throw new Exception('Bad Request, Forbidden');
+                Log::error($exception->getMessage());
+            }
+        }
+    }
 
 }

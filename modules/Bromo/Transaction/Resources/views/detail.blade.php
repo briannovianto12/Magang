@@ -182,7 +182,9 @@
                                             <span>{{ $data->special_id ?? '-' }}</span>
                                         </div>
                                     </div>
-                                    
+                                </div>
+
+                                <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
@@ -200,7 +202,23 @@
                                     </div>
                                     @endcan
 
+                                    @can("recall_shipper")
+                                    <div class="col-6">
+                                        <div class="m-widget28__tab-item">
+                                            @if( (empty($data->special_id) || $data->special_id == '')
+                                            && !isset($data->unsupportedShipper) 
+                                            && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED )
+                                                <button class="btn btn-success" onclick="_callCourier(this, '{{ $data->id }}', {{ $shipping_weight }}); ">
+                                                    Call Courier Shipper
+                                                </button>
+                                                <br/>
+                                                <br/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endcan    
                                 </div>
+
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
