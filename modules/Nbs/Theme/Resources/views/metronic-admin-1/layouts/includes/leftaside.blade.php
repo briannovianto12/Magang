@@ -2,11 +2,41 @@
 <button class="m-aside-left-close m-aside-left-close--skin-light" id="m_aside_left_close_btn">
     <i class="la la-close"></i>
 </button>
+<style>
+.vertical-nav li a:hover,
+a:active {
+  color: gray;
+}
+
+.has-dropdown {}
+
+icd:before {
+  font-family: 'FontAwesome';
+  content: "\f0d7";
+  padding: 0 0 0 15px;
+}
+
+.vertical-nav li ul {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.3s;
+  -webkit-transition: height 0.3s;
+  -ms-transition: height 0.3s;
+}
+
+.vertical-nav li:hover ul {
+  padding:20px 20px 20px 15px;
+  height: 100%;
+  text-indent: 20px;
+}
+  
+</style>
+
 <div id="m_aside_left" class="m-grid__item m-aside-left m-aside-left--skin-light">
     <!-- BEGIN: Aside Menu -->
     <div id="m_ver_menu" class="m-aside-menu m-aside-menu--skin-light m-aside-menu--submenu-skin-dark"
          m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
-        <ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
+        <ul class="vertical-nav m-menu__nav m-menu__nav--dropdown-submenu-arrow">
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('dashboard') }}" aria-haspopup="true">
                 <a href="/" class="m-menu__link">
                     <i class="m-menu__link-icon flaticon-line-graph"></i>
@@ -113,78 +143,93 @@
                     </a>
                 </li>
             @endcan
-            @can('view_seller_balance_log')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.index') }}" aria-haspopup="true">
-                <a href="{{ route('mutation.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-newspaper-o"></i>
-                    <span class="m-menu__link-text">Seller Balance Log</span>
+
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.*') }}" aria-haspopup="true">
+                <a href="#" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-bank"></i>
+                    <span class="m-menu__link-text">Payment Report</span><icd></icd>
                 </a>
+                <ul class="child">
+                    @can('view_seller_balance_log')
+                        <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.index') }}" aria-haspopup="true">
+                            <a href="{{ route('mutation.index') }}" class="m-menu__link">
+                                <i class="la la-money"></i>&nbsp;&nbsp;Seller Balance Log
+                            </a>
+                        </li>
+                    @endcan
+                    <br/>
+                    @can('view_payment_detail')
+                        <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.index') }}" aria-haspopup="true">
+                            <a href="{{ route('mutation.payment-detail') }}" class="m-menu__link">
+                                <i class="la la-money"></i>&nbsp;&nbsp;Payment Detail
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </li>
-            @endcan
             @can('view_refund')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('refund.index') }}" aria-haspopup="true">
-                <a href="{{ route('refund.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-money"></i>
-                    <span class="m-menu__link-text">Refund</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('refund.index') }}" aria-haspopup="true">
+                    <a href="{{ route('refund.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-money"></i>
+                        <span class="m-menu__link-text">Refund</span>
+                    </a>
+                </li>
             @endcan
             @can('view_news_notification')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
-                <a href="{{ route('news') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-newspaper-o"></i>
-                    <span class="m-menu__link-text">News Notification</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
+                    <a href="{{ route('news') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-newspaper-o"></i>
+                        <span class="m-menu__link-text">News Notification</span>
+                    </a>
+                </li>
             @endcan
             @can('view_banner')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('banner.index') }}" aria-haspopup="true">
-                <a href="{{ route('banner.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-photo"></i>
-                    <span class="m-menu__link-text">Banner</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('banner.index') }}" aria-haspopup="true">
+                    <a href="{{ route('banner.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-photo"></i>
+                        <span class="m-menu__link-text">Banner</span>
+                    </a>
+                </li>
             @endcan
             @can('view_tools')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
-                <a href="{{ route('tools.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-wrench"></i>
-                    <span class="m-menu__link-text">Tools</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('tools.index') }}" aria-haspopup="true">
+                    <a href="{{ route('tools.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-wrench"></i>
+                        <span class="m-menu__link-text">Tools</span>
+                    </a>
+                </li>
             @endcan
             @can('view_logistic_organizer')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('logistic.mobile-index') }}" aria-haspopup="true">
-                <a href="{{ route('logistic.mobile-index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-newspaper-o"></i>
-                    <span class="m-menu__link-text">Logistic Organizer</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('logistic.mobile-index') }}" aria-haspopup="true">
+                    <a href="{{ route('logistic.mobile-index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-newspaper-o"></i>
+                        <span class="m-menu__link-text">Logistic Organizer</span>
+                    </a>
+                </li>
             @endcan
             @can('view_exports')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('export.index') }}" aria-haspopup="true">
-                <a href="{{ route('export.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-download"></i>
-                    <span class="m-menu__link-text">Exports</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('export.index') }}" aria-haspopup="true">
+                    <a href="{{ route('export.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-download"></i>
+                        <span class="m-menu__link-text">Exports</span>
+                    </a>
+                </li>
             @endcan
             @can('view_payout')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('payout.index') }}" aria-haspopup="true">
-                <a href="{{ route('payout.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-money"></i>
-                    <span class="m-menu__link-text">Payout</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('payout.index') }}" aria-haspopup="true">
+                    <a href="{{ route('payout.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-money"></i>
+                        <span class="m-menu__link-text">Payout</span>
+                    </a>
+                </li>
             @endcan
-
             @can('view_faq')
-            <li class="m-menu__item{{ nbs_helper()->isMenuActive('freqaskedquestion.index') }}" aria-haspopup="true">
-                <a href="{{ route('faq.index') }}" class="m-menu__link">
-                    <i class="m-menu__link-icon la la-question-circle"></i>
-                    <span class="m-menu__link-text">FAQ</span>
-                </a>
-            </li>
+                <li class="m-menu__item{{ nbs_helper()->isMenuActive('freqaskedquestion.index') }}" aria-haspopup="true">
+                    <a href="{{ route('faq.index') }}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-question-circle"></i>
+                        <span class="m-menu__link-text">FAQ</span>
+                    </a>
+                </li>
             @endcan
             {{--<li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
