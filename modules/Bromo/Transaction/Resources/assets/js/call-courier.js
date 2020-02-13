@@ -96,7 +96,8 @@ window._callCourier = function(e, order_id, shipping_weight ){
                         showCloseButton: true,
                         showCancelButton: false,
                         focusConfirm: false,
-                        confirmButtonAriaLabel: 'OK',
+                        timer: 5000,
+                        confirmButtonAriaLabel: 'OK'
                       })
                       location.reload(true);
   
@@ -106,7 +107,8 @@ window._callCourier = function(e, order_id, shipping_weight ){
                       Swal.fire({
                         type: 'error',
                         title: 'Error.',
-                        text: 'Oopps ada kesalahan sistem'
+                        text: 'Oopps ada kesalahan sistem',
+                        timer: 5000
                       })
                     }
                 },
@@ -117,6 +119,7 @@ window._callCourier = function(e, order_id, shipping_weight ){
                     Swal.fire({
                       type: 'error',
                       title: 'Error.',
+                      timer: 5000,
                       text: 'Oopps ada kesalahan sistem'
                     })
                 }
