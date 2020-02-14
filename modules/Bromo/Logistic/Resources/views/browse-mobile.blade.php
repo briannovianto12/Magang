@@ -14,7 +14,7 @@
 
         @can('view_logistic_organizer')
             <nav class="d-none d-md-block">
-            <ul class="nav nav-tabs  m-tabs-line m-tabs-line--info" role="tablist">
+            <ul class="nav nav-tabs  d-md-none m-tabs-line m-tabs-line--info" role="tablist">
                 
                 {{-- Status menunggu di pickup disini, seller sudah call pickup --}}
                 <li class="nav-item m-tabs__item">
@@ -43,7 +43,7 @@
             </nav>
 
             <div class="form-group">
-            <select id="selectStatus" class="d-xs-block d-md-none form-control"> 
+            <select id="selectStatus" class="d-xs-block  form-control"> 
                 
                 <option value="#confirm" selected>{{ __('logistic::messages.waiting_for_pick_up') }}</option>  
                 <option value="#process">{{ __('logistic::messages.in_process') }}</option>  
@@ -55,7 +55,7 @@
 
                 <!--begin:: Confirm Page-->
                 <div class="tab-pane active" id="confirm" role="tabpanel">
-                    <div class="d-md-none fixed-mobile-screen" >
+                    <div class="" >
                         <table class="display wrap compact" id="order_confirm_mobile"
                             style="width: 100%">
                             <thead class="d-none">
@@ -71,7 +71,7 @@
                 
                 <!--begin:: Process Page-->
                 <div class="tab-pane" id="process" role="tabpanel">
-                    <div class="d-md-none" >
+                    <div class="" >
                         <table class="display wrap compact" id="order_process_mobile"
                             style="width: 100%">
                             <thead class="d-none">
@@ -86,7 +86,7 @@
 
                 <!--begin:: Sent Page-->
                 <div class="tab-pane" id="sent" role="tabpanel">
-                    <div class="d-md-none" >
+                    <div class="" >
                         <table class="display wrap compact" id="order_sent_mobile"
                             style="width: 100%">
                             <thead class="d-none">
@@ -101,7 +101,7 @@
 
                 <!--begin:: Transaction Page-->
                 <div class="tab-pane" id="transaction" role="tabpanel">
-                    <div class="d-md-none" >
+                    <div class="" >
                         <table class="display wrap compact" id="order_transaction_mobile"
                             style="width: 100%">
                             <thead class="d-none">
