@@ -231,7 +231,7 @@
                                             <span>
                                                 {{ __('transaction::messages.package_weight') }}
                                                 @if(isset($shippingManifest))
-                                                    @if($data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_KURIR_EKSPEDISI)
+                                                    @if(!isset($unsupportedShipper))
                                                         @can("edit_order_weight")
                                                         <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                             <i class="fa fa-edit"></i>
