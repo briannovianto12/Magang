@@ -206,7 +206,7 @@
                                     <div class="col-6">
                                         <div class="m-widget28__tab-item">
                                             @if( (empty($data->special_id) || $data->special_id == '')
-                                            && !isset($data->unsupportedShipper) 
+                                            && $data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_SHIPPER
                                             && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED )
                                                 <button class="btn btn-success" onclick="_callCourier(this, '{{ $data->id }}', {{ $shipping_weight }}); ">
                                                     Call Courier Shipper
@@ -231,7 +231,7 @@
                                             <span>
                                                 {{ __('transaction::messages.package_weight') }}
                                                 @if(isset($shippingManifest))
-                                                    @if(!isset($unsupportedShipper))
+                                                    @if($data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_KURIR_EKSPEDISI)
                                                         @can("edit_order_weight")
                                                         <button id="edit-weight-btn" class="btn btn-sm" style="background-color: white" onclick="_edit('{{ $data->id }}')">
                                                             <i class="fa fa-edit"></i>
