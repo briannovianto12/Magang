@@ -27,19 +27,9 @@
                             <form action="{{ route('mutation.payment-detail-view', $shop_id) }}" method="GET" class="form-group" id="formFilter">
                                 {{ csrf_field() }}
                                 <select style="cursor:pointer;margin-top:1.5em;margin-bottom:1.5em;" class="form-control filter-date" id="month-select" name="month">
-                                    <option value={{ $current_month->month }} selected > {{ $current_month->format('F') }} </option>
-                                    <option value="01"> Januari</option>
-                                    <option value="02"> Februari</option>
-                                    <option value="03"> Maret</option>
-                                    <option value="04"> April</option>
-                                    <option value="05"> Mei</option>
-                                    <option value="06"> Juni</option>
-                                    <option value="07"> Juli</option>
-                                    <option value="08"> Agustus</option>
-                                    <option value="09"> September</option>
-                                    <option value="10"> Oktober</option>
-                                    <option value="11"> November</option>
-                                    <option value="12"> Desember</option>
+                                    @foreach ($month_list as $key => $month)
+                                    <option value="{{ $key }}"  @if( session('month')  == $key) selected="selected" @endif>{{ $month }}</option>
+                                    @endforeach    
                                 </select>
                                 
                                 <select style="cursor:pointer;" class="form-control filter-date" id="year-select" name="year">
@@ -54,6 +44,9 @@
                     </div>
 
                     <br/><br/>
+                    <div class="modal-header">
+                        <h5 class="modal-title title">Detail uang masuk selama {{ \Carbon\Carbon::createFromTimestamp($start_month) }} - {{ \Carbon\Carbon::createFromTimestamp($end_month) }} </h5>
+                    </div>
                     <div>
                         @if(count($response))
                         <table class="fold-table">

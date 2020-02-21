@@ -75,6 +75,9 @@ class PaymentController extends Controller
         $data['end'] = $data['current_year'];
         $data['name'] = 'select year';
 
+        $data['start_month'] = $start_month;
+        $data['end_month'] = $end_month;
+
         $shop = Shop::where('id', $shop_id)->first();
         $data['shop_id'] = intval($shop->id);
         $shop_name = $shop->name;
@@ -87,6 +90,23 @@ class PaymentController extends Controller
         $data['response'] = $response['data'];
         
         $data['shop'] = $shop_name;
+
+        session()->put('month', $request->get('month'));
+
+        $data['month_list'] = [
+            '1' => 'Januari',
+            '2' => 'Februari',
+            '3' => 'Maret',
+            '4' => 'April',
+            '5' => 'Mei',
+            '6' => 'Juni',
+            '7' => 'Juli',
+            '8' => 'Agustus',
+            '9' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        ];
 
         return view('mutation::payment-detail-view', $data);
         
