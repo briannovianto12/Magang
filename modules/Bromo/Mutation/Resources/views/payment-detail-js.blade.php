@@ -35,17 +35,6 @@ $(document).ready(function(){
     }
 });
 
-$(function() {
-    if (localStorage.getItem('filter-date')) {
-        $(".filter-date option").eq(localStorage.getItem('filter-date')).prop('selected', true);
-    }
-
-    $(".filter-date").on('change', function() {
-        localStorage.setItem('filter-date', $('option:selected', this).index());
-    });
-});
-
-
 $(function(){
     $(".fold-table tr.view").on("click", function(){
         $(this).toggleClass("open").next(".fold").toggleClass("open");
