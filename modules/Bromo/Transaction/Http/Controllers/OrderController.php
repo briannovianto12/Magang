@@ -665,5 +665,15 @@ class OrderController extends Controller
         }        
     }
 
+    public function unRejectOrder($id){
+        try{
+            DB::select("SELECT f_unreject_order($id)");
+            nbs_helper()->flashSuccess('Order has been unrejected.');
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            nbs_helper()->flashError($ex->getMessage());
+        }
+        
+        return redirect()->back();
+    }
 }
 

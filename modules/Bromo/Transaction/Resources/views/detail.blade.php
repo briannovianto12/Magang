@@ -83,6 +83,18 @@
                                             @endif
                                         </div>
                                     @endcan
+
+                                    @can('unreject_order')
+                                        <div class="col-3 ml-4">
+                                            @if($data->status == 31)
+                                                <a href="{{ route('order.unRejectOrder', ['id' => $data->id]) }}" onclick="return confirm('Are you sure you want to unreject the order?')" class="btn btn-success">
+                                                    {{ __('Unreject Order') }}
+                                                </a>
+                                                <br/><br/>
+                                            @endif
+                                        </div>
+                                    @endcan
+
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('transaction::messages.ordered_date') }}</span>
