@@ -28,14 +28,13 @@
                                 {{ csrf_field() }}
                                 <select style="cursor:pointer;margin-top:1.5em;margin-bottom:1.5em;" class="form-control filter-date" id="month-select" name="month">
                                     @foreach ($month_list as $key => $month)
-                                    <option value="{{ $key }}"  @if( session('month')  == $key) selected="selected" @endif>{{ $month }}</option>
+                                        <option value="{{ $key }}" @if( session('month') == $key) selected="selected" @endif>{{ $month }}</option>
                                     @endforeach    
                                 </select>
                                 
                                 <select style="cursor:pointer;" class="form-control filter-date" id="year-select" name="year">
-                                    <option value="{{ $end }}" selected >{{ $end }}</option>
                                     @foreach(range($end, $begin) as $y)
-                                        <option value={{ $y }}>{{ $y }}</option>
+                                        <option value="{{ $y }}" @if( session('year') == $y) selected="selected" @endif>{{ $y }}</option>
                                     @endforeach
                                 </select>
                             </form>
