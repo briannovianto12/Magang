@@ -48,7 +48,6 @@ class PaymentController extends Controller
 
     public function getPaymentDetail($shop_id, Request $request) 
     {
-        $data['current_month'] = Carbon::now();
         $data['month'] = Carbon::now()->month;
         $data['year'] = Carbon::now()->year;
 
@@ -91,7 +90,8 @@ class PaymentController extends Controller
         
         $data['shop'] = $shop_name;
 
-        session()->put('month', $request->get('month'));
+        session()->put('month', $data['month']);
+        session()->put('year', $data['year']);
 
         $data['month_list'] = [
             '1' => 'Januari',
