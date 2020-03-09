@@ -31,6 +31,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class SellerController extends BaseResourceController
 {
     use Result;
+
+    private const TAX_IMAGE = 'business/tax-image/FILENAME';
+    private const DEFAULT_NO_IMAGE = 'https://via.placeholder.com/320x320?text=No+Image';
+
     public function __construct(Shop $model, SellerDataTable $dataTable)
     {
         $this->module = 'store';
@@ -376,6 +380,9 @@ class SellerController extends BaseResourceController
             'business_bank_account' => $businessBankAccount
         ];
         $data = array_merge($this->pageData, $this->requiredData);
+        $response = $this->getTaxImageURL($data['data']->tax_card_image_file);
+        $data['data']['tax_image_private_url'] = $response;
+        
         return view($this->getDetailView(), $data);
     }
 
@@ -427,6 +434,48 @@ class SellerController extends BaseResourceController
             return response()->json([
                 'message' => $exception->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private function getTaxImageURL($filename)
+    {
+        if ($filename == null) {
+            $response = self::DEFAULT_NO_IMAGE;
+            
+            return $response;
+        } else {
+            try {
+                $endpoint = config('hosttohost.api') . str_replace('FILENAME', $filename, self::TAX_IMAGE);
+                $header = [
+                    'Authorization' => config('hosttohost.admin_token'),
+                ];
+    
+                $service = new RequestService();
+                $response = $service->setUrl($endpoint)
+                    ->setHeaders($header)
+                    ->get();
+    
+                if ($response->getStatusCode() !== Response::HTTP_OK) {
+                    $error = $response->original;
+                    $decode = json_decode($error['body']);
+    
+                    throw new Exception($decode->message, $decode->code);
+                } else {
+                    $content = $response->original;
+                    $response = json_decode($content['body']);
+                    $response = current($response->data);
+                }
+            } catch (\Exception $exception) {
+                report($exception);
+    
+                $response = new Response();
+                $response->setStatusCode(400);
+                \Log::error(json_decode($exception->getMessage()));
+            }
+            if($response == "") {
+                $response = self::DEFAULT_NO_IMAGE;
+            }
+            return $response;
         }
     }
 }

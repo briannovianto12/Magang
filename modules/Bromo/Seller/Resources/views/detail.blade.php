@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Tax Image') }}</span>
-                                    <span><img src="{{ $data->tax_image_url }}" alt="" width="128"></span>
+                                    <span><img src="{{ $data->tax_image_private_url }}" alt="" width="128"></span>
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Tax Type') }}</span>
@@ -255,7 +255,7 @@
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Tax Image') }}</span>
                                         <span>
-                                            <img src="{{ $data->business->tax_image_url }}" alt="" width="128">
+                                            <img src="{{ $data->tax_image_private_url }}" alt="" width="128">
                                         </span>
                                     </div>
                                 </div>

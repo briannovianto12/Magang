@@ -7,5 +7,6 @@ return [
         'token' => env('SELLER_TOKEN', null),
         'app_id' => env('QISCUS_APP_ID', null)
     ],
-    'seller_token' => env('SELLER_TOKEN', null)
+    'seller_token' => env('SELLER_TOKEN', null),
+    'admin_token' => env('AUTH_KEY', null)
 ];
