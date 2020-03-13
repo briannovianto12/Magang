@@ -26,6 +26,7 @@ return [
     'canceled' => 'Canceled',
     'carrier' => 'Carrier',
     'change_order_status_to_delivered' => 'Change Status to "Delivered"',
+    'change_picked_up' => 'Change To Pickup',
     'copy' => 'Copy',
     'corrected_package_weight' => 'Corrected Package Weight',
     'cost' => 'Cost',

@@ -273,6 +273,22 @@ class OrderController extends Controller
         ]);
     }
 
+    public function changePickedUp(Request $request, $id){
+        
+        $order = Order::findOrFail($id);
+        $notes = null;
+
+        if(!empty($request->input('notes'))){
+            $notes = $request->input('notes');
+        }
+        
+        DB::select("SELECT public.f_update_order_picked_up_from_false_to_true('$order->order_no','$notes')");
+
+        return response()->json([
+            "status" => "Success",
+        ]);
+    }
+
     public function getOrderInfo($order_id){
         $orderShippingManifest = null;
         if(OrderShippingManifest::where('order_id', $order_id)->first() != null){
