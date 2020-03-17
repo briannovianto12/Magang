@@ -27,6 +27,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Bromo\Seller\Entities\BusinessDesc;
 
 class SellerController extends BaseResourceController
 {
@@ -477,5 +478,23 @@ class SellerController extends BaseResourceController
             }
             return $response;
         }
+    }
+    public function shopDescription(Request $request, $id){
+        $description = $request->get('description');
+        try{
+           
+            $shop_description = $this->model::find($id);
+            $shop_description->description = $description; 
+            $shop_description->save();
+
+            $business_description = BusinessDesc::find($shop_description->business_id);
+            $business_description->description = $description; 
+            $business_description->save();
+
+        }catch(\Illuminate\Database\QueryException $ex){
+            nbs_helper()->flashError($ex->getMessage());
+        }
+        return redirect()->back();     
+        
     }
 }

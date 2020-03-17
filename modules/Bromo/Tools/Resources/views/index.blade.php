@@ -49,6 +49,13 @@
                             </a>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ route('blacklist-phone-number.index') }}">
+                                Blacklist Phone Number
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

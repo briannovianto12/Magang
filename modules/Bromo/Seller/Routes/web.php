@@ -38,3 +38,10 @@ Route::prefix('popular-shop')->group(function () {
     Route::name('popular-shop.delete')->delete('/{shop_id}', 'PopularShopController@removeFromPopularShop');
     Route::name('popular-shop.update-index')->post('/update-index', 'PopularShopController@updatePopularShopIndex');
 });
+
+Route::prefix('shop')->group(function () {
+
+    Route::get('/', 'BuyerController@index');   
+    Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');
+    
+});
