@@ -75,7 +75,8 @@
             "Bromo\\Logistic\\": "modules/Bromo/Logistic/",
             "Bromo\\Export\\": "modules/Bromo/Export/",
             "Bromo\\FreqAskedQuestion\\": "modules/Bromo/FreqAskedQuestion/",
-            "Bromo\\Payout\\": "modules/Bromo/Payout/"
+            "Bromo\\Payout\\": "modules/Bromo/Payout/",
+            "Bromo\\ShippingMapping\\": "modules/Bromo/ShippingMapping/"
 
         },
         "classmap": [
