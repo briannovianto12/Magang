@@ -23,6 +23,16 @@ class DashboardController extends Controller
      * @return Response
      */
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     public function __construct(DashboardRepository $dashboardRepository)
     {
         $this->middleware('auth');

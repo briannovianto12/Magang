@@ -31,6 +31,16 @@ class RefundController extends Controller
         $this->title = 'Refund';
     }
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     /**
      * Display index page.
      *

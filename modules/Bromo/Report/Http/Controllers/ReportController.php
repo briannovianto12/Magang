@@ -40,6 +40,16 @@ class ReportController extends Controller
         $this->middleware('auth');
     }
     
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     /**
      * Display a listing of the resource.
      * @return Response

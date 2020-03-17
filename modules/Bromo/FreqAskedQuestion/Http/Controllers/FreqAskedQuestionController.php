@@ -23,6 +23,16 @@ class FreqAskedQuestionController extends Controller
         $this->title = ucwords($this->module);
     }
    
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     /**
      * Display a listing of the resource.
      * @return Response

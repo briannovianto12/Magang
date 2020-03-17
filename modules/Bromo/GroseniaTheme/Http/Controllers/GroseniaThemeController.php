@@ -17,6 +17,16 @@ class GroseniaThemeController extends Controller
         return view('groseniatheme::index');
     }
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     /**
      * Show the form for creating a new resource.
      * @return Response
