@@ -9,6 +9,9 @@ use Bromo\Buyer\Models\Business;
 use Bromo\Buyer\Models\BusinessAddress;
 use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\Transaction\Models\Order;
+use Bromo\Buyer\Entities\FraudBlackListUser;
+use Bromo\Buyer\Entities\UserProfile;
+use Bromo\Buyer\Entities\UserStatus as Status;
 
 class BuyerController extends BaseResourceController
 {
@@ -54,6 +57,13 @@ class BuyerController extends BaseResourceController
             'last_ten_orders' => $lastTenOrders
         ];
         $data = array_merge($this->pageData, $this->requiredData);
+        $fraud_blacklist_user = FraudBlackListUser::where('user_id',$id)->count();
+        if($fraud_blacklist_user > 0) {
+            $data['blacklist_status'] = true;
+        }else{
+            $data['blacklist_status'] = false;
+        }
+        
         //dd($data);
         return view($this->getDetailView(), $data);
     }
@@ -86,5 +96,27 @@ class BuyerController extends BaseResourceController
                             ->where('status', 10)
                             ->sum('payment_amount');
         return $totalSpending;
+    }
+
+
+    public function blacklistUser($id){
+        try{
+            
+            $fraud_blacklist_user = new FraudBlacklistUser;
+            
+            $fraud_blacklist_user->user_id = $id;
+            $fraud_blacklist_user->fraud_status = 1;
+            $fraud_blacklist_user->remark = 'test';
+            $fraud_blacklist_user->save();
+
+            $blacklist_status = UserProfile::find($id);
+            $blacklist_status->status = Status::BLOCKED;
+            $blacklist_status->save();
+
+            nbs_helper()->flashSuccess('Success Blacklisted User');
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            nbs_helper()->flashError($ex->getMessage());
+        }
+        return redirect()->back();     
     }
 }

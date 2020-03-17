@@ -14,6 +14,8 @@ Route::resource('buyer', 'BuyerController');
 
 Route::prefix('buyer')->name('buyer')->group(function () {
 
-    Route::get('/', 'BuyerController@index');
+    Route::get('/', 'BuyerController@index');   
+    Route::get('/{id}/blacklist-user','BuyerController@blacklistUser')->name('.blacklist');
     
 });
+

@@ -74,6 +74,22 @@
                                                 @endforeach
                                             </span>
                                         </div>
+                                        <br>
+                                       
+                                        {{-- @can('blacklist-user') --}}
+                                            <div class="d-flex flex-column justify-content-center">
+                                            <div class="row">
+                                                <div class ="col-6">
+                                            @if($blacklist_status == false)
+                                                <a href="{{ route('buyer.blacklist',['id' => $data->id]) }}" onclick="return confirm('Are you sure you want to blacklist this user?')" class="alert alert-danger" role="alert">
+                                                    BLACKLIST!
+                                                </a>
+                                                <br/><br/>
+                                           @endif
+                                            </div>
+                                            </div>
+                                        </div>
+                                    {{-- @endcan --}}
                                     </div>
                                 </div>
                                 @isset($data->business)
@@ -174,6 +190,7 @@
                                                 <span>{{ __('Business Member Joined At') }}</span>
                                                 <span>{{ $data->business->pivot->joined_at_formatted ?? '-' }}</span>
                                             </div>
+                                   
                                         </div>
                                     </div>
                                 @endisset

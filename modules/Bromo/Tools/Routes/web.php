@@ -24,7 +24,7 @@ Route::prefix('tools')->group(function() {
     Route::prefix('shipping-simulation')->group(function() {
         Route::name('shipping-simulation.simulateShipping')->get('/simulate', 'ShippingSimulationController@simulateShipping');
     });
-    Route::resource('courier-business-mapping', 'CourierBusinessMappingController')->except('show');;
+    Route::resource('courier-business-mapping', 'CourierBusinessMappingController')->except('show');
     Route::prefix('courier-business-mapping')->group(function() {
         Route::name('courier-business-mapping.get-table')->get('/get-table', 'CourierBusinessMappingController@getTable');
         Route::name('courier-business-mapping.get-filtered-table')->get('/get-filtered-table/{courier_id}', 'CourierBusinessMappingController@getFilteredTable');
@@ -32,5 +32,11 @@ Route::prefix('tools')->group(function() {
         Route::name('courier-business-mapping.search-seller')->get('/search-seller/{keyword}', 'CourierBusinessMappingController@searchSeller');
         Route::name('courier-business-mapping.search-buyer')->get('/search-buyer/{shop_id}', 'CourierBusinessMappingController@searchBuyer');
     });
+
+    Route::resource('blacklist-phone-number', 'BlacklistUserController')->except('show');
+    Route::prefix('blacklist-phone-number')->group(function() {
+        Route::name('blacklist-phone-number.get-table')->get('/blacklist-phone-number', 'BlacklistUserController@index');
+        Route::name('blacklist-phone-number.post-table')->post('/blacklist-phone-number/post', 'BlacklistUserController@blacklistPhoneNumber');
     
+    });
 });
