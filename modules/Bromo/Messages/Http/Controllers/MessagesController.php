@@ -21,6 +21,16 @@ class MessagesController extends BaseResourceController
         parent::__construct();
     }
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     public function searchList(Request $request) {
 
         $searchVal = $request->get('search', "");

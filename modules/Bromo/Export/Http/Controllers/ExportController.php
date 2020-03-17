@@ -31,6 +31,16 @@ class ExportController extends Controller
         return view("export::index", $data);
     }
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     public function getExportOrderList(Request $request)
     {        
         $start = Carbon::now()->subDays(7);

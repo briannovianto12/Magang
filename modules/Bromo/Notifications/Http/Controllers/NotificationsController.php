@@ -19,6 +19,16 @@ class NotificationsController extends Controller
         return view('notifications::index');
     }
 
+     /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     /**
      * Send newly created resource to an event.
      * @param Request $request

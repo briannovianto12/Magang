@@ -28,6 +28,16 @@ class UnverifiedController extends Controller{
         return view('unverified::index',['data' => $data]);
     }
 
+    /**
+     * Get User 
+     * @return Response
+     */
+    public function user()
+    {
+        return $request->user();
+    }
+    
+
     public function export(){
         $data = DB::select('select * from vw_sellers_unverified');
         $spreadsheet = new Spreadsheet();
