@@ -167,6 +167,7 @@ icd:before {
                     @endcan
                 </ul>
             </li>
+
             @can('view_refund')
                 <li class="m-menu__item{{ nbs_helper()->isMenuActive('refund.index') }}" aria-haspopup="true">
                     <a href="{{ route('refund.index') }}" class="m-menu__link">
@@ -199,6 +200,31 @@ icd:before {
                     </a>
                 </li>
             @endcan
+
+            <li class="m-menu__item{{ nbs_helper()->isMenuActive('shippingmapping.*') }}" aria-haspopup="true">
+                <a href="#" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-truck"></i>
+                    <span class="m-menu__link-text">Shipping Mapping</span><icd></icd>
+                </a>
+                <ul class="child">
+                    @can('view_shipping_courier_to_city')
+                        <li class="m-menu__item{{ nbs_helper()->isMenuActive('shippingmapping.city') }}" aria-haspopup="true">
+                            <a href="{{ route('shippingmapping.city') }}" class="m-menu__link">
+                                <i class="la la-map"></i>&nbsp;&nbsp;Shipping Courier to City
+                            </a>
+                        </li>
+                    @endcan
+                    <br/>
+                    @can('view_shipping_courier_to_building')
+                        <li class="m-menu__item{{ nbs_helper()->isMenuActive('shippingmapping.building') }}" aria-haspopup="true">
+                            <a href="{{ route('shippingmapping.building') }}" class="m-menu__link">
+                                <i class="la la-building"></i>&nbsp;&nbsp;Shipping Courier to Building
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+
             @can('view_logistic_organizer')
                 <li class="m-menu__item{{ nbs_helper()->isMenuActive('logistic.mobile-index') }}" aria-haspopup="true">
                     <a href="{{ route('logistic.mobile-index') }}" class="m-menu__link">
