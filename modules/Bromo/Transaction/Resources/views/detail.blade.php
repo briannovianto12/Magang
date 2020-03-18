@@ -66,19 +66,19 @@
 
                                     <div class="col-5">
                                     @can('change_order_to_delivered')
-                                            @if($data->status == 8)
-                                                <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
-                                                    {{ __('transaction::messages.change_order_status_to_delivered') }}
-                                                </button>
-                                            @endif
+                                        @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED && $data->is_picked_up)
+                                            <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
+                                                {{ __('transaction::messages.change_order_status_to_delivered') }}
+                                            </button>
+                                        @endif
                                     @endcan
 
                                     @can('do_success_order')
-                                            @if($data->status == 9)
-                                                <button class="btn btn-success" onclick="_changeOrderSuccess('{{ $data->id }}')">
-                                                    {{ __('transaction::messages.change_order_status_to_success') }}
-                                                </button>
-                                            @endif
+                                        @if($data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED)
+                                            <button class="btn btn-success" onclick="_changeOrderSuccess('{{ $data->id }}')">
+                                                {{ __('transaction::messages.change_order_status_to_success') }}
+                                            </button>
+                                        @endif
                                     @endcan
                                     </div>
 
