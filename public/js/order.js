@@ -188,3 +188,67 @@ function _changeStatus( order_id ){
         alert( "Internal Error" );
       }); 
     }
+
+function _changePickedUp( order_id ){
+
+      $.get('/order-info/' + order_id)
+      .done(function(data){
+        
+        var template = $('#changePickedUp').html();
+        Mustache.parse(template);   // optional, speeds up future uses
+        html = Mustache.render(template, data);
+
+        Swal.fire({
+          // grow: 'fullscreen',
+          title: '<strong>Change To Pickup</strong>',
+          type: '',
+          showCloseButton: false,
+          showCancelButton: false,
+          showConfirmButton: false,
+          focusConfirm: false,
+          customClass: 'swal2-overflow',
+          html: html,
+          width: 500,
+          onOpen: function(){
+            $('#btnChangePickedUp').click(function(){
+                var notes = $("#changeNotes").val();
+                if(!confirm('Are you sure ?')) {
+                    return
+                    }
+                $("#btnChangePickedUp").attr("disabled", true);
+                $("#btnChangePickedUp").html("Please wait");
+                $.ajax({
+                    method: 'GET',
+                    url: '/order/change-picked-up/' + order_id,
+                    dataType : "json",
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        notes : notes
+                    },
+                    success: function(data){
+                        $('#btnChangePickedUp').attr('disabled', false);
+                        swalSuccess(data, false, 2000);
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Success!',
+                            }).then(function(){ 
+                                location.reload();
+                            }
+                        );  
+                    },
+                    error: function(error){
+                        console.log(error);
+                        $('#btnChangePickedUp').attr('disabled', false);
+                        swalError('Internal Error');
+                    }
+                });
+            })
+          }
+        }).then((result) => {   
+              return;
+        })
+      }).fail(function(e) {
+        console.log(e);
+        alert( "Internal Error" );
+      }); 
+    }

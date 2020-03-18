@@ -198,7 +198,7 @@
 
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             @if( empty($data->shippingManifest()->first()->airwaybill)
                                             && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED 
@@ -214,8 +214,23 @@
                                     </div>
                                     @endcan
 
+                                    @can("change_picked_up")
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                && !$data->is_picked_up)
+                                                    <button class="btn btn-success" onclick="_changePickedUp('{{ $data->id }}')">
+                                                        {{ __('transaction::messages.change_picked_up') }}
+                                                    </button>
+                                                    <br/>
+                                                    <br/>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endcan
+
                                     @can("recall_shipper")
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             @if( (empty($data->special_id) || $data->special_id == '')
                                             && $data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_SHIPPER
