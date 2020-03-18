@@ -289,6 +289,29 @@ class OrderController extends Controller
         ]);
     }
 
+    public function changeStatusToSuccess(Request $request, $id){
+
+        $order = Order::findOrFail($id);
+
+        if($order->order_no != $request->input('orderNo')){
+            return response()->json([
+                "status" => "Error",
+                "message" => "Order No. is not valid!"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $notes = null;
+        if(!empty($request->input('notes'))){
+            $notes = $request->input('notes');
+        }
+
+        DB::select("SELECT public.f_update_order_status_from_delivered_to_success('$order->order_no','$notes')");
+
+        return response()->json([
+            "status" => "Success",
+        ]);
+    }
+
     public function getOrderInfo($order_id){
         $orderShippingManifest = null;
         if(OrderShippingManifest::where('order_id', $order_id)->first() != null){

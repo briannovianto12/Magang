@@ -64,15 +64,23 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-5">
                                     @can('change_order_to_delivered')
-                                        <div class="col-5">
                                             @if($data->status == 8)
                                                 <button class="btn btn-success" onclick="_changeStatus('{{ $data->id }}')">
                                                     {{ __('transaction::messages.change_order_status_to_delivered') }}
                                                 </button>
                                             @endif
-                                        </div>
                                     @endcan
+
+                                    @can('do_success_order')
+                                            @if($data->status == 9)
+                                                <button class="btn btn-success" onclick="_changeOrderSuccess('{{ $data->id }}')">
+                                                    {{ __('transaction::messages.change_order_status_to_success') }}
+                                                </button>
+                                            @endif
+                                    @endcan
+                                    </div>
 
                                     @can('reject_order')
                                         <div class="col-3 ml-4">
@@ -94,7 +102,6 @@
                                             @endif
                                         </div>
                                     @endcan
-
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('transaction::messages.ordered_date') }}</span>

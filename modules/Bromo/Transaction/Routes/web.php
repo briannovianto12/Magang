@@ -30,6 +30,7 @@ Route::name('order.shipped-delivery-order')->get('/delivery-order/shipped', 'Ord
 Route::name('order.not-shipped-delivery-order')->get('/delivery-order/not-shipped', 'OrderController@notShippedDeliveryOrder');
 Route::name('order.change-status')->get('/order/change-status/{id}/', 'OrderController@changeStatusToDelivered');
 Route::name('order.change-picked-up')->get('/order/change-picked-up/{id}/', 'OrderController@changePickedUp');
+Route::name('order.change-order-success')->get('/order/change-order-success/{id}/', 'OrderController@changeStatusToSuccess');
 Route::name('order.getInfo')->get('/shipping-manifest-info/{order_id}', 'OrderController@getShippingManifestInfo');
 Route::name('order.edit')->put('/order/update/{id}', 'OrderController@updateShippingManifest');
 Route::name('order.getOrderInfo')->get('/order-info/{order_id}', 'OrderController@getOrderInfo');

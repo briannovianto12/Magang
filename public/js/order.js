@@ -189,6 +189,80 @@ function _changeStatus( order_id ){
       }); 
     }
 
+function _changeOrderSuccess( order_id ){
+
+      $.get('/order-info/' + order_id)
+      .done(function(data){
+        
+        var template = $('#changeOrderSuccess').html();
+        Mustache.parse(template);   // optional, speeds up future uses
+        html = Mustache.render(template, data);
+
+        Swal.fire({                              
+          // grow: 'fullscreen',
+          title: '<strong>Are you sure want to success this order ?</strong>',
+          type: '',
+          showCloseButton: false,
+          showCancelButton: false,
+          showConfirmButton: false,
+          focusConfirm: false,
+          customClass: 'swal2-overflow',
+          html: html,
+          width: 500,
+          onOpen: function(){
+            $('#btnChangeOrderSuccess').click(function(){
+                var orderNo = $("#orderNo").val();
+                var notes = $("#changeNotes").val();
+                if(orderNo == ''){
+                  alert('Please re-enter Order No.');
+                }
+                else if(orderNo != data.order_no){
+                  alert('Order No. is not valid!');
+                }
+                else if(!confirm('This action cannot be undone. Proceed ?')) {
+                    return;
+                }
+                else{
+                  $("#btnChangeOrderSuccess").attr("disabled", true);
+                  $("#btnChangeOrderSuccess").html("Please wait");
+                  $.ajax({
+                      method: 'GET',
+                      url: '/order/change-order-success/' + order_id,
+                      dataType : "json",
+                      data: {
+                          '_token': $('meta[name="csrf-token"]').attr('content'),
+                          orderNo : orderNo,
+                          notes : notes
+                      },
+                      success: function(data){
+                          $('#btnChangeOrderSuccess').attr('disabled', false)
+                          swalSuccess(data, false, 2000)
+                          Swal.fire({
+                              type: 'success',
+                              title: 'Success!',
+                              }).then(function(){ 
+                                  location.reload();
+                              }
+                          );  
+                      },
+                      error: function(error){
+                          console.log(error)
+                          $('#btnChangeOrderSuccess').attr('disabled', false);
+                          swalError('Internal Error');
+                      }
+                  });
+                }
+            })
+          }
+        }).then((result) => {   
+              return;
+        })
+      }).fail(function(e) {
+        console.log(e);
+        alert( "Internal Error" );
+      }); 
+    }
+
 function _changePickedUp( order_id ){
 
       $.get('/order-info/' + order_id)
