@@ -207,8 +207,8 @@
                                     @can("update_airwaybill")
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
-                                            @if( empty($data->shippingManifest()->first()->airwaybill)
-                                            && ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED 
+                                            @if(
+                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED 
                                                     || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED 
                                                     || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
                                             && $data->is_picked_up)
