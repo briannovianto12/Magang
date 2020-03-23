@@ -76,6 +76,7 @@
             "Bromo\\Export\\": "modules/Bromo/Export/",
             "Bromo\\FreqAskedQuestion\\": "modules/Bromo/FreqAskedQuestion/",
             "Bromo\\Payout\\": "modules/Bromo/Payout/",
+            "Bromo\\Disbursement\\": "modules/Bromo/Disbursement/",
             "Bromo\\ShippingMapping\\": "modules/Bromo/ShippingMapping/"
 
         },
