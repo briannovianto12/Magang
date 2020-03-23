@@ -497,4 +497,27 @@ class SellerController extends BaseResourceController
         return redirect()->back();     
         
     }
+
+    public function status($id)
+    {
+        DB::beginTransaction();
+        try {
+            $shop = Shop::findOrFail($id);
+            $shop->update([
+                'status' => ($shop->status === ShopStatus::SUSPENDED) ? ShopStatus::VERIFIED : ShopStatus::SUSPENDED
+            ]);
+            \Log::debug($shop->status);
+
+            DB::commit();
+            nbs_helper()->flashMessage('stored');
+
+        } catch (Exception $exception) {
+            report($exception);
+            DB::rollBack();
+
+            nbs_helper()->flashMessage('error');
+        }
+
+        return redirect()->back();
+    }
 }

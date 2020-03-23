@@ -24,7 +24,8 @@ Route::prefix('store')->name('store')->group(function () {
     Route::post('/token', 'SellerController@requestJwt')->name('.token');
 
     Route::post('verify-bank-account/{bank_account}', 'SellerController@verifyBankAccount')->name('.verify-bank-account');
-
+    
+    Route::name('.status')->put('/shop-status/{id}', 'SellerController@status');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');

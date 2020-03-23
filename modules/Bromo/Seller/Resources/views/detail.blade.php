@@ -183,7 +183,24 @@
                                     </span>
                                    
                                     <span>{{ $data->description ?? '-' }}</span>
-                                </div>    
+                                </div>   
+                                <div class="m-widget28__tab-item">
+                                    <span>Active</span>
+                                    @if(
+                                    ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
+                                    ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
+                                        <span class="m-switch m-switch--icon mt-3">
+                                            <label>
+                                                <input id="status" type="checkbox"
+                                                       @if($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED) checked="checked" @endif>
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    @else
+                                        <span>{{ $data->status ?? '-' }}</span>
+                                    @endif
+                                </div>
+
                             </div>
                         </div>
                         @isset($data->business)
@@ -425,5 +442,27 @@
             </div>
         @endslot
     @endcomponent
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+    aria-hidden="true">
+   <div class="modal-dialog">
+       <div class="modal-content">
+           <form action="{{ route('store.status', $data->id) }}" method="POST">
+               {{ csrf_field() }}
+               {{ method_field('PUT') }}
+               <div class="modal-header">
+                   <h5 class="modal-title title">Change Status</h5>
+               </div>
+               <div class="modal-body">
+                   <p>Are you sure change status of data?</p>
+               </div>
+               <div class="modal-footer">
+                   <button id="cancel" type="button" class="btn btn-secondary">Cancel</button>
+                   <button type="submit" class="btn btn-primary">Yes</button>
+               </div>
+           </form>
+           </div>
+       </div>
+    </div>
 
 @endsection
