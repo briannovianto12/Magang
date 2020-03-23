@@ -8,6 +8,7 @@
         @slot('body')
             @can('view_seller_with_balance')
                 <a href="{{ route('seller.export') }}" class="btn btn-success">Export to .xlsx</a>
+                <a href="{{ route('disbursement.index') }}" class="btn btn-success">Disbursement</a>
                 </div>
                 <div class="container-fluid">
                     <div class="row">

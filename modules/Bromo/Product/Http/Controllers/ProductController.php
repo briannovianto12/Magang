@@ -18,6 +18,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
+use Datatables;
+
 class ProductController extends Controller
 {
 

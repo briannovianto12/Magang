@@ -1,0 +1,14 @@
+{
+    "name": "Disbursement",
+    "alias": "disbursement",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Bromo\\Disbursement\\Providers\\DisbursementServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
