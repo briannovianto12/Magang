@@ -18,6 +18,7 @@ use Bromo\Transaction\Models\Order;
 use Bromo\Transaction\Models\OrderDeliveryTracking;
 use Bromo\Transaction\Models\OrderInternalNotes;
 use Bromo\Transaction\Models\OrderLog;
+use Bromo\Transaction\Models\OrderPaymentInvoice;
 use Bromo\Transaction\Models\OrderShippingManifest;
 use Bromo\Transaction\Models\OrderShippingManifestLog;
 use Bromo\Transaction\Models\OrderStatus;
@@ -244,6 +245,14 @@ class OrderController extends Controller
         }
         if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
+        }
+        if(!empty(Order::where('id', $id)->first()->paymentInvoice()->get())){
+            $data['paymentInvoiceList'] = Order::where('id', $id)->first()
+                                                ->paymentInvoice()
+                                                ->whereDate('expiry_date','>',Carbon::now())
+                                                ->where('status', '=', 'PENDING')
+                                                ->orderBy('external_created_at','desc')
+                                                ->get();
         }
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
 

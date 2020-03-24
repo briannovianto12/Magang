@@ -59,6 +59,7 @@ return [
 
     //M
     'margin_rate' => 'Margin Rate',
+    'payment_invoice_list' => 'Payment Invoice List',
 
     //N
     'not_picked_up' => 'Not Picked Up',
@@ -87,6 +88,8 @@ return [
     'payment_amount' => 'Payment Amount',
     'payment_details' => 'Payment Details',
     'payment_ok' =>  'Payment OK',
+    'payment_status' => 'Payment Status',
+    'payment_url' => 'Payment URL',
     'pick_up_address' => 'Pick Up Address',
     'pick_up_no' => 'Nomor Pickup',
     'pick_up_status' => 'Pick-Up Status:',
@@ -140,6 +143,7 @@ return [
     //V
     'variant' => 'Variant',
     'vat' => 'VAT',
+    'virtual_account_no' => 'No. Virtual Account',
     
     //W    
     'weight' => 'Weight',
