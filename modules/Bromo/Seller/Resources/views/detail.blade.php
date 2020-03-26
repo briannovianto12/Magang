@@ -79,6 +79,24 @@
                                     <span>{{ __('Store ID') }}</span>
                                     <span>{{ $data->id }}</span>
                                 </div>
+                                @can('view_suspend_seller')   
+                                <div class="m-widget28__tab-item">
+                                    <span>Suspend Shop</span>
+                                    @if(
+                                    ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
+                                    ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
+                                        <span class="m-switch m-switch--icon mt-3">
+                                            <label>
+                                                <input id="status" type="checkbox"
+                                                       @if($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED) checked="checked" @endif>
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    @else
+                                        <span>{{ $data->status ?? '-' }}</span>
+                                    @endif
+                                </div>
+                                @endcan
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Store Name') }}</span>
                                     <span>{{ $data->name ?? '-' }}</span>
@@ -174,32 +192,18 @@
                                     </div>
                                 </div>
                             </form>
+                                @can('change_shop_description')
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Shop Description') }}
                                 
                                          <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalContactForm"></a>
-                                         {{-- <span>@isset($postfix_edit) {{$postfix_edit}} @endisset</span> --}}
                         
                                     </span>
                                    
                                     <span>{{ $data->description ?? '-' }}</span>
-                                </div>   
-                                <div class="m-widget28__tab-item">
-                                    <span>Active</span>
-                                    @if(
-                                    ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
-                                    ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
-                                        <span class="m-switch m-switch--icon mt-3">
-                                            <label>
-                                                <input id="status" type="checkbox"
-                                                       @if($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED) checked="checked" @endif>
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                    @else
-                                        <span>{{ $data->status ?? '-' }}</span>
-                                    @endif
                                 </div>
+                                @endcan
+
 
                             </div>
                         </div>
@@ -445,7 +449,7 @@
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog"
     aria-hidden="true">
-   <div class="modal-dialog">
+    <div class="modal-dialog">
        <div class="modal-content">
            <form action="{{ route('store.status', $data->id) }}" method="POST">
                {{ csrf_field() }}

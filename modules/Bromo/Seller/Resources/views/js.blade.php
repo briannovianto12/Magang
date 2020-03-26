@@ -108,7 +108,7 @@
                 });
 
                 $('#cancel').on('click', function () {
-                    if ("{{ $data->status }}" == "{{ \Bromo\Seller\Models\ShopStatus::VERIFIED }}") {
+                    if ("{{ $data->status }}" == "{{ \Bromo\Seller\Models\ShopStatus::SUSPENDED }}") {
                         switchEl.prop('checked', true);
                     } else {
                         switchEl.prop('checked', false);
