@@ -12,7 +12,7 @@
     <script src="{{ mix('js/disbursement.js') }}"></script>
 @endsection
 
-{{-- @can('view_disbursement') --}}
+@can('view_batch_disbursement')
 @section('content')
     @component('components._portlet',[
         'portlet_head' => true,
@@ -67,4 +67,4 @@
         @endslot
     @endcomponent
 @endsection
-{{-- @endcan --}}
+@endcan
