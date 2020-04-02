@@ -16,16 +16,13 @@ Route::resource('store', 'SellerController');
 Route::prefix('store')->name('store')->group(function () {
 
     Route::get('/', 'SellerController@index');
-
     Route::post('{id}/verify', 'SellerController@verify')->name('.verify');
-    
     Route::post('{id}/reject', 'SellerController@reject')->name('.reject');
-
     Route::post('/token', 'SellerController@requestJwt')->name('.token');
-
     Route::post('verify-bank-account/{bank_account}', 'SellerController@verifyBankAccount')->name('.verify-bank-account');
-    
     Route::name('.status')->put('/shop-status/{id}', 'SellerController@status');
+    Route::name('.address-info')->get('{id}/business-address', 'SellerController@getBusinessAddress');
+    Route::name('.edit-address-info')->put('/change-address/{id}', 'SellerController@postBusinessAddress');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');

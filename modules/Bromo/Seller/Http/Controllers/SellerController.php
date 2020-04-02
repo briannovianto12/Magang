@@ -28,6 +28,9 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Bromo\Seller\Entities\BusinessDesc;
+use Bromo\Seller\Entities\BusinessAddress;
+use Illuminate\Support\Collection;
+
 use Bromo\Seller\Entities\Product;
 
 class SellerController extends BaseResourceController
@@ -526,5 +529,46 @@ class SellerController extends BaseResourceController
         }
 
         return redirect()->back();
+    }
+
+    public function getBusinessAddress($id)
+    {
+        $shop = $this->model::find($id);
+        $shop_business_address_list = BusinessAddress::where('business_id', $shop->business_id)->get();
+        
+        foreach ($shop_business_address_list as $address) {
+            if ($shop->address_id == $address->id) {
+                $address['current_address'] = true;
+            }
+
+            $address['id_str'] = strval($address->id);
+        }
+
+        return response()->json([
+            'shop' => $shop,
+            'shop_business_address_list' => $shop_business_address_list
+        ]);
+    }
+
+    public function postBusinessAddress(Request $request, $id)
+    {
+        try {
+            $new_pickup_address = $request->input('addressId');
+        
+            $shop = $this->model::find($id);
+            $shop->update([
+                'address_id' => $new_pickup_address
+            ]);
+
+            return response()->json([
+                "status" => "OK"
+            ]);
+        } catch (Exception $exception) {
+            report($exception);
+
+            return response()->json([
+                "status" => "Failed"
+            ]);
+        }
     }
 }
