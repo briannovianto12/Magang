@@ -6,6 +6,7 @@ use Bromo\Buyer\Models\Business;
 use Bromo\Buyer\Models\Buyer;
 use Bromo\Buyer\Models\BuyerStatus;
 use Bromo\Seller\Models\Shop;
+use Bromo\Transaction\Models\OrderPaymentInvoice;
 use Bromo\Transaction\Models\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
@@ -167,6 +168,11 @@ class Order extends Model
     public function itemShipment()
     {
         return $this->hasMany(OrderItemShipment::class, 'order_id');
+    }
+
+    public function paymentInvoice()
+    {
+        return $this->hasMany(OrderPaymentInvoice::class, 'order_no', 'order_no');
     }
 
     /*

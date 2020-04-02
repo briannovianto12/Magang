@@ -473,6 +473,11 @@
                     {{ __('transaction::messages.delivery_tracking') }}
                 </a>
             </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#payment_invoice" role="tab">
+                    {{ __('transaction::messages.payment_invoice_list') }}
+                </a>
+            </li>
         @endslot
 
         @slot('tab_body')
@@ -638,6 +643,53 @@
                                                             </td>
                                                             <td>
                                                                 {{ $deliveryTracking->created_at ?? '-' }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endisset
+                    @endslot
+                @endcomponent
+            </div>
+            <div class="tab-pane" id="payment_invoice">
+                @component('components._widget-list')
+                    @slot('body')
+                        @isset($paymentInvoiceList)
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="h3">{{ __('transaction::messages.internal') }}</div>
+                                        <div class="m-widget28__tab-item row">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <th>{{ __('transaction::messages.virtual_account_no') }}</th>
+                                                    <th>{{ __('transaction::messages.payment_url') }}</th>
+                                                    <th>{{ __('transaction::messages.payment_status') }}</th>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($paymentInvoiceList as $paymentInvoice)
+                                                        <tr>
+                                                            <td>
+                                                                <span>
+                                                                    <a href="#" id="payment_invoice_va_no" data-toggle="tooltip" data-placement="top" title="Copy To Clipboard" onclick="_copyToClipboard('{{ $paymentInvoice->bank_account_number }}')">
+                                                                        {{ $paymentInvoice->bank_account_number ?? '-' }}
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span>
+                                                                    <a href="#" id="payment_invoice_payment_url" data-toggle="tooltip" data-placement="top" title="Copy To Clipboard" onclick="_copyToClipboard('{{ $paymentInvoice->invoice_url }}')">
+                                                                        {{ $paymentInvoice->invoice_url ?? '-' }}
+                                                                    </a>
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                {{ $paymentInvoice->status ?? '-' }}
                                                             </td>
                                                         </tr>
                                                     @endforeach

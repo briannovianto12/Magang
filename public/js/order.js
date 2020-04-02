@@ -1,3 +1,4 @@
+$('[data-toggle="tooltip"]').tooltip();
 function swalError ( message, showConfirmButton, timer ) {
     Swal.fire({
       position: 'top',
@@ -325,4 +326,20 @@ function _changePickedUp( order_id ){
         console.log(e);
         alert( "Internal Error" );
       }); 
+    }
+
+function _copyToClipboard( value ){
+      event.preventDefault();
+      const tempField = document.createElement('textarea');
+      tempField.value = value;
+      document.body.appendChild(tempField);
+      tempField.focus();
+      tempField.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempField);
+      
+      originalTitle = $(event.target).attr('data-original-title');
+      $(event.target).attr('data-original-title', 'Copied!')
+        .tooltip('show')
+        .attr('data-original-title', originalTitle);
     }
