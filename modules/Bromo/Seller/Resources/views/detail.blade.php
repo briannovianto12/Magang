@@ -4,7 +4,11 @@
     <script src="{{ asset('vendor/qiscus/js/lib/qiscus-sdk-core.min.js') }}"></script>
 
     @include('store::js')
+    @include('store::js-template')
+    <script src="{{ mix('js/shop.js') }}"></script>
+    <script src="{{ asset('js/mustache.min.js') }}"></script>
 @endsection
+
 
 @section('content')
 
@@ -267,6 +271,10 @@
                                                 <i class="fa fa-clone"></i>
                                                 Copy
                                             </button>
+                                            <button onclick="_changeAddress(this, '{{ $data->id }}'); " class="btn btn-sm" style="background-color: white" >
+                                                <i class="fa fa-edit"></i>
+                                                Edit
+                                            </button>
                                         </span>
                                         <span id="business-address">
                                                 {!! nl2br($data->businessAddress->address_line
@@ -469,4 +477,21 @@
        </div>
     </div>
 
+    {{-- <div class="modal fade" role="dialog" id="comment-modal-{{ $posts->id }}"> --}}
+    <div class="modal fade" id="modalAddressForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+    
+                <div class="modal-body">
+    
+                </div>
+    
+    
+            </div>
+        </div>
+    </div>
 @endsection
