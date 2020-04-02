@@ -28,6 +28,7 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Bromo\Seller\Entities\BusinessDesc;
+use Bromo\Seller\Entities\Product;
 
 class SellerController extends BaseResourceController
 {
@@ -503,10 +504,16 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
         try {
             $shop = Shop::findOrFail($id);
+            $products = Product::where('shop_id', $id)->get();
             $shop->update([
                 'status' => ($shop->status === ShopStatus::SUSPENDED) ? ShopStatus::VERIFIED : ShopStatus::SUSPENDED
             ]);
-            \Log::debug($shop->status);
+
+            foreach($products as $product){
+                $product->update([
+                    'status' => ($shop->status === ShopStatus::SUSPENDED) ? \Bromo\Product\Models\ProductStatus::UNPUBLISH : \Bromo\Product\Models\ProductStatus::PUBLISH 
+                ]);
+            }
 
             DB::commit();
             nbs_helper()->flashMessage('stored');
