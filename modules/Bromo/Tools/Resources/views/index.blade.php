@@ -56,6 +56,13 @@
                             </a>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ route('master-courier.index') }}">
+                                Master Ekspedisi
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

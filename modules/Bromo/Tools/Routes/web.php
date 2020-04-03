@@ -37,6 +37,11 @@ Route::prefix('tools')->group(function() {
     Route::prefix('blacklist-phone-number')->group(function() {
         Route::name('blacklist-phone-number.get-table')->get('/blacklist-phone-number', 'BlacklistUserController@index');
         Route::name('blacklist-phone-number.post-table')->post('/blacklist-phone-number/post', 'BlacklistUserController@blacklistPhoneNumber');
-    
     });
+
+    Route::resource('master-courier', 'CourierController')->except('show');
+    Route::name('master-courier.index')->get('/master-courier', 'CourierController@index');
+    Route::name('master-courier.data')->get('/data', 'CourierController@courierData');
+    Route::name('master-courier.info')->get('/courier-info/{id}', 'CourierController@getCourierInfo');
+    Route::name('master-courier.edit-info')->post('/courier-info/{id}/edit', 'CourierController@editCourierInfo');
 });
