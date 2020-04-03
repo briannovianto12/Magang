@@ -134,6 +134,7 @@ return [
     'total_gross_amount' => 'Total Gross Amount',
     'total_gross_cost' => 'Total Gross Cost',
     'total_qty' => 'Total Qty',
+    'total_commission' => 'Total Commission',
     'transaction_title' => 'List of :title',
 
     //U
