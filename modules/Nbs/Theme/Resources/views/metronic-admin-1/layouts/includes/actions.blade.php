@@ -66,5 +66,12 @@
     @isset($waiting_approval)
         <a title="Waiting Approval">{{ $waiting_approval }}</a>
     @endisset
+    
+    @isset($change_ekspedisi)
+        <a href="#" onclick="_editLogistic('{{$change_ekspedisi}}' )"
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Change Master Ekspedisi"><i class="la la-edit"></i>
+        </a>
+    @endisset
 
 </div>
