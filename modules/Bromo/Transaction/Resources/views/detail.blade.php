@@ -405,7 +405,8 @@
                                         @endisset
                                     </div>
                                 @endisset
-                                <div class="m-widget28__tab-items row">
+
+                                <div class="m-widget28__tab-item row">
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
                                             <span>
@@ -436,10 +437,18 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('transaction::messages.total_gross_amount') }}</span>
                                             <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.total_commission') }}</span>
+                                            <span>IDR {{ number_format($data->total_commission ?? 0) }}</span>
                                         </div>
                                     </div>
 
