@@ -12,6 +12,7 @@
                             <input type="radio" name="address-line" value="{{id_str}}" checked>                                 
                                 <b>Current Address</b>
                                 <br/>    
+                                <h5>{{id_str}}</h5>
                                 <h5>{{building_name}}</h5>
                                 <h5>{{address_line}}, {{ subdistrict }}, {{ district }}</h5>
                                 <h5>{{ city }} - {{ province }}, {{ postal_code }}</h5>
@@ -20,6 +21,7 @@
 
                     {{^current_address}}                    
                             <input type="radio" name="address-line" value="{{id_str}}" >
+                                <h5>{{id_str}}</h5>
                                 <h5>{{building_name}}</h5>
                                 <h5>{{address_line}}, {{ subdistrict }}, {{ district }}</h5>
                                 <h5>{{ city }} - {{ province }}, {{ postal_code }}</h5>
