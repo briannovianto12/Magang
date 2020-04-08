@@ -74,7 +74,6 @@
                                                     <th>Tanggal</th>
                                                     <th>Nama Pembeli</th>
                                                     <th>No. Order</th>
-                                                    <th>Kota</th>
                                                     <th>Total Order</th>
                                                 </tr>
                                             </thead>
@@ -86,7 +85,6 @@
                                                     <td> {{\Carbon\Carbon::createFromTimestamp($data['datetime'])}} </td>
                                                     <td>{{ $data['buyer_name'] }}</td>
                                                     <td>{{ $data['order_no'] }}</td>
-                                                    <td>{{ $data['city'] }}</td>
                                                     <td class="cur">{{ number_format($data['total_order'] , 0, ',', '.' ) }}</td>
                                                 </tr>
                                                 @empty
