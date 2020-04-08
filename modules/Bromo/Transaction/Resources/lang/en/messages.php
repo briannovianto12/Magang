@@ -16,6 +16,7 @@ return [
 
     //B
     'back' => 'Back',
+    'bank_name' => 'Bank Name',
     'building_name' => 'Building Name',
     'buyer' => 'Buyer',
     'buyer_email' => 'Buyer Email',
@@ -47,6 +48,7 @@ return [
 
     //E
     'edit' => 'Edit',
+    'expiry_date' => 'Expiry Date',
     'external' => 'External',
 
     //G

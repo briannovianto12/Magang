@@ -180,6 +180,8 @@
 
     document.getElementById("origin-cpy-btn").addEventListener("click", copy_origin_address);
     document.getElementById("dest-cpy-btn").addEventListener("click", copy_destination_address);
+    document.getElementsByName("va-cpy-btn").forEach(e => e.addEventListener("click", copy_va_number));
+    document.getElementsByName("invoice-url-cpy-btn").forEach(e => e.addEventListener("click", copy_invoice_url));
 
     function copy_origin_address() {
         var copyText = document.getElementById("origin-address");
@@ -194,6 +196,28 @@
 
     function copy_destination_address() {
         var copyText = document.getElementById("destination-address");
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+        alert('Text Copied!');
+    }
+
+    function copy_va_number() {
+        var copyText = event.currentTarget.parentNode.getElementsByTagName("SPAN")[0];
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+        alert('Text Copied!');
+    }
+
+    function copy_invoice_url() {
+        var copyText = event.currentTarget.parentNode.getElementsByTagName("A")[0];
         var textArea = document.createElement("textarea");
         textArea.value = copyText.textContent;
         document.body.appendChild(textArea);
