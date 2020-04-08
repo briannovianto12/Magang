@@ -271,10 +271,12 @@
                                                 <i class="fa fa-clone"></i>
                                                 Copy
                                             </button>
-                                            <button onclick="_changeAddress(this, '{{ $data->id }}'); " class="btn btn-sm" style="background-color: white" >
-                                                <i class="fa fa-edit"></i>
-                                                Edit
-                                            </button>
+                                            @can('change_address')
+                                                <button onclick="_changeAddress(this, '{{ $data->id }}'); " class="btn btn-sm" style="background-color: white" >
+                                                    <i class="fa fa-edit"></i>
+                                                    Edit
+                                                </button>
+                                            @endcan
                                         </span>
                                         <span id="business-address">
                                                 {!! nl2br($data->businessAddress->address_line
