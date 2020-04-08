@@ -672,36 +672,62 @@
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <div class="m-widget28__tab-items">
-                                        <div class="h3">{{ __('transaction::messages.internal') }}</div>
+                                        <div class="h3">{{ __('transaction::messages.payment_invoice_list') }}</div>
                                         <div class="m-widget28__tab-item row">
                                             <table class="table table-bordered table-striped">
                                                 <thead>
+                                                    <th>{{ __('transaction::messages.bank_name') }}</th>
                                                     <th>{{ __('transaction::messages.virtual_account_no') }}</th>
                                                     <th>{{ __('transaction::messages.payment_url') }}</th>
                                                     <th>{{ __('transaction::messages.payment_status') }}</th>
+                                                    <th>{{ __('transaction::messages.expiry_date') }}</th>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($paymentInvoiceList as $paymentInvoice)
-                                                        <tr>
-                                                            <td>
-                                                                <span>
-                                                                    <a href="#" id="payment_invoice_va_no" data-toggle="tooltip" data-placement="top" title="Copy To Clipboard" onclick="_copyToClipboard('{{ $paymentInvoice->bank_account_number }}')">
+                                                    @if(count($paymentInvoiceList) > 0)
+                                                        @foreach($paymentInvoiceList as $paymentInvoice)
+                                                            <tr>
+                                                                <td class="align-middle">
+                                                                    <span>
+                                                                        {{ $paymentInvoice->xendit_bank_name ?? '-' }}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <span>
                                                                         {{ $paymentInvoice->bank_account_number ?? '-' }}
-                                                                    </a>
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <span>
-                                                                    <a href="#" id="payment_invoice_payment_url" data-toggle="tooltip" data-placement="top" title="Copy To Clipboard" onclick="_copyToClipboard('{{ $paymentInvoice->invoice_url }}')">
+                                                                    </span>
+                                                                    <button name="va-cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                                        <i class="fa fa-clone"></i>
+                                                                        {{ __('transaction::messages.copy') }}
+                                                                    </button>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <a href="{{ $paymentInvoice->invoice_url ?? '#' }}" target="_blank">
                                                                         {{ $paymentInvoice->invoice_url ?? '-' }}
                                                                     </a>
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                {{ $paymentInvoice->status ?? '-' }}
+                                                                    <button name="invoice-url-cpy-btn" class="btn btn-sm" style="background-color: white">
+                                                                        <i class="fa fa-clone"></i>
+                                                                        {{ __('transaction::messages.copy') }}
+                                                                    </button>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <span>
+                                                                        {{ $paymentInvoice->status ?? '-' }}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <span>
+                                                                        {{ \Carbon\Carbon::parse(strtotime($paymentInvoice->expiry_date))->setTimezone('Asia/Jakarta')->format('d M Y H:i:s T') }}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="100" class="align-middle text-center">
+                                                                <span>No pending payments found</span>
                                                             </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
