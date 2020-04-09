@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/tools', 'ToolsController@user');
+Route::middleware('auth:api')->get('/tools', function (Request $request) {
+    return $request->user();
+});

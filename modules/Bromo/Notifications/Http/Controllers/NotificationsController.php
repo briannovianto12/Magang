@@ -18,15 +18,6 @@ class NotificationsController extends Controller
     {
         return view('notifications::index');
     }
-
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
 
     /**

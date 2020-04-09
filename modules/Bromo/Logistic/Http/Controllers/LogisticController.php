@@ -44,15 +44,6 @@ class LogisticController extends Controller
         $this->title = 'Order';
     }
 
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
-    
     /**
      * Load order datatable.
      *

@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/refund', 'RefundController@user');
+Route::middleware('auth:api')->get('/refund', function (Request $request) {
+    return $request->user();
+});

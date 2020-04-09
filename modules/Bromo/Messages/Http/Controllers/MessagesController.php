@@ -20,15 +20,6 @@ class MessagesController extends BaseResourceController
         $this->model = $model;
         parent::__construct();
     }
-
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
 
     public function searchList(Request $request) {

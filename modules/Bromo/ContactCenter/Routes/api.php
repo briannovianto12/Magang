@@ -13,4 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/contactcenter', 'ContactCenterController@user');
+Route::middleware('auth:api')->get('/contactcenter', function (Request $request) {
+    return $request->user();
+});
+

@@ -19,16 +19,6 @@ class BannerController extends Controller
     {
         return view('banner::index');
     }
-
-
-    /**
-     * Get admin from api
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
 
     /**
