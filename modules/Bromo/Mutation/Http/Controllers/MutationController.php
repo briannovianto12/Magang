@@ -11,14 +11,6 @@ use DB;
 
 class MutationController extends Controller
 {
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
     function index(Request $request){
         $start = Carbon::now()->subDays(7);

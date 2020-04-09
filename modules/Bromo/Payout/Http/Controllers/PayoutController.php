@@ -25,15 +25,6 @@ class PayoutController extends Controller
     private const VOID_PAYOUT = 'admin/payout/void';
     private const SEND_LINK = "admin/payout/PAYOUT_ID/sms";
     private const CREATE_PAYOUT = 'admin/payout';
-
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
 
     public function __construct()

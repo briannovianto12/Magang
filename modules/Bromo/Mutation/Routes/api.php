@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/mutation', 'MutationController@user');
+Route::middleware('auth:api')->get('/mutation', function (Request $request) {
+    return $request->user();
+});

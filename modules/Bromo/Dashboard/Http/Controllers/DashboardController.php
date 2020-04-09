@@ -22,15 +22,6 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-
-     /**
-     * Get User 
-     * @return Response
-     */
-    public function user()
-    {
-        return $request->user();
-    }
     
 
     public function __construct(DashboardRepository $dashboardRepository)

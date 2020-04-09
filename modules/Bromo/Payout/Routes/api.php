@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/payout', 'PayoutController@user');
+Route::middleware('auth:api')->get('/payout', function (Request $request) {
+    return $request->user();
+});

@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/export', 'ExportController@user');
+Route::middleware('auth:api')->get('/export', function (Request $request) {
+    return $request->user();
+});

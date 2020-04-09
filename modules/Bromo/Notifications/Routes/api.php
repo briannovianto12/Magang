@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/notifications', 'NotificationsController@user');
+Route::middleware('auth:api')->get('/notifications', function (Request $request) {
+    return $request->user();
+});
