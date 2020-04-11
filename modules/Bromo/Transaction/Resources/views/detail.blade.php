@@ -185,7 +185,7 @@
                             <div class="m-widget28__tab-items">
                                 <h3><b>{{ __('transaction::messages.shipping') }}</b></h3>
                                 <div class="m-widget28__tab-item row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('transaction::messages.airwaybill_no') }}</span>
                                             @if(empty($data->shippingManifest()->first()->airwaybill))
@@ -195,10 +195,20 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('transaction::messages.pick_up_no') }}</span>
                                             <span>{{ $data->special_id ?? '-' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.self_drop') }}</span>
+                                            @if($data->is_self_drop)
+                                                <span> Yes </span>
+                                            @elseif($data->is_self_drop == 0)
+                                                <span> No </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
