@@ -43,7 +43,9 @@ class Shop extends Model
         'product_category_id',
         'product_category',
         'status',
-        'version'
+        'version',
+        'is_temporary_closed',
+        'temporary_closed_message'
     ];
 
     public function business()

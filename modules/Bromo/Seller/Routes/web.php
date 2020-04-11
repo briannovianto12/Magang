@@ -40,6 +40,7 @@ Route::prefix('popular-shop')->group(function () {
 Route::prefix('shop')->group(function () {
 
     Route::get('/', 'BuyerController@index');   
-    Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');
-    
+    Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');   
 });
+
+Route::name('temporary-closed.post-table')->post('/shop/post/{id}', 'SellerController@temporaryClosed');
