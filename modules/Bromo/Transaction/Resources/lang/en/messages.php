@@ -129,6 +129,7 @@ return [
     'status' => 'Status',
     'status_order_process' => 'Status:',
     'success' => 'Success',
+    'self_drop' => 'Self Drop',
 
     //T
     'tax' => 'Tax',
