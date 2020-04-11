@@ -207,8 +207,48 @@
                                     <span>{{ $data->description ?? '-' }}</span>
                                 </div>
                                 @endcan
-
-
+                                <br></br>
+                            
+                                <form action="{{ route('temporary-closed.post-table', $data->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="modal fade" id="modalTemporaryClosed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h4 class="modal-title w-100 font-weight-bold">Temporary Closed</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body mx-3">
+                                                    <div class="md-form">
+                                                        <i class="fas fa-pencil prefix grey-text"></i>
+                                                        <textarea type="text" name="temporary_closed_message" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                                                        <label data-error="wrong" data-success="right" for="form8">Temporary Closed Message</label>
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <button class="btn btn-unique" onclick="return confirm('Are you sure you want to temporary closed your shop?')">Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                @can('temporary_closed')
+                                    @if($data->is_temporary_closed == 0)
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <div class="row">
+                                                <div class ="col-12">
+                                                    <a href=""  method="post" data-toggle="modal" data-target="#modalTemporaryClosed" class="alert alert-danger" role="alert">
+                                                        Temporary Closed
+                                                    </a>
+                                                    <br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    @endif  
+                                @endcan      
                             </div>
                         </div>
                         @isset($data->business)

@@ -571,4 +571,22 @@ class SellerController extends BaseResourceController
             ]);
         }
     }
+
+    public function temporaryClosed(Request $request, $id){
+        $temporary_closed_message = $request->get('temporary_closed_message');
+        try{
+           
+            $temporary_closed = $this->model::find($id);
+            $temporary_closed->temporary_closed_message = $temporary_closed_message; 
+            $temporary_closed->is_temporary_closed = 1;
+            $temporary_closed->save();
+
+            nbs_helper()->flashMessage('stored');
+      
+        }catch(\Illuminate\Database\QueryException $ex){
+            nbs_helper()->flashError($ex->getMessage());
+        }
+        return redirect()->back();     
+        
+    }
 }
