@@ -495,6 +495,8 @@ class SellerController extends BaseResourceController
             $business_description->description = $description; 
             $business_description->save();
 
+            nbs_helper()->flashMessage('stored');
+
         }catch(\Illuminate\Database\QueryException $ex){
             nbs_helper()->flashError($ex->getMessage());
         }
