@@ -23,6 +23,8 @@ Route::prefix('store')->name('store')->group(function () {
     Route::name('.status')->put('/shop-status/{id}', 'SellerController@status');
     Route::name('.address-info')->get('{id}/business-address', 'SellerController@getBusinessAddress');
     Route::name('.edit-address-info')->put('/change-address/{id}', 'SellerController@postBusinessAddress');
+    Route::name('.commission-info')->get('{id}/commission', 'SellerController@getCommissionInfo');
+    Route::name('.edit-commission-info')->put('{id}/commission/post', 'SellerController@postCommission');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');

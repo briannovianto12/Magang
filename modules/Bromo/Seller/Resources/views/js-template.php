@@ -37,3 +37,39 @@
         
     </div>
 </script>
+
+<script id="change-commission" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+
+        <form id="form-change-commission" action="POST">
+            {{ method_field('PUT') }}
+            {{ csrf_field() }}
+            <div id="form-group">
+                {{#shop.current_commission_null}}
+                    <input type="radio" name="commission-type" value="" >
+                        <b>None</b>
+                    </input>
+                    <hr/>
+                {{/shop.current_commission_null}}
+                {{#commission_group}}
+                    {{#current_commission}}                    
+                            <input type="radio" name="commission-type" value="{{id}}" checked>                                 
+                                <b>{{name}} (Current Commission)</b>
+                            </input>
+                    {{/current_commission}}
+
+                    {{^current_commission}}                    
+                            <input type="radio" name="commission-type" value="{{id}}" >
+                                <b>{{name}}</b>
+                            </input>
+                    {{/current_commission}}
+                    <hr/>
+                {{/commission_group}}
+                
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnChangeCommission">Submit</button> 
+            
+            </div>
+        </form>
+        
+    </div>
+</script>
