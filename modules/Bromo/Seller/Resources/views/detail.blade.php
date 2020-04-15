@@ -109,6 +109,22 @@
                                     <span>{{ __('Product Category') }}</span>
                                     <span>{{ $data->product_category ?? '-' }}</span>
                                 </div>
+
+
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Commission Type') }}
+                                        @can('change_commission')
+                                        <button onclick="_changeCommission(this, '{{ $data->id }}'); " class="btn btn-sm" style="background-color: white" >
+                                            <i class="fa fa-edit"></i>
+                                            Edit
+                                        </button>
+                                        @endcan
+                                    </span>
+                                    <span>{{ $data->commissionType->name ?? '-' }}</span>
+                                
+                                </div>
+
+                                
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Shop Contact Person') }}</span>
                                     <span>{{ $data->businessAddress->contact_person ?? '-'}}</span>

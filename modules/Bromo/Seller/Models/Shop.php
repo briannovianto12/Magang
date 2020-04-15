@@ -6,6 +6,7 @@ use Bromo\Buyer\Models\Business;
 use Bromo\Buyer\Models\BusinessAddress;
 use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\Buyer\Models\Buyer;
+use Bromo\Seller\Entities\CommissionGroup;
 use Bromo\ProductCategory\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
 use Nbs\BaseResource\Traits\FormatDates;
@@ -108,5 +109,8 @@ class Shop extends Model
         return file_attribute('shop.path_tax_image', $this->tax_card_image_file);
     }
 
-    
+    public function commissionType()
+    {
+        return $this->belongsTo(CommissionGroup::class, 'commission_group_id');
+    }
 }

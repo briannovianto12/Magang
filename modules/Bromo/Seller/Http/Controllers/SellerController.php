@@ -32,6 +32,8 @@ use Bromo\Seller\Entities\BusinessAddress;
 use Illuminate\Support\Collection;
 
 use Bromo\Seller\Entities\Product;
+use Bromo\Seller\Entities\CommissionGroup;
+
 
 class SellerController extends BaseResourceController
 {
@@ -572,6 +574,58 @@ class SellerController extends BaseResourceController
                 "status" => "Failed"
             ]);
         }
+    }
+
+    public function getCommissionInfo($id)
+    {
+        $shop = $this->model::find($id);
+        $commission_group = CommissionGroup::all();
+
+        foreach ($commission_group as $commission) {
+            if ($shop->commissionType['id'] == null ) {
+                $shop['current_commission_null'] = true;
+            } else if ($commission->id == $shop->commissionType['id'] ) {
+                $commission['current_commission'] = true;
+            }
+        }
+
+        return response()->json([
+            'shop' => $shop,
+            'commission_group' => $commission_group
+        ]);
+    }
+
+    public function postCommission(Request $request, $id)
+    {
+        try {
+            $new_commission_type = $request->input('commissionId');
+            \Log::debug(CommissionGroup::STANDARD);
+            \Log::debug(CommissionGroup::PREMIUM);
+            $shop = $this->model::find($id);
+            $resp = '';
+
+            if ($new_commission_type == null) {
+                return;
+            } 
+            
+            if ($new_commission_type == CommissionGroup::STANDARD) {
+                $standard = DB::select("SELECT public.f_update_commission_standard_and_check($shop->id)");
+            } elseif ($new_commission_type == CommissionGroup::PREMIUM) {
+                $premium = DB::select("SELECT public.f_update_commission_premium_and_check($shop->id)");
+            }
+
+            return response()->json([
+                "status" => "OK"
+            ]);
+        } catch (Exception $exception) {
+            report($exception);
+
+            return response()->json([
+                "status" => "Failed"
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     public function temporaryClosed(Request $request, $id){
