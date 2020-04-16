@@ -698,7 +698,7 @@
                                                             <tr>
                                                                 <td class="align-middle">
                                                                     <span>
-                                                                        {{ $paymentInvoice->xendit_bank_name ?? '-' }}
+                                                                        {{ \Bromo\Transaction\Helpers\XenditBankNameUtil::getBankName($paymentInvoice->bank_account_number) ?? '-' }}
                                                                     </span>
                                                                 </td>
                                                                 <td class="align-middle">

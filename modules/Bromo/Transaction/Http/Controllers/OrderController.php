@@ -247,13 +247,9 @@ class OrderController extends Controller
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
         if(!empty(Order::where('id', $id)->first()->paymentInvoice()->get())){
-            $data['paymentInvoiceList'] = Order::join('order_payment_invoice','order_trx.order_no','=','order_payment_invoice.order_no')
-                                                ->join('shop','order_trx.shop_id','=','shop.id')
-                                                ->join('business_bank_account','shop.business_id','=','business_bank_account.business_id')
-                                                ->join('bank','business_bank_account.bank_id','=','bank.id')
-                                                ->join('bank_code_xendit','bank.id','=','bank_code_xendit.bank_id')
-                                                ->select('bank_code_xendit.xendit_bank_name','order_payment_invoice.bank_account_number','order_payment_invoice.invoice_url','order_payment_invoice.status','order_payment_invoice.expiry_date')
-                                                ->where('order_trx.id', $id)
+            $data['paymentInvoiceList'] = Order::find($id)
+                                                ->paymentInvoice()
+                                                ->select('order_payment_invoice.bank_account_number','order_payment_invoice.invoice_url','order_payment_invoice.status','order_payment_invoice.expiry_date')
                                                 ->whereDate('order_payment_invoice.expiry_date','>',Carbon::now())
                                                 ->where('order_payment_invoice.status', '=', 'PENDING')
                                                 ->orderBy('order_payment_invoice.external_created_at','desc')
