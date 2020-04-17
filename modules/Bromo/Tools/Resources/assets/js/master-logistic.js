@@ -14,7 +14,7 @@ window._editLogistic = function (courier_id) {
     
       Swal.fire({                              
         // grow: 'fullscreen',
-        title: '<strong>Update Airwaybill Order Shipping Manifest</strong>',
+        title: '<strong>Update Shipping Courier</strong>',
         type: '',
         html: html,
         showCloseButton: true,
