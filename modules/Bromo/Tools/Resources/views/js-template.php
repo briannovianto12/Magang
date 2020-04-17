@@ -6,7 +6,7 @@
                 <h4>Nama Kurir: {{ data.name }}</h4>
                 <h4>Nama Provider Key: {{ data.provider_key }}</h4>
             </div>
-            <form id="form-update-awb">
+            <form id="form-update-ekspedisi">
                 <div class="form-group">
                     <label>
                     </label>
