@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Bromo\Tools\Entities\PhoneNumberBlacklist;
+use Illuminate\Support\Facades\DB;
+use Bromo\Buyer\Entities\FraudBlackListUser;
+use Bromo\Buyer\Entities\UserProfile;
+use Bromo\Buyer\Entities\UserStatus as Status;
 
 class BlacklistUserController extends Controller
 {
@@ -22,29 +26,43 @@ class BlacklistUserController extends Controller
         return view('tools::blacklist-phone-number');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('tools::create');
-    }
-
     public function blacklistPhoneNumber(Request $request){
         $msisdn = $request->get('msisdn');
-        // \Log::debug($msisdn);        
-        try{
-            $phone_number_blacklist = new PhoneNumberBlacklist;
-            // \Log::debug('inside try');
-            $phone_number_blacklist->msisdn = $msisdn;
-            // \Log::debug($phone_number_blacklist->msisdn);
-            $phone_number_blacklist->save();
 
-            nbs_helper()->flashSuccess('Success Blacklisted Phone Number');
-        }catch(\Exception $ex){ 
+        $admin = \Auth::user()->id;
+        $user = UserProfile::where('msisdn', $msisdn)->first();
+
+        DB::beginTransaction();  
+          
+        try{
+            if($user) {
+                $fraud_blacklist_user = new FraudBlacklistUser;
+                $fraud_blacklist_user->user_id = $user->id;
+                $fraud_blacklist_user->fraud_status = 1;
+                $fraud_blacklist_user->remark = 'blacklist by user id = '. \Auth::user()->id;
+                $fraud_blacklist_user->save();
+                
+                $user->status = Status::BLOCKED;
+                $user->save();
+            } 
+
+            else{
+            // PREVENT FOR RE-REGISTRATION
+            $phone_number_blacklist = new PhoneNumberBlacklist;
+            $phone_number_blacklist->msisdn = $msisdn;
+            $phone_number_blacklist->save();
+            }
+
+            DB::commit();
+            \Log::debug('test');
+
+            nbs_helper()->flashMessage('stored');
+
+        }catch(\Exception $ex){            
+            report($ex);
             // \Log::error($ex->getMessage());
-            nbs_helper()->flashError($ex->getMessage());
+            DB::rollBack();
+            nbs_helper()->flashMessage('error');
         }
         return redirect()->back();     
     } 
