@@ -188,7 +188,7 @@
                                 @endcan
                             <form action="{{ route('description.post-table', $data->id) }}" method="POST">
                                 {{ csrf_field() }}
-                                <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                <div class="modal fade" id="modalDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -201,7 +201,9 @@
                                             <div class="modal-body mx-3">
                                                 <div class="md-form">
                                                     <i class="fas fa-pencil prefix grey-text"></i>
-                                                    <textarea type="text" name="description" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                                                    <textarea type="text" name="description" id="message-body" class="md-textarea form-control" 
+                                                    placeholder="Enter Message Body" maxlength="148" rows="4"></textarea>
+                                                    <span id="chars">128</span> characters remaining
                                                     <label data-error="wrong" data-success="right" for="form8">New Shop Description</label>
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
@@ -216,7 +218,7 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Shop Description') }}
                                 
-                                         <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalContactForm"></a>
+                                        <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
                         
                                     </span>
                                    
