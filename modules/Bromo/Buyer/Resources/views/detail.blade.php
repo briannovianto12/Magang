@@ -76,7 +76,7 @@
                                         </div>
                                         <br>
                                        
-                                        @can('blacklist-user')
+                                        {{-- @can('blacklist-user') --}}
                                             <div class="d-flex flex-column justify-content-center">
                                             <div class="row">
                                                 <div class ="col-6">
@@ -89,7 +89,7 @@
                                             </div>
                                             </div>
                                         </div>
-                                        @endcan
+                                    {{-- @endcan --}}
                                     </div>
                                 </div>
                                 @isset($data->business)

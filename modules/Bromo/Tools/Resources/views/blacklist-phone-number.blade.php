@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    @can('blacklist-user')
+    @can('view_postal_code_finder')
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
