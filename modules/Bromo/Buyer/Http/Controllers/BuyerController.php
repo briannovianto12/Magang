@@ -11,7 +11,9 @@ use Bromo\Buyer\Models\BusinessBankAccount;
 use Bromo\Transaction\Models\Order;
 use Bromo\Buyer\Entities\FraudBlackListUser;
 use Bromo\Buyer\Entities\UserProfile;
+use Illuminate\Support\Facades\DB;
 use Bromo\Buyer\Entities\UserStatus as Status;
+use Bromo\Tools\Entities\PhoneNumberBlacklist;
 
 class BuyerController extends BaseResourceController
 {
@@ -100,22 +102,25 @@ class BuyerController extends BaseResourceController
 
 
     public function blacklistUser($id){
-        try{
-            
+        $admin = \Auth::user()->id;
+        DB::beginTransaction();     
+        try{   
             $fraud_blacklist_user = new FraudBlacklistUser;
-            
             $fraud_blacklist_user->user_id = $id;
             $fraud_blacklist_user->fraud_status = 1;
-            $fraud_blacklist_user->remark = 'test';
+            $fraud_blacklist_user->remark = 'blacklist by user id = '. \Auth::user()->id;
             $fraud_blacklist_user->save();
 
-            $blacklist_status = UserProfile::find($id);
-            $blacklist_status->status = Status::BLOCKED;
-            $blacklist_status->save();
+            $user = UserProfile::find($id);
+            $user->status = Status::BLOCKED;
+            $user->save();
+
+            DB::commit();
 
             nbs_helper()->flashSuccess('Success Blacklisted User');
         }catch(\Illuminate\Database\QueryException $ex){ 
-            nbs_helper()->flashError($ex->getMessage());
+            DB::rollBack();
+            nbs_helper()->flashMessage('error');
         }
         return redirect()->back();     
     }
