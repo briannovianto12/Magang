@@ -173,7 +173,7 @@
         });
     }
 
-    var maxLength = 128;
+    var maxLength = 124;
     
     $('textarea').keyup(function() {
       var length = $(this).val().length;
