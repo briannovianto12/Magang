@@ -27,7 +27,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Writer as Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Bromo\Seller\Entities\BusinessDesc;
+use Bromo\Seller\Entities\Business;
 use Bromo\Seller\Entities\BusinessAddress;
 use Illuminate\Support\Collection;
 
@@ -486,21 +486,25 @@ class SellerController extends BaseResourceController
         }
     }
     public function shopDescription(Request $request, $id){
-        $description = $request->get('description');
+        $shop_description = $request->get('description');
+        DB::beginTransaction();
         try{
-           
-            $shop_description = $this->model::find($id);
-            $shop_description->description = $description; 
-            $shop_description->save();
+            $shop = $this->model::find($id);
+            $shop->description = $shop_description; 
+            $shop->save();
 
-            $business_description = BusinessDesc::find($shop_description->business_id);
-            $business_description->description = $description; 
-            $business_description->save();
+            $business = Business::find($shop->business_id);
+            $business->description = $shop_description; 
+            $business->save();
+
+            DB::commit();
 
             nbs_helper()->flashMessage('stored');
+        } catch (Exception $exception) {
+            report($exception);
+            DB::rollBack();
 
-        }catch(\Illuminate\Database\QueryException $ex){
-            nbs_helper()->flashError($ex->getMessage());
+            nbs_helper()->flashMessage('error');
         }
         return redirect()->back();     
         

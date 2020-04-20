@@ -202,8 +202,8 @@
                                                 <div class="md-form">
                                                     <i class="fas fa-pencil prefix grey-text"></i>
                                                     <textarea type="text" name="description" id="message-body" class="md-textarea form-control" 
-                                                    placeholder="Enter Message Body" maxlength="148" rows="4"></textarea>
-                                                    <span id="chars">128</span> characters remaining
+                                                    placeholder="Enter Message Body" maxlength="124" rows="4"></textarea>
+                                                    <span id="chars">124</span> characters remaining
                                                     <label data-error="wrong" data-success="right" for="form8">New Shop Description</label>
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
@@ -217,12 +217,10 @@
                                 @can('change_shop_description')
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Shop Description') }}
-                                
                                         <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
-                        
                                     </span>
                                    
-                                    <span>{{ $data->description ?? '-' }}</span>
+                                    <span style='white-space: pre-wrap;'>{{ $data->description ?? '-' }}</span>
                                 </div>
                                 @endcan
                                 <br></br>
@@ -320,7 +318,7 @@
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Description') }}</span>
-                                        <span>{{ $data->business->description ?? '-' }}</span>
+                                        <span style='white-space: pre-wrap;'>{{ $data->business->description ?? '-' }}</span>
                                     </div>
                                     <div class="m-widget28__tab-item">
                                         <span>
