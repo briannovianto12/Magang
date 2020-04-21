@@ -25,6 +25,8 @@ Route::prefix('store')->name('store')->group(function () {
     Route::name('.edit-address-info')->put('/change-address/{id}', 'SellerController@postBusinessAddress');
     Route::name('.commission-info')->get('{id}/commission', 'SellerController@getCommissionInfo');
     Route::name('.edit-commission-info')->put('{id}/commission/post', 'SellerController@postCommission');
+    Route::name('.temporary-closed')->post('{id}/temporary-closed', 'SellerController@temporaryClosed');
+    Route::name('.re-open-shop')->post('{id}/re-open-shop', 'SellerController@reOpenShop');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');
@@ -45,4 +47,3 @@ Route::prefix('shop')->group(function () {
     Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');   
 });
 
-Route::name('temporary-closed.post-table')->post('/shop/post/{id}', 'SellerController@temporaryClosed');

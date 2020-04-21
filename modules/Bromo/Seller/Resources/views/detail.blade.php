@@ -74,6 +74,35 @@
             </div>
             <!--end::Modal-->
 
+            <!--begin::Modal Temporary Closed-->
+            <form action="{{ route("{$module}.temporary-closed", $data->id) }}" method="POST">
+                {{ csrf_field() }}
+                <div class="modal fade" id="modalTemporaryClosed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">Temporary Closed</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <div class="md-form">
+                                    <i class="fas fa-pencil prefix grey-text"></i>
+                                    <textarea type="text" name="temporary_closed_message" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                                    <label data-error="wrong" data-success="right" for="form8">Temporary Closed Message</label>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button class="btn btn-unique" onclick="return confirm('Are you sure you want to temporary closed the shop?')">Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--end::Modal-->
+
             @component('components._widget-list')
                 @slot('body')
                     <div class="row">
@@ -83,24 +112,95 @@
                                     <span>{{ __('Store ID') }}</span>
                                     <span>{{ $data->id }}</span>
                                 </div>
-                                @can('view_suspend_seller')   
+
                                 <div class="m-widget28__tab-item">
-                                    <span>Suspend Shop</span>
+                                    <span>{{ __('Status') }}</span>
+                                    @if($data->status_name == 'Verified')
+                                        @if($data->is_temporary_closed == 1)
+                                            <span name="shop_status">
+                                                <i class="fa fa-exclamation-triangle" style="color:#FFCC00"></i> Shop is temporarily closed
+                                                <br/>
+                                                    Message: {{ $data->temporary_closed_message }}    
+                                            </span>
+                                        @else
+                                            <span name="shop_status" style="color:#39b54a">
+                                                {{ $data->status_name }}
+                                            </span>
+                                        @endif
+                                    @elseif($data->status_name == '@michaelRejected')
+                                        <span name="shop_status" style="color:red">
+                                            {{ $data->status_name }}
+                                        </span>
+                                    @elseif($data->status_name == 'Registration Submitted')
+                                        <span name="shop_status" style="color:blue">
+                                            {{ $data->status_name }}
+                                        </span>
+                                    @endif
+                                </div>
+
+                                @can('store_modify')
+                                    @if(in_array($data->status, [
+                                            \Bromo\Seller\Models\ShopStatus::REG_SUBMITTED,
+                                            \Bromo\Seller\Models\ShopStatus::SURVEY_SUBMITTED
+                                        ]))
+                                    <div id="approval" class="m-widget28__tab-item">
+                                        <button type="button" class="btn btn-success m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#verify"
+                                                data-route="{{ route("{$module}.verify", $data->id) }}">
+                                            Verify
+                                        </button>
+                                        <button type="button" class="btn btn-danger m-btn m-btn--custom"
+                                                data-toggle="modal" data-target="#reject"
+                                                data-route="{{ route("{$module}.reject", $data->id) }}">
+                                            Reject
+                                        </button>
+                                        <br/><br/>
+                                    </div>
+                                    @endif
+                                @endcan
+
+                                @if ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED )
+                                <div class="m-widget28__tab-item">
+                                    <span>Shop Action</span>
+                                    @can('view_suspend_seller')   
                                     @if(
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
                                         <span class="m-switch m-switch--icon mt-3">
                                             <label>
                                                 <input id="status" type="checkbox"
-                                                       @if($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED) checked="checked" @endif>
+                                                    @if($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED) checked="checked" @endif>
                                                 <span></span>
                                             </label>
                                         </span>
-                                    @else
-                                        <span>{{ $data->status ?? '-' }}</span>
                                     @endif
+                                    @endcan
+
+
+                                    @can('temporary_closed')
+                                    @if($data->is_temporary_closed == 0 && $data->status !== \Bromo\Seller\Models\ShopStatus::SUSPENDED)
+                                        <div class="m-widget28__tab-item">
+                                            <button type="button" class="btn btn-warning m-btn m-btn--custom"
+                                                    data-toggle="modal" data-target="#modalTemporaryClosed">
+                                                    Temporary Closed
+                                            </button>
+                                            <br/><br/>
+                                        </div>
+                                    @else
+                                        <div class="m-widget28__tab-item">
+                                            <form method="POST" action="{{ route('store.re-open-shop', ['id' => $data->id]) }}">
+                                                {!! csrf_field() !!}
+                                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to re-open the shop?')">
+                                                    <span> Re-open Shop</span>
+                                                </button>
+                                            </form>
+                                            <br/><br/>
+                                        </div>
+                                    @endif
+                                    @endcan
                                 </div>
-                                @endcan
+                                @endif
+
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Store Name') }}</span>
                                     <span>{{ $data->name ?? '-' }}</span>
@@ -144,48 +244,12 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Tax Type') }}</span>
                                     <span>{{ $data->taxType->name ?? '-' }}</span>
-
-                                </div>
-                                <div class="m-widget28__tab-item">
-                                    <span>{{ __('Status') }}</span>
-                                    @if($data->status_name == 'Verified')
-                                        <span name="shop_status" style="color:#39b54a">
-                                            {{ $data->status_name }}
-                                        </span>
-                                    @elseif($data->status_name == 'Rejected')
-                                        <span name="shop_status" style="color:red">
-                                            {{ $data->status_name }}
-                                        </span>
-                                    @elseif($data->status_name == 'Registration Submitted')
-                                        <span name="shop_status" style="color:blue">
-                                            {{ $data->status_name }}
-                                        </span>
-                                    @endif
-                                    
                                 </div>
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Created At') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
                                 </div>
-                                @can('store_modify')
-                                <div id="approval" class="m-widget28__tab-item">
-                                    @if(in_array($data->status, [
-                                        \Bromo\Seller\Models\ShopStatus::REG_SUBMITTED,
-                                        \Bromo\Seller\Models\ShopStatus::SURVEY_SUBMITTED
-                                    ]))
-                                        <button type="button" class="btn btn-success m-btn m-btn--custom"
-                                                data-toggle="modal" data-target="#verify"
-                                                data-route="{{ route("{$module}.verify", $data->id) }}">
-                                            Verify
-                                        </button>
-                                        <button type="button" class="btn btn-danger m-btn m-btn--custom"
-                                                data-toggle="modal" data-target="#reject"
-                                                data-route="{{ route("{$module}.reject", $data->id) }}">
-                                            Reject
-                                        </button>
-                                    @endif
-                                </div>
-                                @endcan
+
                             <form action="{{ route('description.post-table', $data->id) }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="modal fade" id="modalDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -214,59 +278,19 @@
                                     </div>
                                 </div>
                             </form>
-                                @can('change_shop_description')
-                                <div class="m-widget28__tab-item">
-                                    <span>{{ __('Shop Description') }}
-                                        <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
-                                    </span>
-                                   
-                                    <span style='white-space: pre-wrap;'>{{ $data->description ?? '-' }}</span>
-                                </div>
-                                @endcan
-                                <br></br>
-                            
-                                <form action="{{ route('temporary-closed.post-table', $data->id) }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <div class="modal fade" id="modalTemporaryClosed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header text-center">
-                                                    <h4 class="modal-title w-100 font-weight-bold">Temporary Closed</h4>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body mx-3">
-                                                    <div class="md-form">
-                                                        <i class="fas fa-pencil prefix grey-text"></i>
-                                                        <textarea type="text" name="temporary_closed_message" id="form8" class="md-textarea form-control" rows="4"></textarea>
-                                                        <label data-error="wrong" data-success="right" for="form8">Temporary Closed Message</label>
-                                                    </div>
-                                                    <div class="modal-footer d-flex justify-content-center">
-                                                        <button class="btn btn-unique" onclick="return confirm('Are you sure you want to temporary closed your shop?')">Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                @can('temporary_closed')
-                                    @if($data->is_temporary_closed == 0)
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <div class="row">
-                                                <div class ="col-12">
-                                                    <a href=""  method="post" data-toggle="modal" data-target="#modalTemporaryClosed" class="alert alert-danger" role="alert">
-                                                        Temporary Closed
-                                                    </a>
-                                                    <br/><br/>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    @endif  
-                                @endcan      
+                            @can('change_shop_description')
+                            <div class="m-widget28__tab-item">
+                                <span>{{ __('Shop Description') }}
+                                    <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
+                                </span>
+                                <span style='white-space: pre-wrap;'>{{ $data->description ?? '-' }}</span>
+                            </div>
+                            @endcan
+
+                                  
                             </div>
                         </div>
+
                         @isset($data->business)
                             <div class="col-6">
                                 <div class="m-widget28__tab-items">

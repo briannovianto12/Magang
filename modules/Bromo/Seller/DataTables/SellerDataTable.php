@@ -36,6 +36,15 @@ class SellerDataTable extends DataTable
                     });
                 }
             })
+            ->editColumn('shop_status_name', function ($data) {
+                if($data->status == 5) {
+                    return '<span class="badge badge-danger">'.'Suspended'.'</span>';
+                } elseif($data->is_temporary_closed == true && $data->status != 5) {
+                    return '<span class="badge badge-warning">'.'Temporary Closed'.'</span>';
+                } else {
+                    return $data->shop_status_name;
+                }
+            })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at_formatted;
             })
@@ -52,7 +61,7 @@ class SellerDataTable extends DataTable
 
                 return view('theme::layouts.includes.actions', $action);
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'shop_status_name'])
             ->make(true);
     }
 
@@ -67,7 +76,8 @@ class SellerDataTable extends DataTable
             'shop_status.id as status, ' .
             'shop_status.name as shop_status_name, ' .
             'shop.created_at, ' .
-            'shop.updated_at '
+            'shop.updated_at,' . 
+            'shop.is_temporary_closed'
         ))
         ->join('business', 'business.id', '=', 'shop.business_id')
         ->join('shop_product_category', 'shop_product_category.shop_id', '=', 'shop.id')
