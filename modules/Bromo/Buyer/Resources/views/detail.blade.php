@@ -38,7 +38,14 @@
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Status') }}</span>
-                                            <span>{{ $data->status_name }}</span>
+                                            @if($data->status == Bromo\Buyer\Entities\UserStatus::BLOCKED)
+                                                <span style="color:#e54444">
+                                                    <i class="fa fa-exclamation-triangle"></i>&nbsp; {{ $data->status_name }} 
+                                                </span>
+                                                {{-- <span class="badge badge-danger"> <a style="color: white;">{{ $data->status_name }} </a></span> --}}
+                                            @else
+                                                <span>{{ $data->status_name }}</span>
+                                            @endif
                                         </div>
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Joined At') }}</span>
@@ -76,20 +83,20 @@
                                         </div>
                                         <br>
                                        
-                                        @can('blacklist-user')
+                                        @can('view_blacklist_user')
                                             <div class="d-flex flex-column justify-content-center">
                                             <div class="row">
                                                 <div class ="col-6">
-                                            @if($blacklist_status == false)
-                                                <a href="{{ route('buyer.blacklist',['id' => $data->id]) }}" onclick="return confirm('Are you sure you want to blacklist this user?')" class="alert alert-danger" role="alert">
-                                                    BLACKLIST!
-                                                </a>
-                                                <br/><br/>
-                                           @endif
+                                                    @if($blacklist_status == false)
+                                                        <a href="{{ route('buyer.blacklist',['id' => $data->id]) }}" onclick="return confirm('Are you sure you want to blacklist this user?')" class="btn btn-danger" role="alert">
+                                                            BLACKLIST!
+                                                        </a>
+                                                        <br/><br/>
+                                                    @endif
+                                                    </div>
+                                                </div>
                                             </div>
-                                            </div>
-                                        </div>
-                                    @endcan
+                                        @endcan
                                     </div>
                                 </div>
                                 @isset($data->business)
