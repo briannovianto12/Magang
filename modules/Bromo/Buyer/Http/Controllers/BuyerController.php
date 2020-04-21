@@ -60,7 +60,8 @@ class BuyerController extends BaseResourceController
         ];
         $data = array_merge($this->pageData, $this->requiredData);
         $fraud_blacklist_user = FraudBlackListUser::where('user_id',$id)->count();
-        if($fraud_blacklist_user > 0) {
+
+        if($fraud_blacklist_user > 0 || $this->pageData['data']->status == Status::BLOCKED) {
             $data['blacklist_status'] = true;
         }else{
             $data['blacklist_status'] = false;

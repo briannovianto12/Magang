@@ -23,7 +23,7 @@
           'portlet_head' => true,
           'portlet_title' => "Blacklist Phone Number"])
         @slot('body')
-            @can('blacklist-user')
+            @can('view_blacklist_user')
             <div class="row">
                 <div class="col-3">
                 </div>
