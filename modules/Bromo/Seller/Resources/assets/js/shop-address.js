@@ -12,7 +12,7 @@ window._changeAddress = function(e, shop_id ){
     
       Swal.fire({                              
         // grow: 'fullscreen',
-        title: '<strong>Select Address For</strong>' + '<stong>' + ' ' + data.shop.name + '</strong>',
+        title: '<strong>Select Address For</strong>' + '&nbsp;' + '<stong>' + data.shop.name + '</strong>',
         type: '',
         html: html,
         showCloseButton: true,
