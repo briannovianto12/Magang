@@ -108,9 +108,11 @@ class PopularShopController extends Controller
     public function addToPopularShop(Request $request)
     {
         $shop_id = $request->all()['shop_id'];
+        $max_sort_by = PopularShop::max('sort_by');
         $shop = Shop::where('id', '=', $shop_id)->first();
         $new_popular_shop = new PopularShop();
         $new_popular_shop->shop_id = $shop_id;
+        $new_popular_shop->sort_by = $max_sort_by + 1;
         $response = $new_popular_shop->save();
     }
 
