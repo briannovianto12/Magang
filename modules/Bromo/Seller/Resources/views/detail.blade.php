@@ -162,7 +162,7 @@
                                 @if ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED )
                                 <div class="m-widget28__tab-item">
                                     <span>Shop Action</span>
-                                    @can('view_suspend_seller')   
+                                    {{-- @can('view_suspend_seller')   
                                     @if(
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
@@ -174,7 +174,7 @@
                                             </label>
                                         </span>
                                     @endif
-                                    @endcan
+                                    @endcan --}}
 
 
                                     @can('temporary_closed')
