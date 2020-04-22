@@ -653,6 +653,7 @@ class SellerController extends BaseResourceController
     public function reOpenShop($id){
         try{
             $shop = $this->model::find($id);
+            $shop->temporary_closed_message = '';
             $shop->is_temporary_closed = 0;
             $shop->save();
 

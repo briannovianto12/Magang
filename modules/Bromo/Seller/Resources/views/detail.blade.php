@@ -90,7 +90,7 @@
                             <div class="modal-body mx-3">
                                 <div class="md-form">
                                     <i class="fas fa-pencil prefix grey-text"></i>
-                                    <textarea type="text" name="temporary_closed_message" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                                    <textarea type="text" name="temporary_closed_message" id="form8" class="md-textarea form-control" rows="4" required></textarea>
                                     <label data-error="wrong" data-success="right" for="form8">Temporary Closed Message</label>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-center">
