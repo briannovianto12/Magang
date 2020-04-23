@@ -21,9 +21,17 @@ window._rejectOrder = function _rejectOrder( order_id ){
         onOpen: function(){
           $('#btnRejectOrder').click(function(){
               var reject_notes = $("#rejectNotes").val();
+              
+              if( reject_notes == "") {
+                alert("Masukan Reject Notes")
+                $('#rejectNotes').focus()
+                return;
+              }
+
               if(!confirm('Are you sure ?')) {
-                  return
-                  }
+                return
+              }
+
               $("#btnRejectOrder").attr("disabled", true);
               $("#btnRejectOrder").html("Please wait");
               $.ajax({
