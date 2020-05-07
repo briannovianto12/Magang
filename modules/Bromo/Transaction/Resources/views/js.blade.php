@@ -115,6 +115,7 @@
         },
         loadDataTable: function (elem, route, getColumns, order = []) {
             if (!$.fn.dataTable.isDataTable("#" + elem)) {
+                const sessionDuration = {{config('transaction.datatable_session_duration')}};
                 $("#" + elem).DataTable({
                     serverSide: true,
                     processing: true,
@@ -122,6 +123,8 @@
                     order: order,
                     scrollX: true,
                     searchable: true,
+                    stateSave: true,
+                    stateDuration: sessionDuration,
                     dom:
                         "<'row'<'col-sm-8 text-left dataTables_pager'li> <'col-sm-3 text-right'f> <'col-sm-1 text-right'B>>" +
                         "<'row'<'col-sm-12'tr>>" +
@@ -138,7 +141,9 @@
         },
 
         init: function () {
-            Order.loadNewOrder();
+            $('#new_order_tab').on('click', function () {
+                Order.loadNewOrder();
+            });
 
             $('#process_order_tab').on('click', function () {
                 Order.loadProcessOrder();
@@ -166,6 +171,13 @@
 
             $('#rejected_order_tab').on('click', function () {
                 Order.loadRejectedOrder();
+            });
+            
+            $('a[data-toggle="tab"]').on("click", function() {
+                let newUrl;
+                const hash = $(this).attr("href");
+                location.hash = hash;
+                window.sessionStorage["orderPrevTab"] = hash;
             });
         }
     };
@@ -209,6 +221,14 @@
             }
         });
 
+        if(window.sessionStorage["orderPrevTab"]){
+            const prevTab = window.sessionStorage["orderPrevTab"];
+            $('#tablist a[href="'+prevTab+'"]').click();
+        }
+        else{
+            $('#tablist a[href="#new_order"]').click();
+        }
+        
         $('.tab-pane').on('click','button[name="awb-cpy-btn"]',function () {
             var copyText = this.parentNode.getElementsByTagName("SPAN")[0];
             var textArea = document.createElement("textarea");

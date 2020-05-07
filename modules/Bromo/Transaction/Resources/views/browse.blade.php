@@ -27,7 +27,7 @@
         </div>
         @can('view_order')
             <div class="m-portlet__body">
-                <ul class="nav nav-tabs m-tabs-line m-tabs-line--info" role="tablist">
+                <ul id="tablist" class="nav nav-tabs m-tabs-line m-tabs-line--info" role="tablist">
                     <li class="nav-item m-tabs__item">
                         <a id="new_order_tab" class="nav-link m-tabs__link active" data-toggle="tab" href="#new_order"
                         role="tab">
