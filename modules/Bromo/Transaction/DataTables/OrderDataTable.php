@@ -62,6 +62,20 @@ abstract class OrderDatatable extends DataTable
                     return '<span class="badge badge-rejected">'.$data->orderStatus->name.'</span>';
                 }
             })
+            ->editColumn('airwaybill', function ($data) {
+                if($data->airwaybill == '' || $data->airwaybill == null){
+                    return '<span>-</span>';
+                }else{
+                    return '<span>'.$data->airwaybill.'</span><button name="awb-cpy-btn" class="btn btn-sm" style="background-color: white"><i class="fa fa-clone"></i></button></span>';
+                }
+            })
+            ->editColumn('special_id', function ($data) {
+                if($data->special_id == '' || $data->special_id == null){
+                    return '<span>-</span>';
+                }else{
+                    return '<span>'.$data->special_id.'</span><button name="pickup-cpy-btn" class="btn btn-sm" style="background-color: white"><i class="fa fa-clone"></i></button></span>';
+                }
+            })
             ->addColumn('seller_name', function ($data) {
                 return $data->seller_name;
             })
@@ -89,7 +103,7 @@ abstract class OrderDatatable extends DataTable
                 $sql = "CONCAT(order_trx.shop_snapshot->>'name')  ilike ?";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up', 'status_name'])
+            ->rawColumns(['order_no', 'payment_amount_formatted', 'payment_details_formatted', 'action', 'is_picked_up', 'status_name', 'airwaybill', 'special_id'])
             ->make(true);
     }
 
