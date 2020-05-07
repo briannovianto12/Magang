@@ -144,6 +144,8 @@
                             <thead>
                             <tr>
                                 <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.airwaybill_no') }}</th>
+                                <th>{{ __('transaction::messages.pick_up_no') }}</th>
                                 <th>{{ __('transaction::messages.buyer') }}</th>
                                 <th>{{ __('transaction::messages.seller') }}</th>
                                 <th>{{ __('transaction::messages.payment_amount') }}</th>
@@ -168,6 +170,8 @@
                             <thead>
                             <tr>
                                 <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.airwaybill_no') }}</th>
+                                <th>{{ __('transaction::messages.pick_up_no') }}</th>
                                 <th>{{ __('transaction::messages.buyer') }}</th>
                                 <th>{{ __('transaction::messages.seller') }}</th>
                                 <th>{{ __('transaction::messages.payment_amount') }}</th>
@@ -191,6 +195,8 @@
                             <thead>
                             <tr>
                                 <th>{{ __('transaction::messages.order_no') }}</th>
+                                <th>{{ __('transaction::messages.airwaybill_no') }}</th>
+                                <th>{{ __('transaction::messages.pick_up_no') }}</th>
                                 <th>{{ __('transaction::messages.buyer') }}</th>
                                 <th>{{ __('transaction::messages.seller') }}</th>
                                 <th>{{ __('transaction::messages.payment_amount') }}</th>

@@ -30,6 +30,8 @@
 
     var deliveryOrderColumns = [
         {'data': 'order_no', 'name': 'order_no', searchable:true},
+        {'data': 'airwaybill', 'name': 'order_shipping_manifest.airwaybill'},
+        {'data': 'special_id', 'name': 'special_id'},
         {'data': 'buyer_name', 'name': 'buyer_name'},
         {'data': 'seller_name', 'name': 'seller_name'},
         {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
@@ -37,6 +39,36 @@
         {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
         {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'is_picked_up', 'name': 'status_name'},
+        {'data': 'created_at', 'name': 'created_at'},
+        {'data': 'updated_at', 'name': 'updated_at'},
+        {'data': 'action', 'name': 'action'},
+    ];
+
+    var deliveredOrderColumns = [
+        {'data': 'order_no', 'name': 'order_no', searchable:true},
+        {'data': 'airwaybill', 'name': 'order_shipping_manifest.airwaybill'},
+        {'data': 'special_id', 'name': 'special_id'},
+        {'data': 'buyer_name', 'name': 'buyer_name'},
+        {'data': 'seller_name', 'name': 'seller_name'},
+        {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
+        {'data': 'payment_details_formatted', 'name': 'payment_details'},
+        {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
+        {'data': 'status_name', 'name': 'status_name', searchable: false},
+        {'data': 'created_at', 'name': 'created_at'},
+        {'data': 'updated_at', 'name': 'updated_at'},
+        {'data': 'action', 'name': 'action'},
+    ];
+
+    var successOrderColumns = [
+        {'data': 'order_no', 'name': 'order_no', searchable:true},
+        {'data': 'airwaybill', 'name': 'order_shipping_manifest.airwaybill'},
+        {'data': 'special_id', 'name': 'special_id'},
+        {'data': 'buyer_name', 'name': 'buyer_name'},
+        {'data': 'seller_name', 'name': 'seller_name'},
+        {'data': 'payment_amount_formatted', 'name': 'payment_amount'},
+        {'data': 'payment_details_formatted', 'name': 'payment_details'},
+        {'data': 'notes', 'name': 'notes', orderable: false, searchable: false},
+        {'data': 'status_name', 'name': 'status_name', searchable: false},
         {'data': 'created_at', 'name': 'created_at'},
         {'data': 'updated_at', 'name': 'updated_at'},
         {'data': 'action', 'name': 'action'},
@@ -66,10 +98,10 @@
             Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, orderColumnsForUpdated);
         },
         loadDeliveredOrder: function () {
-            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", initColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", deliveredOrderColumns, orderColumnsForUpdated);
         },
         loadSuccessOrder: function () {
-            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", initColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", successOrderColumns, orderColumnsForUpdated);
         },
         loadCancelOrder: function () {
             Order.loadDataTable('table_cancel_order', "{{ route("order.cancel-order") }}", initColumns, orderColumnsForUpdated);
@@ -175,6 +207,28 @@
                 Order.loadDataTable('table_delivery_order', "{{ route("order.not-shipped-delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
                 $('#table_delivery_order').DataTable().draw();
             }
+        });
+
+        $('.tab-pane').on('click','button[name="awb-cpy-btn"]',function () {
+            var copyText = this.parentNode.getElementsByTagName("SPAN")[0];
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+            alert('Text Copied!');
+        });
+
+        $('.tab-pane').on('click','button[name="pickup-cpy-btn"]',function () {
+            var copyText = this.parentNode.getElementsByTagName("SPAN")[0];
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+            alert('Text Copied!');
         });
     });
 
