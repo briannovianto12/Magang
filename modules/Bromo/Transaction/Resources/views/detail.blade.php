@@ -212,23 +212,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="m-widget28__tab-item row">
-                                    <div class="col-12">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                            <br></br>
-                                            <div>
-                                                <span class="btn btn-file btn-info"><span class="fileupload-new">Unggah Bukti</span>
-                                                <br></br>
-                                                <span class="fileupload-exists">Ganti</span><br></br><input name="bukti" type="file" /></span>
-                                                <br></br>
-                                                <a href="#" class="btn btn-info fileupload-exists" data-dismiss="fileupload">Hapus</a>
-                                                <span class="text-danger">{{ $errors->first('bukti') }}</span>
+
+
+                                {{-- UPLOAD RESI --}}
+                                <form action="{{ route('order.uploadAWBImage', $data->id) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="modal fade" id="modalDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h4 class="modal-title w-100 font-weight-bold">Upload Foto Resi</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body mx-3">
+                                                    <div class="form-group">
+                                                        <label for="file"><b>Upload Foto Resi</b></label>
+                                                        <input id="file" required class="form-control-lg" type="file">
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <button class="btn btn-unique" >Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </form>
+
+                                <div class="m-widget28__tab-item">
+                                    <span>{{ __('Upload Foto Resi') }}
+                                        <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
+                                    </span>
+                                        <a data-fancybox data-type="image"
+                                            href="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}">
+                                                <img src="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}"
+                                                    alt="" width="128">
+                                        </a>
                                 </div>
+
+
+
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-4">

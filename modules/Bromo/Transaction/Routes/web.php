@@ -42,4 +42,5 @@ Route::name('order.unRejectOrder')->get('/order/unreject-order/{order_id}', 'Ord
 
 Route::name('order.pickup')->post('/order/pickup/{order_id}', 'OrderController@callPickupShipper');
 Route::name('order.updateAwbShippingManifest')->post('/order/{order_id}/update-awb', 'OrderController@updateAwbShippingManifest');
+Route::name('order.uploadAWBImage')->post('/upload-awb-image/{order_id}', 'OrderController@uploadAwbImage');
 
