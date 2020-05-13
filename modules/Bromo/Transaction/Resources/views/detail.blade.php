@@ -212,7 +212,23 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="m-widget28__tab-item row">
+                                    <div class="col-12">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="https://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                            <br></br>
+                                            <div>
+                                                <span class="btn btn-file btn-info"><span class="fileupload-new">Unggah Bukti</span>
+                                                <br></br>
+                                                <span class="fileupload-exists">Ganti</span><br></br><input name="bukti" type="file" /></span>
+                                                <br></br>
+                                                <a href="#" class="btn btn-info fileupload-exists" data-dismiss="fileupload">Hapus</a>
+                                                <span class="text-danger">{{ $errors->first('bukti') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-4">
