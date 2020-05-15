@@ -37,6 +37,9 @@ use Modules\Bromo\HostToHost\Services\RequestService;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use Image;
+use Storage;
+
 
 class OrderController extends Controller
 {
@@ -258,8 +261,7 @@ class OrderController extends Controller
         }
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
         $image_awb = OrderImage::where('order_id', $id)->first();
-        // $data['self_drop_awb'] = 
-        // $path/$order_id/$file_awb_name
+        // $data['self_drop_awb'] = $path/$order_id/$file_awb_name;
 
         return view("{$this->module}::detail", $data);
     }
@@ -731,8 +733,11 @@ class OrderController extends Controller
 
     public function uploadAwbImage($id, Request $request){
         try{
+
+            
             $path = '/orders/';
             $file_awb = $request->file('file');
+            \Log::debug($request->all());
             $ext = $file_awb->extension();
             $file_awb_name = $file_awb->getClientOriginalName();
         
@@ -742,7 +747,7 @@ class OrderController extends Controller
                 $constraint->aspectRatio();
             });
         
-            $upload_awb = Storage::put("$path/$order_id/$file_awb_name", $image_awb->stream());
+            $upload_awb = Storage::put("$path/$id/$file_awb_name", $image_awb->stream());
             if ($upload_awb === false) {
                 new Exception('Error on upload');
             }
@@ -752,9 +757,12 @@ class OrderController extends Controller
             $order_image->filename = "$order_id/$file_awb_name";
             $order_image->save();
 
+           
+            
             nbs_helper()->flashSuccess('Image has been uploaded.');
         } catch(Exception $e) {
             nbs_helper()->flashError($ex->getMessage());
+            
         }
         return redirect()->back();
     }

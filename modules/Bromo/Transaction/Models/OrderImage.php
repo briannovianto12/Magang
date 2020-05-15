@@ -9,7 +9,7 @@ use Nbs\BaseResource\Traits\SnowFlakeTrait;
 
 class OrderImage extends Model
 {
-    use TimezoneAccessor;
+    // use TimezoneAccessor;
 
     protected $fillable = [
         'id',

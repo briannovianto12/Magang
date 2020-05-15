@@ -215,9 +215,9 @@
 
 
                                 {{-- UPLOAD RESI --}}
-                                <form action="{{ route('order.uploadAWBImage', $data->id) }}" method="POST">
+                                <form action="{{ route('order.uploadAWBImage', $data->id) }}" method="POST" enctype="multipart/form-data">
                                     {{ csrf_field() }}
-                                    <div class="modal fade" id="modalDescriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                    <div class="modal fade" id="modalUploadResi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -230,7 +230,7 @@
                                                 <div class="modal-body mx-3">
                                                     <div class="form-group">
                                                         <label for="file"><b>Upload Foto Resi</b></label>
-                                                        <input id="file" required class="form-control-lg" type="file">
+                                                        <input name="file" id="file" required class="form-control-lg" type="file">
                                                     </div>
                                                     <div class="modal-footer d-flex justify-content-center">
                                                         <button class="btn btn-unique" >Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
@@ -242,14 +242,14 @@
                                 </form>
 
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Upload Foto Resi') }}
-                                        <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalDescriptionForm"></a>
-                                    </span>
-                                        <a data-fancybox data-type="image"
-                                            href="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}">
-                                                <img src="{{ ($item->product_image_file) ? Storage::url(config('product.path.product') . $item->product_image_file) : 'https://via.placeholder.com/480x480?text=No+Image' }}"
-                                                    alt="" width="128">
-                                        </a>
+                                    <span>{{ __('Upload Foto Resi') }} </span>
+                                    <div class="row">
+                                        <div class ="col-12">
+                                            <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                Upload Image
+                                            </a> 
+                                        </div>
+                                    </div>
                                 </div>
 
 
