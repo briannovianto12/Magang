@@ -212,7 +212,7 @@
 
 
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Commission Type') }}
+                                    <span>{{ __('Account Type') }}
                                         @can('change_commission')
                                         <button onclick="_changeCommission(this, '{{ $data->id }}'); " class="btn btn-sm" style="background-color: white" >
                                             <i class="fa fa-edit"></i>
