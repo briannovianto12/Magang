@@ -59,9 +59,9 @@ window._createBatchDisbursement = function _createBatchDisbursement(){
                 $('#disb_header').DataTable().ajax.reload();
               } else if ( data.status == 'FAILED' ) {
                   Swal.fire({
-                      type: 'success',
-                      title: 'No Disbursement Available',
-                      text: 'Success!',
+                      type: 'warning',
+                      title: data.message,
+                      text: 'Failed!',
                       showCloseButton: true,
                       showCancelButton: false,
                       focusConfirm: false,
@@ -71,6 +71,7 @@ window._createBatchDisbursement = function _createBatchDisbursement(){
                   Swal.fire({
                       type: 'error',
                       title: 'Error!',
+                      text: data.message,
                       showCloseButton: true,
                       showCancelButton: false,
                       focusConfirm: false,
@@ -166,7 +167,6 @@ window._retryMigrationPaymentDetail = function( header_id ){
   title: "Harap tunggu",
   showConfirmButton: false,
   });
-  console.log(header_id)
 
   $.ajax({
       method: 'GET',

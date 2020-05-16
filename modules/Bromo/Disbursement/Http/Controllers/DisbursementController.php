@@ -13,6 +13,7 @@ use Bromo\Disbursement\Entities\ViewSellerBalance;
 use Bromo\Disbursement\Entities\SellerBalance;
 use Modules\Bromo\HostToHost\Services\RequestService;
 use Bromo\HostToHost\Traits\Result;
+use Bromo\Disbursement\Entities\DisbursementStatus;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -87,40 +88,55 @@ class DisbursementController extends Controller
     }
 
     public function createDisbursement(Request $request) {
-        DB::beginTransaction();
-        try {
-            $count_saved = 0;
-            $count_not_saved = 0;
-            $last_current_balance_update = "";
+        $count_saved = 0;
+        $count_not_saved = 0;
+        $year = Carbon\Carbon::now()->year;
 
-            $year = Carbon\Carbon::now()->year;
-            $user = auth()->user();
+        $user = auth()->user();
 
-            $sellerBalance = ViewSellerBalance::all();
-            
-            $sumAmount = 0;
-            $countItem = count($sellerBalance);
-            
-            $shopCurrentBalance = SellerBalance::where('balance', '>', 0)->orderBy('updated_at', 'desc')->first();
-            $lastHeaderUpdate = DisbursementHeader::latest()->first();
-            
-            if($lastHeaderUpdate){
-                $last_current_balance_update = $lastHeaderUpdate->last_current_balance_update;
-                \Log::debug('last header update');
-            } else {
-                $date = date('Y-m-d H:i:sO', strtotime('-2 seconds', strtotime($shopCurrentBalance->updated_at)));
-                $last_current_balance_update = $date;
-                \Log::debug('last header update use current date');
-            }
-            
-            // dd($last_current_balance_update);
-            \Log::debug($last_current_balance_update);
-            \Log::debug($shopCurrentBalance->updated_at);
-            
-            $header_no = DB::select("SELECT f_gen_autonum('D$year', 'PROCESS_DISB') as header_id")[0]->header_id;
+        $sellerBalance = ViewSellerBalance::all();
+        
+        $sumAmount = 0;
+        $countItem = count($sellerBalance);
 
+        // Check current balance
+        $shopCurrentBalance = SellerBalance::where('balance', '>', 0)->orderBy('updated_at', 'asc')->first();
+        if(!$shopCurrentBalance){
+            return response()->json([
+                "status" => "FAILED",
+                "saved" => $count_saved,
+                "duplicated" => $count_not_saved,
+                "message" => "No Disbursement Available"
+            ]);            
+        }
+
+        // Check balance and log mutation
+        $balanceLogMutation = DB::select("SELECT sum FROM vw_shop_balance_log_mutation_check"); 
+        $balanceLogMutation = $balanceLogMutation[0]->sum;
+        if($balanceLogMutation != 0.00) {
+            return response()->json([
+                "status" => "Error",
+                "message" => "Something went wrong, please contact Administrator!"
+            ]);
+        }
+
+        // Check for stalled disbursement 
+        $stalled_disbursement = DisbursementHeader::
+            whereIn(
+                'status', 
+                [
+                    DisbursementStatus::WAITING_FOR_APPROVAL, 
+                    DisbursementStatus::CHECK, 
+                    DisbursementStatus::PAYMENT_DETAIL_MIGRATION_FAILED
+                ]
+            )->count();
+
+        // Only process if stalled disbursement == 0
+        if($stalled_disbursement == 0) {
+            DB::beginTransaction();
+            try {            
             // Begin process disbursement
-            if($shopCurrentBalance->updated_at > $last_current_balance_update) {
+                $header_no = DB::select("SELECT f_gen_autonum('D$year', 'PROCESS_DISB') as header_id")[0]->header_id;
                 // Create New Header
                 $disbursementHeader = New DisbursementHeader;
                 $disbursementHeader->disbursement_header_no = $header_no;
@@ -132,18 +148,16 @@ class DisbursementController extends Controller
                 $disbursementHeader->save();
             
                 // Loop through available item (seller current balance)
-                for($i=0; $i < $countItem; $i++) {
+                // Only process the first 1000 items
+                // Next 200 items will be processed for the next disbursment
+                for($i=0; $i < $countItem && $i < 2; $i++) {
+                    $external_id = explode("-",$sellerBalance[$i]['external_id']);
+                    $shop_id = $external_id[0];
+
                     $disbursementItem = New DisbursementItem;
-                    $existing_record = DisbursementHeader::selectRaw("process_disbursement_item.external_id, sum(process_disbursement_item.amount) as amount")
-                            ->join('process_disbursement_item', 'process_disbursement_item.disbursement_header_id', '=','process_disbursement_header.id')
-                            ->where('external_id', '=', $sellerBalance[$i]['external_id'])
-                            ->where('processed_flag', '=', false)->groupBy("process_disbursement_item.external_id")->first();
-                    
-                    if($existing_record) {
-                        $disbursementItem->amount = $sellerBalance[$i]['amount'] - $existing_record->amount;
-                    } else {
-                        $disbursementItem->amount = $sellerBalance[$i]['amount'];
-                    }
+                    // NOTE: Existing record not used anymore 
+                    // Since we validate stalled dibursement first
+                    $disbursementItem->amount = $sellerBalance[$i]['amount'];
                     $disbursementItem->bank_code = $sellerBalance[$i]['bank_code'];
                     $disbursementItem->bank_account_name = $sellerBalance[$i]['bank_account_name']; 
                     $disbursementItem->bank_account_number = $sellerBalance[$i]['bank_account_number'];
@@ -152,8 +166,9 @@ class DisbursementController extends Controller
                     $disbursementItem->email_cc = $sellerBalance[$i]['email_cc']; 
                     $disbursementItem->email_bcc = $sellerBalance[$i]['email_bcc']; 
                     $disbursementItem->external_id = $sellerBalance[$i]['external_id']; 
-                    $disbursementItem->shop_name = $sellerBalance[$i]['shop_name']; 
-                        
+                    $disbursementItem->shop_name = $sellerBalance[$i]['shop_name'];
+                    $disbursementItem->shop_name = $shop_id;
+
                     if($disbursementItem->amount != 0) {
                         $disbursementItem->disbursement_header_id = $disbursementHeader->id;
                         $disbursementItem->save();
@@ -169,33 +184,34 @@ class DisbursementController extends Controller
                     'total_item' => $count_saved,
                     'amount' => $sumAmount,
                 ]);
-            }
-            DB::commit();
-            if($count_saved > 0) {
+            
+                DB::commit();
                 return response()->json([
-                        "status" => "OK",
-                        "header_no" => $header_no,
-                        "saved" => $count_saved,
-                        "duplicated" => $count_not_saved
+                    "status" => "OK",
+                    "header_no" => $header_no,
+                    "saved" => $count_saved,
+                    "duplicated" => $count_not_saved
+                ]);             
+            } catch(Exception $exception) {
+                DB::rollback();
+
+                report($exception);
+
+                    return response()->json([
+                        "status" => "ERROR"
                     ]);
-            } else {
-                return response()->json([
-                        "status" => "FAILED",
-                        "saved" => $count_saved,
-                        "duplicated" => $count_not_saved
-                    ]);
+
             }
-                            
-        } catch(Exception $exception) {
-            DB::rollback();
-
-            report($exception);
-
-                return response()->json([
-                    "status" => "ERROR"
-                ]);
-
+        } else {
+            // stalled disbursement
+            return response()->json([
+                "status" => "FAILED",
+                "saved" => $count_saved,
+                "duplicated" => $count_not_saved,
+                "message" => "There are still disbursement stalled \nPlease process stalled disbursement first!"
+            ]);
         }
+        
         return redirect()->route($this->module . '.index');
     }
 
