@@ -23,7 +23,7 @@ class DisbursementItemDataTable extends DataTable
                     return '<span class="badge badge-success">'.DisbursementStatus::STR_COMPLETED.'</span>';
                 }else if($data->status == DisbursementStatus::CHECK){
                     return '<span class="badge badge-warning">'.DisbursementStatus::STR_CHECK.'</span>';
-                }else if($data->status == DisbursementStatus::DELETED || $data->status == DisbursementStatus::FAILED){
+                }else if($data->status == DisbursementStatus::DELETED || $data->status == DisbursementStatus::FAILED || $data->status == DisbursementStatus::PAYMENT_DETAIL_MIGRATION_FAILED){
                     return '<span class="badge badge-danger">'.$data->status_name.'</span>';
                 }
             })

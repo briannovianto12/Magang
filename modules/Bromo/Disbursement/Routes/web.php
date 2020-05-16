@@ -21,5 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::name('.create')->post('/create', 'DisbursementController@createDisbursement');
         Route::name('.process')->get('/process/disb/{header_id}', 'DisbursementController@processDisbursement');
+        Route::name('.retry')->get('/process/disb/{header_id}/retry', 'DisbursementController@retryPaymentDetailMigration');
     });
 });

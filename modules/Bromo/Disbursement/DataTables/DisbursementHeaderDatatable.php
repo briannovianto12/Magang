@@ -29,7 +29,7 @@ class DisbursementHeaderDataTable extends DataTable
                     return '<span class="badge badge-success">'.DisbursementStatus::STR_COMPLETED.'</span>';
                 }else if($data->status == DisbursementStatus::CHECK){
                     return '<span class="badge badge-warning">'.DisbursementStatus::STR_CHECK.'</span>';
-                }else if($data->status == DisbursementStatus::DELETED || $data->status == DisbursementStatus::FAILED){
+                }else if($data->status == DisbursementStatus::DELETED || $data->status == DisbursementStatus::FAILED || $data->status == DisbursementStatus::PAYMENT_DETAIL_MIGRATION_FAILED){
                     return '<span class="badge badge-danger">'.$data->status_name.'</span>';
                 }
             })
@@ -54,7 +54,8 @@ class DisbursementHeaderDataTable extends DataTable
             'process_disbursement_status.name as status_name'            
             ])
         ->join('admin', 'admin.id', '=', 'process_disbursement_header.created_by')
-        ->join('process_disbursement_status', 'process_disbursement_status.id', '=', 'process_disbursement_header.status');
+        ->join('process_disbursement_status', 'process_disbursement_status.id', '=', 'process_disbursement_header.status')
+        ->orderBy('process_disbursement_header.updated_at', 'desc');
 
         return $this->applyScopes($query);
     }

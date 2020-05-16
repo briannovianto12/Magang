@@ -30,6 +30,7 @@ class DisbursementController extends Controller
     protected $title;
 
     private const PROCESS_DISBURSEMENT = 'admin/batch-disbursement/DISBURSEMENT_HEADER_ID';
+    private const RETRY_PAYMENT_DETAIL_MIGRATION = 'admin/batch-disbursement/retry-migration-payment/DISBURSEMENT_HEADER_ID';
 
     public function __construct(DisbursementHeader $modelHeader, DisbursementItem $modelItem)
     {
@@ -105,13 +106,16 @@ class DisbursementController extends Controller
             
             if($lastHeaderUpdate){
                 $last_current_balance_update = $lastHeaderUpdate->last_current_balance_update;
+                \Log::debug('last header update');
             } else {
                 $date = date('Y-m-d H:i:sO', strtotime('-2 seconds', strtotime($shopCurrentBalance->updated_at)));
                 $last_current_balance_update = $date;
+                \Log::debug('last header update use current date');
             }
             
-
             // dd($last_current_balance_update);
+            \Log::debug($last_current_balance_update);
+            \Log::debug($shopCurrentBalance->updated_at);
             
             $header_no = DB::select("SELECT f_gen_autonum('D$year', 'PROCESS_DISB') as header_id")[0]->header_id;
 
@@ -203,8 +207,6 @@ class DisbursementController extends Controller
                 'Content-Type' => 'application/json',
                 'Authorization' => $this->auth_key,
             ];
-            \Log::debug($endpoint);
-            \Log::debug($this->auth_key);
 
             $service = new RequestService();
             $response = $service->setUrl($endpoint)
@@ -246,6 +248,57 @@ class DisbursementController extends Controller
                 "disbursement" => '',
                 "reference" => '',
                 "error_code" => '',
+                "message" => '',
+            ]);
+        }
+    }
+
+    public function retryPaymentDetailMigration($header_id) 
+    {
+        try {
+            $endpoint = $this->base_url . str_replace('DISBURSEMENT_HEADER_ID', $header_id, self::RETRY_PAYMENT_DETAIL_MIGRATION);
+            $header = [
+                'Content-Type' => 'application/json',
+                'Authorization' => $this->auth_key,
+            ];
+
+            $service = new RequestService();
+            $response = $service->setUrl($endpoint)
+                ->setHeaders($header)
+                ->post();
+
+
+            $original = $response->original;
+            $original = json_decode($original['body']);
+            $response = $original->data;
+
+            if ( $response->migration_status != 'COMPLETED' ) {
+                return response()->json([
+                    "status" => 'FAILED',
+                    "reference" => $response->header_no,
+                    "migration_status" => $response->migration_status,
+                    "message" => "Email has been sent for detailed information!",
+                ]);
+            }
+
+            return response()->json([
+                "status" => 'OK',
+                "reference" => $response->header_no,
+                "migration_status" => $response->migration_status,
+                "message" => "Success!",
+            ]);
+
+        } catch (\Exception $exception) {
+            report($exception);
+
+            $response = new Response();
+            $response->setStatusCode(400);
+            \Log::error(json_decode($exception->getMessage()));
+            
+            return response()->json([
+                "status" => "Error",
+                "reference" => '',
+                "migration_status" => '',
                 "message" => '',
             ]);
         }
