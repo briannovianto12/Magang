@@ -36,7 +36,12 @@
                     <button class="btn btn-success" id="processDisbursement" onclick="_processDisbursement({{$header_id}})">
                         Process Disbursement
                     </button>
+                    @elseif($status == Bromo\Disbursement\Entities\DisbursementStatus::PAYMENT_DETAIL_MIGRATION_FAILED)
+                    <button class="btn btn-success" id="processDisbursement" onclick="_retryMigrationPaymentDetail({{$header_id}})">
+                        Retry Migration Process
+                    </button>
                     @endif
+
                     <div class="tab-content">
 
                         <div class="tab-pane active" id="item" role="tabpanel">
