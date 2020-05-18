@@ -753,8 +753,8 @@ class OrderController extends Controller
             }
 
             $order_image = new OrderImage();
-            $order_image->order_id = $order_id;
-            $order_image->filename = "$order_id/$file_awb_name";
+            $order_image->order_id = $id;
+            $order_image->filename = "$id/$file_awb_name";
             $order_image->save();
 
            
