@@ -113,10 +113,11 @@ class DisbursementController extends Controller
         // Check balance and log mutation
         $balanceLogMutation = DB::select("SELECT sum FROM vw_shop_balance_log_mutation_check"); 
         $balanceLogMutation = $balanceLogMutation[0]->sum;
+        \Log::debug($balanceLogMutation);
         if($balanceLogMutation != 0.00) {
             return response()->json([
                 "status" => "Error",
-                "message" => "Something went wrong, please contact Administrator!"
+                "message" => "Shop balance and log mutation is not 0."
             ]);
         }
 
@@ -150,7 +151,7 @@ class DisbursementController extends Controller
                 // Loop through available item (seller current balance)
                 // Only process the first 1000 items
                 // Next 200 items will be processed for the next disbursment
-                for($i=0; $i < $countItem && $i < 2; $i++) {
+                for($i=0; $i < $countItem && $i < 1000; $i++) {
                     $external_id = explode("-",$sellerBalance[$i]['external_id']);
                     $shop_id = $external_id[0];
 
