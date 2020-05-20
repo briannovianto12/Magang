@@ -262,6 +262,8 @@ class OrderController extends Controller
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
         $image_awb = OrderImage::where('order_id', $id)->first();
         // $data['self_drop_awb'] = $path/$order_id/$file_awb_name;
+        // $image_awb = $this->uploadAwbImage($data['data']->filename);
+        // $data['data']['awb_image_url'] = $image_awb;
 
         return view("{$this->module}::detail", $data);
     }
