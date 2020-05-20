@@ -230,10 +230,13 @@
                                                 <div class="modal-body mx-3">
                                                     <div class="form-group">
                                                         <label for="file"><b>Upload Foto Resi</b></label>
-                                                        <input name="file" id="file" required class="form-control-lg" type="file">
+                                                        <img id="image-preview" alt="image preview" style="display:none; width:250px; height:300px;"/>
+                                                        <input name="file" id="image-source" required class="form-control-lg" type="file" onchange="previewImage();"/>
                                                     </div>
+                                                    
+                                                    {{-- <input type="file" id="image-source" onchange="previewImage();"/> --}}
                                                     <div class="modal-footer d-flex justify-content-center">
-                                                        <button class="btn btn-unique" >Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                                        <button class="btn btn-unique" onclick="return confirm('Are you sure you want to upload this image?')" >Submit <i class="fas fa-paper-plane-o ml-1"> </i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -244,6 +247,9 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Upload Foto Resi') }} </span>
                                     <div class="row">
+                                        <div class="m-widget28__tab-item">
+                                            {{-- <span><img src="{{ $data->order->filename_url }}" alt="" width="128"></span> --}}
+                                        </div>
                                         <div class ="col-12">
                                             <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
                                                 Upload Image
