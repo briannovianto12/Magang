@@ -233,8 +233,6 @@
                                                         <img id="image-preview" alt="image preview" style="display:none; width:250px; height:300px;"/>
                                                         <input name="file" id="image-source" required class="form-control-lg" type="file" onchange="previewImage();"/>
                                                     </div>
-                                                    
-                                                    {{-- <input type="file" id="image-source" onchange="previewImage();"/> --}}
                                                     <div class="modal-footer d-flex justify-content-center">
                                                         <button class="btn btn-unique" onclick="return confirm('Are you sure you want to upload this image?')" >Submit <i class="fas fa-paper-plane-o ml-1"> </i></button>
                                                     </div>
@@ -243,28 +241,29 @@
                                         </div>
                                     </div>
                                 </form>
-
-                                <div class="m-widget28__tab-item">
-                                    {{-- TODO @Brian Tambahkan kondisional kapan section ini akan muncul (if self drop == true) --}}
-                                    <span>{{ __('Foto Resi') }} </span>
-                                    <div class="row">
-                                        @if(isset($awb_image_url))
-                                            <div class="col-12">
-                                                <span>
-                                                    <img src="{{ $awb_image_url }}" alt="" width="128">
-                                                </span>
+                                
+                                @if($data->is_self_drop)
+                                    @can("upload_img_awb")
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Foto Resi') }} </span>
+                                            <div class="row">
+                                                @if(isset($awb_image_url))
+                                                    <div class="col-12">
+                                                        <span>
+                                                            <img src="{{ $awb_image_url }}" alt="" width="128">
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class ="col-12">
+                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                            Upload Image
+                                                        </a> 
+                                                    </div>
+                                                @endif
                                             </div>
-                                        @else
-                                            <div class ="col-12">
-                                                <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
-                                                    Upload Image
-                                                </a> 
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-
-
+                                        </div>
+                                    @endcan
+                                @endif
 
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
