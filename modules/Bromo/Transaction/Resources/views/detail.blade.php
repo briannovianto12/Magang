@@ -245,16 +245,22 @@
                                 </form>
 
                                 <div class="m-widget28__tab-item">
-                                    <span>{{ __('Upload Foto Resi') }} </span>
+                                    {{-- TODO @Brian Tambahkan kondisional kapan section ini akan muncul (if self drop == true) --}}
+                                    <span>{{ __('Foto Resi') }} </span>
                                     <div class="row">
-                                        <div class="m-widget28__tab-item">
-                                            {{-- <span><img src="{{ $data->order->filename_url }}" alt="" width="128"></span> --}}
-                                        </div>
-                                        <div class ="col-12">
-                                            <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
-                                                Upload Image
-                                            </a> 
-                                        </div>
+                                        @if(isset($awb_image_url))
+                                            <div class="col-12">
+                                                <span>
+                                                    <img src="{{ $awb_image_url }}" alt="" width="128">
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class ="col-12">
+                                                <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                    Upload Image
+                                                </a> 
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
 

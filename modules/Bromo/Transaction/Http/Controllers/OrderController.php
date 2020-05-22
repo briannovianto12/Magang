@@ -260,10 +260,17 @@ class OrderController extends Controller
                                                 ->get();
         }
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
-        $image_awb = OrderImage::where('order_id', $id)->first();
-        // $data['self_drop_awb'] = $path/$order_id/$file_awb_name;
-        // $image_awb = $this->uploadAwbImage($data['data']->filename);
-        // $data['data']['awb_image_url'] = $image_awb;
+        
+        $image_awb = OrderImage::where('order_trx_images.order_id', $id)
+                    ->join('order_trx', 'order_trx.id', '=', 'order_trx_images.order_id')
+                    ->first();
+        if (!empty($image_awb)) {
+            $dir = config('transaction.path.image_awb');
+            $gcs_path = config('transaction.gcs_path');
+            $filename = $image_awb->filename;
+            $image_url = $gcs_path . $dir . $filename;
+            $data['awb_image_url'] = $image_url;
+        }
 
         return view("{$this->module}::detail", $data);
     }
