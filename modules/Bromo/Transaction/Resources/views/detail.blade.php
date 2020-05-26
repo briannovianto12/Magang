@@ -243,7 +243,7 @@
                                 </form>
                                 
                                 @if($data->is_self_drop)
-                                    @can("upload_img_awb")
+                                    @can("upload_awb_image")
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('Foto Resi') }} </span>
                                             <div class="row">
