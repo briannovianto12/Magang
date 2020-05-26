@@ -50,19 +50,4 @@
         }
     });
 
-    $('#processDisbursement').click(function(){
-        if(!confirm('Are you sure ?')) {
-          return
-        }
-
-        $("#processDisbursement").attr("disabled", true);
-        $("#processDisbursement").html("Harap tunggu");
-
-        swal({ 
-        title: "Harap tunggu",
-        showConfirmButton: false,
-        });
-        
-
-    });
 </script>
