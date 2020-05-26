@@ -213,6 +213,58 @@
                                     </div>
                                 </div>
 
+
+                                {{-- UPLOAD RESI --}}
+                                <form action="{{ route('order.uploadAWBImage', $data->id) }}" method="POST" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="modal fade" id="modalUploadResi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h4 class="modal-title w-100 font-weight-bold">Upload Foto Resi</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body mx-3">
+                                                    <div class="form-group">
+                                                        <label for="file"><b>Upload Foto Resi</b></label>
+                                                        <img id="image-preview" alt="image preview" style="display:none; width:250px; height:300px;"/>
+                                                        <input name="file" id="image-source" required class="form-control-lg" type="file" onchange="previewImage();"/>
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <button class="btn btn-unique" onclick="return confirm('Are you sure you want to upload this image?')" >Submit <i class="fas fa-paper-plane-o ml-1"> </i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                @if($data->is_self_drop)
+                                    @can("upload_awb_image")
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('Foto Resi') }} </span>
+                                            <div class="row">
+                                                @if(isset($awb_image_url))
+                                                    <div class="col-12">
+                                                        <span>
+                                                            <img src="{{ $awb_image_url }}" alt="" width="128">
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class ="col-12">
+                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                            Upload Image
+                                                        </a> 
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endcan
+                                @endif
+
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-4">

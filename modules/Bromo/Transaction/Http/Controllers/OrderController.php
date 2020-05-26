@@ -23,6 +23,7 @@ use Bromo\Transaction\Models\OrderShippingManifest;
 use Bromo\Transaction\Models\OrderShippingManifestLog;
 use Bromo\Transaction\Models\OrderStatus;
 use Bromo\Transaction\Models\ShippingCourier;
+use Bromo\Transaction\Models\OrderImage;
 use Bromo\Transaction\Services\ShipperShippingApiService;
 use Bromo\Transaction\Helpers\ShippingAddressUtil;
 use Illuminate\Contracts\View\Factory;
@@ -36,6 +37,9 @@ use Modules\Bromo\HostToHost\Services\RequestService;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use Image;
+use Storage;
+
 
 class OrderController extends Controller
 {
@@ -256,6 +260,17 @@ class OrderController extends Controller
                                                 ->get();
         }
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
+        
+        $image_awb = OrderImage::where('order_trx_images.order_id', $id)
+                    ->join('order_trx', 'order_trx.id', '=', 'order_trx_images.order_id')
+                    ->first();
+        if (!empty($image_awb)) {
+            $dir = config('transaction.path.image_awb');
+            $gcs_path = config('transaction.gcs_path');
+            $filename = $image_awb->filename;
+            $image_url = $gcs_path . $dir . $filename;
+            $data['awb_image_url'] = $image_url;
+        }
 
         return view("{$this->module}::detail", $data);
     }
@@ -722,6 +737,42 @@ class OrderController extends Controller
             nbs_helper()->flashError($ex->getMessage());
         }
         
+        return redirect()->back();
+    }
+
+    public function uploadAwbImage($id, Request $request){
+        try{
+
+            
+            $path = '/orders/';
+            $file_awb = $request->file('file');
+            \Log::debug($request->all());
+            $ext = $file_awb->extension();
+            $file_awb_name = $file_awb->getClientOriginalName();
+        
+            //Maximum image width 800px, keep aspect ratio
+            $image_awb = Image::make($file_awb);
+            $image_awb->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        
+            $upload_awb = Storage::put("$path/$id/$file_awb_name", $image_awb->stream());
+            if ($upload_awb === false) {
+                new Exception('Error on upload');
+            }
+
+            $order_image = new OrderImage();
+            $order_image->order_id = $id;
+            $order_image->filename = "$id/$file_awb_name";
+            $order_image->save();
+
+           
+            
+            nbs_helper()->flashSuccess('Image has been uploaded.');
+        } catch(Exception $e) {
+            nbs_helper()->flashError($ex->getMessage());
+            
+        }
         return redirect()->back();
     }
 }
