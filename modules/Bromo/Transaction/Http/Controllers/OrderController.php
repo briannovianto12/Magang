@@ -225,6 +225,7 @@ class OrderController extends Controller
         $data['sellerData'] = $data['data']->seller->business->getOwner();
         $data['shipingCostDetails'] = null;
         $data['deliveryTrackings'] = null;
+        $data['shippingManifest'] = null;
         if($data['data']->shippingCourier->provider_id == ShippingCourier::SHIPPING_PROVIDER_KURIR_EKSPEDISI || $data['data']->shippingCourier->provider_id == ShippingCourier::SHIPPING_PROVIDER_NINJAVAN){
             $data['unsupportedShipper'] = true;
         }
@@ -250,6 +251,7 @@ class OrderController extends Controller
         if(!empty(OrderShippingManifest::where('order_id', $id)->first())){
             $data['shippingManifest'] = OrderShippingManifest::where('order_id', $id)->first();
         }
+
         if(!empty(Order::where('id', $id)->first()->paymentInvoice()->get())){
             $data['paymentInvoiceList'] = Order::find($id)
                                                 ->paymentInvoice()
@@ -271,6 +273,22 @@ class OrderController extends Controller
             $image_url = $gcs_path . $dir . $filename;
             $data['awb_image_url'] = $image_url;
         }
+
+        if(isset($data['shippingManifest']) && $data['shippingManifest']['logistic_details_snapshot'] != null ){
+            $snapshot = $data['shippingManifest']['logistic_details_snapshot'];
+            $logistic_detail_snapshot = json_decode($snapshot);
+            $weight = $logistic_detail_snapshot->weight;
+            $shipping_cost = $logistic_detail_snapshot->total_price;
+            $data['logisticDetail'] = 
+                [
+                    'weightPackage' => $weight,
+                ];
+            $data['logisticDetailCost'] = 
+                [
+                    'shippingCost' => $shipping_cost,
+                ];
+        }
+
 
         return view("{$this->module}::detail", $data);
     }
@@ -774,6 +792,102 @@ class OrderController extends Controller
             
         }
         return redirect()->back();
+    }
+
+    public function updateWeightPackage(Request $request, $order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $shipping_courier = ShippingCourier::findOrFail($order->shipping_courier_id);
+
+        \Log::debug("Request values: ");
+        \Log::debug($request->all());
+
+        $weight_in_kg = $request->get('weight_in_kg');
+
+        $manifest = OrderShippingManifest::where('order_id', $order_id)->first();
+
+        $logistic_detail_snapshot = json_decode($manifest->logistic_details_snapshot);
+
+        if($logistic_detail_snapshot != null) {
+            $shipping_fee_paid = $logistic_detail_snapshot->total_price;
+            $platform_discount = $logistic_detail_snapshot->platform_discount;
+            $awb_file_name = $logistic_detail_snapshot->awb_filename;
+            $paket_filename = $logistic_detail_snapshot->paket_filename;
+
+        } else {
+            $shipping_fee_paid = 0;
+            $platform_discount = 0;
+            $awb_file_name = "-";
+            $paket_filename = "";
+        }
+
+        $logistic_data = [
+            "weight" => $weight_in_kg * 1000,
+            "total_price" => $shipping_fee_paid,
+            "platform_discount" => $platform_discount,
+            "awb_filename" => $awb_file_name,
+            "paket_filename" => $paket_filename,
+        ];
+
+        try {           
+             // weight_in_kg
+            $manifest->logistic_details_snapshot = json_encode($logistic_data);
+            $manifest->save();
+           
+            nbs_helper()->flashSuccess('Weight has been updated.');
+        } catch(Exception $e) {
+            nbs_helper()->flashError($e->getMessage());            
+        }
+        return redirect()->back();
+
+    }
+
+    public function updateShippingCost(Request $request, $order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $shipping_courier = ShippingCourier::findOrFail($order->shipping_courier_id);
+
+        \Log::debug("Request values: ");
+        \Log::debug($request->all());
+
+        $shipping_fee_paid = $request->get('shipping_fee_paid');
+
+        $manifest = OrderShippingManifest::where('order_id', $order_id)->first();
+        
+        $logistic_detail_snapshot = json_decode($manifest->logistic_details_snapshot);
+
+        if($logistic_detail_snapshot != null) {
+            $weight_in_kg = $logistic_detail_snapshot->weight;
+            $platform_discount = $logistic_detail_snapshot->platform_discount;
+            $awb_file_name = $logistic_detail_snapshot->awb_filename;
+            $paket_filename = $logistic_detail_snapshot->paket_filename;
+
+        } else {
+            $weight_in_kg = '-';
+            $platform_discount = 0;
+            $awb_file_name = "-";
+            $paket_filename = "";
+        }
+
+        $logistic_data = [
+            "weight" => $weight_in_kg,
+            "total_price" => $shipping_fee_paid,
+            "platform_discount" => $platform_discount,
+            "awb_filename" => $awb_file_name,
+            "paket_filename" => $paket_filename,
+        ];
+
+        try {           
+             // shipping_cost
+            $manifest->logistic_details_snapshot = json_encode($logistic_data);
+            $manifest->save();
+           
+            nbs_helper()->flashSuccess('Shipping Cost has been updated.');
+        } catch(Exception $e) {
+            nbs_helper()->flashError($e->getMessage());            
+        }
+        return redirect()->back();
+
     }
 }
 

@@ -130,6 +130,7 @@ return [
     'status_order_process' => 'Status:',
     'success' => 'Success',
     'self_drop' => 'Self Drop',
+    'self_drop_detail' => 'Self Drop Detail',
 
     //T
     'tax' => 'Tax',
