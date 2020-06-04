@@ -241,30 +241,142 @@
                                         </div>
                                     </div>
                                 </form>
-                                
-                                @if($data->is_self_drop)
-                                    @can("upload_awb_image")
-                                        <div class="m-widget28__tab-item">
-                                            <span>{{ __('Foto Resi') }} </span>
-                                            <div class="row">
-                                                @if(isset($awb_image_url))
-                                                    <div class="col-12">
-                                                        <span>
-                                                            <img src="{{ $awb_image_url }}" alt="" width="128">
-                                                        </span>
-                                                    </div>
-                                                @else
-                                                    <div class ="col-12">
-                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
-                                                            Upload Image
-                                                        </a> 
-                                                    </div>
-                                                @endif
+                                @can("upload_awb_image")
+                                    @if($data->is_self_drop)
+                                        <div class="m-widget28__tab-item row">
+                                            <div class="col-12">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>
+                                                        <h5><b>{{ __('transaction::messages.self_drop_detail') }}</b></h5>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endcan
-                                @endif
+                                    
+                                            <div class="col-6">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('Foto Resi') }} </span>
+                                                    <div class="row">
+                                                        @if(isset($awb_image_url))
+                                                            <div class="col-12">
+                                                                <span>
+                                                                    <img src="{{ $awb_image_url }}" alt="" width="128">
+                                                                </span>
+                                                            </div>
+                                                        @else
+                                                            <div class ="col-12">
+                                                                <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                                    Upload Image
+                                                                </a> 
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      
+                                            {{-- Update Weight--}}
+                                            <form action="{{ route('order.updateWeightPackage', $data->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <div class="modal fade" id="modalUpdateWeight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header text-center">
+                                                                <h4 class="modal-title w-100 font-weight-bold">Package Weight (Kg)</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body mx-3">
+                                                                <div class="md-form">
+                                                                    <i class="fas fa-pencil prefix grey-text"></i>
+                                                                    <input type="text" name="weight_in_kg" id="message-body" class="md-textarea form-control" 
+                                                                    placeholder="Enter Weight Package"></input>
+                                                                </div>
+                                                                <div class="modal-footer d-flex justify-content-center">
+                                                                    <button class="btn btn-unique" >Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
 
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="m-widget28__tab-item">
+                                                        <span>{{ __('transaction::messages.package_weight') }}
+                                                            @if(isset($logisticDetail))
+                                                                <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateWeight"></a>
+                                                            @endif
+                                                        </span>
+
+                                                        @if(isset($logisticDetailCost))
+                                                            <span>{!! ceil($logisticDetail['weightPackage'])/1000 ?? '-' !!} Kg</span>
+                                                        @else
+
+                                                        <div class ="col-12">
+                                                            <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateWeight">
+                                                                Update Weight
+                                                            </a>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Update Shipping Cost--}}
+                                            <form action="{{ route('order.updateShippingCost', $data->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <div class="modal fade" id="modalUpdateShippingCost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header text-center">
+                                                                <h4 class="modal-title w-100 font-weight-bold">Shipping Cost</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body mx-3">
+                                                                <div class="md-form">
+                                                                    <i class="fas fa-pencil prefix grey-text"></i>
+                                                                    <input type="text" name="shipping_fee_paid" id="message-body" class="md-textarea form-control" 
+                                                                    placeholder="Enter Shipping Cost"></input>
+                                                                </div>
+                                                                <div class="modal-footer d-flex justify-content-center">
+                                                                    <button class="btn btn-unique" >Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="col-6"></div>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="m-widget28__tab-item">
+                                                            <span>{{ __('transaction::messages.shipping_cost') }}
+                                                                @if(isset($logisticDetailCost))
+                                                                    <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateShippingCost"></a>
+                                                                @endif
+                                                            </span>            
+                                                            @if(isset($logisticDetailCost))
+                                                                <span>IDR {{ number_format($logisticDetailCost['shippingCost']) ?? '-' }}</span>
+                                                            @else
+                                                                <div class ="col-6">
+                                                                    <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateShippingCost">
+                                                                        Update Shipping Cost
+                                                                    </a> 
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    @endif
+                                @endcan
+                                
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-4">
