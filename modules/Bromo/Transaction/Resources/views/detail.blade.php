@@ -252,24 +252,18 @@
                                                 </div>
                                             </div>
                                     
-                                            <div class="col-6">
+                                            <div class="col-4">
                                                 <div class="m-widget28__tab-item">
                                                     <span>{{ __('Foto Resi') }} </span>
-                                                    <div class="row">
-                                                        @if(isset($awb_image_url))
-                                                            <div class="col-12">
-                                                                <span>
-                                                                    <img src="{{ $awb_image_url }}" alt="" width="128">
-                                                                </span>
-                                                            </div>
-                                                        @else
-                                                            <div class ="col-12">
-                                                                <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
-                                                                    Upload Image
-                                                                </a> 
-                                                            </div>
-                                                        @endif
-                                                    </div>
+                                                    @if(isset($awb_image_url))
+                                                        <span>
+                                                            <img src="{{ $awb_image_url }}" alt="" width="128">
+                                                        </span>
+                                                    @else
+                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
+                                                            Upload Image
+                                                        </a> 
+                                                    @endif
                                                 </div>
                                             </div>
                                       
@@ -301,26 +295,21 @@
                                                 </div>
                                             </form>
 
-                                            <div class="col-6">
-                                                <div class="row">
-                                                    <div class="m-widget28__tab-item">
-                                                        <span>{{ __('transaction::messages.package_weight') }}
-                                                            @if(isset($logisticDetail))
-                                                                <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateWeight"></a>
-                                                            @endif
-                                                        </span>
-
-                                                        @if(isset($logisticDetailCost))
-                                                            <span>{!! ceil($logisticDetail['weightPackage'])/1000 ?? '-' !!} Kg</span>
-                                                        @else
-
-                                                        <div class ="col-12">
-                                                            <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateWeight">
-                                                                Update Weight
-                                                            </a>
-                                                        </div>
+                                            <div class="col-4">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('transaction::messages.package_weight') }}
+                                                        @if(isset($logisticDetail))
+                                                            <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateWeight"></a>
                                                         @endif
-                                                    </div>
+                                                    </span>
+
+                                                    @if(isset($logisticDetailCost))
+                                                        <span>{!! ceil($logisticDetail['weightPackage'])/1000 ?? '-' !!} Kg</span>
+                                                    @else
+                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateWeight">
+                                                            Update Weight
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -352,27 +341,22 @@
                                                 </div>
                                             </form>
 
-                                            <div class="col-6"></div>
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="m-widget28__tab-item">
-                                                            <span>{{ __('transaction::messages.shipping_cost') }}
-                                                                @if(isset($logisticDetailCost))
-                                                                    <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateShippingCost"></a>
-                                                                @endif
-                                                            </span>            
-                                                            @if(isset($logisticDetailCost))
-                                                                <span>IDR {{ number_format($logisticDetailCost['shippingCost']) ?? '-' }}</span>
-                                                            @else
-                                                                <div class ="col-6">
-                                                                    <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateShippingCost">
-                                                                        Update Shipping Cost
-                                                                    </a> 
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+                                            <div class="col-4">
+                                                <div class="m-widget28__tab-item">
+                                                    <span>{{ __('transaction::messages.shipping_cost') }}
+                                                        @if(isset($logisticDetailCost))
+                                                            <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateShippingCost"></a>
+                                                        @endif
+                                                    </span>            
+                                                    @if(isset($logisticDetailCost))
+                                                        <span>IDR {{ number_format($logisticDetailCost['shippingCost']) ?? '-' }}</span>
+                                                    @else
+                                                        <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateShippingCost">
+                                                            Update Shipping Cost
+                                                        </a> 
+                                                    @endif
                                                 </div>
+                                            </div>
                                         </div>
                                     @endif
                                 @endcan
