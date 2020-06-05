@@ -325,7 +325,11 @@ class OrderController extends Controller
             $notes = $request->input('notes');
         }
         
-        DB::select("SELECT public.f_update_order_picked_up_from_false_to_true('$order->order_no','$notes')");
+        $user = Auth::user();
+        $input_by = $user->id;
+        $input_role = $user->role_id;
+
+        DB::select("SELECT public.f_update_order_picked_up_from_false_to_true('$order->order_no','$notes','$input_by','$input_role')");
 
         return response()->json([
             "status" => "Success",
@@ -348,7 +352,11 @@ class OrderController extends Controller
             $notes = $request->input('notes');
         }
 
-        DB::select("SELECT public.f_update_order_status_from_delivered_to_success('$order->order_no','$notes')");
+        $user = Auth::user();
+        $input_by = $user->id;
+        $input_role = $user->role_id;
+
+        DB::select("SELECT public.f_update_order_status_from_delivered_to_success('$order->order_no','$notes','$input_by','$input_role')");
 
         return response()->json([
             "status" => "Success",
