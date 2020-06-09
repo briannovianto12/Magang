@@ -53,3 +53,19 @@
         </div>
     </div>
 </script>
+
+<script id="enable-disable-courier" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                {{#data.enabled}}
+                <h4>Disable {{ data.name }}?</h4>
+                {{/data.enabled}}
+                {{^data.enabled}}
+                <h4>Enable {{ data.name }}?</h4>
+                {{/data.enabled}}
+            </div>
+        </div>
+    </div>
+</script>

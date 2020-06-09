@@ -73,5 +73,16 @@
         title="Change Master Ekspedisi"><i class="la la-edit"></i>
         </a>
     @endisset
+    @isset($enable_disable_courier)
+        @if($enable_disable_courier_status)
+            <span class="badge badge-success">Enabled</span>
+        @else
+            <span class="badge badge-danger">Disabled</span>
+        @endif
+        <a href="#" onclick="_editStatusCourier('{{$enable_disable_courier}}' )"
+        class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill d-md-inline-block"
+        title="Enable/Disable Courier"><i class="la la-edit"></i>
+        </a>
+    @endisset
 
 </div>

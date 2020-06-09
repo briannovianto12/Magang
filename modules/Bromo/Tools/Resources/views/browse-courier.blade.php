@@ -45,6 +45,7 @@
                                 <tr>
                                     <th>Provider Key</th>
                                     <th>Name</th>
+                                    <th>Status</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
