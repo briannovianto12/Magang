@@ -46,6 +46,7 @@
                         columns: [
                             { "data": "provider_key"},
                             { "data": "name"},
+                            { "data": "enabled"},
                             { "data": "updated_at"},
                             { "data": "action"}
                         ],

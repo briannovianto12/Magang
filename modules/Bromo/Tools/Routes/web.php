@@ -46,4 +46,5 @@ Route::prefix('tools')->group(function() {
     Route::name('master-courier.data')->get('/data', 'CourierController@courierData');
     Route::name('master-courier.info')->get('/courier-info/{id}', 'CourierController@getCourierInfo');
     Route::name('master-courier.edit-info')->post('/courier-info/{id}/edit', 'CourierController@editCourierInfo');
+    Route::name('master-courier.edit-info')->post('/courier-info/{id}/enable-disable', 'CourierController@enableDisableCourier');
 });

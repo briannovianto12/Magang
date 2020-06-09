@@ -73,4 +73,22 @@ class CourierController extends Controller
             ]);
         }        
     }
+
+    public function enableDisableCourier(Request $request, $id) 
+    {
+        try{
+            $shipping_courier = $this->model->findOrFail($id);
+            $shipping_courier->enabled = !$shipping_courier->enabled;
+            $shipping_courier->save();
+
+            return response()->json([
+                'status' => 'OK',
+            ]);
+        } catch (\Exception $exception) {
+            report($exception);
+            return response()->json([
+                'status' => 'Failed',
+            ]);
+        }
+    }
 }

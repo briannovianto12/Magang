@@ -19,6 +19,14 @@ class CourierDataTable extends DataTable
     public function ajax()
     {
         return datatables($this->query())
+            ->editColumn('enabled', function ($data) {
+                $action = [
+                    'enable_disable_courier' => $data->id,
+                    'enable_disable_courier_status' => $data->enabled
+                ];
+
+                return view('theme::layouts.includes.actions', $action);
+            })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at;
             })
@@ -29,7 +37,7 @@ class CourierDataTable extends DataTable
                 
                     return view('theme::layouts.includes.actions', $action);         
                 })
-            ->rawColumns(['action'])
+            ->rawColumns(['enabled','action'])
             ->make(true);
 
     }
@@ -42,8 +50,8 @@ class CourierDataTable extends DataTable
     public function query()
     {
         $query = $this->model
-            ->select('id','provider_key', 'name', 'updated_at');
-
+            ->select('id','provider_key', 'name', 'enabled', 'updated_at');
+        
         return $this->applyScopes($query);
     }
 
