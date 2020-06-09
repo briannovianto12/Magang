@@ -69,6 +69,20 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+        
+        'pgsql_shipping' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE_SHIPPING', 'forge'),
+            'username' => env('DB_USERNAME_SHIPPING', 'forge'),
+            'password' => env('DB_PASSWORD_SHIPPING', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
