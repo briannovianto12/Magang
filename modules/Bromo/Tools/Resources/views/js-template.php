@@ -22,3 +22,34 @@
         </div>
     </div>
 </script>
+
+<script id="changePostalCode" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Province: {{ province_name }}</h4>
+                <h4>City: {{ city_name }}</h4>
+                <h4>District: {{ district_name }}</h4>
+                {{#subdistrict_name}}
+                    <h4>Subdistrict: {{ subdistrict_name }}</h4>
+                {{/subdistrict_name}}
+            </div>
+            <form id="form-edit-product">
+                <div class="form-group">
+                    <label>
+                        Postal Code:
+                    </label>
+                        {{#postal_code}}
+                            <input id="inputPostalCode" class="form-control" type="text" placeholder="{{ postal_code }}">
+                        {{/postal_code}}
+                        {{^postal_code}}
+                            <input id="inputPostalCode" class="form-control" type="text" placeholder="New Postal Code">
+                        {{/postal_code}}
+                    <br/>
+                   <button type="button" class="btn btn-primary btn-lg btn-block" id="btnChangePostalCode">Change Postal Code</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

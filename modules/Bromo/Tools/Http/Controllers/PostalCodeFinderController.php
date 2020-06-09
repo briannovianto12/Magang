@@ -6,21 +6,40 @@ use Bromo\Tools\Models\City;
 use Bromo\Tools\Models\District;
 use Bromo\Tools\Models\Province;
 use Bromo\Tools\Models\Subdistrict;
+use Bromo\Tools\Models\SubdistrictShipping;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Bromo\Tools\DataTables\PostalCodeFinderDataTable;
+use Illuminate\Http\JsonResponse;
+use Exception;
+use DB;
 
 class PostalCodeFinderController extends Controller
 {
+    const PAGE_SIZE = 30;
+
+    public function __construct(Province $model)
+    {
+        $this->model = $model;
+        $this->module = 'tools';
+        $this->title = 'Postal Code Finder';
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        $data['provinces'] = Province::where('id', 'like', '200%')->orderBy('name', 'asc')->get();
-        
-        return view('tools::postal-code-finder', $data);
+        $provinces = Province::where('id', 'like', '200%')->orderBy('name', 'asc')->get();
+
+        return view('tools::postal-code-finder', [
+            "provinces" => $provinces,
+            "model" => $this->model,
+            "module" => $this->module,
+            "title" => $this->title
+        ]);
     }
 
     /**
@@ -116,6 +135,56 @@ class PostalCodeFinderController extends Controller
         
         return response()->json([
             "postal_code" => $postal_code,
+        ]);
+    }
+
+
+    /**
+     * Get Postal Code data.
+     * @param PostalCodeFinderDataTable $datatable
+     * @return JsonResponse
+     */
+    public function getByPostalCode(PostalCodeFinderDataTable $datatable)
+    {
+        return $datatable->with([
+            'model' => $this->model,
+            'module' => $this->module
+        ])->ajax();
+    }
+
+    public function editPostalCode(Request $request){
+        $district_id = $request->get('district_id');
+        $postal_code = $request->get('postal_code');
+        $subdistrict_id = $request->get('subdistrict_id',null);
+
+        DB::beginTransaction();
+        DB::connection('pgsql_shipping')->beginTransaction();
+        try{
+            if($subdistrict_id){
+                $query_main = Subdistrict::find($subdistrict_id);
+                $query_main->postal_code = $postal_code;
+                $query_main->save();
+                $query_shipping = SubdistrictShipping::find($subdistrict_id);
+                $query_shipping->postal_code = $postal_code;
+                $query_shipping->save();
+            } else {
+                $query_main = Subdistrict::where('district_id','=',$district_id)
+                    ->update(['postal_code'=>$postal_code]);
+                $query_shipping = SubdistrictShipping::where('district_id','=',$district_id)
+                    ->update(['postal_code'=>$postal_code]);
+            }
+            DB::commit();
+            DB::connection('pgsql_shipping')->commit();
+        } catch (Exception $exception){
+            DB::rollback();
+            DB::connection('pgsql_shipping')->rollback();
+            return response()->json([
+                "status" => "Fail",
+            ]);            
+        }
+        
+        return response()->json([
+            "status" => "Success",
         ]);
     }
 }
