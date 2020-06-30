@@ -47,7 +47,7 @@
                             <input id="inputPostalCode" class="form-control" type="text" placeholder="New Postal Code">
                         {{/postal_code}}
                     <br/>
-                   <button type="button" class="btn btn-primary btn-lg btn-block" id="btnChangePostalCode">Change Postal Code</button>
+                   <button class="btn btn-primary btn-lg btn-block" id="btnChangePostalCode">Change Postal Code</button>
                 </div>
             </form>
         </div>
