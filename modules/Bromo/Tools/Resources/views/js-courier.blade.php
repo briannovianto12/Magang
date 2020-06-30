@@ -50,7 +50,7 @@
                             { "data": "updated_at"},
                             { "data": "action"}
                         ],
-                        order: [2, 'desc'],
+                        order: [3, 'desc'],
                         scrollX: true,
                         searchable: true,
                         dom:

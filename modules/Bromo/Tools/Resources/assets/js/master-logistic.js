@@ -170,7 +170,7 @@ window._editStatusCourier = function (courier_id) {
                       if ( data.status == 'OK' ) {
                           Swal.fire({
                               type: 'success',
-                              title: data.message,
+                              title: 'Success!',
                               showCloseButton: true,
                               showCancelButton: false,
                               focusConfirm: false,
@@ -179,7 +179,7 @@ window._editStatusCourier = function (courier_id) {
                               $('#master_courier').DataTable().ajax.reload();
                           });
                       } else if(data.status == 'Failed' ) {
-                          swalError(data.message);
+                          swalError('Internal Error');
                       } else {
                           swalError('Error!');
                       }
