@@ -103,6 +103,32 @@
                                         </div>
                                     @endcan
                                 </div>
+                                @if($data->is_cod)
+                                    <div class="m-widget28__tab-item row">
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('transaction::messages.cod_status') }}</span>
+                                                @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
+                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
+                                                    @if($data->is_cod_received)
+                                                        <span>{{ __('transaction::messages.cod_received') }}</span>
+                                                    @else
+                                                        <span>{{ __('transaction::messages.cod_not_yet_received') }}</span>
+                                                    @endif
+                                                @else
+                                                    <span>{{ __('transaction::messages.cod_this_order_is_using_cod') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('transaction::messages.cod_admin_fee') }}</span>
+                                                <span>IDR {{ number_format($data->admin_fee) ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('transaction::messages.ordered_date') }}</span>
                                     <span>{{ $data->created_at_formatted }}</span>
@@ -251,7 +277,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                    
+
                                             <div class="col-4">
                                                 <div class="m-widget28__tab-item">
                                                     <span>{{ __('Foto Resi') }} </span>
@@ -262,11 +288,11 @@
                                                     @else
                                                         <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUploadResi">
                                                             Upload Image
-                                                        </a> 
+                                                        </a>
                                                     @endif
                                                 </div>
                                             </div>
-                                      
+
                                             {{-- Update Weight--}}
                                             <form action="{{ route('order.updateWeightPackage', $data->id) }}" method="POST">
                                                 {{ csrf_field() }}
@@ -283,7 +309,7 @@
                                                             <div class="modal-body mx-3">
                                                                 <div class="md-form">
                                                                     <i class="fas fa-pencil prefix grey-text"></i>
-                                                                    <input type="text" name="weight_in_kg" id="message-body" class="md-textarea form-control" 
+                                                                    <input type="text" name="weight_in_kg" id="message-body" class="md-textarea form-control"
                                                                     placeholder="Enter Weight Package"></input>
                                                                 </div>
                                                                 <div class="modal-footer d-flex justify-content-center">
@@ -329,7 +355,7 @@
                                                             <div class="modal-body mx-3">
                                                                 <div class="md-form">
                                                                     <i class="fas fa-pencil prefix grey-text"></i>
-                                                                    <input type="text" name="shipping_fee_paid" id="message-body" class="md-textarea form-control" 
+                                                                    <input type="text" name="shipping_fee_paid" id="message-body" class="md-textarea form-control"
                                                                     placeholder="Enter Shipping Cost"></input>
                                                                 </div>
                                                                 <div class="modal-footer d-flex justify-content-center">
@@ -347,27 +373,27 @@
                                                         @if(isset($logisticDetailCost))
                                                             <a href="" method="post"  class="la la-edit" data-toggle="modal" data-target="#modalUpdateShippingCost"></a>
                                                         @endif
-                                                    </span>            
+                                                    </span>
                                                     @if(isset($logisticDetailCost))
                                                         <span>IDR {{ number_format($logisticDetailCost['shippingCost']) ?? '-' }}</span>
                                                     @else
                                                         <a href="" method="post"  class="btn btn-default" data-toggle="modal" data-target="#modalUpdateShippingCost">
                                                             Update Shipping Cost
-                                                        </a> 
+                                                        </a>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                 @endcan
-                                
+
                                 <div class="m-widget28__tab-item row">
                                     @can("update_airwaybill")
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             @if(
-                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED 
-                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED 
+                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
                                                     || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
                                             && $data->is_picked_up)
                                                 <button class="btn btn-success" onclick="_updateAwbShippingManifest('{{ $data->id }}')">
@@ -409,7 +435,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    @endcan    
+                                    @endcan
                                 </div>
 
                                 <div class="m-widget28__tab-item row">
@@ -595,7 +621,7 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_shipping_cost']) }}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-4">
                                         <div class="m-widget28__tab-item">
                                             <span>{{ __('transaction::messages.total_gross_amount') }}</span>

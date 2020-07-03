@@ -262,7 +262,7 @@ class OrderController extends Controller
                                                 ->get();
         }
         $data['shipping_weight'] = ceil($data['data']->shipping_weight/1000);
-        
+
         $image_awb = OrderImage::where('order_trx_images.order_id', $id)
                     ->join('order_trx', 'order_trx.id', '=', 'order_trx_images.order_id')
                     ->first();
@@ -279,16 +279,15 @@ class OrderController extends Controller
             $logistic_detail_snapshot = json_decode($snapshot);
             $weight = $logistic_detail_snapshot->weight;
             $shipping_cost = $logistic_detail_snapshot->total_price;
-            $data['logisticDetail'] = 
+            $data['logisticDetail'] =
                 [
                     'weightPackage' => $weight,
                 ];
-            $data['logisticDetailCost'] = 
+            $data['logisticDetailCost'] =
                 [
                     'shippingCost' => $shipping_cost,
                 ];
         }
-
 
         return view("{$this->module}::detail", $data);
     }
@@ -317,14 +316,14 @@ class OrderController extends Controller
     }
 
     public function changePickedUp(Request $request, $id){
-        
+
         $order = Order::findOrFail($id);
         $notes = null;
 
         if(!empty($request->input('notes'))){
             $notes = $request->input('notes');
         }
-        
+
         $user = Auth::user();
         $input_by = $user->id;
         $input_role = $user->role_id;
@@ -368,7 +367,7 @@ class OrderController extends Controller
         if(OrderShippingManifest::where('order_id', $order_id)->first() != null){
             $orderShippingManifest = strval(OrderShippingManifest::where('order_id', $order_id)->first()->id);
         }
-        
+
         $order = Order::where('id', $order_id)->first();
         $currWeight = ceil($order->shipping_weight/1000);
         $currCost = $order->shipping_service_snapshot['shipper']['finalRate'];
@@ -419,7 +418,7 @@ class OrderController extends Controller
 
         $order = Order::findOrFail($id);
         $order->status = OrderStatus::REJECTED;
-        
+
         $log = new OrderLog;
         $log_version = OrderLog::where('id', $id)->orderBy('version', 'desc')->first()->version;
         $log->id = $id;
@@ -427,7 +426,7 @@ class OrderController extends Controller
         $log->modified_by = auth()->user()->id;
         $log->modifier_role = auth()->user()->role_id;
         $log->notes = $notes;
-        
+
         $order->save();
         $log->save();
 
@@ -491,7 +490,7 @@ class OrderController extends Controller
 
         $seller_info = DB::select('SELECT owner_name, owner_phone FROM vw_business_contact_person as pic where business_id = ?', [$business_id]);
         $owner_name = $seller_info[0]->owner_name;
-        $owner_phone = $seller_info[0]->owner_phone;    
+        $owner_phone = $seller_info[0]->owner_phone;
 
         $params = [
             // TODO PIC User only use seller id first
@@ -529,7 +528,7 @@ class OrderController extends Controller
             $shipper_order_id = $data['shipper_order_id'];
             $special_id = $data['special_id'];
 
-            if($shipper_order_id == '') {                
+            if($shipper_order_id == '') {
                 \Log::alert('Call shipper failed with order no: '. $order->order_no);
                 \Log::alert('In the meantime, please process the order manually');
             }
@@ -548,7 +547,7 @@ class OrderController extends Controller
 
             $order->special_id = $special_id;
             $order->save();
-            
+
 
             DB::commit();
 
@@ -568,7 +567,7 @@ class OrderController extends Controller
             DB::rollBack();
 
             nbs_helper()->flashError('Something wen\'t wrong. Please contact Administrator');
-        
+
             return response()->json([
                 "status" => "FAIL",
                 "error" => $exception->getMessage(),
@@ -587,7 +586,7 @@ class OrderController extends Controller
 
             \Log::debug('Start create order');
             $shipper_order_id = $shippingServiceForShipper->createOrder($order_params);
-            
+
             if($shipper_order_id == ''){
                 \Log::debug('Order is not created');
                 return $shipper_order_id;
@@ -605,17 +604,17 @@ class OrderController extends Controller
             if(isset($special_id)) {
                 \Log::debug('Order tracking ID retrieved');
                 \Log::debug('special_id:' . $special_id);
-            
+
                 $data = [
                     'shipper_order_id' => $shipper_order_id,
                     'special_id' => $special_id
                 ];
-            }    
+            }
 
             // If successful activate the order
             \Log::debug('Start order activation');
             $activation_result = $shippingServiceForShipper->activateOrder($shipper_order_id);
-            
+
             if(isset($activation_result) && isset($activation_result->status) ) {
                 if ($activation_result->status != 'success') {
                     \Log::debug('Order is not activated');
@@ -647,7 +646,7 @@ class OrderController extends Controller
                 // The value if not affected by discount
                 "value" => $item->payment_details->unit_price,
             ];
-        } 
+        }
         return $items;
     }
 
@@ -661,7 +660,7 @@ class OrderController extends Controller
 
         // Set the destination location ID
         $result['d'] = ShippingAddressUtil::getLocationId($order->dest_address_snapshot);
-        
+
         // Set the length, width, height
         $result['l'] = $params['dimension_length'];
         $result['w'] = $params['dimension_width'];
@@ -686,13 +685,13 @@ class OrderController extends Controller
 
         $result['consignerName'] = $params['consignee_name'];
         $result['consignerPhoneNumber'] = $params['consignee_phone_number'] ?? '';
-        
+
         // Set the origin Address
         $result['originAddress'] = ShippingAddressUtil::getAddressDetails($order->orig_address_snapshot);
 
         // Set the destination Address
         $result['destinationAddress'] = ShippingAddressUtil::getAddressDetails($order->dest_address_snapshot);
-        
+
         // Set the itemName as array of ( name, qty, value )
         $result['itemName'] = $this->prepareOrderItems( $order );
 
@@ -714,17 +713,17 @@ class OrderController extends Controller
         return $result;
     }
     public function updateAwbShippingManifest(Request $request, $order_id)
-    {   
+    {
         $new_airwaybill = $request->new_airwaybill;
         $order_no = $request->order_no;
         $id = $request->shipping_manifest_id;
-        
+
         try {
             $update_airwaybill = DB::select("SELECT public.fs_update_awb_for_order_shipping_manifest('$order_no', '$new_airwaybill');");
             \Log::debug($update_airwaybill);
 
             if ($update_airwaybill[0]->fs_update_awb_for_order_shipping_manifest == 'OK') {
-                
+
 
                 $log = new OrderShippingManifestLog;
                 $log_version = OrderShippingManifestLog::where('id', $id)->orderBy('version', 'desc')->first()->version;
@@ -752,36 +751,36 @@ class OrderController extends Controller
                 'status' => 'Failed',
                 'message' => $exception->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }        
+        }
     }
 
     public function unRejectOrder($id){
         try{
             DB::select("SELECT f_unreject_order($id)");
             nbs_helper()->flashSuccess('Order has been unrejected.');
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             nbs_helper()->flashError($ex->getMessage());
         }
-        
+
         return redirect()->back();
     }
 
     public function uploadAwbImage($id, Request $request){
         try{
 
-            
+
             $path = '/orders/';
             $file_awb = $request->file('file');
             \Log::debug($request->all());
             $ext = $file_awb->extension();
             $file_awb_name = $file_awb->getClientOriginalName();
-        
+
             //Maximum image width 800px, keep aspect ratio
             $image_awb = Image::make($file_awb);
             $image_awb->resize(800, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
-        
+
             $upload_awb = Storage::put("$path/$id/$file_awb_name", $image_awb->stream());
             if ($upload_awb === false) {
                 new Exception('Error on upload');
@@ -792,12 +791,12 @@ class OrderController extends Controller
             $order_image->filename = "$id/$file_awb_name";
             $order_image->save();
 
-           
-            
+
+
             nbs_helper()->flashSuccess('Image has been uploaded.');
         } catch(Exception $e) {
             nbs_helper()->flashError($ex->getMessage());
-            
+
         }
         return redirect()->back();
     }
@@ -837,14 +836,14 @@ class OrderController extends Controller
             "paket_filename" => $paket_filename,
         ];
 
-        try {           
+        try {
              // weight_in_kg
             $manifest->logistic_details_snapshot = json_encode($logistic_data);
             $manifest->save();
-           
+
             nbs_helper()->flashSuccess('Weight has been updated.');
         } catch(Exception $e) {
-            nbs_helper()->flashError($e->getMessage());            
+            nbs_helper()->flashError($e->getMessage());
         }
         return redirect()->back();
 
@@ -861,7 +860,7 @@ class OrderController extends Controller
         $shipping_fee_paid = $request->get('shipping_fee_paid');
 
         $manifest = OrderShippingManifest::where('order_id', $order_id)->first();
-        
+
         $logistic_detail_snapshot = json_decode($manifest->logistic_details_snapshot);
 
         if($logistic_detail_snapshot != null) {
@@ -885,14 +884,14 @@ class OrderController extends Controller
             "paket_filename" => $paket_filename,
         ];
 
-        try {           
+        try {
              // shipping_cost
             $manifest->logistic_details_snapshot = json_encode($logistic_data);
             $manifest->save();
-           
+
             nbs_helper()->flashSuccess('Shipping Cost has been updated.');
         } catch(Exception $e) {
-            nbs_helper()->flashError($e->getMessage());            
+            nbs_helper()->flashError($e->getMessage());
         }
         return redirect()->back();
 

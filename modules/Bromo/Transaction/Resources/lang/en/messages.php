@@ -29,6 +29,11 @@ return [
     'change_order_status_to_delivered' => 'Change Status to "Delivered"',
     'change_order_status_to_success' => 'Change Order to "Success"',
     'change_picked_up' => 'Change To Pickup',
+    'cod_admin_fee' => 'Admin Fee',
+    'cod_status' => 'COD Status',
+    'cod_not_yet_received' => 'COD Not Yet Received',
+    'cod_received' => 'COD Received',
+    'cod_this_order_is_using_cod' => 'This order is using COD',
     'copy' => 'Copy',
     'corrected_package_weight' => 'Corrected Package Weight',
     'cost' => 'Cost',
@@ -84,7 +89,7 @@ return [
     'order_success' => 'Pesanan Sukses',
     'ordered_date' => 'Ordered Date',
     'origin_address' => 'Origin Address',
-    
+
     //P
     'package_weight' => 'Package Weight',
     'payment_amount' => 'Payment Amount',
@@ -149,8 +154,8 @@ return [
     'variant' => 'Variant',
     'vat' => 'VAT',
     'virtual_account_no' => 'No. Virtual Account',
-    
-    //W    
+
+    //W
     'weight' => 'Weight',
 
 ];
