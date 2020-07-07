@@ -1,7 +1,5 @@
 <script id="change-address" type="x-tmpl-mustache">
     <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
-
-
         <form id="form-change-pickup-address" action="POST">
             {{ method_field('PUT') }}
             {{ csrf_field() }}
@@ -67,6 +65,48 @@
                 {{/commission_group}}
                 
                 <button type="button" class="btn btn-primary btn-lg btn-block" id="btnChangeCommission">Submit</button> 
+            
+            </div>
+        </form>
+        
+    </div>
+</script>
+
+<script id="seller-courier-mapping" type="x-tmpl-mustache">
+    <div class="t-item container" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <style>
+            ul{
+                columns: 4;
+                -webkit-columns: 4;
+                -moz-columns: 4;
+            }
+            li{
+                height: 15px;
+            }
+        </style>
+        <form id="form-seller-courier-mapping" action="POST">
+            {{ method_field('PUT') }}
+            {{ csrf_field() }}
+            <div id="form-group" >
+                <ul>
+                {{#couriers}}
+                    {{#checked}}
+                        <li>    
+                            <label for="courier">{{ name }}</label>
+                            <input type="checkbox"  name="couriers" value="{{ id }}" checked>
+                        </li>
+                    {{/checked}}
+                    
+                    {{^checked}}
+                        <li>    
+                            <label for="courier">{{ name }}</label>
+                            <input type="checkbox" name="couriers" value="{{ id }}">
+                        </li>
+                    {{/checked}}
+                    <hr/>
+                {{/couriers}}
+                </ul>
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnSellerCourierMapping">Submit</button>
             
             </div>
         </form>

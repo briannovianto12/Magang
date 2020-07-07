@@ -27,6 +27,8 @@ Route::prefix('store')->name('store')->group(function () {
     Route::name('.edit-commission-info')->put('{id}/commission/post', 'SellerController@postCommission');
     Route::name('.temporary-closed')->post('{id}/temporary-closed', 'SellerController@temporaryClosed');
     Route::name('.re-open-shop')->post('{id}/re-open-shop', 'SellerController@reOpenShop');
+    Route::name('.courier-info')->get('{id}/shipping-courier', 'SellerController@getShippingCourier');
+    Route::name('.courier-info')->post('{id}/shipping-courier', 'SellerController@postShippingCourier');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');
