@@ -9,7 +9,6 @@
     <script src="{{ asset('js/mustache.min.js') }}"></script>
 @endsection
 
-
 @section('content')
 
     @component('components._portlet', [
@@ -120,7 +119,7 @@
                                             <span name="shop_status">
                                                 <i class="fa fa-exclamation-triangle" style="color:#FFCC00"></i> Shop is temporarily closed
                                                 <br/>
-                                                    Message: {{ $data->temporary_closed_message }}    
+                                                    Message: {{ $data->temporary_closed_message }}
                                             </span>
                                         @else
                                             <span name="shop_status" style="color:#39b54a">
@@ -162,7 +161,7 @@
                                 @if ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED )
                                 <div class="m-widget28__tab-item">
                                     <span>Shop Action</span>
-                                    {{-- @can('view_suspend_seller')   
+                                    {{-- @can('view_suspend_seller')
                                     @if(
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::SUSPENDED ))
@@ -221,10 +220,10 @@
                                         @endcan
                                     </span>
                                     <span>{{ $data->commissionType->name ?? '-' }}</span>
-                                
+
                                 </div>
 
-                                
+
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Shop Contact Person') }}</span>
                                     <span>{{ $data->businessAddress->contact_person ?? '-'}}</span>
@@ -265,7 +264,7 @@
                                             <div class="modal-body mx-3">
                                                 <div class="md-form">
                                                     <i class="fas fa-pencil prefix grey-text"></i>
-                                                    <textarea type="text" name="description" id="message-body" class="md-textarea form-control" 
+                                                    <textarea type="text" name="description" id="message-body" class="md-textarea form-control"
                                                     placeholder="Enter Message Body" maxlength="124" rows="4"></textarea>
                                                     <span id="chars">124</span> characters remaining
                                                     <label data-error="wrong" data-success="right" for="form8">New Shop Description</label>
@@ -287,7 +286,7 @@
                             </div>
                             @endcan
 
-                                  
+
                             </div>
                         </div>
 
@@ -296,14 +295,14 @@
                                 <div class="m-widget28__tab-items">
                                     <div class="m-widget28__tab-item">
                                         <span>{{ __('Business Bank Account') }}</span>
-                                        <span>  
+                                        <span>
                                             @foreach($business_bank_account as $bank_account)
-                                                    
+
                                                     {!! $bank_account->account_no
                                                     .' - '
                                                     .$bank_account->bank_name !!}
                                                     {{-- TODO Change to new screen to verify bank account --}}
-                                                    {{-- 
+                                                    {{--
                                                     @can('verify_bank_account')
                                                         @if($bank_account->is_verified == false)
                                                             <a href="#" onclick='_verifyBank("{{ route("{$module}.verify-bank-account", $bank_account->id) }}")'
@@ -316,10 +315,10 @@
                                                                 <br/>
                                                             </span>
                                                         @endif
-                                                    @endcan                                                     
-                                                    --}}                                                  
+                                                    @endcan
+                                                    --}}
                                                     {!!'<br>'
-                                                    .$bank_account->account_owner_name.'<br><br>' ?? '-'!!} 
+                                                    .$bank_account->account_owner_name.'<br><br>' ?? '-'!!}
                                             @endforeach
                                         </span>
                                     </div>
@@ -363,11 +362,11 @@
                                                 ."\n"
                                                 ."Kel. ".$data->businessAddress->subdistrict
                                                 .", "
-                                                ."Kec. ".$data->businessAddress->district 
+                                                ."Kec. ".$data->businessAddress->district
                                                 ."\n"
-                                                .$data->businessAddress->city 
+                                                .$data->businessAddress->city
                                                 .", "
-                                                .$data->businessAddress->province 
+                                                .$data->businessAddress->province
                                                 .", "
                                                 .$data->businessAddress->postal_code)
                                                 ?? '-'!!}
@@ -436,6 +435,12 @@
                     Survey
                 </a>
             </li>
+
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link" data-toggle="tab" href="#courier_mapping" role="tab">
+                    Courier Mappings
+                </a>
+            </li>
         @endslot
 
         @slot('tab_body')
@@ -453,11 +458,11 @@
                                                 ."<br>"
                                                 ."Kel. ".$data->businessAddress->subdistrict
                                                 .", "
-                                                ."Kec. ".$data->businessAddress->district 
+                                                ."Kec. ".$data->businessAddress->district
                                                 ."<br>"
-                                                .$data->businessAddress->city 
+                                                .$data->businessAddress->city
                                                 .", "
-                                                .$data->businessAddress->province 
+                                                .$data->businessAddress->province
                                                 .", Indonesia "
                                                 ."<br>"
                                                 .$data->businessAddress->postal_code
@@ -534,6 +539,37 @@
                     @endslot
                 @endcomponent
             </div>
+
+            <div class="tab-pane" id="courier_mapping">
+                @component('components._widget-list')
+                    @slot('body')
+                        <div class="row">
+                            <div class="col-12 text-left">
+                                <button onclick="_sellerCourierMapping(this, '{{ $data->id }}'); " class="btn btn-primary">
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+
+                        @isset($data->courier_list)
+                        <br/>
+                        @foreach($data->courier_list->chunk(3) as $couriers)
+                            <div class="row course-set courses__row">
+                                @foreach($couriers as $courier)
+                                    <article class="col-md-4 course-block course-block-lessons">
+                                        {{-- {{ $courier->shippingCourier->name }} --}}
+                                        {{-- <div class="m-widget28__tab-items"> --}}
+                                        <label class="badge label-primary" style ="font-size:15px" for="{{ $courier->shippingCourier->id }}"> {{ $courier->shippingCourier->name }}</label><br>
+                                        {{-- </div> --}}
+                                    </article>
+                                @endforeach
+                            </div>
+                        @endforeach
+                        @endisset
+                    @endslot
+                @endcomponent
+            </div>
+
         @endslot
     @endcomponent
 
@@ -567,12 +603,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
-    
+
                 <div class="modal-body">
-    
+
                 </div>
-    
-    
+
+
             </div>
         </div>
     </div>

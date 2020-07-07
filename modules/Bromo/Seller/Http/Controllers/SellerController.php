@@ -32,7 +32,12 @@ use Bromo\Seller\Entities\BusinessAddress;
 use Illuminate\Support\Collection;
 
 use Bromo\Seller\Entities\Product;
+use Bromo\Seller\Entities\CourierMapping;
+use Bromo\Seller\Entities\ShippingCourier;
 use Bromo\Seller\Entities\CommissionGroup;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+
 
 
 class SellerController extends BaseResourceController
@@ -309,7 +314,7 @@ class SellerController extends BaseResourceController
         return $data['data']['results']['nonce'];
     }
 
-    
+
     /**
      * @param $id
      * @param int $status
@@ -389,7 +394,9 @@ class SellerController extends BaseResourceController
         $data = array_merge($this->pageData, $this->requiredData);
         $response = $this->getTaxImageURL($data['data']->tax_card_image_file);
         $data['data']['tax_image_private_url'] = $response;
-        
+
+        $data['data']['courier_list'] = $this->courierMapping($this->pageData['data']->business_id);
+
         return view($this->getDetailView(), $data);
     }
 
@@ -448,7 +455,7 @@ class SellerController extends BaseResourceController
     {
         if ($filename == null) {
             $response = self::DEFAULT_NO_IMAGE;
-            
+
             return $response;
         } else {
             try {
@@ -456,16 +463,16 @@ class SellerController extends BaseResourceController
                 $header = [
                     'Authorization' => config('hosttohost.admin_token'),
                 ];
-    
+
                 $service = new RequestService();
                 $response = $service->setUrl($endpoint)
                     ->setHeaders($header)
                     ->get();
-    
+
                 if ($response->getStatusCode() !== Response::HTTP_OK) {
                     $error = $response->original;
                     $decode = json_decode($error['body']);
-    
+
                     throw new Exception($decode->message, $decode->code);
                 } else {
                     $content = $response->original;
@@ -474,7 +481,7 @@ class SellerController extends BaseResourceController
                 }
             } catch (\Exception $exception) {
                 report($exception);
-    
+
                 $response = new Response();
                 $response->setStatusCode(400);
                 \Log::error(json_decode($exception->getMessage()));
@@ -490,11 +497,11 @@ class SellerController extends BaseResourceController
         DB::beginTransaction();
         try{
             $shop = $this->model::find($id);
-            $shop->description = $shop_description; 
+            $shop->description = $shop_description;
             $shop->save();
 
             $business = Business::find($shop->business_id);
-            $business->description = $shop_description; 
+            $business->description = $shop_description;
             $business->save();
 
             DB::commit();
@@ -506,8 +513,8 @@ class SellerController extends BaseResourceController
 
             nbs_helper()->flashMessage('error');
         }
-        return redirect()->back();     
-        
+        return redirect()->back();
+
     }
 
     public function status($id)
@@ -522,7 +529,7 @@ class SellerController extends BaseResourceController
 
             foreach($products as $product){
                 $product->update([
-                    'status' => ($shop->status === ShopStatus::SUSPENDED) ? \Bromo\Product\Models\ProductStatus::UNPUBLISH : \Bromo\Product\Models\ProductStatus::PUBLISH 
+                    'status' => ($shop->status === ShopStatus::SUSPENDED) ? \Bromo\Product\Models\ProductStatus::UNPUBLISH : \Bromo\Product\Models\ProductStatus::PUBLISH
                 ]);
             }
 
@@ -543,7 +550,7 @@ class SellerController extends BaseResourceController
     {
         $shop = $this->model::find($id);
         $shop_business_address_list = BusinessAddress::where('business_id', $shop->business_id)->get();
-        
+
         foreach ($shop_business_address_list as $address) {
             if ($shop->address_id == $address->id) {
                 $address['current_address'] = true;
@@ -562,7 +569,7 @@ class SellerController extends BaseResourceController
     {
         try {
             $new_pickup_address = $request->input('addressId');
-        
+
             $shop = $this->model::find($id);
             $shop->update([
                 'address_id' => $new_pickup_address
@@ -603,15 +610,13 @@ class SellerController extends BaseResourceController
     {
         try {
             $new_commission_type = $request->input('commissionId');
-            \Log::debug(CommissionGroup::STANDARD);
-            \Log::debug(CommissionGroup::PREMIUM);
             $shop = $this->model::find($id);
             $resp = '';
 
             if ($new_commission_type == null) {
                 return;
-            } 
-            
+                }
+
             if ($new_commission_type == CommissionGroup::STANDARD) {
                 $standard = DB::select("SELECT public.f_update_commission_standard_and_check($shop->id)");
             } elseif ($new_commission_type == CommissionGroup::PREMIUM) {
@@ -636,18 +641,18 @@ class SellerController extends BaseResourceController
         $temporary_closed_message = $request->get('temporary_closed_message');
         try{
             $shop = $this->model::find($id);
-            $shop->temporary_closed_message = $temporary_closed_message; 
+            $shop->temporary_closed_message = $temporary_closed_message;
             $shop->is_temporary_closed = 1;
             $shop->save();
 
             nbs_helper()->flashMessage('stored');
-      
+
         } catch (Exception $exception) {
             report($exception);
 
             nbs_helper()->flashMessage('error');
         }
-        return redirect()->back();   
+        return redirect()->back();
     }
 
     public function reOpenShop($id){
@@ -658,12 +663,93 @@ class SellerController extends BaseResourceController
             $shop->save();
 
             nbs_helper()->flashMessage('stored');
-      
+
         } catch (Exception $exception) {
             report($exception);
 
             nbs_helper()->flashMessage('error');
         }
-        return redirect()->back();        
+        return redirect()->back();
+    }
+
+
+    private function courierMapping($business_id){
+        $courier_list = CourierMapping::where('seller_business_id', $business_id)->get();
+
+        return $courier_list;
+    }
+
+    public function getShippingCourier($id)
+    {
+        $shop = $this->model::find($id);
+        $couriers = ShippingCourier::all();
+        $seller_courier = CourierMapping::where('seller_business_id', $shop->business_id)->get();
+
+        foreach ($couriers as $courier) {
+            foreach ($seller_courier as $seller) {
+                if ($seller->courier_id == $courier->id) {
+                    $courier['checked'] = true;
+                }
+            }
+        }
+
+        return response()->json([
+            'shop' => $shop,
+            'couriers' => $couriers,
+            'seller_courier' => $seller_courier,
+        ]);
+    }
+
+    public function postShippingCourier(Request $request, $id)
+    {
+        $new_couriers = $request->input('couriers');
+        $old_couriers = [];
+
+        $shop = $this->model::find($id);
+        $business_id = $shop->business_id;
+        $courier_mappings = CourierMapping::where('seller_business_id', $shop->business_id)->get();
+
+        foreach($courier_mappings as $courier) {
+            array_push($old_couriers, $courier->courier_id);
+        }
+
+        $delete_couriers = array_diff($old_couriers, $new_couriers);
+        $insert_couriers = array_diff($new_couriers, $old_couriers);
+
+        DB::beginTransaction();
+        try{
+            if($insert_couriers){
+                $data_set = [];
+
+                foreach($insert_couriers as $courier) {
+                    $data_set[] = [
+                        'seller_business_id' => $shop->business_id,
+                        'courier_id' => $courier,
+                        'remark' => 'test input local aditya',
+                        'created_at' => Carbon::now()->format('Y-m-d H:m:s.uP'),
+                        'updated_at' => Carbon::now()->format('Y-m-d H:m:s.uP'),
+                    ];
+                }
+                CourierMapping::insert($data_set);
+            }
+
+            if($delete_couriers){
+                CourierMapping::whereIn('courier_id', $delete_couriers)->where('seller_business_id', $shop->business_id)->delete();
+            }
+
+            DB::commit();
+
+            return response()->json([
+                "status" => "OK"
+            ]);
+        }catch(Exception $exception){
+            DB::rollback();
+            report($exception);
+
+            return response()->json([
+                "status" => "Failed"
+            ]);
+
+        }
     }
 }
