@@ -29,7 +29,7 @@ icd:before {
   height: 100%;
   text-indent: 20px;
 }
-  
+
 </style>
 
 <div id="m_aside_left" class="m-grid__item m-aside-left m-aside-left--skin-light">
@@ -135,14 +135,15 @@ icd:before {
                     </a>
                 </li>
             @endcan
-            @can('view_contactcenter')
+            {{-- Hide menu contact center --}}
+            {{-- @can('view_contactcenter')
                 <li class="m-menu__item{{ nbs_helper()->isMenuActive('contactcenter.index') }}" aria-haspopup="true">
                     <a href="{{ route('contactcenter.index') }}" class="m-menu__link">
                         <i class="m-menu__link-icon la la-phone"></i>
                         <span class="m-menu__link-text">Contact Center</span>
                     </a>
                 </li>
-            @endcan
+            @endcan --}}
 
             <li class="m-menu__item{{ nbs_helper()->isMenuActive('mutation.*') }}" aria-haspopup="true">
                 <a href="#" class="m-menu__link">
@@ -176,14 +177,15 @@ icd:before {
                     </a>
                 </li>
             @endcan
-            @can('view_news_notification')
+            {{-- Hide menu news notification --}}
+            {{-- @can('view_news_notification')
                 <li class="m-menu__item{{ nbs_helper()->isMenuActive('news') }}" aria-haspopup="true">
                     <a href="{{ route('news') }}" class="m-menu__link">
                         <i class="m-menu__link-icon la la-newspaper-o"></i>
                         <span class="m-menu__link-text">News Notification</span>
                     </a>
                 </li>
-            @endcan
+            @endcan --}}
             @can('view_banner')
                 <li class="m-menu__item{{ nbs_helper()->isMenuActive('banner.index') }}" aria-haspopup="true">
                     <a href="{{ route('banner.index') }}" class="m-menu__link">
