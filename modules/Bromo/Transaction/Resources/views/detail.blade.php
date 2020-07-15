@@ -105,26 +105,40 @@
                                 </div>
                                 @if($data->is_cod)
                                     <div class="m-widget28__tab-item row">
-                                        <div class="col-6">
+                                        <div class="col-12">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('transaction::messages.cod_status') }}</span>
                                                 @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
                                                 || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
-                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
+                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS
+                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::CANCELED
+                                                || $data->status == \Bromo\Transaction\Models\OrderStatus::REJECTED)
                                                     @if($data->is_cod_received)
-                                                        <span>{{ __('transaction::messages.cod_received') }}</span>
+                                                        <span style="color:#5867dd">{{ __('transaction::messages.cod_received') }}</span>
                                                     @else
-                                                        <span>{{ __('transaction::messages.cod_not_yet_received') }}</span>
+                                                        <span style="color:#5867dd">{{ __('transaction::messages.cod_not_yet_received') }}</span>
                                                     @endif
                                                 @else
-                                                    <span>{{ __('transaction::messages.cod_this_order_is_using_cod') }}</span>
+                                                    <span style="color:#5867dd">{{ __('transaction::messages.cod_this_order_is_using_cod') }}</span>
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="m-widget28__tab-item">
                                                 <span>{{ __('transaction::messages.cod_admin_fee') }}</span>
                                                 <span>IDR {{ number_format($data->admin_fee) ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('transaction::messages.cod_admin_fee_rounding') }}</span>
+                                                <span>IDR {{ number_format($data->admin_cod_fee_rounding) ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                <span>{{ __('transaction::messages.cod_admin_fee_rounded') }}</span>
+                                                <span>IDR {{ number_format( $data->admin_fee + $data->admin_cod_fee_rounding ) ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
