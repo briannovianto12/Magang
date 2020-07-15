@@ -9,7 +9,15 @@ abstract class OrderDatatable extends DataTable
 {
     public function ajax()
     {
+        $keyword=$this->request()->input('search.value');
         return datatables($this->query())
+            ->filterColumn('is_cod', function ($query) use ($keyword) {
+                if ($keyword == 'COD') {
+                    $query->whereHas('is_cod', function ($query) use ($keyword) {
+                        $query->where('is_cod', '=', true);
+                    });
+                }
+            })
             ->addColumn('order_no', function ($data) {
                 return '<a href="' . route('order.show', $data->id) .'">'.$data->order_no.'</a>';
             })
@@ -138,6 +146,7 @@ abstract class OrderDatatable extends DataTable
             'payment_details',
             'notes',
             'is_picked_up',
+            'is_cod',
             'created_at',
             'updated_at',
         ];
