@@ -74,10 +74,32 @@
         {'data': 'action', 'name': 'action'},
     ];
 
-    let orderColumnsForUpdated = [
-        [6, 'desc'],
+    const orderColumnsForUpdated = [
+        [8, 'desc'],
         [7, 'desc']
     ];
+
+    const orderColumnsForOnDelivery = [
+        [11, 'desc'],
+        [10, 'desc']
+    ];
+
+    const orderColumnsForDelivered = [
+        [10, 'desc'],
+        [9, 'desc']
+    ];
+
+    const orderColumnsForSuccess = [
+        [10, 'desc'],
+        [9, 'desc']
+    ];
+
+    const orderColumnsForRejected = [
+        [9, 'desc'],
+        [8, 'desc']
+    ];
+
+
 
     var Columns = function (data) {
         if (data) {
@@ -95,13 +117,13 @@
             Order.loadDataTable('table_process_order', "{{ route("order.process-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadDeliveryOrder: function () {
-            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, orderColumnsForOnDelivery);
         },
         loadDeliveredOrder: function () {
-            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", deliveredOrderColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_delivered_order', "{{ route("order.delivered-order") }}", deliveredOrderColumns, orderColumnsForDelivered);
         },
         loadSuccessOrder: function () {
-            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", successOrderColumns, orderColumnsForUpdated);
+            Order.loadDataTable('table_success_order', "{{ route("order.success-order") }}", successOrderColumns, orderColumnsForSuccess);
         },
         loadCancelOrder: function () {
             Order.loadDataTable('table_cancel_order', "{{ route("order.cancel-order") }}", initColumns, orderColumnsForUpdated);
@@ -110,8 +132,7 @@
             Order.loadDataTable('table_list_order', "{{ route("order.list-order") }}", initColumns, orderColumnsForUpdated);
         },
         loadRejectedOrder: function () {
-            Order.loadDataTable('table_rejected_order', "{{ route("order.rejected-order") }}", rejectedOrderColumns, [[7, 'desc'],
-        [8, 'desc']]);
+            Order.loadDataTable('table_rejected_order', "{{ route("order.rejected-order") }}", rejectedOrderColumns, orderColumnsForRejected);
         },
         loadDataTable: function (elem, route, getColumns, order = []) {
             if (!$.fn.dataTable.isDataTable("#" + elem)) {
@@ -172,7 +193,7 @@
             $('#rejected_order_tab').on('click', function () {
                 Order.loadRejectedOrder();
             });
-            
+
             $('a[data-toggle="tab"]').on("click", function() {
                 let newUrl;
                 const hash = $(this).attr("href");
@@ -182,7 +203,7 @@
         }
     };
 
-    
+
     $(document).ready(function () {
         Order.init();
         document.getElementById("po-table-status").addEventListener('change', function(){
@@ -206,17 +227,17 @@
         document.getElementById("deliveryo-table-status").addEventListener('change', function(){
             if(document.getElementById("deliveryo-table-status").value == "All"){
                 $('#table_delivery_order').DataTable().destroy();
-                Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                Order.loadDataTable('table_delivery_order', "{{ route("order.delivery-order") }}", deliveryOrderColumns, orderColumnsForOnDelivery);
                 $('#table_delivery_order').DataTable().draw();
             }
             else if(document.getElementById("deliveryo-table-status").value == "true"){
                 $('#table_delivery_order').DataTable().destroy();
-                Order.loadDataTable('table_delivery_order', "{{ route("order.shipped-delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                Order.loadDataTable('table_delivery_order', "{{ route("order.shipped-delivery-order") }}", deliveryOrderColumns, orderColumnsForOnDelivery);
                 $('#table_delivery_order').DataTable().draw();
             }
             else if(document.getElementById("deliveryo-table-status").value == "false"){
                 $('#table_delivery_order').DataTable().destroy();
-                Order.loadDataTable('table_delivery_order', "{{ route("order.not-shipped-delivery-order") }}", deliveryOrderColumns, [[6, 'desc'],[7, 'desc']]);
+                Order.loadDataTable('table_delivery_order', "{{ route("order.not-shipped-delivery-order") }}", deliveryOrderColumns, orderColumnsForOnDelivery);
                 $('#table_delivery_order').DataTable().draw();
             }
         });
@@ -228,7 +249,7 @@
         else{
             $('#tablist a[href="#new_order"]').click();
         }
-        
+
         $('.tab-pane').on('click','button[name="awb-cpy-btn"]',function () {
             var copyText = this.parentNode.getElementsByTagName("SPAN")[0];
             var textArea = document.createElement("textarea");
@@ -305,7 +326,7 @@
         document.getElementById("image-preview").style.display = "block";
         var oFReader = new FileReader();
         oFReader.readAsDataURL(document.getElementById("image-source").files[0]);
-    
+
         oFReader.onload = function(oFREvent) {
         document.getElementById("image-preview").src = oFREvent.target.result;
         };
