@@ -435,12 +435,13 @@
                     Survey
                 </a>
             </li>
-
+            @can('view_seller_courier_mapping')
             <li class="nav-item m-tabs__item">
                 <a class="nav-link m-tabs__link" data-toggle="tab" href="#courier_mapping" role="tab">
                     Courier Mappings
                 </a>
             </li>
+            @endcan
         @endslot
 
         @slot('tab_body')
@@ -542,14 +543,26 @@
 
             <div class="tab-pane" id="courier_mapping">
                 @component('components._widget-list')
+                @can('view_seller_courier_mapping')
                     @slot('body')
-                        <div class="row">
-                            <div class="col-12 text-left">
-                                <button onclick="_sellerCourierMapping(this, '{{ $data->id }}'); " class="btn btn-primary">
-                                    Edit
-                                </button>
+                        @if($data->business->custom_courier_mapping)
+                            <div class="row">
+                                <div class="col-12 text-left">
+                                    <button onclick="_sellerCourierMapping(this, '{{ $data->id }}'); " class="btn btn-primary">
+                                        Edit
+                                    </button>&nbsp;&nbsp;
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="row">
+                                <div class="col-12 text-left">
+                                    <span>
+                                        <i class="fa fa-exclamation-triangle" style="color:#FFCC00"></i> Custom Shipping Courier For This Seller is disabled
+                                    </span>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                        @endif
 
                         @isset($data->courier_list)
                         <br/>
@@ -567,8 +580,10 @@
                         @endforeach
                         @endisset
                     @endslot
+                    @endcan
                 @endcomponent
             </div>
+
 
         @endslot
     @endcomponent

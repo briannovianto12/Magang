@@ -682,7 +682,7 @@ class SellerController extends BaseResourceController
     public function getShippingCourier($id)
     {
         $shop = $this->model::find($id);
-        $couriers = ShippingCourier::all();
+        $couriers = ShippingCourier::where('provider_id', 3)->where('enabled', true)->orderBy('name', 'asc')->get();
         $seller_courier = CourierMapping::where('seller_business_id', $shop->business_id)->get();
 
         foreach ($couriers as $courier) {
