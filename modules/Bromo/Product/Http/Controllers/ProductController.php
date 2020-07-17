@@ -239,7 +239,9 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product_image_array = $product->image_files['filenames'];
         if(count($product_image_array) > 0) {
-            $image = config('product.gcs_path') . "/" .  config('product.path.product')  .  $product_image_array[0];            
+            $image = config('product.gcs_path') . "/" .  config('product.path.product')  .  $product_image_array[0];
+        } else {
+            $image = 'http://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png';
         }
 
         $current_category = DB::select("SELECT f_get_category_fulltext($product->category_id)");
@@ -260,7 +262,7 @@ class ProductController extends Controller
         } else {
             $categories = ProductCategory::select('id','name')->where('parent_id', $id)->orderBy('sort_by')->get();
         }
-      
+
         return response()->json([
             "categories" => $categories,
         ]);
@@ -300,15 +302,15 @@ class ProductController extends Controller
             $weight_log = New ProductWeightLog;
             $weight_log->product_id = $product->id;
             $weight_log->old_weight = $old_weight['after_packaging']['weight'];
-            
+
             $product_dimensions = $product->dimensions;
             $weight_log->new_weight = $new_weight;
             $weight_log->updated_by = $user->id;
             $weight_log->modifier_role_id = 1;
             $weight_log->increment('version', 1);
-            
+
             $weight_log->save();
-            
+
             DB::commit();
 
 
@@ -319,7 +321,7 @@ class ProductController extends Controller
                 "status" => "Failed"
             ]);
         }
-            
+
         return response()->json([
             "status" => "OK",
             "nama_produk" => $product->name,
@@ -332,12 +334,12 @@ class ProductController extends Controller
         $inputTags = json_decode($request->input('input-tags'));
         if(empty($inputTags)){
             return back()->with('errorMsg', 'Tags cannot be empty!');
-        } 
+        }
         $updatedTags = null;
         foreach($inputTags as $key => $inputTag){
             $updatedTags[] = $inputTag->value;
         }
-        
+
         $product->tags = $updatedTags;
         $product->updated_at = Carbon::now();
         $product->save();
