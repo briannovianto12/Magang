@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -116,9 +118,102 @@
 
                     $('#modal').modal('hide');
                 });
+
+
+                $(".self-drop-status").bootstrapSwitch({
+                    size: 'mini',
+                    onText: 'Active',
+                    offText: 'Set to Active',
+                    onColor: 'custom-success',
+                    offColor: 'default',
+                }).on("switchChange.bootstrapSwitch", function (event, state) {
+                    $(".self-drop-status").html(state);
+                    $(this).val(state ? 1 : 0)
+                    var value = $(this).val();
+                    var id = $(this).attr('data-id');
+                    var change = $(this);
+
+                    swal({
+                        title: "Are you sure?",
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'Cancel'
+                    }).then(function(isConfirm) {
+                        var cancel = isConfirm.dismiss;
+                        if (isConfirm && !cancel) {
+                            $.ajax({
+                                url: id + "/set-self-drop",
+                                type: "POST",
+                                data: {
+                                    status: value,
+                                    _token: '{{csrf_token()}}',
+                                    _method: 'PUT'
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                },
+                                error: function(error){
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            if(state != false){ change.bootstrapSwitch('state', false, true); }
+                            if(state != true){ change.bootstrapSwitch('state', true, true); }
+                            return false;
+                        }
+                    })
+                })
+
+                $(".seller-custom-courier-flag").bootstrapSwitch({
+                    size: 'mini',
+                    onText: 'Active',
+                    offText: 'Set to Active',
+                    onColor: 'custom-success',
+                    offColor: 'default',
+                }).on("switchChange.bootstrapSwitch", function (event, state) {
+                    $(".seller-custom-courier-flag").html(state);
+                    $(this).val(state ? 1 : 0)
+                    var value = $(this).val();
+                    var id = $(this).attr('data-id');
+                    var change = $(this);
+
+                    swal({
+                        title: "Are you sure?",
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'Cancel'
+                    }).then(function(isConfirm) {
+                        var cancel = isConfirm.dismiss;
+                        if (isConfirm && !cancel) {
+                            $.ajax({
+                                url: id + "/set-custom-courier",
+                                type: "POST",
+                                data: {
+                                    status: value,
+                                    _token: '{{csrf_token()}}',
+                                    _method: 'PUT'
+                                },
+                                success: function (data) {
+                                    location.reload();
+                                },
+                                error: function(error){
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            if(state != false){ change.bootstrapSwitch('state', false, true); }
+                            if(state != true){ change.bootstrapSwitch('state', true, true); }
+                            return false;
+                        }
+                    })
+                })
+
             }
         @endisset
-
     })
 
     document.getElementById("cpy-btn").addEventListener("click", copy_address);
@@ -159,7 +254,7 @@
                     },
                     data: {_method: 'POST'},
                     success: function (response) {
-                        location.reload();  
+                        location.reload();
                     },
                     error: function () {
                         swal(
@@ -174,7 +269,7 @@
     }
 
     var maxLength = 124;
-    
+
     $('textarea').keyup(function() {
       var length = $(this).val().length;
       var length = maxLength-length;

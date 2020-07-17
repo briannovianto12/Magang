@@ -1,5 +1,17 @@
 @extends('theme::layouts.master')
 
+@section('css')
+    <style>
+        .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-custom-success,
+        .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-custom-success {
+        color: #fff;
+        background: #34bfa3;
+        }
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+@endsection
+
 @section('scripts')
     <script src="{{ asset('vendor/qiscus/js/lib/qiscus-sdk-core.min.js') }}"></script>
 
@@ -160,7 +172,7 @@
 
                                 @if ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED )
                                 <div class="m-widget28__tab-item">
-                                    <span>Shop Action</span>
+                                    {{-- <span>Shop Action</span> --}}
                                     {{-- @can('view_suspend_seller')
                                     @if(
                                     ($data->status === \Bromo\Seller\Models\ShopStatus::VERIFIED ) ||
@@ -175,28 +187,70 @@
                                     @endif
                                     @endcan --}}
 
-
-                                    @can('temporary_closed')
-                                    @if($data->is_temporary_closed == 0 && $data->status !== \Bromo\Seller\Models\ShopStatus::SUSPENDED)
-                                        <div class="m-widget28__tab-item">
-                                            <button type="button" class="btn btn-warning m-btn m-btn--custom"
-                                                    data-toggle="modal" data-target="#modalTemporaryClosed">
-                                                    Temporary Closed
-                                            </button>
-                                            <br/><br/>
-                                        </div>
-                                    @else
-                                        <div class="m-widget28__tab-item">
-                                            <form method="POST" action="{{ route('store.re-open-shop', ['id' => $data->id]) }}">
-                                                {!! csrf_field() !!}
-                                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to re-open the shop?')">
-                                                    <span> Re-open Shop</span>
+                                    <div class="row">
+                                        <div class="col-12">
+                                        @can('temporary_closed')
+                                        @if($data->is_temporary_closed == 0 && $data->status !== \Bromo\Seller\Models\ShopStatus::SUSPENDED)
+                                            <div class="m-widget28__tab-item">
+                                                <span>Shop is Active</span>
+                                                <button type="button" class="btn btn-warning m-btn"
+                                                        data-toggle="modal" data-target="#modalTemporaryClosed">
+                                                        Temporary Closed
                                                 </button>
-                                            </form>
-                                            <br/><br/>
+                                                <br/><br/>
+                                            </div>
+                                        @else
+                                            <div class="m-widget28__tab-item">
+                                                <span>Shop is Temporary Closed</span>
+                                                <form method="POST" action="{{ route('store.re-open-shop', ['id' => $data->id]) }}">
+                                                    {!! csrf_field() !!}
+                                                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to re-open the shop?')">
+                                                        <span> Re-open Shop</span>
+                                                    </button>
+                                                </form>
+                                                <br/><br/>
+                                            </div>
+                                        @endif
+                                        @endcan
                                         </div>
-                                    @endif
-                                    @endcan
+
+                                        @can('enable_self_drop')
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>Self Drop Status</span>
+                                                {{-- {{dd($data->enable_self_drop)}} --}}
+                                                @if($data->enable_self_drop)
+                                                    <input id="self-drop-status" type="checkbox" class="self-drop-status" checked="checked" data-toggle="toggle" data-id="{{ $data->id }}">
+                                                @else
+                                                    <input id="self-drop-status" type="checkbox" class="self-drop-status" data-toggle="toggle" data-id="{{ $data->id }}">
+                                                @endif
+                                                <span></span>
+
+                                                <br/><br/>
+                                            </div>
+                                        </div>
+                                        @endcan
+
+                                        @can('enable_custom_courier')
+                                        @if($data->enable_self_drop)
+                                        <div class="col-6">
+                                            <div class="m-widget28__tab-item">
+                                                <span>Seller Custom Courier</span>
+                                                @if($data->business->custom_courier_mapping)
+                                                    <input id="seller-custom-courier-flag" type="checkbox" class="seller-custom-courier-flag" checked="checked" data-toggle="toggle" data-id="{{ $data->id }}">
+                                                @else
+                                                    <input id="seller-custom-courier-flag" type="checkbox" class="seller-custom-courier-flag" data-toggle="toggle" data-id="{{ $data->id }}">
+                                                @endif
+                                                <span></span>
+
+                                                <br/><br/>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @endcan
+                                    </div>
+
+
                                 </div>
                                 @endif
 
