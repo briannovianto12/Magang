@@ -123,24 +123,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-4">
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('transaction::messages.cod_admin_fee') }}</span>
-                                                <span>IDR {{ number_format($data->admin_fee) ?? 0 }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('transaction::messages.cod_admin_fee_rounding') }}</span>
-                                                <span>IDR {{ number_format($data->admin_cod_fee_rounding) ?? 0 }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="m-widget28__tab-item">
-                                                <span>{{ __('transaction::messages.cod_admin_fee_rounded') }}</span>
-                                                <span>IDR {{ number_format( $data->admin_fee + $data->admin_cod_fee_rounding ) ?? 0 }}</span>
-                                            </div>
-                                        </div>
                                     </div>
                                 @endif
                                 <div class="m-widget28__tab-item">
@@ -604,6 +586,37 @@
                                     </div>
                                 @endisset
 
+                                @if($data->is_cod)
+                                <div class="m-widget28__tab-item row">
+                                    <div class="col-12">
+                                        <div class="m-widget28__tab-item">
+                                            <span>
+                                                <h5><b>{{ __('transaction::messages.cod_details') }}</b></h5>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.cod_admin_fee') }}</span>
+                                            <span>IDR {{ number_format($data->admin_fee) ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.cod_admin_fee_rounding') }}</span>
+                                            <span>IDR {{ number_format($data->admin_cod_fee_rounding) ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.cod_admin_fee_rounded') }}</span>
+                                            <span>IDR {{ number_format( $data->admin_fee + $data->admin_cod_fee_rounding ) ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
@@ -642,6 +655,15 @@
                                             <span>IDR {{ number_format($data['payment_details']['total_gross']) }}</span>
                                         </div>
                                     </div>
+
+                                    @if($data->is_cod)
+                                    <div class="col-12">
+                                        <div class="m-widget28__tab-item">
+                                            <span>{{ __('transaction::messages.cod_admin_fee_rounded') }}</span>
+                                            <span>IDR {{ number_format( $data->admin_fee + $data->admin_cod_fee_rounding ) ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     <div class="col-12">
                                         <div class="m-widget28__tab-item">
