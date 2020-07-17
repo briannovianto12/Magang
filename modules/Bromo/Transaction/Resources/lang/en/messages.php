@@ -31,6 +31,7 @@ return [
     'change_picked_up' => 'Change To Pickup',
     'cod_admin_fee' => 'Biaya Admin',
     'cod_admin_fee_rounding' => 'Biaya Layanan COD',
+    'cod_details' => 'COD Details',
     'cod_status' => 'COD Status',
     'cod_not_yet_received' => 'COD Not Yet Received',
     'cod_received' => 'COD Received',
