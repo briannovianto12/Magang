@@ -752,4 +752,56 @@ class SellerController extends BaseResourceController
 
         }
     }
+
+    public function setSelfDrop($id, Request $request)
+    {
+        try {
+
+            if($request->status == 0) {
+                DB::select("SELECT fs_enable_self_drop($id, false)");
+            } else if($request->status == 1) {
+                DB::select("SELECT fs_enable_self_drop($id, true)");
+            }
+
+            $flash = nbs_helper()->flashMessage('stored');
+
+        } catch (Exception $exception) {
+            \Log::error($exception->getMessage());
+
+            nbs_helper()->flashMessage('error');
+            return response()->json([
+                "status" => "error"
+            ], 500);
+        }
+
+        return response()->json([
+            "status" => "OK"
+        ]);
+    }
+
+    public function setCustomCourier($id, Request $request)
+    {
+        try {
+
+            if($request->status == 0) {
+                DB::select("SELECT fs_enable_seller_custom_courier($id, false)");
+            } else if($request->status == 1) {
+                DB::select("SELECT fs_enable_seller_custom_courier($id, true)");
+            }
+
+            nbs_helper()->flashMessage('stored');
+
+        } catch (Exception $exception) {
+            \Log::error($exception->getMessage());
+
+            nbs_helper()->flashMessage('error');
+            return response()->json([
+                "status" => "error"
+            ], 500);
+        }
+
+        return response()->json([
+            "status" => "OK"
+        ]);
+    }
 }

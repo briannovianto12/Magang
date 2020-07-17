@@ -29,6 +29,8 @@ Route::prefix('store')->name('store')->group(function () {
     Route::name('.re-open-shop')->post('{id}/re-open-shop', 'SellerController@reOpenShop');
     Route::name('.courier-info')->get('{id}/shipping-courier', 'SellerController@getShippingCourier');
     Route::name('.courier-info')->post('{id}/shipping-courier', 'SellerController@postShippingCourier');
+    Route::name('.set-self-drop')->put('{id}/set-self-drop', 'SellerController@setSelfDrop');
+    Route::name('.set-custom-courier')->put('{id}/set-custom-courier', 'SellerController@setCustomCourier');
 });
 
 Route::get('/balance', 'SellerController@getBalanceView')->name('seller.balance');
@@ -45,7 +47,7 @@ Route::prefix('popular-shop')->group(function () {
 
 Route::prefix('shop')->group(function () {
 
-    Route::get('/', 'BuyerController@index');   
-    Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');   
+    Route::get('/', 'BuyerController@index');
+    Route::name('description.post-table')->post('/shop/post/{id}', 'SellerController@shopDescription');
 });
 
