@@ -127,7 +127,7 @@
                                 <div class="m-widget28__tab-item">
                                     <span>{{ __('Status') }}</span>
                                     @if($data->status_name == 'Verified')
-                                        @if($data->is_temporary_closed == 1)
+                                        @if($data->is_temporary_closed)
                                             <span name="shop_status">
                                                 <i class="fa fa-exclamation-triangle" style="color:#FFCC00"></i> Shop is temporarily closed
                                                 <br/>
@@ -138,7 +138,7 @@
                                                 {{ $data->status_name }}
                                             </span>
                                         @endif
-                                    @elseif($data->status_name == '@michaelRejected')
+                                    @elseif($data->status_name == 'Rejected')
                                         <span name="shop_status" style="color:red">
                                             {{ $data->status_name }}
                                         </span>
@@ -195,7 +195,7 @@
                                                 <span>Shop is Active</span>
                                                 <button type="button" class="btn btn-warning m-btn"
                                                         data-toggle="modal" data-target="#modalTemporaryClosed">
-                                                        Temporary Closed
+                                                        Set Temporary Closed
                                                 </button>
                                                 <br/><br/>
                                             </div>
