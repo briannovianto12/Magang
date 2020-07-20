@@ -712,6 +712,7 @@ class OrderController extends Controller
 
         return $result;
     }
+
     public function updateAwbShippingManifest(Request $request, $order_id)
     {
         $new_airwaybill = $request->new_airwaybill;
@@ -754,6 +755,45 @@ class OrderController extends Controller
         }
     }
 
+    public function updatePickupNumber(Request $request, $order_id)
+    {
+        $new_pickup_number = $request->new_pickup_number;
+
+        DB::beginTransaction();
+        try {
+            $order = Order::find($order_id);
+            $order->special_id = $new_pickup_number;
+
+            $log = new OrderLog;
+            $log_version = OrderLog::where('id', $order_id)->orderBy('version', 'desc')->first()->version;
+            $log->id = $order_id;
+            $log->version = $log_version+1;
+            $log->is_picked_up = $order->is_picked_up;
+            $log->special_id = $order->special_id;
+            $log->modified_by = auth()->user()->id;
+            $log->modifier_role = auth()->user()->role_id;
+            $log->notes = 'Admin update pickup number';
+
+            $order->save();
+            $log->save();
+
+            DB::commit();
+            return response()->json([
+                "status" => "OK",
+                "message" => "Success! Pickup Number Updated!"
+            ]);
+
+        } catch (\Exception $exception) {
+            report($exception);
+            DB::rollback();
+
+            return response()->json([
+                'status' => 'Failed',
+                'message' => $exception->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function unRejectOrder($id){
         try{
             DB::select("SELECT f_unreject_order($id)");
@@ -767,11 +807,8 @@ class OrderController extends Controller
 
     public function uploadAwbImage($id, Request $request){
         try{
-
-
             $path = '/orders/';
             $file_awb = $request->file('file');
-            \Log::debug($request->all());
             $ext = $file_awb->extension();
             $file_awb_name = $file_awb->getClientOriginalName();
 
@@ -806,13 +843,8 @@ class OrderController extends Controller
         $order = Order::findOrFail($order_id);
         $shipping_courier = ShippingCourier::findOrFail($order->shipping_courier_id);
 
-        \Log::debug("Request values: ");
-        \Log::debug($request->all());
-
         $weight_in_kg = $request->get('weight_in_kg');
-
         $manifest = OrderShippingManifest::where('order_id', $order_id)->first();
-
         $logistic_detail_snapshot = json_decode($manifest->logistic_details_snapshot);
 
         if($logistic_detail_snapshot != null) {
@@ -854,13 +886,8 @@ class OrderController extends Controller
         $order = Order::findOrFail($order_id);
         $shipping_courier = ShippingCourier::findOrFail($order->shipping_courier_id);
 
-        \Log::debug("Request values: ");
-        \Log::debug($request->all());
-
         $shipping_fee_paid = $request->get('shipping_fee_paid');
-
         $manifest = OrderShippingManifest::where('order_id', $order_id)->first();
-
         $logistic_detail_snapshot = json_decode($manifest->logistic_details_snapshot);
 
         if($logistic_detail_snapshot != null) {

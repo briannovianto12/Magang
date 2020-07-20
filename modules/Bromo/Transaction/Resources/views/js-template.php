@@ -224,3 +224,23 @@
         </div>
     </div>
 </script>
+
+<script id="update-special-id" type="x-tmpl-mustache">
+    <div class="t-item" style="text-align: left; font-size: 14px; font-color: #666 !important;">
+        <div>
+            <div class="text-center">
+                <br/>
+                <h4>Order No. {{ order_no }}</h4>
+            </div>
+            <form id="form-special-id">
+                <div class="form-group">
+                    <label>
+                    </label>
+                    <input id="newSpecialId" class="form-control" type="text" placeholder="New Pickup Number" name="new_special_id">
+                    <br/>
+                   <button data-order-id="{{ data.id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnUpdateSpecialId">Update Pickup Number</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

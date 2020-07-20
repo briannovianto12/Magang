@@ -45,4 +45,6 @@ Route::name('order.updateAwbShippingManifest')->post('/order/{order_id}/update-a
 Route::name('order.uploadAWBImage')->post('/upload-awb-image/{order_id}', 'OrderController@uploadAwbImage');
 Route::name('order.updateWeightPackage')->post('/update-weight-package/{id}', 'OrderController@updateWeightPackage');
 Route::name('order.updateShippingCost')->post('/update-shipping-cost/{id}', 'OrderController@updateShippingCost');
+Route::name('order.update-pickup-number')->post('/order/{order_id}/update-pickup-number', 'OrderController@updatePickupNumber');
+
 
