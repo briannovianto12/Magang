@@ -16,7 +16,7 @@ class SellerDataTable extends DataTable
                 if ($keyword ) {
                     $keyword = $this->request()->input('search.value');
                     $query->whereHas('business', function ($query) use ($keyword) {
-                        $query->where('name', 'like', "%{$keyword}%");
+                        $query->where('name', 'ilike', "%{$keyword}%");
                     });
                 }
             })
@@ -76,16 +76,18 @@ class SellerDataTable extends DataTable
             'shop_status.id as status, ' .
             'shop_status.name as shop_status_name, ' .
             'shop.created_at, ' .
-            'shop.updated_at,' . 
-            'shop.is_temporary_closed'
+            'shop.updated_at,' .
+            'shop.is_temporary_closed, ' .
+            'user_profile.msisdn as msisdn'
         ))
         ->join('business', 'business.id', '=', 'shop.business_id')
-        ->join('shop_product_category', 'shop_product_category.shop_id', '=', 'shop.id')
-        ->join('product_category', 'product_category.id', '=', 'shop_product_category.product_category_id')
+        ->join('product_category', 'product_category.id', '=', 'shop.product_category_id')
         ->join('shop_status', 'shop_status.id', '=', 'shop.status')
         ->join('taxpayer_type', 'taxpayer_type.id', '=', 'shop.taxpayer_type')
-        ->groupBy(\DB::raw('shop.id, business.name, shop.name, taxpayer_type.name, shop_status.id, shop_status.name, shop.created_at, shop.updated_at'));
-        
+        ->join('business_member', 'business_member.business_id', '=', 'shop.business_id')
+        ->join(\DB::raw('user_profile'), \DB::raw('user_profile.id'), '=', \DB::raw('business_member.user_id'))
+        ->groupBy(\DB::raw('shop.id, business.name, shop.name, taxpayer_type.name, shop_status.id, shop_status.name, shop.created_at, shop.updated_at, user_profile.msisdn'));
+
         return $this->applyScopes($query);
     }
 
@@ -101,7 +103,7 @@ class SellerDataTable extends DataTable
             ->minifiedAjax()
             ->parameters([
                 'order' => [
-                    [7, 'desc']
+                    [9, 'desc']
                 ],
             ]);
     }
@@ -121,6 +123,7 @@ class SellerDataTable extends DataTable
             ['data' => 'product_category', 'name' => 'product_category', 'title' => 'Category'],
             ['data' => 'tax_type', 'name' => 'tax_type', 'title' => 'Tax Payer Type'],
             ['data' => 'shop_status_name', 'name' => 'status', 'title' => 'Status'],
+            ['data' => 'msisdn', 'name' => 'user_profile.msisdn', 'title' => 'Phone Number'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Created'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Updated']
         ];
