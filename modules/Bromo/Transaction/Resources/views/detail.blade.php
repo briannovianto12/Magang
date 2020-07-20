@@ -235,6 +235,74 @@
                                     </div>
                                 </div>
 
+                                <div class="m-widget28__tab-item row">
+                                    @can("update_airwaybill")
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            @if(
+                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
+                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
+                                            && $data->is_picked_up)
+                                                <button class="btn btn-success" onclick="_updateAwbShippingManifest('{{ $data->id }}')">
+                                                    Update Airwaybill
+                                                </button>
+                                                <br/>
+                                                <br/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endcan
+
+                                    @can("update_pickup_number")
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            @if(
+                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
+                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
+                                            && $data->is_picked_up)
+                                                <button class="btn btn-success" onclick="_updatePickupNumber('{{ $data->id }}')">
+                                                    Update Nomor Pickup
+                                                </button>
+                                                <br/>
+                                                <br/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endcan
+
+                                    @can("change_picked_up")
+                                        <div class="col-4">
+                                            <div class="m-widget28__tab-item">
+                                                @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
+                                                && !$data->is_picked_up)
+                                                    <button class="btn btn-success" onclick="_changePickedUp('{{ $data->id }}')">
+                                                        {{ __('transaction::messages.change_picked_up') }}
+                                                    </button>
+                                                    <br/>
+                                                    <br/>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endcan
+
+                                    @can("recall_shipper")
+                                    <div class="col-4">
+                                        <div class="m-widget28__tab-item">
+                                            @if( (empty($data->special_id) || $data->special_id == '')
+                                            && $data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_SHIPPER
+                                            && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED )
+                                                <button class="btn btn-success" onclick="_callCourier(this, '{{ $data->id }}', {{ $shipping_weight }}); ">
+                                                    Call Courier Shipper
+                                                </button>
+                                                <br/>
+                                                <br/>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endcan
+                                </div>
 
                                 {{-- UPLOAD RESI --}}
                                 <form action="{{ route('order.uploadAWBImage', $data->id) }}" method="POST" enctype="multipart/form-data">
@@ -382,57 +450,6 @@
                                         </div>
                                     @endif
                                 @endcan
-
-                                <div class="m-widget28__tab-item row">
-                                    @can("update_airwaybill")
-                                    <div class="col-4">
-                                        <div class="m-widget28__tab-item">
-                                            @if(
-                                            ($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
-                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::DELIVERED
-                                                    || $data->status == \Bromo\Transaction\Models\OrderStatus::SUCCESS)
-                                            && $data->is_picked_up)
-                                                <button class="btn btn-success" onclick="_updateAwbShippingManifest('{{ $data->id }}')">
-                                                    Update Airwaybill
-                                                </button>
-                                                <br/>
-                                                <br/>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    @endcan
-
-                                    @can("change_picked_up")
-                                        <div class="col-4">
-                                            <div class="m-widget28__tab-item">
-                                                @if($data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED
-                                                && !$data->is_picked_up)
-                                                    <button class="btn btn-success" onclick="_changePickedUp('{{ $data->id }}')">
-                                                        {{ __('transaction::messages.change_picked_up') }}
-                                                    </button>
-                                                    <br/>
-                                                    <br/>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endcan
-
-                                    @can("recall_shipper")
-                                    <div class="col-4">
-                                        <div class="m-widget28__tab-item">
-                                            @if( (empty($data->special_id) || $data->special_id == '')
-                                            && $data->shippingCourier->provider_id == Bromo\Transaction\Models\ShippingCourier::SHIPPING_PROVIDER_SHIPPER
-                                            && $data->status == \Bromo\Transaction\Models\OrderStatus::SHIPPED )
-                                                <button class="btn btn-success" onclick="_callCourier(this, '{{ $data->id }}', {{ $shipping_weight }}); ">
-                                                    Call Courier Shipper
-                                                </button>
-                                                <br/>
-                                                <br/>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    @endcan
-                                </div>
 
                                 <div class="m-widget28__tab-item row">
                                     <div class="col-6">
