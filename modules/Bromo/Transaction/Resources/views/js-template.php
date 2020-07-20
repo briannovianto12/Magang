@@ -44,7 +44,7 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order No. {{ data.order_no }}</h4>
+                <h4>Order No. {{ order_no }}</h4>
             </div>
             <form id="form-edit-product">
                 <div class="form-group">
@@ -91,7 +91,7 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order No. {{ data.order_no }}</h4>
+                <h4>Order No. {{ order_no }}</h4>
             </div>
             <form id="form-edit-product">
                 <div class="form-group">
@@ -152,7 +152,7 @@
         <div>
             <div class="text-center">
                 <br/>
-                <h4>Order No. {{ data.order_no }}</h4>
+                <h4>Order No. {{ order_no }}</h4>
             </div>
             <form id="form-edit-product" action="POST">
                 {{ method_field('PUT') }}
@@ -178,7 +178,7 @@
                 <br>
                 <h5><b>Estimasi pengambilan sampai H+1</b></h5>
                 <h5><b>(Senin-Sabtu)</b></h5>
-                <br/><br/> 
+                <br/><br/>
             </div>
             <form>
                 <div class="form-group">
@@ -198,7 +198,7 @@
                     <li>Sedang (4-8 kg)</li>
                     <li>Besar (9+ kg)</li>
                 </ul>
-                 
+
                 <button data-order-id="{{ id }}" type="button" class="btn btn-primary btn-lg btn-block" id="btnKirim">Kirim</button>
             </form>
         </div>
