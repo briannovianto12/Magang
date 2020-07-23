@@ -35,6 +35,7 @@ use Bromo\Seller\Entities\Product;
 use Bromo\Seller\Entities\CourierMapping;
 use Bromo\Seller\Entities\ShippingCourier;
 use Bromo\Seller\Entities\CommissionGroup;
+use Bromo\Seller\Entities\ShopSuspended;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 
@@ -608,26 +609,41 @@ class SellerController extends BaseResourceController
 
     public function postCommission(Request $request, $id)
     {
-        try {
-            $new_commission_type = $request->input('commissionId');
-            $shop = $this->model::find($id);
-            $resp = '';
+        $new_commission_type = $request->input('commissionId');
+        $shop = $this->model::find($id);
+        $resp = '';
 
+        DB::beginTransaction();
+        try {
             if ($new_commission_type == null) {
                 return;
                 }
 
             if ($new_commission_type == CommissionGroup::STANDARD) {
+                $shop->commission_group_id = CommissionGroup::STANDARD;
                 $standard = DB::select("SELECT public.f_update_commission_standard_and_check($shop->id)");
+                $shop->is_temporary_closed = false;
+
+                $shop->save();
+                ShopSuspended::where('shop_id', $id)->delete();
+
             } elseif ($new_commission_type == CommissionGroup::PREMIUM) {
+                $shop->commission_group_id = CommissionGroup::STANDARD;
                 $premium = DB::select("SELECT public.f_update_commission_premium_and_check($shop->id)");
+                $shop->is_temporary_closed = false;
+
+                $shop->save();
+                ShopSuspended::where('shop_id', $id)->delete();
             }
 
+            DB::commit();
             return response()->json([
                 "status" => "OK"
             ]);
         } catch (Exception $exception) {
             report($exception);
+            \Log::debug($exception);
+            DB::rollback();
 
             return response()->json([
                 "status" => "Failed"
