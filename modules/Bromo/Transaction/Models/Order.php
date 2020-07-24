@@ -226,7 +226,7 @@ class Order extends Model
 
     public function getBusinessNameAttribute(): string
     {
-        return presence($this->business_snapshot['name'], '-');
+        return $this->business_snapshot['name'] ?? '-';
     }
 
     public function getBusinessTagAttribute(): string
