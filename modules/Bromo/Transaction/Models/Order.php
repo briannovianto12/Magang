@@ -231,12 +231,12 @@ class Order extends Model
 
     public function getBusinessTagAttribute(): string
     {
-        return presence($this->business_snapshot['tag'], '-');
+        return $this->$this->business_snapshot['tag'] ?? '-';
     }
 
     public function getBusinessTaxNoAttribute(): string
     {
-        return presence($this->business_snapshot['tax_no'], '-');
+        return $this->business_snapshot['tax_no'] ?? '-';
     }
 
     // Seller Section
@@ -247,22 +247,22 @@ class Order extends Model
 
     public function getSellerNameAttribute(): string
     {
-        return presence($this->shop_snapshot['name'], '-');
+        return $this->shop_snapshot['name'] ?? '-';
     }
 
     public function getSellerDescriptionAttribute()
     {
-        return presence($this->shop_snapshot['description'], '-');
+        return $this->shop_snapshot['description'] ?? '-';
     }
 
     public function getSellerTaxNoAttribute()
     {
-        return presence($this->shop_snapshot['tax_no'], '-');
+        return $this->shop_snapshot['tax_no'] ?? '-';
     }
 
     public function getSellerProductCategoryAttribute()
     {
-        return presence($this->shop_snapshot['product_category'], '-');
+        return $this->shop_snapshot['product_category'] ?? '-';
     }
 
     // Shipping section
