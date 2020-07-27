@@ -41,7 +41,7 @@ class LogisticController extends Controller
         $this->middleware('auth');
         $this->model = $model;
         $this->module = 'logistic';
-        $this->title = 'Order';
+        $this->title = 'Traiditonal Logistic';
     }
 
     /**
@@ -141,10 +141,10 @@ class LogisticController extends Controller
 
     /**
      * Get detail info by order_id
-     * 
+     *
      */
     public function getDetailInfo ( $order_id ) {
-        
+
         $order = Order::findOrFail( $order_id );
         $shipping_manifest = OrderShippingManifest::where( 'order_id', $order_id )->first();
         $admin = Admin::where('id', $shipping_manifest->user_admin_id)->first();
@@ -154,9 +154,9 @@ class LogisticController extends Controller
         } else {
             $admin_name = $admin->name;
         }
- 
+
         $shop_info = DB::table('order_trx')
-            ->select('shop.name as name', 'user_profile.msisdn as msisdn', 
+            ->select('shop.name as name', 'user_profile.msisdn as msisdn',
             "order_trx.notes as notes",
             "order_trx.orig_address_snapshot->building_name as building_name",
             "order_trx.orig_address_snapshot->address_line as address_line"
@@ -199,8 +199,8 @@ class LogisticController extends Controller
             foreach($order_images as $image) {
                 $array_order_images[] = config('logistic.gcs_path') . '/orders/' . $image->filename;
             }
-        }  
-        
+        }
+
         $data = [
             "order" => $order,
             "shop_info" => $shop_info,
@@ -243,7 +243,6 @@ class LogisticController extends Controller
 
         if($request->ajax()){
             return response()->json([ "status" => "OK" ]);
-            // return redirect()->route('logistic.show', $order_id);
         }
 
         return redirect()->route('logistic.show', $order_id);
@@ -277,7 +276,6 @@ class LogisticController extends Controller
 
         if($request->ajax()){
             return response()->json([ "status" => "OK" ]);
-            // return redirect()->route('logistic.show', $order_id);
         }
 
         return redirect()->route('logistic.show', $order_id);
@@ -303,7 +301,6 @@ class LogisticController extends Controller
             "address_line" => $order->dest_address_snapshot['address_line'],
             "building_name" => $order->dest_address_snapshot['building_name']
         ];
-        // dd($data);
 
         return view("{$this->module}::form-mobile", $data);
     }
@@ -321,7 +318,7 @@ class LogisticController extends Controller
             $order = Order::findOrFail($order_id);
 
             $path = '/orders/';
-            
+
             $file_paket = $request->file('paket_image');
             $ext = $file_paket->extension();
             $file_paket_name = $file_paket->getClientOriginalName();
@@ -344,16 +341,15 @@ class LogisticController extends Controller
             }
 
             $data = [
-                "weight" => $request->weight, 
+                "weight" => $request->weight,
                 "total_price" => str_replace('.', '', $request->total_price),
                 "platform_discount" => str_replace('.', '', $request->platform_discount),
                 "awb_filename" => "$order_id/$file_awb_name",
                 "paket_filename" => "$order_id/$file_paket_name",
             ];
 
-            $airwaybill = ($request->airwaybill) ? $request->airwaybill : ''; 
+            $airwaybill = ($request->airwaybill) ? $request->airwaybill : '';
 
-            // $shipping_manifest = OrderShippingManifest::where('order_id', '=', $order_id)->first();
             OrderShippingManifest::where('order_id', '=', $order_id)
             ->update([
                 'airwaybill' => $airwaybill,
@@ -384,12 +380,98 @@ class LogisticController extends Controller
             nbs_helper()->flashError($exception->getMessage() ?? 'Something wen\'t wrong. Please contact Administrator');
         }
 
-        // if($request->ajax()){
-        //     return response()->json([ "status" => "OK" ]);
-        // }
-
-        // return view("{$this->module}::form-mobile", $data);
-
         return redirect()->route('logistic.mobile-index');
+    }
+
+    public function indexLogisticSpreadsheet()
+    {
+        $data['title'] = $this->title;
+        return view("logistic::logistic-spreadsheet", $data);
+    }
+
+    public function getLogisticInfo(Request $request)
+    {
+        //get input value
+        $value = $request->get('input');
+        //get data order
+        $order = Order::whereIn('order_no', $value)->get();
+
+        if(!$order) {
+            return response()->json([
+                "status" => "Failed",
+            ], 400);
+        }
+
+        //init new variable for respons
+        $list = [];
+        $message = "";
+
+        foreach($order as $key => $value)
+        {
+            if($value->status < OrderStatus::SHIPPED){
+                $message = "Seller didn't call pickup courier for this order";
+            }
+
+            if($value->status > OrderStatus::SHIPPED && $value->is_picked_up == true) {
+                $message = "This order already on shipment";
+            }
+
+            if($value->status == OrderStatus::SHIPPED) {
+                $message = "";
+            }
+
+            $temp = [
+                "shop_name" => $value->shop_snapshot['name'],
+                "system_price" => number_format($value->shipping_service_snapshot['shipper']['finalRate'], 0, 0, '.'),
+                "system_weight" => ceil($value->shipping_weight/1000),
+                "platform_discount" => number_format($value->shipping_service_snapshot['shipper']['platform_discount'], 0, 0, '.'),
+                "status" => $value->status,
+                "is_picked_up" => $value->is_picked_up,
+                "real_weight" => 0,
+                "real_price"=> 0,
+                "message" => $message
+            ];
+
+            $list[] = $temp;
+        }
+
+        $result = [
+            "status"    => "success",
+            "data"      => $list
+        ];
+
+        return json_encode($result);
+    }
+
+    public function submitLogisticData(Request $request)
+    {
+        $user_id = \Auth::user()->id;
+        $role_id = \Auth::user()->role_id;
+
+        $data = $request['data'];
+        \DB::beginTransaction();
+        try {
+            for($index = 0; $index < count($data); $index++) {
+                $order_no = $data[$index]['order_no'];
+                $airwaybill = $data[$index]['airwaybill'];
+                $real_price = $data[$index]['real_price'];
+                $real_weight = $data[$index]['real_weight']*1000;
+                $message = $data[$index]['message'];
+
+                Order::where('order_no',$data[$index]['order_no'])->update(['is_picked_up' => true]);
+                $query_order_shipping_manifest = \DB::select("SELECT f_update_order_shipping_manifest('$order_no','$airwaybill',$real_price,$real_weight,$user_id)");
+                $query_update_status = \DB::select("SELECT f_update_order_status_from_shipped_to_success('$order_no','Diinput lewat webadmin',$user_id,$role_id)");
+
+            }
+            \DB::commit();
+
+        } catch (\Execption $e) {
+            \DB::rollback();
+        }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "data berhasil diproses"
+        ]);
     }
 }

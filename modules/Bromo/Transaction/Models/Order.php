@@ -22,7 +22,7 @@ class Order extends Model
         TimezoneAccessor,
         VersionModelTrait,
         ModifierModelTrait;
-
+        
     /**
      * The attributes that should be cast to native types.
      *
